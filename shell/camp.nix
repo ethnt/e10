@@ -35,10 +35,10 @@ in {
     (addPackage "deployment" pkgs.terraform)
 
     {
-      package = (pkgs.writeShellScriptBin "tf" ''
+      package = pkgs.writeShellScriptBin "tf" ''
         ${pkgs.terraform}/bin/terraform -chdir=deploy/ $@ &&
           ${pkgs.terraform}/bin/terraform -chdir=deploy/ show -json > state.json
-      '');
+      '';
       category = "deployment";
       help = "Wrapper for Terraform";
     }

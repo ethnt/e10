@@ -26,5 +26,9 @@
           inherit system;
           overlays = [ devshell.overlay ];
         };
-      in { devShell = import ./shell { inherit self pkgs; }; });
+      in {
+        apps = import ./apps { inherit self pkgs; };
+        checks = import ./checks { inherit self pkgs; };
+        devShell = import ./shell { inherit self pkgs; };
+      });
 }
