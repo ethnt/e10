@@ -1,3 +1,6 @@
 /.direnv/
 /deploy/.terraform/
 /keys/
+/tmp/
+
+result

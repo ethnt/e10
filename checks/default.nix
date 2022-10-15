@@ -14,4 +14,8 @@ in {
   lint = runCodeAnalysis "lint" ''
     ${pkgs.statix}/bin/statix check .
   '';
+
+  terraform-format = runCodeAnalysis "terraform-format" ''
+    ${pkgs.terraform}/bin/terraform -chdir=${self}/deploy fmt -check
+  '';
 }
