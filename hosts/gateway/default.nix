@@ -1,5 +1,5 @@
 { config, lib, pkgs, suites, modulesPath, ... }: {
-  imports = with suites; base ++ aws ++ gateway ++ observability;
+  imports = with suites; base ++ network ++ aws ++ gateway ++ observability;
 
   camp = {
     privateAddress = config.services.nebula.networks.camp.address;

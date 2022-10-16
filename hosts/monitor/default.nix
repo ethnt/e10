@@ -1,5 +1,6 @@
 { config, suites, ... }: {
-  imports = with suites; base ++ aws ++ observability ++ web ++ monitor;
+  imports = with suites;
+    base ++ network ++ aws ++ observability ++ web ++ monitor;
 
   camp = {
     privateAddress = config.services.nebula.networks.camp.address;

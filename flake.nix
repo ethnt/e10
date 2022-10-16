@@ -29,8 +29,8 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, digga, nixos, nixos-hardware, sops-nix, deploy, nixpkgs, ...
-    }@inputs:
+  outputs = { self, digga, nixos, nixos-hardware, nixos-generators, sops-nix
+    , deploy, nixpkgs, ... }@inputs:
     digga.lib.mkFlake {
       inherit self inputs;
 
@@ -73,6 +73,7 @@
         hosts = {
           gateway = { };
           monitor = { };
+          template = { };
         };
 
         importables = rec {
@@ -84,10 +85,10 @@
               core.tooling
               networking.mosh
               networking.openssh
-              networking.nebula.peer
               system.earlyoom
               users.root
             ];
+            network = [ networking.nebula.peer ];
             aws = [ virtualisation.aws ];
             observability =
               [ monitoring.prometheus-node-exporter monitoring.promtail ];
@@ -118,6 +119,13 @@
         in {
           apps = import ./apps { inherit self pkgs; };
           checks = import ./checks { inherit self pkgs; };
+          packages = {
+            proxmox = nixos-generators.nixosGenerate {
+              system = "x86_64-linux";
+              modules = [ ];
+              format = "proxmox";
+            };
+          };
         };
     };
 }
