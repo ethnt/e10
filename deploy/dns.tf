@@ -9,3 +9,19 @@ resource "aws_route53_record" "gateway" {
   ttl     = 300
   records = [aws_eip.gateway.public_ip]
 }
+
+resource "aws_route53_record" "monitor" {
+  zone_id = aws_route53_zone.primary.zone_id
+  name    = "monitor.camp.computer"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.monitor.public_ip]
+}
+
+resource "aws_route53_record" "grafana" {
+  zone_id = aws_route53_zone.primary.zone_id
+  name    = "grafana.camp.computer"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.monitor.public_ip]
+}

@@ -70,9 +70,13 @@
 
         imports = [ (digga.lib.importHosts ./hosts) ];
 
-        hosts = { gateway = { }; };
+        hosts = {
+          gateway = { };
+          monitor = { };
+        };
 
         importables = rec {
+          hosts = self.nixosConfigurations;
           profiles = digga.lib.rakeLeaves ./profiles;
           suites = with profiles; rec {
             base = [
@@ -84,22 +88,29 @@
               system.earlyoom
               users.root
             ];
-
             aws = [ virtualisation.aws ];
+            observability =
+              [ monitoring.prometheus-node-exporter monitoring.promtail ];
+            web = [ web-servers.nginx ];
 
             gateway = [ networking.nebula.lighthouse ];
+            monitor =
+              [ monitoring.prometheus monitoring.grafana monitoring.loki ];
           };
         };
       };
 
       devshell = ./shell;
 
-      deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations {
-        gateway = {
-          hostname = "3.136.251.131";
+      deploy.nodes = let
+        mkDeployNode = { hostname }: {
+          inherit hostname;
           sshUser = "root";
           sshOpts = [ "-i" "keys/id_rsa" ];
         };
+      in digga.lib.mkDeployNodes self.nixosConfigurations {
+        gateway = mkDeployNode { hostname = "gateway.camp.computer"; };
+        monitor = mkDeployNode { hostname = "monitor.camp.computer"; };
       };
 
       outputsBuilder = channels:
