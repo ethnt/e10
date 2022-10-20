@@ -24,6 +24,17 @@
           ];
         }];
       }
+      {
+        job_name = "errata";
+        static_configs = [{
+          targets = [
+            "${hosts.errata.config.camp.privateAddress}:${
+              toString
+              hosts.errata.config.services.prometheus.exporters.node.port
+            }"
+          ];
+        }];
+      }
     ];
   };
 }

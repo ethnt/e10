@@ -2,6 +2,7 @@ keys:
   - &user_ethnt age1xgvn6f36rkzmq2kfqx0g2xg90qrpar4hpu6fr8xc3s2kqw6dzqcssnslsv
   - &machine_gateway age1qmhmk73n32camd0sj5xj0f06epe3nglygxp58uxd6t7fejtvdqrqe59tde
   - &machine_monitor age1z32asqn3p2gy2cyuy4vszfqz4z8adsyx768jy7mf9czqtmjrq5dqvt4a52
+  - &machine_errata age1ezvm044jvkhe2au6ep6fm2kty4nd3e5y55s583wmpucvzjjt4vwqzeqf8u
 
 creation_rules:
   - path_regex: secrets.yaml$
@@ -10,3 +11,4 @@ creation_rules:
         - *user_ethnt
         - *machine_gateway
         - *machine_monitor
+        - *machine_errata

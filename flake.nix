@@ -73,6 +73,8 @@
         hosts = {
           gateway = { };
           monitor = { };
+          errata = { };
+
           template = { };
         };
 
@@ -90,6 +92,7 @@
             ];
             network = [ networking.nebula.peer ];
             aws = [ virtualisation.aws ];
+            proxmox = [ virtualisation.proxmox ];
             observability =
               [ monitoring.prometheus-node-exporter monitoring.promtail ];
             web = [ web-servers.nginx ];
@@ -103,15 +106,11 @@
 
       devshell = ./shell;
 
-      deploy.nodes = let
-        mkDeployNode = { hostname }: {
-          inherit hostname;
-          sshUser = "root";
-          sshOpts = [ "-i" "keys/id_rsa" ];
-        };
-      in digga.lib.mkDeployNodes self.nixosConfigurations {
+      deploy.nodes = let inherit (self.lib) deployableHosts mkDeployNode;
+      in digga.lib.mkDeployNodes (deployableHosts self.nixosConfigurations) {
         gateway = mkDeployNode { hostname = "gateway.camp.computer"; };
         monitor = mkDeployNode { hostname = "monitor.camp.computer"; };
+        errata = mkDeployNode { hostname = "192.168.1.211"; };
       };
 
       outputsBuilder = channels:
@@ -119,13 +118,6 @@
         in {
           apps = import ./apps { inherit self pkgs; };
           checks = import ./checks { inherit self pkgs; };
-          packages = {
-            proxmox = nixos-generators.nixosGenerate {
-              system = "x86_64-linux";
-              modules = [ ];
-              format = "proxmox";
-            };
-          };
         };
     };
 }

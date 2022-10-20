@@ -17,6 +17,10 @@ in {
     ${setSopsValueToEnvironmentVariable "AWS_SECRET_ACCESS_KEY"
     "aws_secret_access_key"}
 
+    ${setSopsValueToEnvironmentVariable "PM_API_TOKEN_ID" "pm_api_token_id"}
+    ${setSopsValueToEnvironmentVariable "PM_API_TOKEN_SECRET"
+    "pm_api_token_secret"}
+
     export PATH=''${_PATH}
     unset _PATH
   '');

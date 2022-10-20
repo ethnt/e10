@@ -6,6 +6,7 @@
     privateAddress = config.services.nebula.networks.camp.address;
     publicAddress = "18.219.39.43";
     domain = "monitor.camp.computer";
+    deployable = true;
   };
 
   sops = {

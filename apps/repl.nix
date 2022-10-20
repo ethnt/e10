@@ -5,5 +5,7 @@ let
     builtins.getFlake (toString flakePath)
   else
     { };
+  Me = Flake.darwinConfigurations.${host} or { };
+  Channels = Flake.pkgs.${builtins.currentSystem} or { };
   LoadFlake = path: builtins.getFlake (toString path);
-in { inherit Flake LoadFlake; }
+in { inherit Channels Flake LoadFlake Me; }

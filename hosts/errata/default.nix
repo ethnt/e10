@@ -1,10 +1,10 @@
-{ config, lib, pkgs, suites, modulesPath, ... }: {
-  imports = with suites; base ++ network ++ aws ++ gateway ++ observability;
+{ config, suites, ... }: {
+  imports = with suites; base ++ network ++ proxmox ++ observability;
 
   camp = {
     privateAddress = config.services.nebula.networks.camp.address;
-    publicAddress = "3.136.251.131";
-    domain = "gateway.camp.computer";
+    publicAddress = "192.168.1.211";
+    domain = "errata.camp.computer";
     deployable = true;
   };
 
@@ -18,10 +18,10 @@
   };
 
   services.nebula.networks.camp = {
-    address = "10.10.0.1";
+    address = "10.10.0.4";
     key = config.sops.secrets.nebula_host_key.path;
     cert = config.sops.secrets.nebula_host_cert.path;
   };
 
-  networking.hostName = "gateway";
+  networking.hostName = "errata";
 }
