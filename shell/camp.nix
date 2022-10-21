@@ -46,5 +46,32 @@ in {
       '';
       help = "Wrapper for Terraform";
     }
+
+    {
+      category = "management";
+      package = let
+        sshConfig = pkgs.writeTextFile {
+          name = "ssh_config";
+          text = ''
+            Host gateway
+              Hostname gateway.camp.computer
+
+            Host monitor
+              Hostname monitor.camp.computer
+
+            Host errata
+              Hostname 10.10.0.4
+              ProxyJump root@gateway
+
+            Host *
+              User root
+              IdentityFile keys/id_rsa
+          '';
+        };
+      in pkgs.writeShellScriptBin "camp-ssh" ''
+        ssh -F ${sshConfig} $@
+      '';
+      help = "Wrapper for SSH";
+    }
   ];
 }

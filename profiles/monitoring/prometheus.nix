@@ -35,6 +35,26 @@
           ];
         }];
       }
+      {
+        job_name = "blocky_public";
+        static_configs = [{
+          targets = [
+            "${hosts.gateway.config.camp.privateAddress}:${
+              toString hosts.gateway.config.services.blocky.settings.httpPort
+            }"
+          ];
+        }];
+      }
+      {
+        job_name = "blocky_private";
+        static_configs = [{
+          targets = [
+            "${hosts.errata.config.camp.privateAddress}:${
+              toString hosts.errata.config.services.blocky.settings.httpPort
+            }"
+          ];
+        }];
+      }
     ];
   };
 }

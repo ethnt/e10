@@ -1,5 +1,5 @@
 { config, suites, ... }: {
-  imports = with suites; base ++ network ++ proxmox ++ observability;
+  imports = with suites; base ++ network ++ proxmox ++ observability ++ errata;
 
   camp = {
     privateAddress = config.services.nebula.networks.camp.address;

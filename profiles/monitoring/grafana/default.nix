@@ -1,9 +1,11 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   services.grafana = {
     enable = true;
     domain = "localhost";
     port = 2342;
     addr = "127.0.0.1";
+
+    declarativePlugins = with pkgs.grafanaPlugins; [ grafana-piechart-panel ];
 
     provision = {
       enable = true;
@@ -22,6 +24,22 @@
               toString
               config.services.loki.configuration.server.http_listen_port
             }";
+        }
+        {
+          name = "MySQL (Blocky/Public)";
+          type = "mysql";
+          url = "10.10.0.1:3306";
+          database = "blocky";
+          user = "grafana";
+          password = "grafana";
+        }
+        {
+          name = "MySQL (Blocky/Private)";
+          type = "mysql";
+          url = "10.10.0.4:3306";
+          database = "blocky";
+          user = "grafana";
+          password = "grafana";
         }
       ];
       dashboards = [{
