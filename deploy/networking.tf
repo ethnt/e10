@@ -34,3 +34,8 @@ resource "aws_eip" "gateway" {
   instance = aws_instance.gateway.id
   vpc      = true
 }
+
+resource "aws_eip" "monitor" {
+  instance = aws_instance.monitor.id
+  vpc      = true
+}

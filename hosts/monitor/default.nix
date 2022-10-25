@@ -1,10 +1,10 @@
-{ config, lib, pkgs, suites, modulesPath, ... }: {
-  imports = with suites; base ++ aws ++ gateway ++ observability;
+{ config, suites, ... }: {
+  imports = with suites; base ++ aws ++ observability ++ web ++ monitor;
 
   camp = {
     privateAddress = config.services.nebula.networks.camp.address;
-    publicAddress = "3.136.251.131";
-    domain = "gateway.camp.computer";
+    publicAddress = "18.219.39.43";
+    domain = "monitor.camp.computer";
   };
 
   sops = {
@@ -17,10 +17,10 @@
   };
 
   services.nebula.networks.camp = {
-    address = "10.10.0.1";
+    address = "10.10.0.2";
     key = config.sops.secrets.nebula_host_key.path;
     cert = config.sops.secrets.nebula_host_cert.path;
   };
 
-  networking.hostName = "gateway";
+  networking.hostName = "monitor";
 }
