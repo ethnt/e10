@@ -4,6 +4,7 @@
     htop
     nix-index
     tmux
+    mariadb-client
     dosfstools
     gptfdisk
     iputils

@@ -36,17 +36,7 @@
         }];
       }
       {
-        job_name = "blocky_public";
-        static_configs = [{
-          targets = [
-            "${hosts.gateway.config.camp.privateAddress}:${
-              toString hosts.gateway.config.services.blocky.settings.httpPort
-            }"
-          ];
-        }];
-      }
-      {
-        job_name = "blocky_private";
+        job_name = "blocky";
         static_configs = [{
           targets = [
             "${hosts.errata.config.camp.privateAddress}:${

@@ -97,14 +97,10 @@
               [ monitoring.prometheus-node-exporter monitoring.promtail ];
             web = [ web-servers.nginx ];
 
-            gateway = [
-              networking.nebula.lighthouse
-              networking.blocky
-              databases.mysql
-            ];
+            gateway = [ networking.nebula.lighthouse ];
             monitor =
               [ monitoring.prometheus monitoring.grafana monitoring.loki ];
-            errata = [ networking.blocky databases.mysql ];
+            errata = [ networking.blocky ];
           };
         };
       };

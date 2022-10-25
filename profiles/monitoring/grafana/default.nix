@@ -25,22 +25,15 @@
               config.services.loki.configuration.server.http_listen_port
             }";
         }
-        {
-          name = "MySQL (Blocky/Public)";
-          type = "mysql";
-          url = "10.10.0.1:3306";
-          database = "blocky";
-          user = "grafana";
-          password = "grafana";
-        }
-        {
-          name = "MySQL (Blocky/Private)";
-          type = "mysql";
-          url = "10.10.0.4:3306";
-          database = "blocky";
-          user = "grafana";
-          password = "grafana";
-        }
+        # {
+        #   name = "PostgreSQL (Blocky, Public)";
+        #   type = "postgresql";
+        #   access = "proxy";
+        #   url = "http://0.0.0.0:${
+        #       toString
+        #       config.services.loki.configuration.server.http_listen_port
+        #     }";
+        # }
       ];
       dashboards = [{
         name = "Nodes";

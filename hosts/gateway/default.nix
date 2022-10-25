@@ -24,20 +24,5 @@
     cert = config.sops.secrets.nebula_host_cert.path;
   };
 
-  services.nginx.virtualHosts = {
-    "blocky.camp.computer" = {
-      http2 = true;
-
-      forceSSL = true;
-      enableACME = true;
-
-      locations."/" = {
-        proxyPass = "http://${hosts.gateway.config.camp.privateAddress}:${
-            toString hosts.gateway.config.services.blocky.settings.httpPort
-          }";
-      };
-    };
-  };
-
   networking.hostName = "gateway";
 }
