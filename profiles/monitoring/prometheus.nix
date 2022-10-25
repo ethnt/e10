@@ -25,12 +25,12 @@
         }];
       }
       {
-        job_name = "errata";
+        job_name = "matrix";
         static_configs = [{
           targets = [
-            "${hosts.errata.config.camp.privateAddress}:${
+            "${hosts.matrix.config.camp.privateAddress}:${
               toString
-              hosts.errata.config.services.prometheus.exporters.node.port
+              hosts.matrix.config.services.prometheus.exporters.node.port
             }"
           ];
         }];
@@ -39,8 +39,19 @@
         job_name = "blocky";
         static_configs = [{
           targets = [
-            "${hosts.errata.config.camp.privateAddress}:${
-              toString hosts.errata.config.services.blocky.settings.httpPort
+            "${hosts.matrix.config.camp.privateAddress}:${
+              toString hosts.matrix.config.services.blocky.settings.httpPort
+            }"
+          ];
+        }];
+      }
+      {
+        job_name = "apcups";
+        static_configs = [{
+          targets = [
+            "${hosts.matrix.config.camp.privateAddress}:${
+              toString
+              hosts.matrix.config.services.prometheus.exporters.apcupsd.port
             }"
           ];
         }];

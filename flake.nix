@@ -73,7 +73,7 @@
         hosts = {
           gateway = { };
           monitor = { };
-          errata = { };
+          matrix = { };
 
           template = { };
         };
@@ -100,7 +100,11 @@
             gateway = [ networking.nebula.lighthouse ];
             monitor =
               [ monitoring.prometheus monitoring.grafana monitoring.loki ];
-            errata = [ networking.blocky ];
+            matrix = [
+              networking.blocky
+              power.apcupsd
+              monitoring.prometheus-apcupsd-exporter
+            ];
           };
         };
       };
@@ -111,7 +115,7 @@
       in digga.lib.mkDeployNodes (deployableHosts self.nixosConfigurations) {
         gateway = mkDeployNode { hostname = "gateway.camp.computer"; };
         monitor = mkDeployNode { hostname = "monitor.camp.computer"; };
-        errata = mkDeployNode { hostname = "192.168.1.211"; };
+        matrix = mkDeployNode { hostname = "192.168.1.212"; };
       };
 
       outputsBuilder = channels:

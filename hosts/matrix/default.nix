@@ -1,10 +1,10 @@
 { config, suites, ... }: {
-  imports = with suites; base ++ network ++ proxmox ++ observability ++ errata;
+  imports = with suites; base ++ network ++ proxmox ++ observability ++ matrix;
 
   camp = {
     privateAddress = config.services.nebula.networks.camp.address;
-    publicAddress = "192.168.1.211";
-    domain = "errata.camp.computer";
+    publicAddress = "192.168.1.212";
+    domain = "matrix.camp.computer";
     deployable = true;
   };
 
@@ -23,5 +23,5 @@
     cert = config.sops.secrets.nebula_host_cert.path;
   };
 
-  networking.hostName = "errata";
+  networking.hostName = "matrix";
 }

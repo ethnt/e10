@@ -35,10 +35,16 @@
         #     }";
         # }
       ];
-      dashboards = [{
-        name = "Nodes";
-        options.path = ./dashboards/nodes.json;
-      }];
+      dashboards = [
+        {
+          name = "Nodes";
+          options.path = ./dashboards/nodes.json;
+        }
+        {
+          name = "APC UPS";
+          options.path = ./dashboards/apcupsd.json;
+        }
+      ];
     };
   };
 
