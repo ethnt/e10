@@ -1,5 +1,9 @@
-{
-  services.nginx.enable = true;
+{ pkgs, ... }: {
+  services.nginx = {
+    enable = true;
+    package =
+      pkgs.nginx.override { modules = [ pkgs.nginxModules.fancyindex ]; };
+  };
 
   security.acme = {
     acceptTerms = true;

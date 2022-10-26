@@ -24,5 +24,18 @@
     cert = config.sops.secrets.nebula_host_cert.path;
   };
 
+  services.nginx.virtualHosts = {
+    "e10.land" = {
+      http2 = true;
+
+      forceSSL = true;
+      enableACME = true;
+
+      locations."/" = {
+        proxyPass = "http://${hosts.matrix.config.camp.privateAddress}:8080";
+      };
+    };
+  };
+
   networking.hostName = "gateway";
 }
