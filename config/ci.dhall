@@ -38,7 +38,7 @@ let check =
       GithubActions.Step::{
       , run = Some
           ''
-            nix flake -Lv check --show-trace
+            nix flake check --show-trace
           ''
       }
 

@@ -29,8 +29,8 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, digga, nixos, nixos-hardware, sops-nix, deploy, nixpkgs, ...
-    }@inputs:
+  outputs = { self, digga, nixos, nixos-hardware, nixos-generators, sops-nix
+    , deploy, nixpkgs, ... }@inputs:
     digga.lib.mkFlake {
       inherit self inputs;
 
@@ -73,6 +73,9 @@
         hosts = {
           gateway = { };
           monitor = { };
+          matrix = { };
+
+          template = { };
         };
 
         importables = rec {
@@ -84,11 +87,12 @@
               core.tooling
               networking.mosh
               networking.openssh
-              networking.nebula.peer
               system.earlyoom
               users.root
             ];
+            network = [ networking.nebula.peer ];
             aws = [ virtualisation.aws ];
+            proxmox = [ virtualisation.proxmox ];
             observability =
               [ monitoring.prometheus-node-exporter monitoring.promtail ];
             web = [ web-servers.nginx ];
@@ -96,21 +100,22 @@
             gateway = [ networking.nebula.lighthouse ];
             monitor =
               [ monitoring.prometheus monitoring.grafana monitoring.loki ];
+            matrix = [
+              networking.blocky
+              power.apcupsd
+              monitoring.prometheus-apcupsd-exporter
+            ];
           };
         };
       };
 
       devshell = ./shell;
 
-      deploy.nodes = let
-        mkDeployNode = { hostname }: {
-          inherit hostname;
-          sshUser = "root";
-          sshOpts = [ "-i" "keys/id_rsa" ];
-        };
-      in digga.lib.mkDeployNodes self.nixosConfigurations {
+      deploy.nodes = let inherit (self.lib) deployableHosts mkDeployNode;
+      in digga.lib.mkDeployNodes (deployableHosts self.nixosConfigurations) {
         gateway = mkDeployNode { hostname = "gateway.camp.computer"; };
         monitor = mkDeployNode { hostname = "monitor.camp.computer"; };
+        matrix = mkDeployNode { hostname = "192.168.1.212"; };
       };
 
       outputsBuilder = channels:

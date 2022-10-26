@@ -15,6 +15,7 @@
       fallback = true
     '';
     systemFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    settings = { experimental-features = [ "nix-command" "flakes" ]; };
   };
 
   system.stateVersion = "22.05";

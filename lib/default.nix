@@ -1,1 +1,12 @@
-{ lib }: lib.makeExtensible (self: { })
+{ lib }:
+lib.makeExtensible (self: {
+  # Filters hosts by if they are allowed to be deployed or not
+  deployableHosts = lib.filterAttrs (name: cfg: cfg.config.camp.deployable);
+
+  # Includes the SSH key automatically for deploy nodes
+  mkDeployNode = { hostname }: {
+    inherit hostname;
+    sshUser = "root";
+    sshOpts = [ "-i" "keys/id_rsa" ];
+  };
+})

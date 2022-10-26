@@ -17,6 +17,10 @@ in {
     ${setSopsValueToEnvironmentVariable "AWS_SECRET_ACCESS_KEY"
     "aws_secret_access_key"}
 
+    ${setSopsValueToEnvironmentVariable "PM_API_TOKEN_ID" "pm_api_token_id"}
+    ${setSopsValueToEnvironmentVariable "PM_API_TOKEN_SECRET"
+    "pm_api_token_secret"}
+
     export PATH=''${_PATH}
     unset _PATH
   '');
@@ -41,6 +45,33 @@ in {
           ${pkgs.terraform}/bin/terraform -chdir=deploy show -json > state.json
       '';
       help = "Wrapper for Terraform";
+    }
+
+    {
+      category = "management";
+      package = let
+        sshConfig = pkgs.writeTextFile {
+          name = "ssh_config";
+          text = ''
+            Host gateway
+              Hostname gateway.camp.computer
+
+            Host monitor
+              Hostname monitor.camp.computer
+
+            Host errata
+              Hostname 10.10.0.4
+              ProxyJump root@gateway
+
+            Host *
+              User root
+              IdentityFile keys/id_rsa
+          '';
+        };
+      in pkgs.writeShellScriptBin "camp-ssh" ''
+        ssh -F ${sshConfig} $@
+      '';
+      help = "Wrapper for SSH";
     }
   ];
 }
