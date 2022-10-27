@@ -25,3 +25,23 @@ resource "aws_route53_record" "grafana" {
   ttl     = 300
   records = [aws_eip.monitor.public_ip]
 }
+
+resource "aws_route53_record" "blocky" {
+  zone_id = aws_route53_zone.primary.zone_id
+  name    = "blocky.camp.computer"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.gateway.public_ip]
+}
+
+resource "aws_route53_zone" "e10_land" {
+  name = "e10.land"
+}
+
+resource "aws_route53_record" "e10_land" {
+  zone_id = aws_route53_zone.e10_land.zone_id
+  name    = "e10.land"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.gateway.public_ip]
+}
