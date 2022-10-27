@@ -35,6 +35,19 @@
         proxyPass = "http://${hosts.matrix.config.camp.privateAddress}:8080";
       };
     };
+
+    "blocky.camp.computer" = {
+      http2 = true;
+
+      forceSSL = true;
+      enableACME = true;
+
+      locations."/" = {
+        proxyPass = "http://${hosts.matrix.config.camp.privateAddress}:${
+            toString hosts.matrix.config.services.blocky.settings.httpPort
+          }";
+      };
+    };
   };
 
   networking.hostName = "gateway";
