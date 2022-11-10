@@ -1,5 +1,5 @@
 { config, lib, ... }: {
-  services.nebula.networks.camp = {
+  services.nebula.networks.e10 = {
     isLighthouse = lib.mkOverride 10 true;
     lighthouses = lib.mkOverride 10 [ ];
     settings = {

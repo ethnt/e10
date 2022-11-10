@@ -67,7 +67,7 @@ in {
               IdentityFile keys/id_rsa
           '';
         };
-      in pkgs.writeShellScriptBin "camp-ssh" ''
+      in pkgs.writeShellScriptBin "e10-ssh" ''
         ssh -F ${sshConfig} $@
       '';
       help = "Wrapper for SSH";

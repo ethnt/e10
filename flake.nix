@@ -1,11 +1,11 @@
 {
-  description = "camp";
+  description = "e10";
 
   nixConfig.extra-experimental-features = "nix-command flakes";
   nixConfig.extra-substituters =
     "https://nrdxp.cachix.org https://nix-community.cachix.org";
   nixConfig.extra-trusted-public-keys =
-    "nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= orchard.cachix.org-1:QfoahY05xLNfFqWoWCELCMz2I8I92n5W8wNRJo+YT2U=";
+    "nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= e10.cachix.org-1:/++Tmo/ghEqnLwsQJdXn04c262agRCK5PaPYz8NcVfo=";
 
   inputs = {
     nixos.url = "github:nixos/nixpkgs/nixos-22.05";
@@ -130,8 +130,8 @@
 
       deploy.nodes = let inherit (self.lib) deployableHosts mkDeployNode;
       in digga.lib.mkDeployNodes (deployableHosts self.nixosConfigurations) {
-        gateway = mkDeployNode { hostname = "gateway.camp.computer"; };
-        monitor = mkDeployNode { hostname = "monitor.camp.computer"; };
+        gateway = mkDeployNode { hostname = "gateway.e10.network"; };
+        monitor = mkDeployNode { hostname = "monitor.e10.network"; };
         htpc = mkDeployNode { hostname = "192.168.1.203"; };
         matrix = mkDeployNode { hostname = "192.168.1.202"; };
       };

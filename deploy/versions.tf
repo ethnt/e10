@@ -13,7 +13,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "deploy.camp.computer"
+    bucket         = "deploy.e10.network"
     key            = "terraform.tfstate"
     region         = "us-east-2"
     dynamodb_table = "terraform_lock"

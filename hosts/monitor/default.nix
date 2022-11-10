@@ -2,10 +2,10 @@
   imports = with suites;
     base ++ network ++ aws ++ observability ++ web ++ monitor;
 
-  camp = {
-    privateAddress = config.services.nebula.networks.camp.address;
+  e10 = {
+    privateAddress = config.services.nebula.networks.e10.address;
     publicAddress = "18.219.39.43";
-    domain = "monitor.camp.computer";
+    domain = "monitor.e10.network";
     deployable = true;
   };
 
@@ -18,7 +18,7 @@
     };
   };
 
-  services.nebula.networks.camp = {
+  services.nebula.networks.e10 = {
     address = "10.10.0.2";
     key = config.sops.secrets.nebula_host_key.path;
     cert = config.sops.secrets.nebula_host_cert.path;

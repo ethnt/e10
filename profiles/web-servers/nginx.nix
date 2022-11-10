@@ -8,7 +8,7 @@
 
   security.acme = {
     acceptTerms = true;
-    defaults.email = "camper@camp.computer";
+    defaults.email = "e10@e10.network";
   };
 
   networking.firewall = {

@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "deploy" {
-  bucket = "deploy.camp.computer"
+  bucket = "deploy.e10.network"
 }
 
 resource "aws_s3_bucket_acl" "deploy_acl" {

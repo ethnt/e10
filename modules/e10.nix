@@ -3,7 +3,7 @@
 with lib;
 
 {
-  options.camp = {
+  options.e10 = {
     name = mkOption {
       type = types.str;
       description = "Name of this host";
