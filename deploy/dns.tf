@@ -45,3 +45,43 @@ resource "aws_route53_record" "e10_land" {
   ttl     = 300
   records = [aws_eip.gateway.public_ip]
 }
+
+resource "aws_route53_zone" "orchard_run" {
+  name = "orchard.run"
+}
+
+resource "aws_route53_zone" "satan_network" {
+  name = "satan.network"
+}
+
+resource "aws_route53_zone" "e10_network" {
+  name = "e10.network"
+}
+
+resource "aws_route53_record" "e10_network_wildcard" {
+  zone_id = aws_route53_zone.e10_network.zone_id
+  name    = "*.e10.network"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.gateway.public_ip]
+}
+
+resource "aws_route53_zone" "e10_video" {
+  name = "e10.video"
+}
+
+resource "aws_route53_record" "e10_video_root" {
+  zone_id = aws_route53_zone.e10_video.zone_id
+  name    = "e10.video"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.gateway.public_ip]
+}
+
+resource "aws_route53_record" "e10_video_wildcard" {
+  zone_id = aws_route53_zone.e10_video.zone_id
+  name    = "*.e10.video"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.gateway.public_ip]
+}

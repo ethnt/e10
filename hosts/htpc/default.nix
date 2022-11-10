@@ -1,11 +1,10 @@
 { config, pkgs, suites, ... }: {
-  imports = with suites;
-    base ++ network ++ proxmox ++ observability ++ web ++ matrix;
+  imports = with suites; base ++ network ++ proxmox ++ observability ++ htpc;
 
   camp = {
     privateAddress = config.services.nebula.networks.camp.address;
     publicAddress = "192.168.1.203";
-    domain = "matrix.camp.computer";
+    domain = "htpc.camp.computer";
     deployable = true;
   };
 
@@ -19,12 +18,21 @@
   };
 
   services.nebula.networks.camp = {
-    address = "10.10.0.4";
+    address = "10.10.0.3";
     key = config.sops.secrets.nebula_host_key.path;
     cert = config.sops.secrets.nebula_host_cert.path;
   };
 
-  environment.systemPackages = with pkgs; [ dig ];
+  networking.hostName = "htpc";
 
-  networking.hostName = "matrix";
+  fileSystems."/mnt/omnibus" = {
+    device = "192.168.1.201:/mnt/omnibus/htpc";
+    fsType = "nfs";
+    options = [
+      "noauto"
+      "x-systemd.automount"
+      "x-systemd.requires=network-online.target"
+      "x-systemd.device-timeout=10"
+    ];
+  };
 }

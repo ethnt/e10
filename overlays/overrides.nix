@@ -1,5 +1,7 @@
 channels: final: prev: {
   __dontExport = true;
 
-  inherit (channels.nixos-unstable) cachix dhall nix-index nixfmt deploy-rs;
+  inherit (channels.nixos-unstable)
+    bazarr blocky cachix deploy-rs dhall nix-index nixfmt prowlarr radarr
+    sabnzbd sonarr;
 }

@@ -88,6 +88,7 @@
               networking.mosh
               networking.openssh
               system.earlyoom
+              security.fail2ban
               users.root
             ];
             network = [ networking.nebula.peer ];
@@ -95,15 +96,31 @@
             proxmox = [ virtualisation.proxmox ];
             observability =
               [ monitoring.prometheus-node-exporter monitoring.promtail ];
-            web = [ web-servers.nginx ];
+            web = [ web-servers.nginx monitoring.prometheus-nginx-exporter ];
 
             gateway = [ networking.nebula.lighthouse ];
             monitor =
               [ monitoring.prometheus monitoring.grafana monitoring.loki ];
             matrix = [
               networking.blocky
+              networking.unifi
               power.apcupsd
               monitoring.prometheus-apcupsd-exporter
+              applications.e10-land
+              hardware.nuc
+            ];
+            htpc = [
+              virtualisation.docker
+              hardware.intel-graphics
+              hardware.nuc
+              media-management.prowlarr
+              media-management.sonarr
+              media-management.radarr
+              media-management.sabnzbd
+              media-management.plex
+              media-management.bazarr
+              media-management.tautulli
+              media-management.overseerr
             ];
           };
         };
@@ -115,7 +132,8 @@
       in digga.lib.mkDeployNodes (deployableHosts self.nixosConfigurations) {
         gateway = mkDeployNode { hostname = "gateway.camp.computer"; };
         monitor = mkDeployNode { hostname = "monitor.camp.computer"; };
-        matrix = mkDeployNode { hostname = "192.168.1.212"; };
+        htpc = mkDeployNode { hostname = "192.168.1.203"; };
+        matrix = mkDeployNode { hostname = "192.168.1.202"; };
       };
 
       outputsBuilder = channels:

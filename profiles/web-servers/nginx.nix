@@ -3,6 +3,7 @@
     enable = true;
     package =
       pkgs.nginx.override { modules = [ pkgs.nginxModules.fancyindex ]; };
+    statusPage = true;
   };
 
   security.acme = {

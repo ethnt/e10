@@ -41,8 +41,7 @@ in {
     {
       category = "deployment";
       package = pkgs.writeShellScriptBin "tf" ''
-        ${pkgs.terraform}/bin/terraform -chdir=deploy $@ &&
-          ${pkgs.terraform}/bin/terraform -chdir=deploy show -json > state.json
+        ${pkgs.terraform}/bin/terraform -chdir=deploy $@
       '';
       help = "Wrapper for Terraform";
     }
@@ -54,12 +53,12 @@ in {
           name = "ssh_config";
           text = ''
             Host gateway
-              Hostname gateway.camp.computer
+              Hostname gateway.orchard.computer
 
             Host monitor
-              Hostname monitor.camp.computer
+              Hostname monitor.orchard.computer
 
-            Host errata
+            Host matrix
               Hostname 10.10.0.4
               ProxyJump root@gateway
 

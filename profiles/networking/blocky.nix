@@ -11,10 +11,33 @@
         ];
       };
       upstreamTimeout = "2s";
-      bootstrapDns = "tcp+udp:1.1.1.1";
+      bootstrapDns = {
+        upstream = "tcp-tls:dns10.quad9.net/dns-query";
+        ips = [ "9.9.9.9" ];
+      };
+      clientLookup.upstream = "tcp+udp:192.168.1.1:5353";
+      conditional = {
+        mapping = {
+          "168.192.in-addr.arpa" = "192.168.1.1:5353";
+          "." = "192.168.1.1:5353";
+        };
+      };
       blocking = {
-        blackLists = { ads = [ "https://dbl.oisd.nl" ]; };
-        clientGroupsBlock = { default = [ "ads" ]; };
+        blackLists = {
+          ads = [
+            "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
+            "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+            "https://abp.oisd.nl"
+          ];
+        };
+        clientGroupsBlock.default = [ "ads" ];
+        processingConcurrency = 16;
+      };
+      customDNS = {
+        mapping = {
+          pve = "192.168.1.200";
+          omnibus = "192.168.1.201";
+        };
       };
       caching = {
         prefetching = true;
@@ -23,13 +46,6 @@
         minTime = "2h";
         maxTime = "12h";
         maxItemsCount = 0;
-      };
-      customDNS = {
-        mapping = {
-          gateway = "10.10.0.1";
-          monitor = "10.10.0.2";
-          errata = "10.10.0.4";
-        };
       };
       prometheus = {
         enable = true;

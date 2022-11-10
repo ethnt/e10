@@ -7,6 +7,11 @@
 
     declarativePlugins = with pkgs.grafanaPlugins; [ grafana-piechart-panel ];
 
+    extraOptions = {
+      PANELS_ENABLE_ALPHA = "true";
+      PANELS_DISABLE_SANITIZE_HTML = "true";
+    };
+
     provision = {
       enable = true;
       datasources = [
