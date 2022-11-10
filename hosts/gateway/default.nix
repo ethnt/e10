@@ -2,10 +2,10 @@
   imports = with suites;
     base ++ network ++ aws ++ web ++ gateway ++ observability;
 
-  camp = {
-    privateAddress = config.services.nebula.networks.camp.address;
+  e10 = {
+    privateAddress = config.services.nebula.networks.e10.address;
     publicAddress = "3.136.251.131";
-    domain = "gateway.camp.computer";
+    domain = "gateway.e10.network";
     deployable = true;
   };
 
@@ -18,7 +18,7 @@
     };
   };
 
-  services.nebula.networks.camp = {
+  services.nebula.networks.e10 = {
     address = "10.10.0.1";
     key = config.sops.secrets.nebula_host_key.path;
     cert = config.sops.secrets.nebula_host_cert.path;
@@ -32,7 +32,7 @@
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://${hosts.matrix.config.camp.privateAddress}:8090";
+        proxyPass = "http://${hosts.matrix.config.e10.privateAddress}:8090";
       };
     };
 
@@ -43,7 +43,7 @@
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://${hosts.matrix.config.camp.privateAddress}:${
+        proxyPass = "http://${hosts.matrix.config.e10.privateAddress}:${
             toString hosts.matrix.config.services.blocky.settings.httpPort
           }";
       };
@@ -95,7 +95,7 @@
       '';
 
       locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.camp.privateAddress}:${
+        proxyPass = "http://${hosts.htpc.config.e10.privateAddress}:${
             toString hosts.htpc.config.services.plex.port
           }";
       };
@@ -108,7 +108,7 @@
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.camp.privateAddress}:${
+        proxyPass = "http://${hosts.htpc.config.e10.privateAddress}:${
             toString hosts.htpc.config.services.prowlarr.port
           }";
         proxyWebsockets = true;
@@ -122,7 +122,7 @@
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.camp.privateAddress}:${
+        proxyPass = "http://${hosts.htpc.config.e10.privateAddress}:${
             toString hosts.htpc.config.services.sonarr.port
           }";
         proxyWebsockets = true;
@@ -136,7 +136,7 @@
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.camp.privateAddress}:${
+        proxyPass = "http://${hosts.htpc.config.e10.privateAddress}:${
             toString hosts.htpc.config.services.radarr.port
           }";
         proxyWebsockets = true;
@@ -154,7 +154,7 @@
       '';
 
       locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.camp.privateAddress}:${
+        proxyPass = "http://${hosts.htpc.config.e10.privateAddress}:${
             toString hosts.htpc.config.services.sabnzbd.port
           }";
         proxyWebsockets = true;
@@ -168,7 +168,7 @@
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.camp.privateAddress}:${
+        proxyPass = "http://${hosts.htpc.config.e10.privateAddress}:${
             toString hosts.htpc.config.services.bazarr.port
           }";
         proxyWebsockets = true;
@@ -182,7 +182,7 @@
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.camp.privateAddress}:${
+        proxyPass = "http://${hosts.htpc.config.e10.privateAddress}:${
             toString hosts.htpc.config.services.tautulli.port
           }";
         proxyWebsockets = true;
@@ -196,7 +196,7 @@
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.camp.privateAddress}:${
+        proxyPass = "http://${hosts.htpc.config.e10.privateAddress}:${
             toString hosts.htpc.config.services.overseerr.port
           }";
         proxyWebsockets = true;

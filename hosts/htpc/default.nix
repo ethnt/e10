@@ -1,10 +1,10 @@
 { config, pkgs, suites, ... }: {
   imports = with suites; base ++ network ++ proxmox ++ observability ++ htpc;
 
-  camp = {
-    privateAddress = config.services.nebula.networks.camp.address;
+  e10 = {
+    privateAddress = config.services.nebula.networks.e10.address;
     publicAddress = "192.168.1.203";
-    domain = "htpc.camp.computer";
+    domain = "htpc.e10.network";
     deployable = true;
   };
 
@@ -17,7 +17,7 @@
     };
   };
 
-  services.nebula.networks.camp = {
+  services.nebula.networks.e10 = {
     address = "10.10.0.3";
     key = config.sops.secrets.nebula_host_key.path;
     cert = config.sops.secrets.nebula_host_cert.path;

@@ -1,16 +1,16 @@
 { config, hosts, ... }: {
   sops.secrets = { nebula_ca_cert = { sopsFile = ./secrets.yaml; }; };
 
-  services.nebula.networks.camp = {
+  services.nebula.networks.e10 = {
     enable = true;
     ca = config.sops.secrets.nebula_ca_cert.path;
-    lighthouses = [ hosts.gateway.config.camp.privateAddress ];
+    lighthouses = [ hosts.gateway.config.e10.privateAddress ];
     isLighthouse = false;
     staticHostMap = {
-      "${hosts.gateway.config.camp.privateAddress}" = [
-        "${hosts.gateway.config.camp.publicAddress}:${
+      "${hosts.gateway.config.e10.privateAddress}" = [
+        "${hosts.gateway.config.e10.publicAddress}:${
           toString
-          hosts.gateway.config.services.nebula.networks.camp.listen.port
+          hosts.gateway.config.services.nebula.networks.e10.listen.port
         }"
       ];
     };

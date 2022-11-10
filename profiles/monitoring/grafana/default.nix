@@ -54,7 +54,7 @@
   };
 
   services.nginx.virtualHosts = {
-    "grafana.camp.computer" = {
+    "grafana.e10.network" = {
       http2 = true;
 
       forceSSL = true;

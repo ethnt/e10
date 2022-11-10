@@ -27,9 +27,9 @@ let cachix =
       , uses = Some "cachix/cachix-action@v10"
       , `with` = Some
           ( toMap
-              { name = "camp"
+              { name = "e10"
               , authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}"
-              , extraPullNames = "camp,nix-community,nrdxp"
+              , extraPullNames = "e10,nix-community,nrdxp"
               }
           )
       }

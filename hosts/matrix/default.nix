@@ -2,10 +2,10 @@
   imports = with suites;
     base ++ network ++ proxmox ++ observability ++ web ++ matrix;
 
-  camp = {
-    privateAddress = config.services.nebula.networks.camp.address;
+  e10 = {
+    privateAddress = config.services.nebula.networks.e10.address;
     publicAddress = "192.168.1.203";
-    domain = "matrix.camp.computer";
+    domain = "matrix.e10.network";
     deployable = true;
   };
 
@@ -18,7 +18,7 @@
     };
   };
 
-  services.nebula.networks.camp = {
+  services.nebula.networks.e10 = {
     address = "10.10.0.4";
     key = config.sops.secrets.nebula_host_key.path;
     cert = config.sops.secrets.nebula_host_cert.path;

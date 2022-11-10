@@ -10,7 +10,7 @@
       positions = { filename = "/tmp/positions.yaml"; };
 
       clients = [{
-        url = "http://${hosts.monitor.config.camp.privateAddress}:${
+        url = "http://${hosts.monitor.config.e10.privateAddress}:${
             toString
             hosts.monitor.config.services.loki.configuration.server.http_listen_port
           }/loki/api/v1/push";
@@ -21,7 +21,7 @@
         journal = {
           max_age = "12h";
           labels = {
-            host = config.camp.name;
+            host = config.e10.name;
             job = "systemd-journal";
           };
         };
