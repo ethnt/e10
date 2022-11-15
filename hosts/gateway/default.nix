@@ -202,6 +202,20 @@
         proxyWebsockets = true;
       };
     };
+
+    "feeds.e10.network" = {
+      http2 = true;
+
+      forceSSL = true;
+      enableACME = true;
+
+      locations."/" = {
+        proxyPass = "http://${hosts.matrix.config.e10.privateAddress}:${
+            toString hosts.matrix.config.services.miniflux.config.PORT
+          }";
+        proxyWebsockets = true;
+      };
+    };
   };
 
   networking.hostName = "gateway";

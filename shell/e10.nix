@@ -53,14 +53,16 @@ in {
           name = "ssh_config";
           text = ''
             Host gateway
-              Hostname gateway.orchard.computer
+              Hostname gateway.e10.network
 
             Host monitor
-              Hostname monitor.orchard.computer
+              Hostname monitor.e10.network
 
             Host matrix
-              Hostname 10.10.0.4
-              ProxyJump root@gateway
+              Hostname 192.168.1.202
+
+            Host htpc
+              Hostname 192.168.1.203
 
             Host *
               User root
