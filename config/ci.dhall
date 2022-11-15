@@ -48,7 +48,7 @@ in  GithubActions.Workflow::{
     , name = "CI"
     , on = GithubActions.On::{ push = Some GithubActions.Push::{=} }
     , jobs = toMap
-        { code = GithubActions.Job::{
+        { check = GithubActions.Job::{
           , runs-on = GithubActions.RunsOn.Type.ubuntu-latest
           , steps = setup # [ check ]
           }

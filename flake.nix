@@ -90,6 +90,7 @@
               system.earlyoom
               security.fail2ban
               users.root
+              shell.fish
             ];
             network = [ networking.nebula.peer ];
             aws = [ virtualisation.aws ];
@@ -98,16 +99,21 @@
               [ monitoring.prometheus-node-exporter monitoring.promtail ];
             web = [ web-servers.nginx monitoring.prometheus-nginx-exporter ];
 
-            gateway = [ networking.nebula.lighthouse ];
+            gateway = [ networking.nebula.lighthouse networking.blocky.common ];
             monitor =
               [ monitoring.prometheus monitoring.grafana monitoring.loki ];
             matrix = [
-              networking.blocky
+              databases.redis.blocky
+              networking.blocky.common
+              networking.blocky.local
               networking.unifi
               power.apcupsd
               monitoring.prometheus-apcupsd-exporter
               applications.e10-land
               hardware.nuc
+              networking.printing
+              networking.avahi
+              applications.miniflux
             ];
             htpc = [
               virtualisation.docker
@@ -121,6 +127,7 @@
               media-management.bazarr
               media-management.tautulli
               media-management.overseerr
+              media-management.xteve
             ];
           };
         };

@@ -9,8 +9,7 @@
     staticHostMap = {
       "${hosts.gateway.config.e10.privateAddress}" = [
         "${hosts.gateway.config.e10.publicAddress}:${
-          toString
-          hosts.gateway.config.services.nebula.networks.e10.listen.port
+          toString hosts.gateway.config.services.nebula.networks.e10.listen.port
         }"
       ];
     };
