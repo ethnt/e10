@@ -1,5 +1,5 @@
 jobs:
-  code:
+  check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,7 +15,7 @@ jobs:
         with:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           extraPullNames: "e10,nix-community,nrdxp"
-          name: e10
+          name: 'e10'
       - run: |2
             nix flake check --show-trace
 name: CI
