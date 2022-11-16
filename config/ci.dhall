@@ -24,7 +24,7 @@ let installNix =
 let cachix =
       GithubActions.Step::{
       , name = Some "Use Cachix store"
-      , uses = Some "cachix/cachix-action@v10"
+      , uses = Some "cachix/cachix-action@v12"
       , `with` = Some
           ( toMap
               { name = "e10"
