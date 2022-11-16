@@ -99,7 +99,12 @@
               [ monitoring.prometheus-node-exporter monitoring.promtail ];
             web = [ web-servers.nginx monitoring.prometheus-nginx-exporter ];
 
-            gateway = [ networking.nebula.lighthouse networking.blocky.common ];
+            gateway = [
+              networking.nebula.lighthouse
+              networking.blocky.common
+              databases.postgresql.common
+              databases.postgresql.blocky
+            ];
             monitor =
               [ monitoring.prometheus monitoring.grafana monitoring.loki ];
             matrix = [
@@ -114,6 +119,9 @@
               networking.printing
               networking.avahi
               applications.miniflux
+              databases.postgresql.common
+              databases.postgresql.blocky
+              applications.home-assistant
             ];
             htpc = [
               virtualisation.docker

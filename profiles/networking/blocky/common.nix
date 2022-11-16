@@ -66,6 +66,10 @@
             toString hosts.matrix.config.services.redis.servers.blocky.port
           }";
       };
+      queryLog = {
+        type = "postgresql";
+        target = "postgres://blocky:blocky@localhost/blocky";
+      };
     };
   };
 
