@@ -91,6 +91,7 @@
               security.fail2ban
               users.root
               shell.fish
+              backups.borg
             ];
             network = [ networking.nebula.peer ];
             aws = [ virtualisation.aws ];
@@ -105,8 +106,11 @@
               databases.postgresql.common
               databases.postgresql.blocky
             ];
-            monitor =
-              [ monitoring.prometheus monitoring.grafana monitoring.loki ];
+            monitor = [
+              monitoring.prometheus
+              monitoring.grafana
+              monitoring.loki
+            ];
             matrix = [
               databases.redis.blocky
               networking.blocky.common
