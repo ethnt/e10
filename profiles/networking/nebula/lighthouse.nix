@@ -10,6 +10,10 @@
           port = 53;
         };
       };
+      relay = {
+        am_relay = true;
+        relays = lib.mkOverride 10 [ ];
+      };
     };
   };
 

@@ -1,5 +1,19 @@
-{ config, pkgs, suites, ... }: {
-  imports = with suites; base ++ network ++ proxmox ++ observability ++ htpc;
+{ config, pkgs, suites, profiles, ... }: {
+  imports = with suites;
+    base ++ network ++ proxmox ++ observability ++ docker ++ (with profiles; [
+      hardware.intel-graphics
+      hardware.nuc
+      media-management.prowlarr
+      media-management.sonarr
+      media-management.radarr
+      media-management.sabnzbd
+      media-management.plex
+      media-management.bazarr
+      media-management.tautulli
+      media-management.overseerr
+      media-management.xteve
+      monitoring.prometheus-intel-gpu-exporter
+    ]);
 
   e10 = {
     privateAddress = config.services.nebula.networks.e10.address;

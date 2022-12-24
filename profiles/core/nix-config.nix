@@ -18,5 +18,7 @@
     settings = { experimental-features = [ "nix-command" "flakes" ]; };
   };
 
-  system.stateVersion = "22.05";
+  time.timeZone = "America/New_York";
+
+  system.stateVersion = "22.11";
 }

@@ -1,0 +1,17 @@
+Host gateway
+  Hostname gateway.e10.network
+
+Host monitor
+  Hostname monitor.e10.network
+
+Host htpc
+  Hostname 10.10.0.3
+  ProxyJump root@gateway
+
+Host matrix
+  Hostname 10.10.0.4
+  ProxyJump root@gateway
+
+Host *
+  User root
+  IdentityFile keys/id_rsa

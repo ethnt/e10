@@ -1,6 +1,11 @@
-{ config, lib, pkgs, suites, hosts, modulesPath, ... }: {
+{ config, lib, pkgs, suites, profiles, hosts, modulesPath, ... }: {
   imports = with suites;
-    base ++ network ++ aws ++ web ++ gateway ++ observability;
+    base ++ network ++ aws ++ web ++ observability ++ (with profiles; [
+      networking.nebula.lighthouse
+      networking.blocky.common
+      databases.postgresql.common
+      databases.postgresql.blocky
+    ]);
 
   e10 = {
     privateAddress = config.services.nebula.networks.e10.address;
@@ -169,7 +174,7 @@
 
       locations."/" = {
         proxyPass = "http://${hosts.htpc.config.e10.privateAddress}:${
-            toString hosts.htpc.config.services.bazarr.port
+            toString hosts.htpc.config.services.bazarr.listenPort
           }";
         proxyWebsockets = true;
       };
@@ -228,6 +233,22 @@
             toString
             hosts.matrix.config.services.home-assistant.config.http.server_port
           }";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        '';
+      };
+    };
+
+    "pve.e10.network" = {
+      http2 = true;
+
+      forceSSL = true;
+      enableACME = true;
+
+      locations."/" = {
+        proxyPass =
+          "http://${hosts.matrix.config.e10.privateAddress}:${toString 9010}";
         proxyWebsockets = true;
         extraConfig = ''
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

@@ -32,7 +32,7 @@ in {
       image = "sctx/overseerr";
       environment = {
         LOG_LEVEL = "debug";
-        TZ = "America/New_York";
+        TZ = config.time.timeZone;
       };
       ports = [ "${toString cfg.port}:5055" ];
       volumes = [ "${cfg.dataDir}:/app/config" ];

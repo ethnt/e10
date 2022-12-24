@@ -25,6 +25,10 @@
         proto = "any";
       }];
     };
+    settings = {
+      relay = { relays = [ hosts.gateway.config.e10.privateAddress ]; };
+      use_relays = true;
+    };
   };
 
   networking.firewall.allowedUDPPorts = [ 4242 ];

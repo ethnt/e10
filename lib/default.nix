@@ -7,6 +7,6 @@ lib.makeExtensible (self: {
   mkDeployNode = { hostname }: {
     inherit hostname;
     sshUser = "root";
-    sshOpts = [ "-i" "keys/id_rsa" ];
+    sshOpts = [ "-F" "${../config/ssh_config}" ];
   };
 })

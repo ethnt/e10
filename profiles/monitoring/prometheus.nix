@@ -82,6 +82,18 @@
           ];
         }];
       }
+      {
+        job_name = "htpc_gpu";
+        static_configs = [{
+          targets = [
+            "${hosts.htpc.config.e10.privateAddress}:${
+              toString
+              hosts.monitor.config.services.prometheus-exporters-intel-gpu.port
+            }"
+          ];
+        }];
+      }
+
     ];
   };
 }
