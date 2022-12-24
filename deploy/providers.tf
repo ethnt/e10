@@ -3,6 +3,11 @@ provider "aws" {
   region = var.region
 }
 
+provider "aws" {
+  alias  = "acm_provider"
+  region = "us-east-1"
+}
+
 # API token ID and secret provided by environment variables
 provider "proxmox" {
   pm_tls_insecure = true

@@ -83,64 +83,28 @@
           profiles = digga.lib.rakeLeaves ./profiles;
           suites = with profiles; rec {
             base = [
+              backups.borg
               core.nix-config
               core.tooling
               networking.mosh
               networking.openssh
-              system.earlyoom
               security.fail2ban
-              users.root
               shell.fish
-              backups.borg
+              system.earlyoom
+              users.root
             ];
+
             network = [ networking.nebula.peer ];
+
             aws = [ virtualisation.aws ];
             proxmox = [ virtualisation.proxmox ];
+
             observability =
               [ monitoring.prometheus-node-exporter monitoring.promtail ];
+
             web = [ web-servers.nginx monitoring.prometheus-nginx-exporter ];
 
-            gateway = [
-              networking.nebula.lighthouse
-              networking.blocky.common
-              databases.postgresql.common
-              databases.postgresql.blocky
-            ];
-            monitor = [
-              monitoring.prometheus
-              monitoring.grafana
-              monitoring.loki
-            ];
-            matrix = [
-              databases.redis.blocky
-              networking.blocky.common
-              networking.blocky.local
-              networking.unifi
-              power.apcupsd
-              monitoring.prometheus-apcupsd-exporter
-              applications.e10-land
-              hardware.nuc
-              networking.printing
-              networking.avahi
-              applications.miniflux
-              databases.postgresql.common
-              databases.postgresql.blocky
-              applications.home-assistant
-            ];
-            htpc = [
-              virtualisation.docker
-              hardware.intel-graphics
-              hardware.nuc
-              media-management.prowlarr
-              media-management.sonarr
-              media-management.radarr
-              media-management.sabnzbd
-              media-management.plex
-              media-management.bazarr
-              media-management.tautulli
-              media-management.overseerr
-              media-management.xteve
-            ];
+            docker = [ virtualisation.docker ];
           };
         };
       };
@@ -149,10 +113,10 @@
 
       deploy.nodes = let inherit (self.lib) deployableHosts mkDeployNode;
       in digga.lib.mkDeployNodes (deployableHosts self.nixosConfigurations) {
-        gateway = mkDeployNode { hostname = "gateway.e10.network"; };
-        monitor = mkDeployNode { hostname = "monitor.e10.network"; };
-        htpc = mkDeployNode { hostname = "192.168.1.203"; };
-        matrix = mkDeployNode { hostname = "192.168.1.202"; };
+        gateway = mkDeployNode { hostname = "gateway"; };
+        monitor = mkDeployNode { hostname = "monitor"; };
+        htpc = mkDeployNode { hostname = "htpc"; };
+        matrix = mkDeployNode { hostname = "matrix"; };
       };
 
       outputsBuilder = channels:

@@ -4,4 +4,6 @@
     cpu.intel.updateMicrocode = true;
     video.hidpi.enable = true;
   };
+
+  services.fstrim.enable = true;
 }

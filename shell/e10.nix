@@ -46,31 +46,12 @@ in {
       help = "Wrapper for Terraform";
     }
 
+    (addPackage "management" pkgs.nebula)
+
     {
       category = "management";
-      package = let
-        sshConfig = pkgs.writeTextFile {
-          name = "ssh_config";
-          text = ''
-            Host gateway
-              Hostname gateway.e10.network
-
-            Host monitor
-              Hostname monitor.e10.network
-
-            Host matrix
-              Hostname 192.168.1.202
-
-            Host htpc
-              Hostname 192.168.1.203
-
-            Host *
-              User root
-              IdentityFile keys/id_rsa
-          '';
-        };
-      in pkgs.writeShellScriptBin "e10-ssh" ''
-        ssh -F ${sshConfig} $@
+      package = pkgs.writeShellScriptBin "e10-ssh" ''
+        ssh -F ${../config/ssh_config} $@
       '';
       help = "Wrapper for SSH";
     }

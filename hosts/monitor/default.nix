@@ -1,6 +1,10 @@
-{ config, suites, ... }: {
+{ config, suites, profiles, ... }: {
   imports = with suites;
-    base ++ network ++ aws ++ observability ++ web ++ monitor;
+    base ++ network ++ aws ++ observability ++ web ++ (with profiles; [
+      monitoring.prometheus
+      monitoring.grafana
+      monitoring.loki
+    ]);
 
   e10 = {
     privateAddress = config.services.nebula.networks.e10.address;

@@ -1,4 +1,4 @@
-{
+{ config, ... }: {
   services.home-assistant = {
     enable = true;
     openFirewall = true;
@@ -7,7 +7,7 @@
       default_config = { };
       homeassistant = {
         unit_system = "imperial";
-        time_zone = "America/New_York";
+        time_zone = config.time.timeZone;
         name = "Home";
         latitude = "40.70";
         longitude = "-73.94";
