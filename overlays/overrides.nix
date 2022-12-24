@@ -1,5 +1,5 @@
 channels: final: prev: {
   __dontExport = true;
 
-  inherit (channels.nixos-unstable) deploy-rs radarr sonarr;
+  inherit (channels.nixos-unstable) blocky deploy-rs radarr sonarr;
 }

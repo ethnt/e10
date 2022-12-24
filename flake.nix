@@ -83,15 +83,15 @@
           profiles = digga.lib.rakeLeaves ./profiles;
           suites = with profiles; rec {
             base = [
+              backups.borg
               core.nix-config
               core.tooling
               networking.mosh
               networking.openssh
-              system.earlyoom
               security.fail2ban
-              users.root
               shell.fish
-              backups.borg
+              system.earlyoom
+              users.root
             ];
 
             network = [ networking.nebula.peer ];
