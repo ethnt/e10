@@ -1,20 +1,25 @@
 { config, pkgs, ... }: {
   services.grafana = {
     enable = true;
-    domain = "localhost";
-    port = 2342;
-    addr = "127.0.0.1";
 
     declarativePlugins = with pkgs.grafanaPlugins; [ grafana-piechart-panel ];
 
-    extraOptions = {
-      PANELS_ENABLE_ALPHA = "true";
-      PANELS_DISABLE_SANITIZE_HTML = "true";
+    settings = {
+      server = {
+        domain = "localhost";
+        http_port = 2342;
+        http_addr = "127.0.0.1";
+      };
+
+      panels = {
+        enable_alpha = "true";
+        disable_sanitize_html = "true";
+      };
     };
 
     provision = {
       enable = true;
-      datasources = [
+      datasources.settings.datasources = [
         {
           name = "Prometheus";
           type = "prometheus";
@@ -40,7 +45,7 @@
         #     }";
         # }
       ];
-      dashboards = [
+      dashboards.settings.providers = [
         {
           name = "Nodes";
           options.path = ./dashboards/nodes.json;
@@ -61,8 +66,8 @@
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://${config.services.grafana.addr}:${
-            toString config.services.grafana.port
+        proxyPass = "http://${config.services.grafana.settings.server.http_addr}:${
+            toString config.services.grafana.settings.server.http_port
           }";
         extraConfig = ''
           proxy_set_header Host $host;

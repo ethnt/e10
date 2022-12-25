@@ -8,7 +8,7 @@
     "nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= e10.cachix.org-1:/++Tmo/ghEqnLwsQJdXn04c262agRCK5PaPYz8NcVfo=";
 
   inputs = {
-    nixos.url = "github:nixos/nixpkgs/nixos-22.05";
+    nixos.url = "github:nixos/nixpkgs/nixos-22.11";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     digga.url = "github:divnix/digga";
