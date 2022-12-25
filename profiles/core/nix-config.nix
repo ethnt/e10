@@ -2,20 +2,22 @@
   imports = [ ../cachix ];
 
   nix = {
-    autoOptimiseStore = true;
     optimise.automatic = true;
     gc.automatic = true;
-    useSandbox = true;
-    allowedUsers = [ "@wheel" ];
-    trustedUsers = [ "root" "@wheel" ];
     extraOptions = ''
       min-free = 536870912
       keep-outputs = true
       keep-derivations = true
       fallback = true
     '';
-    systemFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-    settings = { experimental-features = [ "nix-command" "flakes" ]; };
+    settings = {
+      allowed-users = [ "@wheel" ];
+      auto-optimise-store = true;
+      experimental-features = [ "nix-command" "flakes" ];
+      sandbox = true;
+      system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+      trusted-users = [ "root" "@wheel" ];
+    };
   };
 
   time.timeZone = "America/New_York";
