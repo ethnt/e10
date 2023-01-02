@@ -1,1 +1,0 @@
-{ services.tdarr.enable = true; }

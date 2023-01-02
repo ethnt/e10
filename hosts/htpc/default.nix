@@ -12,6 +12,8 @@
       media-management.tautulli
       media-management.overseerr
       media-management.xteve
+      # media-management.tdarr.server
+      # media-management.tdarr.node
       monitoring.prometheus-intel-gpu-exporter
     ]);
 

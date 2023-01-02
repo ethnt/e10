@@ -5,12 +5,10 @@ Host monitor
   Hostname monitor.e10.network
 
 Host htpc
-  Hostname 10.10.0.3
-  ProxyJump root@gateway
+  Hostname 192.168.1.203
 
 Host matrix
-  Hostname 10.10.0.4
-  ProxyJump root@gateway
+  Hostname 192.168.1.202
 
 Host *
   User root
