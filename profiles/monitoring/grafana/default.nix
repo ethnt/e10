@@ -66,7 +66,8 @@
       enableACME = true;
 
       locations."/" = {
-        proxyPass = "http://${config.services.grafana.settings.server.http_addr}:${
+        proxyPass =
+          "http://${config.services.grafana.settings.server.http_addr}:${
             toString config.services.grafana.settings.server.http_port
           }";
         extraConfig = ''

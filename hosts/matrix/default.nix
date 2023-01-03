@@ -14,7 +14,6 @@
       applications.miniflux
       databases.postgresql.common
       databases.postgresql.blocky
-      applications.home-assistant
     ]);
 
   e10 = {

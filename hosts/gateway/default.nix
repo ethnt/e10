@@ -194,6 +194,20 @@
       };
     };
 
+    # "tdarr.e10.video" = {
+    #   http2 = true;
+
+    #   forceSSL = true;
+    #   enableACME = true;
+
+    #   locations."/" = {
+    #     proxyPass = "http://${hosts.htpc.config.e10.privateAddress}:${
+    #         toString hosts.htpc.config.services.tdarr.webUIPort
+    #       }";
+    #     proxyWebsockets = true;
+    #   };
+    # };
+
     "overseerr.e10.video" = {
       http2 = true;
 
@@ -219,24 +233,6 @@
             toString hosts.matrix.config.services.miniflux.config.PORT
           }";
         proxyWebsockets = true;
-      };
-    };
-
-    "hass.e10.network" = {
-      http2 = true;
-
-      forceSSL = true;
-      enableACME = true;
-
-      locations."/" = {
-        proxyPass = "http://${hosts.matrix.config.e10.privateAddress}:${
-            toString
-            hosts.matrix.config.services.home-assistant.config.http.server_port
-          }";
-        proxyWebsockets = true;
-        extraConfig = ''
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        '';
       };
     };
 

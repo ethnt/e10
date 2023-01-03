@@ -55,5 +55,13 @@ in {
       '';
       help = "Wrapper for SSH";
     }
+
+    {
+      category = "management";
+      package = pkgs.writeShellScriptBin "e10-mosh" ''
+        ${pkgs.mosh}/bin/mosh --ssh="ssh -F ${../config/ssh_config}" $@
+      '';
+      help = "Wrapper for Mosh";
+    }
   ];
 }
