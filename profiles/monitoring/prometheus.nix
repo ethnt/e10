@@ -46,6 +46,14 @@
         }];
       }
       {
+        job_name = "router";
+        static_configs = [{ targets = [ "router.satan.network:9100" ]; }];
+      }
+      {
+        job_name = "opnsense";
+        static_configs = [{ targets = [ "router.satan.network:9273" ]; }];
+      }
+      {
         job_name = "blocky";
         static_configs = [{ targets = [ "dns.e10.network" ]; }];
       }

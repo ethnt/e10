@@ -105,6 +105,14 @@ resource "aws_security_group" "base" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "Allow rsyslogd"
+    from_port   = 514
+    to_port     = 514
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
