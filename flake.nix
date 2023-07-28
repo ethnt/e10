@@ -23,7 +23,6 @@
 
       perSystem = { config, self', inputs', pkgs, system, ... }: { };
 
-      flake = {
-      };
+      flake = { };
     };
 }
