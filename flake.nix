@@ -9,6 +9,8 @@
     terranix.url = "github:terranix/terranix";
     terranix.inputs.nixpkgs.follows = "nixpkgs";
 
+    sops-nix.url = "github:Mic92/sops-nix";
+
     devenv.url = "github:cachix/devenv";
 
     nix2container.url = "github:nlewo/nix2container";
@@ -30,7 +32,6 @@
         ./modules/development/treefmt.nix
 
         ./modules/terraform/package.nix
-        ./modules/terraform/shell.nix
       ];
 
       systems = [ "x86_64-linux" "x86_64-darwin" ];
