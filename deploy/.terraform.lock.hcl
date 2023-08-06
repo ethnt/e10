@@ -17,6 +17,20 @@ provider "registry.terraform.io/hashicorp/aws" {
   ]
 }
 
+provider "registry.terraform.io/hashicorp/local" {
+  version = "2.4.0"
+  hashes = [
+    "h1:iPUE8YWbDWCNRq8+ArRdpbZV95TWYDvidXJin8e/ymA=",
+  ]
+}
+
+provider "registry.terraform.io/hashicorp/tls" {
+  version = "4.0.4"
+  hashes = [
+    "h1:O6ouLbudQhS4tj++kn7j9NRtg/tZ3ek7HSWcyPiUR4s=",
+  ]
+}
+
 provider "registry.terraform.io/tailscale/tailscale" {
   version     = "0.13.7"
   constraints = "0.13.7"

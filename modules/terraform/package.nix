@@ -1,8 +1,8 @@
 {
   perSystem = { pkgs, ... }:
     let
-      terraform =
-        pkgs.terraform.withPlugins (p: with p; [ aws sops tailscale ]);
+      terraform = pkgs.terraform.withPlugins
+        (p: with p; [ aws sops tailscale tls local ]);
 
       tf = pkgs.writeShellScriptBin "tf" ''
         set -euo pipefail
