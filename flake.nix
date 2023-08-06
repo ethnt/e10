@@ -16,6 +16,7 @@
         treefmt.flakeModule
 
         ./modules/development/shell.nix
+        ./modules/development/dhall.nix
         ./modules/development/treefmt.nix
       ];
 
