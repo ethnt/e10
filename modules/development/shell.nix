@@ -6,6 +6,8 @@
         packages = with pkgs;
           [ config.treefmt.build.wrapper ]
           ++ (builtins.attrValues config.treefmt.build.programs);
+      } // {
+        containers = pkgs.lib.mkForce { };
       };
     };
   };
