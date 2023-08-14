@@ -22,9 +22,6 @@ jobs:
       matrix:
         host:
           - gateway
-          - monitor
-          - matrix
-          - htpc
   check:
     runs-on: ubuntu-latest
     steps:

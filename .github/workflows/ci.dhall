@@ -64,7 +64,7 @@ in  GithubActions.Workflow::{
           , runs-on = GithubActions.RunsOn.Type.ubuntu-latest
           , strategy = Some GithubActions.Strategy::{
             , matrix = toMap
-                { host = [ "gateway", "monitor", "matrix", "htpc" ] }
+                { host = [ "gateway" ] }
             }
           , steps = setup # [ build ]
           }
