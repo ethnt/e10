@@ -17,6 +17,13 @@ provider "registry.terraform.io/hashicorp/aws" {
   ]
 }
 
+provider "registry.terraform.io/hashicorp/external" {
+  version = "2.3.1"
+  hashes = [
+    "h1:/4FnL0cF4qhQ1ASUYUZG/MZB2d+DvK34tKXI3DQQipY=",
+  ]
+}
+
 provider "registry.terraform.io/hashicorp/local" {
   version = "2.4.0"
   hashes = [

@@ -1,6 +1,6 @@
 { inputs, ... }: {
   perSystem = { config, pkgs, inputs', self', ... }: {
-    devenv.shells.default = { ... }:
+    devenv.shells.default = _:
       {
         enterShell = let
           sops = pkgs.lib.getExe pkgs.sops;
