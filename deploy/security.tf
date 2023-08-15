@@ -32,3 +32,11 @@ resource "aws_security_group" "common" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_security_group" "gateway" {
+  vpc_id = aws_vpc.vpc.id
+}
+
+resource "aws_security_group" "monitor" {
+  vpc_id = aws_vpc.vpc.id
+}
