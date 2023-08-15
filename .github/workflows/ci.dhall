@@ -42,6 +42,14 @@ let check =
           ''
       }
 
+let build =
+      GithubActions.Step::{
+      , run = Some
+          ''
+            nix -Lv build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel
+          ''
+      }
+
 let setup = [ checkout, installNix, cachix ]
 
 in  GithubActions.Workflow::{
@@ -51,6 +59,14 @@ in  GithubActions.Workflow::{
         { check = GithubActions.Job::{
           , runs-on = GithubActions.RunsOn.Type.ubuntu-latest
           , steps = setup # [ check ]
+          }
+          ,  build = GithubActions.Job::{
+          , runs-on = GithubActions.RunsOn.Type.ubuntu-latest
+          , strategy = Some GithubActions.Strategy::{
+            , matrix = toMap
+                { host = [ "gateway" ] }
+            }
+          , steps = setup # [ build ]
           }
         }
     }

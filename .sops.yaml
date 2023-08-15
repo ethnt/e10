@@ -1,8 +1,10 @@
 keys:
   - &user_ethnt age1xgvn6f36rkzmq2kfqx0g2xg90qrpar4hpu6fr8xc3s2kqw6dzqcssnslsv
+  - &host_gateway age1ex9c847ra3fkwv9qwk85a8ukt9f5jny6rusc3pn967dvkwlpwass56jrfd
 
 creation_rules:
   - path_regex: secrets.json$
     key_groups:
       - age:
         - *user_ethnt
+        - *host_gateway
