@@ -40,7 +40,6 @@
         ./modules/terraform/package.nix
 
         ./modules/deploy/shell.nix
-        ./modules/deploy/checks.nix
         ./modules/deploy/configuration.nix
 
         ./hosts

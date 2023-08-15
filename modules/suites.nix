@@ -9,4 +9,6 @@
     profiles.users.root
     profiles.networking.tailscale.default
   ];
+
+  web = [ profiles.web-servers.caddy ];
 }
