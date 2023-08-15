@@ -3,7 +3,7 @@
 
   e10 = {
     name = "gateway";
-    privateAddress = "100.119.226.120";
+    privateAddress = "gateway";
     publicAddress = "3.137.179.105";
     domain = "gateway.e10.camp";
   };

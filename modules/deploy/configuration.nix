@@ -10,4 +10,7 @@ let
   mkHive = nodes:
     (l.mapAttrs mkNode' nodes)
     // (metaFor (l.intersectAttrs nodes configurations));
-in { flake.colmena = mkHive { gateway = { tags = [ "@web" "@aws" ]; }; }; }
+in {
+  # TODO: Automatically map `nixosConfigurations`
+  flake.colmena = mkHive { gateway = { tags = [ "@web" "@aws" ]; }; };
+}

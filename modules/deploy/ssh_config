@@ -1,6 +1,0 @@
-Host gateway
-  Hostname gateway.e10.camp
-
-Host *
-  User root
-  IdentityFile keys/id_rsa

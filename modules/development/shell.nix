@@ -18,6 +18,7 @@
             config.packages.terraform
             config.packages.tf
 
+            statix
             sops
           ] ++ (builtins.attrValues config.treefmt.build.programs);
       } // {

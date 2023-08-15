@@ -24,5 +24,11 @@ with lib;
       type = types.str;
       description = "Domain name for this host";
     };
+
+    deployable = mkOption {
+      type = types.bool;
+      description = "Should we deploy to this host?";
+      default = true;
+    };
   };
 }
