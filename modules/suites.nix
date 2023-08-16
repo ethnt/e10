@@ -13,5 +13,6 @@
 
   web = [ profiles.web-servers.caddy ];
 
-  monitor = [ profiles.monitoring.prometheus ];
+  monitor =
+    [ profiles.monitoring.prometheus profiles.monitoring.grafana.default ];
 }
