@@ -12,5 +12,8 @@ let
     // (metaFor (l.intersectAttrs nodes configurations));
 in {
   # TODO: Automatically map `nixosConfigurations`
-  flake.colmena = mkHive { gateway = { tags = [ "@web" "@aws" ]; }; };
+  flake.colmena = mkHive {
+    gateway = { tags = [ "@web" "@aws" ]; };
+    monitor = { tags = [ "@web" "@aws" ]; };
+  };
 }
