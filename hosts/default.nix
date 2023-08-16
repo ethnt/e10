@@ -32,11 +32,15 @@ let
           }
         ];
 
-        specialArgs = { inherit profiles suites; };
+        specialArgs = {
+          inherit profiles suites;
+          hosts = self.nixosConfigurations;
+        };
       in l.nixosSystem { inherit specialArgs modules system; });
 
 in {
   flake.nixosConfigurations = {
     gateway = mkHost "gateway" { system = "x86_64-linux"; };
+    monitor = mkHost "monitor" { system = "x86_64-linux"; };
   };
 }

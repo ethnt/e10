@@ -8,7 +8,10 @@
     profiles.shell.fish
     profiles.users.root
     profiles.networking.tailscale.default
+    profiles.monitoring.prometheus-node-exporter
   ];
 
   web = [ profiles.web-servers.caddy ];
+
+  monitor = [ profiles.monitoring.prometheus ];
 }
