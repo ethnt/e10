@@ -1,4 +1,4 @@
-{ config, lib, pkgs, profiles, suites, hosts, ... }: {
+{ inputs, config, lib, pkgs, profiles, suites, hosts, ... }: {
   imports = with suites;
     core ++ web ++ monitor ++ [ profiles.virtualisation.aws ];
 
@@ -28,6 +28,17 @@
           "${hosts.monitor.config.e10.privateAddress}:${
             toString
             hosts.monitor.config.services.prometheus.exporters.node.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "node_omnibus";
+      static_configs = [{
+        targets = [
+          "${hosts.omnibus.config.e10.privateAddress}:${
+            toString
+            hosts.omnibus.config.services.prometheus.exporters.node.port
           }"
         ];
       }];

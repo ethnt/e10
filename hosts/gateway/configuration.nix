@@ -1,4 +1,4 @@
-{ config, lib, pkgs, profiles, suites, ... }: {
+{ inputs, config, lib, pkgs, profiles, suites, ... }: {
   imports = with suites; core ++ web ++ [ profiles.virtualisation.aws ];
 
   e10 = {

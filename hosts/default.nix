@@ -15,7 +15,8 @@ let
     loader = haumea.lib.loaders.path;
   }));
 
-  commonModules = [ inputs.sops-nix.nixosModules.sops ] ++ nixosModules;
+  commonModules = with inputs;
+    [ sops-nix.nixosModules.sops disko.nixosModules.disko ] ++ nixosModules;
 
   suites = import ../modules/suites.nix { inherit profiles; };
 
@@ -24,16 +25,15 @@ let
     , configuration ? ./${hostname}/configuration.nix, ... }:
     withSystem system ({ pkgs, ... }:
       let
-        modules = commonModules ++ extraModules ++ [
-          configuration
-          {
-            nixpkgs = { inherit pkgs; };
-            networking.hostName = hostname;
-          }
-        ];
+        baseConfiguration = { ... }: {
+          nixpkgs = { inherit pkgs; };
+          networking.hostName = hostname;
+        };
+        modules = commonModules ++ extraModules
+          ++ [ baseConfiguration configuration ];
 
         specialArgs = {
-          inherit profiles suites;
+          inherit inputs profiles suites;
           hosts = self.nixosConfigurations;
         };
       in l.nixosSystem { inherit specialArgs modules system; });
@@ -42,5 +42,6 @@ in {
   flake.nixosConfigurations = {
     gateway = mkHost "gateway" { system = "x86_64-linux"; };
     monitor = mkHost "monitor" { system = "x86_64-linux"; };
+    omnibus = mkHost "omnibus" { system = "x86_64-linux"; };
   };
 }

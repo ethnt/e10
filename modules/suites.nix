@@ -15,4 +15,13 @@
 
   monitor =
     [ profiles.monitoring.prometheus profiles.monitoring.grafana.default ];
+
+  minimal = [
+    profiles.core.common
+    profiles.core.nix-config
+    profiles.core.tooling
+    profiles.networking.openssh
+    profiles.shell.fish
+    profiles.users.root
+  ];
 }

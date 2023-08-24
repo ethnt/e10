@@ -9,3 +9,7 @@ provider "aws" {
   secret_key = data.sops_file.secrets.data["AWS_SECRET_ACCESS_KEY"]
   region     = var.region
 }
+
+provider "proxmox" {
+  pm_api_url = "https://192.168.10.10:8006/api2/json"
+}
