@@ -15,5 +15,6 @@ in {
   flake.colmena = mkHive {
     gateway = { tags = [ "@web" "@aws" ]; };
     monitor = { tags = [ "@web" "@aws" ]; };
+    omnibus = { tags = [ "@local" "@vm" ]; };
   };
 }

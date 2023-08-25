@@ -23,6 +23,7 @@ jobs:
         host:
           - gateway
           - monitor
+          - omnibus
   check:
     runs-on: ubuntu-latest
     steps:

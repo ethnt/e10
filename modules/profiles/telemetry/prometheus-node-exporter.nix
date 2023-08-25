@@ -2,6 +2,6 @@
   services.prometheus.exporters.node = {
     enable = true;
     openFirewall = true;
-    enabledCollectors = [ ];
+    enabledCollectors = [ "systemd" ];
   };
 }
