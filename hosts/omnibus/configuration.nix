@@ -7,6 +7,9 @@
       profiles.hardware.intel
       profiles.hardware.hidpi
       profiles.hardware.ssd
+      profiles.telemetry.smartd
+      profiles.telemetry.prometheus-smartctl-exporter
+      profiles.telemetry.prometheus-zfs-exporter
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

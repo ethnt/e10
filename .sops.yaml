@@ -5,7 +5,7 @@ keys:
   - &host_omnibus age1k5nzxq4ej2u9ls97c2dhlz96j2vghv0assz5g0p4npzyc8c8fqlqld72hg
 
 creation_rules:
-  - path_regex: secrets.json$
+  - path_regex: '(secrets.json|secrets.yml)$'
     key_groups:
       - age:
         - *user_ethnt

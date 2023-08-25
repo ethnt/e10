@@ -4,6 +4,7 @@
     htop
     inetutils
     lm_sensors
+    tmux
     vim
   ];
 }

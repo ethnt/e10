@@ -1,6 +1,11 @@
 { inputs, config, lib, pkgs, profiles, suites, hosts, ... }: {
   imports = with suites;
-    core ++ web ++ monitor ++ [ profiles.virtualisation.aws ];
+    core ++ web ++ [
+      profiles.virtualisation.aws
+      profiles.monitoring.loki
+      profiles.monitoring.prometheus
+      profiles.observability.grafana.default
+    ];
 
   e10 = {
     name = "monitor";
@@ -39,6 +44,27 @@
           "${hosts.omnibus.config.e10.privateAddress}:${
             toString
             hosts.omnibus.config.services.prometheus.exporters.node.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "smartctl_omnibus";
+      static_configs = [{
+        targets = [
+          "${hosts.omnibus.config.e10.privateAddress}:${
+            toString
+            hosts.omnibus.config.services.prometheus.exporters.smartctl.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "zfs_omnibus";
+      static_configs = [{
+        targets = [
+          "${hosts.omnibus.config.e10.privateAddress}:${
+            toString hosts.omnibus.config.services.prometheus.exporters.zfs.port
           }"
         ];
       }];

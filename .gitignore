@@ -1,6 +1,8 @@
 /.direnv/
 /.devenv/
 /keys/
+/result/
+/tmp/
 
 /**/*.terraform/
 *.tfstate
