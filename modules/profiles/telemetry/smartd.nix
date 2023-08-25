@@ -1,6 +1,1 @@
-{
-  services.smartd = {
-    enable = true;
-    autodetect = false;
-  };
-}
+{ services.smartd.enable = true; }
