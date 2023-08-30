@@ -16,5 +16,6 @@ in {
     gateway = { tags = [ "@web" "@aws" ]; };
     monitor = { tags = [ "@web" "@aws" ]; };
     omnibus = { tags = [ "@local" "@vm" ]; };
+    htpc = { tags = [ "@local" "@vm" ]; };
   };
 }

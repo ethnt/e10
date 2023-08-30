@@ -5,6 +5,7 @@
     profiles.core.sops
     profiles.core.tooling
     profiles.networking.openssh
+    profiles.networking.mosh
     profiles.shell.fish
     profiles.users.root
     profiles.networking.tailscale.default
@@ -13,7 +14,7 @@
     profiles.telemetry.promtail
   ];
 
-  web = [ profiles.web-servers.caddy ];
+  web = [ profiles.web-servers.nginx ];
 
   minimal = [
     profiles.core.common
@@ -23,4 +24,6 @@
     profiles.shell.fish
     profiles.users.root
   ];
+
+  aws = [ profiles.virtualisation.aws profiles.networking.quad9 ];
 }

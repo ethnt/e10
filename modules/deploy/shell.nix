@@ -7,7 +7,7 @@ in {
         hostConfigurations = l.concatStringsSep "\n" (l.attrValues (l.mapAttrs
           (name: configuration: ''
             Host ${name}
-              Hostname ${configuration.config.e10.privateAddress}
+              Hostname ${configuration.config.networking.hostName}
           '') self.nixosConfigurations));
       in pkgs.writeText "ssh_config" ''
         ${hostConfigurations}
@@ -20,12 +20,17 @@ in {
       e10-ssh = pkgs.writeShellScriptBin "e10-ssh" ''
         ssh -F ${sshConfig} $@
       '';
+
+      e10-mosh = pkgs.writeShellScriptBin "e10-mosh" ''
+        ${pkgs.lib.getExe' pkgs.mosh "mosh"} --ssh="ssh -F ${sshConfig}" $@
+      '';
     in _: {
       env.SSH_CONFIG_FILE = sshConfig;
       packages = with inputs'; [
         colmena.packages.colmena
         nixos-anywhere.packages.nixos-anywhere
         e10-ssh
+        e10-mosh
       ];
     };
   };

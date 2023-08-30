@@ -1,4 +1,6 @@
 resource "proxmox_vm_qemu" "omnibus" {
+  provider = proxmox.anise
+
   name        = "omnibus"
   target_node = "anise"
   iso         = "local:iso/latest-nixos-minimal-x86_64-linux.iso"
@@ -16,6 +18,8 @@ resource "proxmox_vm_qemu" "omnibus" {
 
   boot = "order=scsi0"
 
+  scsihw = "virtio-scsi-single"
+
   network {
     model     = "virtio"
     bridge    = "vmbr0"
@@ -29,8 +33,56 @@ resource "proxmox_vm_qemu" "omnibus" {
   }
 
   disk {
+    type     = "scsi"
+    size     = "1024G"
+    storage  = "local-zfs"
+    discard  = "on"
+    file     = "vm-101-disk-0"
+    format   = "raw"
+    slot     = 0
+    volume   = "local-zfs:vm-101-disk-0"
+    aio      = "threads"
+    iothread = 1
+  }
+}
+
+resource "proxmox_vm_qemu" "htpc" {
+  provider = proxmox.basil
+
+  name        = "htpc"
+  target_node = "basil"
+  iso         = "local:iso/latest-nixos-minimal-x86_64-linux.iso"
+  vmid        = 101
+  cpu         = "host,flags=+pcid"
+  memory      = 65536
+  balloon     = 0
+  sockets     = 1
+  cores       = 16
+  qemu_os     = "other"
+  scsihw      = "virtio-scsi-single"
+  boot        = "order=scsi0"
+
+  onboot = true
+  agent  = 1
+
+  bios = "seabios"
+
+
+  network {
+    model     = "virtio"
+    bridge    = "vmbr0"
+    tag       = 10
+    macaddr   = "CE:22:2C:7F:DE:79"
+    link_down = false
+    firewall  = false
+    mtu       = 0
+    queues    = 0
+    rate      = 0
+  }
+
+  disk {
     type    = "scsi"
-    size    = "1024G"
+    size    = "2048G"
     storage = "local-zfs"
     discard = "on"
     file    = "vm-101-disk-0"

@@ -24,6 +24,7 @@ jobs:
           - gateway
           - monitor
           - omnibus
+          - htpc
   check:
     runs-on: ubuntu-latest
     steps:
