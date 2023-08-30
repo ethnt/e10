@@ -22,7 +22,7 @@ in {
       '';
 
       e10-mosh = pkgs.writeShellScriptBin "e10-mosh" ''
-        ${pkgs.lib.getExe pkgs.mosh} --ssh="ssh -F ${sshConfig}" $@
+        ${pkgs.lib.getExe' pkgs.mosh "mosh"} --ssh="ssh -F ${sshConfig}" $@
       '';
     in _: {
       env.SSH_CONFIG_FILE = sshConfig;

@@ -16,7 +16,7 @@
       profiles.media-management.sonarr
       profiles.media-management.sabnzbd
       profiles.media-management.bazarr
-      profiles.media-management.overseerr
+      # profiles.media-management.overseerr
       profiles.media-management.tautulli
       profiles.users.blockbuster
       profiles.media-management.plex
