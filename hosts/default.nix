@@ -25,7 +25,7 @@ let
     , configuration ? ./${hostname}/configuration.nix, ... }:
     withSystem system ({ pkgs, ... }:
       let
-        baseConfiguration = { ... }: {
+        baseConfiguration = _: {
           nixpkgs = { inherit pkgs; };
           networking.hostName = hostname;
         };
@@ -43,5 +43,6 @@ in {
     gateway = mkHost "gateway" { system = "x86_64-linux"; };
     monitor = mkHost "monitor" { system = "x86_64-linux"; };
     omnibus = mkHost "omnibus" { system = "x86_64-linux"; };
+    htpc = mkHost "htpc" { system = "x86_64-linux"; };
   };
 }

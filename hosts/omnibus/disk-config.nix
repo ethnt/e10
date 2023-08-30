@@ -1,6 +1,4 @@
-# STAGE 1: CREATE ZPOOLS, ADD 3 DISKS TO FILES, REST TO BLOCKBUSTER
-
-{ ... }:
+_:
 let
   disks = {
     scsi = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
@@ -47,7 +45,7 @@ in {
           partitions = {
             boot = {
               size = "1M";
-              type = "EF02"; # for grub MBR
+              type = "EF02";
             };
 
             ESP = {

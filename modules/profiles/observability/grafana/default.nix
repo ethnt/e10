@@ -48,14 +48,4 @@
       ];
     };
   };
-
-  services.caddy.virtualHosts."grafana.e10.camp" = {
-    extraConfig = ''
-      handle {
-        reverse_proxy ${config.services.grafana.settings.server.http_addr}:${
-          toString config.services.grafana.settings.server.http_port
-        }
-      }
-    '';
-  };
 }

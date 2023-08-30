@@ -3,6 +3,7 @@ keys:
   - &host_gateway age1ex9c847ra3fkwv9qwk85a8ukt9f5jny6rusc3pn967dvkwlpwass56jrfd
   - &host_monitor age13ztzxk2f2cklrecwqztmwznvj2qdrjlrpcu6xmc698yfex8puvdqsryrcj
   - &host_omnibus age1k5nzxq4ej2u9ls97c2dhlz96j2vghv0assz5g0p4npzyc8c8fqlqld72hg
+  - &host_htpc age1gkzp905yqkla54l52m4xkqtxpn0sndkx0vh6qqa8d2tu29x8f35q354gpe
 
 creation_rules:
   - path_regex: '(secrets.json|secrets.yml)$'
@@ -12,3 +13,4 @@ creation_rules:
         - *host_gateway
         - *host_monitor
         - *host_omnibus
+        - *host_htpc

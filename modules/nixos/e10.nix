@@ -11,8 +11,9 @@ with lib;
     };
 
     privateAddress = mkOption {
-      type = types.str;
-      description = "Private address within our own network";
+      type = types.nullOr types.str;
+      default = null;
+      description = "Private network address (within VPC or local network)";
     };
 
     publicAddress = mkOption {

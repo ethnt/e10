@@ -53,17 +53,23 @@
         ./modules/development/dhall.nix
         ./modules/development/treefmt.nix
 
-        ./modules/terraform/package.nix
-
         ./modules/deploy/shell.nix
         ./modules/deploy/configuration.nix
+        ./modules/deploy/terraform.nix
 
         ./hosts
       ];
 
       systems = [ "x86_64-linux" "x86_64-darwin" ];
 
-      perSystem = _: { };
+      perSystem = { pkgs, lib, system, ... }: {
+        _module.args.pkgs = import inputs.nixpkgs {
+          inherit system;
+
+          # TODO: Make this on a per-system basis, and maybe per-package
+          config.allowUnfree = true;
+        };
+      };
 
       flake = { };
     };

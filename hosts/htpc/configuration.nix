@@ -1,0 +1,48 @@
+{ inputs, config, lib, pkgs, suites, profiles, hosts, ... }: {
+  imports = with suites;
+    core ++ [
+      profiles.virtualisation.qemu
+      profiles.filesystems.hybrid-boot
+      profiles.filesystems.zfs
+      profiles.hardware.intel
+      profiles.hardware.hidpi
+      profiles.hardware.ssd
+      profiles.hardware.nvidia
+      profiles.networking.satan
+      profiles.sharing.nfs-client
+      profiles.virtualisation.docker
+      profiles.media-management.prowlarr
+      profiles.media-management.radarr
+      profiles.media-management.sonarr
+      profiles.media-management.sabnzbd
+      profiles.media-management.bazarr
+      profiles.media-management.overseerr
+      profiles.media-management.tautulli
+      profiles.users.blockbuster
+      profiles.media-management.plex
+    ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
+
+  boot.loader.grub.devices =
+    [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
+
+  e10 = {
+    name = "omnibus";
+    privateAddress = "192.168.10.21";
+    publicAddress = "192.168.10.208";
+    domain = "htpc.e10.camp";
+  };
+
+  networking.interfaces.enp6s18.ipv4.addresses = [{
+    address = "192.168.10.21";
+    prefixLength = 24;
+  }];
+
+  fileSystems."/mnt/blockbuster" = {
+    device =
+      "${hosts.omnibus.config.e10.privateAddress}:${hosts.omnibus.config.disko.devices.zpool.blockbuster.datasets.root.mountpoint}";
+    fsType = "nfs";
+    options = [ "x-systemd.automount" "exec" ];
+  };
+
+  system.stateVersion = "23.11";
+}

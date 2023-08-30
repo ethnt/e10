@@ -1,6 +1,6 @@
 {
-  perSystem = { pkgs, ... }:
-    let
+  perSystem = { config, pkgs, ... }: {
+    packages = {
       tf = pkgs.writeShellScriptBin "tf" ''
         set -euo pipefail
 
@@ -8,5 +8,8 @@
 
         ${pkgs.lib.getExe pkgs.terraform} -chdir=$DIR "$@"
       '';
-    in { packages = { inherit tf; }; };
+    };
+
+    devenv.shells.default.packages = [ config.packages.tf pkgs.terraform ];
+  };
 }
