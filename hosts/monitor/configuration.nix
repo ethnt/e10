@@ -107,5 +107,7 @@
     }
   ];
 
+  e10.backup.jobs.system.exclude = lib.mkAfter [ "/var/lib/loki/wal" ];
+
   system.stateVersion = "23.11";
 }

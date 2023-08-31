@@ -16,7 +16,7 @@
       profiles.media-management.sonarr
       profiles.media-management.sabnzbd
       profiles.media-management.bazarr
-      # profiles.media-management.overseerr
+      profiles.media-management.overseerr
       profiles.media-management.tautulli
       profiles.users.blockbuster
       profiles.media-management.plex
@@ -43,6 +43,9 @@
     fsType = "nfs";
     options = [ "x-systemd.automount" "exec" ];
   };
+
+  e10.backup.jobs.system.exclude =
+    lib.mkAfter [ "/var/lib/plex/Plex Media Server/Cache" ];
 
   system.stateVersion = "23.11";
 }

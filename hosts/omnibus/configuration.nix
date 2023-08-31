@@ -13,6 +13,8 @@
       profiles.sharing.nfs-server
       profiles.networking.satan
       profiles.users.blockbuster
+      profiles.sharing.samba
+      profiles.users.ethan
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
@@ -37,6 +39,21 @@
   in ''
     ${config.disko.devices.zpool.blockbuster.datasets.root.mountpoint} 192.168.0.0/16(${options}) 100.0.0.0/8(${options})
   '';
+
+  services.samba.shares.personal = {
+    path = "/data/files/personal";
+    browseable = "yes";
+    "read only" = "no";
+    "guest ok" = "no";
+    "create mask" = "0644";
+    "directory mask" = "0755";
+    "force user" = config.users.users.ethan.name;
+  };
+
+  e10.backup.jobs.files = {
+    repoName = "${config.networking.hostName}-files";
+    paths = [ "/data/files" ];
+  };
 
   system.stateVersion = "23.11";
 }
