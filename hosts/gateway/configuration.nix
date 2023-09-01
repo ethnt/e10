@@ -69,16 +69,16 @@
       };
     };
 
-    # "overseerr.e10.camp" = {
-    #   http2 = true;
-    #   forceSSL = true;
-    #   enableACME = true;
-    #   locations."/" = {
-    #     proxyPass = "http://${hosts.htpc.config.networking.hostName}:${
-    #         toString hosts.htpc.config.services.overseerr.port
-    #       }";
-    #   };
-    # };
+    "overseerr.e10.camp" = {
+      http2 = true;
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://${hosts.htpc.config.networking.hostName}:${
+            toString hosts.htpc.config.services.overseerr.port
+          }";
+      };
+    };
 
     "tautulli.e10.camp" = {
       http2 = true;

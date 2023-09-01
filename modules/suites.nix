@@ -12,6 +12,8 @@
     profiles.security.fail2ban
     profiles.telemetry.prometheus-node-exporter
     profiles.telemetry.promtail
+    profiles.backups.borg.default
+    profiles.backups.borg.system
   ];
 
   web = [ profiles.web-servers.nginx ];
