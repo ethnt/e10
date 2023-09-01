@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 let
   username = "de2228";
   hostname = "de2228.rsync.net";

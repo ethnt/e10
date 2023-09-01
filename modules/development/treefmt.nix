@@ -4,9 +4,10 @@
       settings = {
         projectRootFile = "flake.nix";
         programs = {
-          nixfmt.enable = true;
-          terraform.enable = true;
+          deadnix.enable = true;
           dhall.enable = true;
+          terraform.enable = true;
+          nixfmt.enable = true;
         };
       };
     in {

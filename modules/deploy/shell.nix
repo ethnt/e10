@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 let l = inputs.nixpkgs.lib // builtins;
 in {
-  perSystem = { config, pkgs, inputs', self', ... }: {
+  perSystem = { config, pkgs, inputs', ... }: {
     devenv.shells.default = let
       sshConfig = let
         hostConfigurations = l.concatStringsSep "\n" (l.attrValues (l.mapAttrs

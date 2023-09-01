@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, ... }: {
   networking.hostId =
     lib.substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
 
@@ -6,4 +6,9 @@
 
   boot.initrd.supportedFilesystems = [ "zfs" ];
   boot.supportedFilesystems = [ "zfs" ];
+
+  services.zfs = {
+    autoScrub.enable = true;
+    trim.enable = true;
+  };
 }

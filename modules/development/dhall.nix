@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{
   perSystem = { pkgs, ... }: {
     apps = {
       generate-ci.program = pkgs.writeShellScriptBin "generate-ci" ''

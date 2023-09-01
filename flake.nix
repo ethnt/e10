@@ -62,7 +62,7 @@
 
       systems = [ "x86_64-linux" "x86_64-darwin" ];
 
-      perSystem = { pkgs, lib, system, ... }: {
+      perSystem = { pkgs, system, ... }: {
         _module.args.pkgs = import inputs.nixpkgs {
           inherit system;
 

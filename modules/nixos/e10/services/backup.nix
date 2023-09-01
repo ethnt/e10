@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 with lib;
 
@@ -83,7 +83,7 @@ in {
       inherit (cfg) publicKeyFile;
     };
 
-    services.borgbackup.jobs = mapAttrs (name: jobConfig:
+    services.borgbackup.jobs = mapAttrs (_: jobConfig:
       {
         inherit (jobConfig) paths exclude;
 

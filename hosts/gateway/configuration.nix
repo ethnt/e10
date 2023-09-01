@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, profiles, suites, hosts, ... }: {
+{ config, suites, hosts, ... }: {
   imports = with suites; core ++ web ++ aws;
 
   e10 = {

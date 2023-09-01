@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, suites, profiles, ... }: {
+{ config, suites, profiles, ... }: {
   imports = with suites;
     core ++ [
       profiles.virtualisation.qemu

@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, profiles, suites, hosts, ... }: {
+{ config, lib, profiles, suites, hosts, ... }: {
   imports = with suites;
     core ++ web ++ aws ++ [
       profiles.monitoring.loki
