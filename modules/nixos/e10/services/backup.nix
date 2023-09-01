@@ -2,9 +2,9 @@
 
 with lib;
 
-let cfg = config.e10.backup;
+let cfg = config.e10.services.backup;
 in {
-  options.e10.backup = {
+  options.e10.services.backup = {
     enable = mkEnableOption "Enable backup to rsync.net via borgbackup";
 
     username = mkOption {

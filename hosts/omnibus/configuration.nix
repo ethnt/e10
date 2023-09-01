@@ -50,7 +50,7 @@
     "force user" = config.users.users.ethan.name;
   };
 
-  e10.backup.jobs.files = {
+  e10.services.backup.jobs.files = {
     repoName = "${config.networking.hostName}-files";
     paths = [ "/data/files" ];
   };

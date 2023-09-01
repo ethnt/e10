@@ -17,7 +17,7 @@ in {
     };
   };
 
-  e10.backup = {
+  e10.services.backup = {
     enable = true;
 
     inherit username hostname;

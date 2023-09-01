@@ -44,7 +44,7 @@
     options = [ "x-systemd.automount" "exec" ];
   };
 
-  e10.backup.jobs.system.exclude =
+  e10.services.backup.jobs.system.exclude =
     lib.mkAfter [ "/var/lib/plex/Plex Media Server/Cache" ];
 
   system.stateVersion = "23.11";
