@@ -27,5 +27,16 @@
     profiles.users.root
   ];
 
+  homelab = [ profiles.networking.satan ];
+
   aws = [ profiles.virtualisation.aws profiles.networking.quad9 ];
+
+  proxmox-vm = [
+    profiles.virtualisation.qemu
+    profiles.filesystems.hybrid-boot
+    profiles.filesystems.zfs
+    profiles.hardware.intel
+    profiles.hardware.hidpi
+    profiles.hardware.ssd
+  ];
 }

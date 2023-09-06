@@ -1,14 +1,7 @@
-{ inputs, config, lib, pkgs, suites, profiles, hosts, ... }: {
+{ config, lib, suites, profiles, hosts, ... }: {
   imports = with suites;
-    core ++ [
-      profiles.virtualisation.qemu
-      profiles.filesystems.hybrid-boot
-      profiles.filesystems.zfs
-      profiles.hardware.intel
-      profiles.hardware.hidpi
-      profiles.hardware.ssd
+    core ++ homelab ++ proxmox-vm ++ [
       profiles.hardware.nvidia
-      profiles.networking.satan
       profiles.sharing.nfs-client
       profiles.virtualisation.docker
       profiles.media-management.prowlarr
@@ -26,7 +19,7 @@
     [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
   e10 = {
-    name = "omnibus";
+    name = "htpc";
     privateAddress = "192.168.10.21";
     publicAddress = "192.168.10.208";
     domain = "htpc.e10.camp";

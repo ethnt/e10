@@ -91,3 +91,48 @@ resource "proxmox_vm_qemu" "htpc" {
     volume  = "local-zfs:vm-101-disk-0"
   }
 }
+
+resource "proxmox_vm_qemu" "matrix" {
+  provider = proxmox.cardamom
+
+  name        = "matrix"
+  target_node = "cardamom"
+  iso         = "omnibus:iso/latest-nixos-minimal-x86_64-linux.iso"
+  vmid        = 101
+  cpu         = "host"
+  memory      = 32768
+  balloon     = 0
+  sockets     = 1
+  cores       = 8
+  qemu_os     = "other"
+  scsihw      = "virtio-scsi-single"
+  boot        = "order=scsi0"
+
+  onboot = true
+  agent  = 1
+
+  bios = "seabios"
+
+  network {
+    model     = "virtio"
+    bridge    = "vmbr0"
+    macaddr   = "06:8D:3E:8F:5F:23"
+    firewall  = false
+    link_down = false
+    mtu       = 0
+    queues    = 0
+    rate      = 0
+    tag       = 10
+  }
+
+  disk {
+    type    = "scsi"
+    size    = "128G"
+    storage = "local-zfs"
+    discard = "on"
+    file    = "vm-101-disk-0"
+    format  = "raw"
+    slot    = 0
+    volume  = "local-zfs:vm-101-disk-0"
+  }
+}

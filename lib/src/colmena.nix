@@ -1,7 +1,7 @@
 { flake, withSystem, ... }:
 let l = flake.inputs.nixpkgs.lib // builtins;
 in {
-  mkNode = evaled: hostname: settings:
+  mkNode = evaled: _: settings:
     let
       evaledModules = evaled._module.args.modules;
       settings' = { deployment = settings; };

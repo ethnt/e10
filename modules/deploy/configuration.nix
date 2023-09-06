@@ -17,5 +17,6 @@ in {
     monitor = { tags = [ "@web" "@aws" ]; };
     omnibus = { tags = [ "@local" "@vm" ]; };
     htpc = { tags = [ "@local" "@vm" ]; };
+    matrix = { tags = [ "@local" "@vm" ]; };
   };
 }

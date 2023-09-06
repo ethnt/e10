@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, profiles, suites, hosts, ... }: {
+{ config, lib, profiles, suites, hosts, ... }: {
   imports = with suites;
     core ++ web ++ aws ++ [
       profiles.monitoring.loki
@@ -39,6 +39,14 @@
     {
       job_name = "host_basil";
       static_configs = [{ targets = [ "basil:9100" ]; }];
+    }
+    {
+      job_name = "host_cardamom";
+      static_configs = [{ targets = [ "cardamom:9100" ]; }];
+    }
+    {
+      job_name = "host_dill";
+      static_configs = [{ targets = [ "dill:9100" ]; }];
     }
     {
       job_name = "node_gateway";
@@ -83,7 +91,16 @@
         ];
       }];
     }
-
+    {
+      job_name = "node_matrix";
+      static_configs = [{
+        targets = [
+          "${hosts.matrix.config.networking.hostName}:${
+            toString hosts.matrix.config.services.prometheus.exporters.node.port
+          }"
+        ];
+      }];
+    }
     {
       job_name = "smartctl_omnibus";
       static_configs = [{

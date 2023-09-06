@@ -25,6 +25,7 @@ jobs:
           - monitor
           - omnibus
           - htpc
+          - matrix
   check:
     runs-on: ubuntu-latest
     steps:

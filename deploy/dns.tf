@@ -6,6 +6,10 @@ resource "aws_route53_zone" "e10_video" {
   name = "e10.video"
 }
 
+resource "aws_route53_zone" "e10_land" {
+  name = "e10.land"
+}
+
 resource "aws_route53_record" "root_e10_video" {
   zone_id = aws_route53_zone.e10_video.zone_id
   name    = "e10.video"
@@ -17,6 +21,22 @@ resource "aws_route53_record" "root_e10_video" {
 resource "aws_route53_record" "wildcard_e10_video" {
   zone_id = aws_route53_zone.e10_video.zone_id
   name    = "*.e10.video"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.gateway.public_ip]
+}
+
+resource "aws_route53_record" "root_e10_land" {
+  zone_id = aws_route53_zone.e10_land.zone_id
+  name    = "e10.land"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.gateway.public_ip]
+}
+
+resource "aws_route53_record" "wildcard_e10_land" {
+  zone_id = aws_route53_zone.e10_land.zone_id
+  name    = "*.e10.land"
   type    = "A"
   ttl     = 300
   records = [aws_instance.gateway.public_ip]

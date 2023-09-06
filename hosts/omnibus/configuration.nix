@@ -1,20 +1,14 @@
-{ inputs, config, lib, pkgs, suites, profiles, ... }: {
+{ config, suites, profiles, ... }: {
   imports = with suites;
-    core ++ [
-      profiles.virtualisation.qemu
-      profiles.filesystems.hybrid-boot
-      profiles.filesystems.zfs
-      profiles.hardware.intel
-      profiles.hardware.hidpi
-      profiles.hardware.ssd
+    core ++ homelab ++ proxmox-vm ++ [
       profiles.telemetry.smartd
       profiles.telemetry.prometheus-smartctl-exporter
       profiles.telemetry.prometheus-zfs-exporter
       profiles.sharing.nfs-server
-      profiles.networking.satan
       profiles.users.blockbuster
       profiles.sharing.samba
       profiles.users.ethan
+      profiles.users.proxmox
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
@@ -39,6 +33,16 @@
   in ''
     ${config.disko.devices.zpool.blockbuster.datasets.root.mountpoint} 192.168.0.0/16(${options}) 100.0.0.0/8(${options})
   '';
+
+  services.samba.shares.proxmox = {
+    path = "/data/files/proxmox";
+    browseable = "yes";
+    "read only" = "no";
+    "guest ok" = "no";
+    "create mask" = "0644";
+    "directory mask" = "0755";
+    "force user" = config.users.users.proxmox.name;
+  };
 
   services.samba.shares.personal = {
     path = "/data/files/personal";

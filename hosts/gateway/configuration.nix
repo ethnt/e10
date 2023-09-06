@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, profiles, suites, hosts, ... }: {
+{ config, suites, hosts, ... }: {
   imports = with suites; core ++ web ++ aws;
 
   e10 = {
@@ -8,95 +8,73 @@
     domain = "gateway.e10.camp";
   };
 
-  services.nginx.virtualHosts = {
-    "prowlarr.e10.camp" = {
-      http2 = true;
+  services.nginx.virtualHosts = let
+    mkVirtualHost = { host, port, http2 ? true, extraConfig ? " " }: {
+      inherit http2 extraConfig;
+
       forceSSL = true;
       enableACME = true;
+
       locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.networking.hostName}:${
-            toString hosts.htpc.config.services.prowlarr.port
-          }";
+        proxyPass =
+          "http://${host.config.networking.hostName}:${toString port}";
         proxyWebsockets = true;
       };
     };
-
-    "radarr.e10.camp" = {
-      http2 = true;
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.networking.hostName}:${
-            toString hosts.htpc.config.services.radarr.port
-          }";
-        proxyWebsockets = true;
-      };
+  in {
+    "e10.land" = mkVirtualHost {
+      host = hosts.matrix;
+      port = 8090;
     };
 
-    "sonarr.e10.camp" = {
-      http2 = true;
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.networking.hostName}:${
-            toString hosts.htpc.config.services.sonarr.port
-          }";
-        proxyWebsockets = true;
-      };
+    "feeds.e10.camp" = mkVirtualHost {
+      host = hosts.matrix;
+      port = hosts.matrix.config.services.miniflux.config.PORT;
     };
 
-    "sabnzbd.e10.camp" = {
-      http2 = true;
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.networking.hostName}:${
-            toString hosts.htpc.config.services.sabnzbd.port
-          }";
-        proxyWebsockets = true;
-      };
+    "headscale.e10.camp" = mkVirtualHost {
+      host = hosts.gateway;
+      port = hosts.gateway.config.services.headscale.port;
     };
 
-    "bazarr.e10.camp" = {
-      http2 = true;
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.networking.hostName}:${
-            toString hosts.htpc.config.services.bazarr.listenPort
-          }";
-        proxyWebsockets = true;
-      };
+    "prowlarr.e10.camp" = mkVirtualHost {
+      host = hosts.htpc;
+      port = hosts.htpc.config.services.prowlarr.port;
     };
 
-    "overseerr.e10.camp" = {
-      http2 = true;
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.networking.hostName}:${
-            toString hosts.htpc.config.services.overseerr.port
-          }";
-      };
+    "radarr.e10.camp" = mkVirtualHost {
+      host = hosts.htpc;
+      port = hosts.htpc.config.services.radarr.port;
     };
 
-    "tautulli.e10.camp" = {
-      http2 = true;
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.networking.hostName}:${
-            toString hosts.htpc.config.services.tautulli.port
-          }";
-      };
+    "sonarr.e10.camp" = mkVirtualHost {
+      host = hosts.htpc;
+      port = hosts.htpc.config.services.sonarr.port;
     };
 
-    "plex.e10.camp" = {
-      http2 = true;
+    "sabnzbd.e10.camp" = mkVirtualHost {
+      host = hosts.htpc;
+      port = hosts.htpc.config.services.sabnzbd.port;
+    };
 
-      forceSSL = true;
-      enableACME = true;
+    "bazarr.e10.camp" = mkVirtualHost {
+      host = hosts.htpc;
+      port = hosts.htpc.config.services.bazarr.listenPort;
+    };
 
+    "overseerr.e10.camp" = mkVirtualHost {
+      host = hosts.htpc;
+      port = hosts.htpc.config.services.overseerr.port;
+    };
+
+    "tautulli.e10.camp" = mkVirtualHost {
+      host = hosts.htpc;
+      port = hosts.htpc.config.services.tautulli.port;
+    };
+
+    "e10.video" = mkVirtualHost {
+      host = hosts.htpc;
+      port = hosts.htpc.config.services.plex.port;
       extraConfig = ''
         send_timeout 100m;
         ssl_stapling on;
@@ -135,12 +113,6 @@
         proxy_redirect off;
         proxy_buffering off;
       '';
-
-      locations."/" = {
-        proxyPass = "http://${hosts.htpc.config.networking.hostName}:${
-            toString hosts.htpc.config.services.plex.port
-          }";
-      };
     };
   };
 
