@@ -12,7 +12,7 @@
           ${setSopsValueToEnvironmentVariable "AWS_SECRET_ACCESS_KEY"}
         '';
 
-        packages = with pkgs; [ deadnix statix sops ];
+        packages = with pkgs; [ deadnix statix sops yarr ];
       } // {
         containers = pkgs.lib.mkForce { };
       };
