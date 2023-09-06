@@ -4,6 +4,7 @@ keys:
   - &host_monitor age13ztzxk2f2cklrecwqztmwznvj2qdrjlrpcu6xmc698yfex8puvdqsryrcj
   - &host_omnibus age1k5nzxq4ej2u9ls97c2dhlz96j2vghv0assz5g0p4npzyc8c8fqlqld72hg
   - &host_htpc age1gkzp905yqkla54l52m4xkqtxpn0sndkx0vh6qqa8d2tu29x8f35q354gpe
+  - &host_matrix age1c4d93hmawmx8nt8g2sjrxcngfl7qx7y6vwxpqqg7grrkhjen6fvstljgg9
 
 creation_rules:
   - path_regex: '(secrets.json|secrets.yml)$'
@@ -14,3 +15,4 @@ creation_rules:
         - *host_monitor
         - *host_omnibus
         - *host_htpc
+        - *host_matrix

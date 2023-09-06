@@ -23,3 +23,10 @@ provider "proxmox" {
   pm_api_token_id     = data.sops_file.secrets.data["BASIL_PM_API_TOKEN_ID"]
   pm_api_token_secret = data.sops_file.secrets.data["BASIL_PM_API_TOKEN_SECRET"]
 }
+
+provider "proxmox" {
+  alias               = "cardamom"
+  pm_api_url          = "https://192.168.10.30:8006/api2/json"
+  pm_api_token_id     = data.sops_file.secrets.data["CARDAMOM_PM_API_TOKEN_ID"]
+  pm_api_token_secret = data.sops_file.secrets.data["CARDAMOM_PM_API_TOKEN_SECRET"]
+}
