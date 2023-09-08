@@ -18,5 +18,9 @@ in {
     omnibus = { tags = [ "@local" "@vm" ]; };
     htpc = { tags = [ "@local" "@vm" ]; };
     matrix = { tags = [ "@local" "@vm" ]; };
+    controller = {
+      tags = [ "@local" ];
+      buildOnTarget = false;
+    };
   };
 }

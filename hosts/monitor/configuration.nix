@@ -4,6 +4,7 @@
       profiles.monitoring.loki
       profiles.monitoring.prometheus
       profiles.observability.grafana.default
+      profiles.emulation.aarch64-linux
     ];
 
   e10 = {
@@ -47,6 +48,17 @@
     {
       job_name = "host_dill";
       static_configs = [{ targets = [ "dill:9100" ]; }];
+    }
+    {
+      job_name = "host_controller";
+      static_configs = [{
+        targets = [
+          "${hosts.controller.config.networking.hostName}:${
+            toString
+            hosts.controller.config.services.prometheus.exporters.node.port
+          }"
+        ];
+      }];
     }
     {
       job_name = "node_gateway";

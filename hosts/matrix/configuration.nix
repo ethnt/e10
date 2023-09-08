@@ -4,7 +4,7 @@
       profiles.services.miniflux.default
       profiles.services.e10-land
       profiles.networking.printing
-      profiles.networking.unifi
+      profiles.emulation.aarch64-linux
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
