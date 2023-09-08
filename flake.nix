@@ -25,6 +25,9 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
+    nixos-generators.url = "github:nix-community/nixos-generators";
+    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
+
     haumea.url = "github:nix-community/haumea/v0.2.2";
     haumea.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -60,7 +63,7 @@
         ./hosts
       ];
 
-      systems = [ "x86_64-linux" "x86_64-darwin" ];
+      systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" ];
 
       perSystem = { pkgs, system, ... }: {
         _module.args.pkgs = import inputs.nixpkgs {

@@ -4,9 +4,9 @@ in {
   mkNode = evaled: _: settings:
     let
       evaledModules = evaled._module.args.modules;
-      settings' = { deployment = settings; };
-      defaults = { deployment = { buildOnTarget = l.mkDefault true; }; };
-    in { imports = evaledModules ++ [ settings' defaults ]; };
+      defaults = { buildOnTarget = l.mkDefault true; };
+      settings' = { deployment = defaults // settings; };
+    in { imports = evaledModules ++ [ settings' ]; };
 
   metaFor = evaled: {
     meta = {

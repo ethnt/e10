@@ -1,5 +1,6 @@
-{ config, suites, hosts, ... }: {
-  imports = with suites; core ++ web ++ aws;
+{ config, suites, hosts, profiles, ... }: {
+  imports = with suites;
+    core ++ web ++ aws ++ [ profiles.emulation.aarch64-linux ];
 
   e10 = {
     name = "gateway";
@@ -115,8 +116,6 @@
       '';
     };
   };
-
-  services.tailscale.useRoutingFeatures = "server";
 
   system.stateVersion = "23.11";
 }
