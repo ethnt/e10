@@ -13,6 +13,7 @@
       profiles.media-management.tautulli
       profiles.users.blockbuster
       profiles.media-management.plex
+      profiles.media-management.xteve
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
