@@ -4,7 +4,6 @@
       profiles.monitoring.loki
       profiles.monitoring.prometheus
       profiles.observability.grafana.default
-      profiles.emulation.aarch64-linux
     ];
 
   e10 = {

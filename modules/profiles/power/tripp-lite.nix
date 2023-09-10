@@ -1,0 +1,5 @@
+{
+  services.nut = {
+    enable = true;
+  };
+}

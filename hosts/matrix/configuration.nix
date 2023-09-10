@@ -5,6 +5,7 @@
       profiles.services.e10-land
       profiles.networking.printing
       profiles.emulation.aarch64-linux
+      profiles.power.tripp-lite
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

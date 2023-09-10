@@ -1,6 +1,6 @@
-{ config, suites, hosts, profiles, ... }: {
+{ config, suites, hosts, ... }: {
   imports = with suites;
-    core ++ web ++ aws ++ [ profiles.emulation.aarch64-linux ];
+    core ++ web ++ aws;
 
   e10 = {
     name = "gateway";
