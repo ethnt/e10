@@ -133,6 +133,17 @@
         ];
       }];
     }
+    {
+      job_name = "nut_matrix";
+      metrics_path = "/ups_metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.matrix.config.networking.hostName}:${
+            toString hosts.matrix.config.services.prometheus.exporters.nut.port
+          }"
+        ];
+      }];
+    }
   ];
 
   e10.services.backup.jobs.system.exclude = lib.mkAfter [ "/var/lib/loki/wal" ];

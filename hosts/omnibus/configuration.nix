@@ -9,6 +9,7 @@
       profiles.sharing.samba
       profiles.users.ethan
       profiles.users.proxmox
+      profiles.power.client
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

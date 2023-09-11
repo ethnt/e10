@@ -6,6 +6,7 @@
       profiles.networking.printing
       profiles.emulation.aarch64-linux
       profiles.power.tripp-lite
+      profiles.telemetry.prometheus-nut-exporter
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
