@@ -4,6 +4,7 @@
     profiles.core.nix-config
     profiles.core.sops
     profiles.core.tooling
+    profiles.core.cachix
     profiles.networking.openssh
     profiles.networking.mosh
     profiles.shell.fish
@@ -22,6 +23,7 @@
     profiles.core.common
     profiles.core.nix-config
     profiles.core.tooling
+    profiles.core.cachix
     profiles.networking.openssh
     profiles.shell.fish
     profiles.users.root

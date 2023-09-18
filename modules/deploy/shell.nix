@@ -8,6 +8,7 @@ in {
           (name: configuration: ''
             Host ${name}
               Hostname ${configuration.config.networking.hostName}
+              # Hostname ${configuration.config.e10.privateAddress}
           '') self.nixosConfigurations));
       in pkgs.writeText "ssh_config" ''
         ${hostConfigurations}

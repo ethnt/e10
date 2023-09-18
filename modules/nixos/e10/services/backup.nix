@@ -93,7 +93,7 @@ in {
           mode = "repokey-blake2";
           passCommand = "cat ${cfg.passphraseFile}";
         };
-        environment.BORG_REMOTE_PATH = "/usr/local/bin/borg1/borg1";
+        environment = { BORG_REMOTE_PATH = "/usr/local/bin/borg1/borg1"; };
         compression = "auto,lzma";
         startAt = "*-*-* 03:00:00";
         extraArgs = "--remote-path=borg1";

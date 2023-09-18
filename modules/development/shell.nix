@@ -1,5 +1,5 @@
 {
-  perSystem = { pkgs, ... }: {
+  perSystem = { inputs', pkgs, ... }: {
     devenv.shells.default = _:
       {
         enterShell = let
@@ -12,7 +12,13 @@
           ${setSopsValueToEnvironmentVariable "AWS_SECRET_ACCESS_KEY"}
         '';
 
-        packages = with pkgs; [ deadnix statix sops yarr ];
+        packages = with pkgs; [
+          deadnix
+          statix
+          sops
+          yarr
+          inputs'.attic.packages.attic
+        ];
       } // {
         containers = pkgs.lib.mkForce { };
       };

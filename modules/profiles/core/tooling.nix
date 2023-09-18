@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     bind
+    busybox
     comma
     glances
     inetutils

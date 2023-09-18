@@ -45,6 +45,6 @@ in {
     omnibus = mkHost "omnibus" { system = "x86_64-linux"; };
     htpc = mkHost "htpc" { system = "x86_64-linux"; };
     matrix = mkHost "matrix" { system = "x86_64-linux"; };
-    controller = mkHost "controller" { system = "aarch64-linux"; };
+    controller = mkHost "controller" { system = "x86_64-linux"; };
   };
 }

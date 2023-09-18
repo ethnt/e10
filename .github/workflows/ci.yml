@@ -26,6 +26,7 @@ jobs:
           - omnibus
           - htpc
           - matrix
+          - controller
   check:
     runs-on: ubuntu-latest
     steps:

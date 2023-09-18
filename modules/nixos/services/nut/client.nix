@@ -21,6 +21,25 @@ in {
       type = types.str;
       default = "/var/lib/nut";
     };
+
+    ups = mkOption {
+      type = types.submodule {
+        options = {
+          name = mkOption { type = types.str; };
+          host = mkOption { type = types.str; };
+          port = mkOption {
+            type = types.port;
+            default = 3493;
+          };
+          username = mkOption { type = types.str; };
+          password = mkOption { type = types.str; };
+          userType = mkOption {
+            type = types.str;
+            default = "slave";
+          };
+        };
+      };
+    };
   };
 
   config = mkIf cfg.enable {
@@ -36,7 +55,9 @@ in {
       inherit (cfg) user group;
 
       text = ''
-        MONITOR tripplite@192.168.10.31 1 monslave "132010" slave
+        MONITOR ${cfg.ups.name}@${cfg.ups.host}:${
+          toString cfg.ups.port
+        } 1 ${cfg.ups.username} "${cfg.ups.password}" ${cfg.ups.userType}
 
         RUN_AS_USER root
 

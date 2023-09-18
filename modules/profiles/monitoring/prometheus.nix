@@ -1,1 +1,6 @@
-{ services.prometheus = { enable = true; }; }
+{
+  services.prometheus = {
+    enable = true;
+    extraFlags = [ "--web.enable-admin-api" ];
+  };
+}
