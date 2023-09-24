@@ -9,6 +9,8 @@
       profiles.sharing.samba
       profiles.users.ethan
       profiles.users.proxmox
+      profiles.databases.postgresql.default
+      profiles.databases.postgresql.atticd
       profiles.services.atticd.default
       profiles.power.client.tripp-lite
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];

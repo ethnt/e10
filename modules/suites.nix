@@ -4,7 +4,7 @@
     profiles.core.nix-config
     profiles.core.sops
     profiles.core.tooling
-    profiles.core.cachix
+    profiles.core.caching
     profiles.networking.openssh
     profiles.networking.mosh
     profiles.shell.fish
@@ -15,6 +15,7 @@
     profiles.telemetry.promtail
     profiles.backups.borg.default
     profiles.backups.borg.system
+    profiles.system.earlyoom
   ];
 
   web = [ profiles.web-servers.nginx ];
@@ -23,7 +24,7 @@
     profiles.core.common
     profiles.core.nix-config
     profiles.core.tooling
-    profiles.core.cachix
+    profiles.core.caching
     profiles.networking.openssh
     profiles.shell.fish
     profiles.users.root

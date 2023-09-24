@@ -6,7 +6,7 @@
       "https://nix-community.cachix.org"
       "https://e10.cachix.org"
       "https://numtide.cachix.org"
-      "https://attic.e10.camp/e10"
+      "https://attic.e10.camp"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="

@@ -1,9 +1,11 @@
-{
+{ inputs, ... }: {
+  environment.systemPackages = [ inputs.attic.packages.x86_64-linux.attic ];
+
   nix.settings = {
     substituters = [
       "https://e10.cachix.org"
       "https://numtide.cachix.org"
-      "https://attic.e10.camp/e10"
+      "https://attic.e10.camp"
     ];
     trusted-public-keys = [
       "e10.cachix.org-1:/++Tmo/ghEqnLwsQJdXn04c262agRCK5PaPYz8NcVfo="

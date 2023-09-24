@@ -34,6 +34,19 @@ let cachix =
           )
       }
 
+let attic =
+      GithubActions.Step::{
+      , name = Some "Use Attic cache"
+      , uses = Some "ryanccn/attic-action@v0"
+      , `with` = Some
+          ( toMap
+              { endpoint = "\${{ secrets.ATTIC_ENDPOINT }}"
+              , cache = "\${{ secrets.ATTIC_CACHE }}"
+              , token = "\${{ secrets.ATTIC_TOKEN }}"
+              }
+          )
+      }
+
 let check =
       GithubActions.Step::{
       , run = Some
@@ -60,11 +73,19 @@ in  GithubActions.Workflow::{
           , runs-on = GithubActions.RunsOn.Type.ubuntu-latest
           , steps = setup # [ check ]
           }
-          ,  build = GithubActions.Job::{
+        , build = GithubActions.Job::{
           , runs-on = GithubActions.RunsOn.Type.ubuntu-latest
           , strategy = Some GithubActions.Strategy::{
             , matrix = toMap
-                { host = [ "gateway", "monitor", "omnibus", "htpc", "matrix", "controller" ] }
+                { host =
+                  [ "gateway"
+                  , "monitor"
+                  , "omnibus"
+                  , "htpc"
+                  , "matrix"
+                  , "controller"
+                  ]
+                }
             }
           , steps = setup # [ build ]
           }
