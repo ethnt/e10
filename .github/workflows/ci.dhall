@@ -63,7 +63,15 @@ let build =
           ''
       }
 
-let setup = [ checkout, installNix, cachix ]
+let clean =
+      GithubActions.Step::{
+      , run = Some
+          ''
+            bash .github/workflows/free-space.sh
+          ''
+      }
+
+let setup = [ checkout, clean, installNix, cachix ]
 
 in  GithubActions.Workflow::{
     , name = "CI"
