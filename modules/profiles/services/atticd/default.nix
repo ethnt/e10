@@ -1,6 +1,6 @@
-{ config, inputs, ... }: {
-  imports = [ inputs.attic.nixosModules.atticd ];
-
+{ config, ... }:
+let storagePath = "/data/files/services/atticd/storage";
+in {
   sops.secrets = {
     attic_credentials = {
       sopsFile = ./secrets.yml;
@@ -8,12 +8,17 @@
     };
   };
 
+  systemd.tmpfiles.rules = [
+    "d '${storagePath}' 0777 ${config.services.atticd.user} ${config.services.atticd.group} - -"
+  ];
+
   services.atticd = {
     enable = true;
     credentialsFile = config.sops.secrets.attic_credentials.path;
     settings = {
       listen = "[::]:8080";
 
+      # Do not change this! Otherwise caches need to be recreated!
       chunking = {
         nar-size-threshold = 64 * 1024;
         min-size = 16 * 1024;
@@ -25,7 +30,7 @@
 
       storage = {
         type = "local";
-        path = "/data/files/services/atticd/storage";
+        path = storagePath;
       };
     };
   };

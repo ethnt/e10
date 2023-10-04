@@ -30,6 +30,7 @@
           development = [ ];
         };
         whiteLists = {
+          ads = [ "l.food52.com" ];
           development = [
             (pkgs.writeText "development.txt" ''
               analytics.google.com
