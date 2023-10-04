@@ -4,16 +4,17 @@
       profiles.hardware.nvidia
       profiles.sharing.nfs-client
       profiles.virtualisation.docker
-      profiles.media-management.prowlarr
-      profiles.media-management.radarr
-      profiles.media-management.sonarr
-      profiles.media-management.sabnzbd
+      profiles.users.blockbuster
       profiles.media-management.bazarr
       profiles.media-management.overseerr
-      profiles.media-management.tautulli
-      profiles.users.blockbuster
       profiles.media-management.plex
+      profiles.media-management.prowlarr
+      profiles.media-management.radarr
+      profiles.media-management.sabnzbd
+      profiles.media-management.sonarr
+      profiles.media-management.tautulli
       profiles.media-management.xteve
+      profiles.power.client.tripp-lite
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

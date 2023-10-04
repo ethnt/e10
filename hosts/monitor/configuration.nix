@@ -4,7 +4,6 @@
       profiles.monitoring.loki
       profiles.monitoring.prometheus
       profiles.observability.grafana.default
-      profiles.emulation.aarch64-linux
     ];
 
   e10 = {
@@ -46,8 +45,8 @@
       static_configs = [{ targets = [ "cardamom:9100" ]; }];
     }
     {
-      job_name = "host_dill";
-      static_configs = [{ targets = [ "dill:9100" ]; }];
+      job_name = "host_satan";
+      static_configs = [{ targets = [ "satan:9100" ]; }];
     }
     {
       job_name = "host_controller";
@@ -59,6 +58,10 @@
           }"
         ];
       }];
+    }
+    {
+      job_name = "blocky";
+      static_configs = [{ targets = [ "blocky.e10.camp" ]; }];
     }
     {
       job_name = "node_gateway";
@@ -130,6 +133,29 @@
         targets = [
           "${hosts.omnibus.config.networking.hostName}:${
             toString hosts.omnibus.config.services.prometheus.exporters.zfs.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "nut_matrix";
+      metrics_path = "/ups_metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.matrix.config.networking.hostName}:${
+            toString hosts.matrix.config.services.prometheus.exporters.nut.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "nut_controller";
+      metrics_path = "/ups_metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.controller.config.networking.hostName}:${
+            toString
+            hosts.controller.config.services.prometheus.exporters.nut.port
           }"
         ];
       }];

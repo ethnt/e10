@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, hosts, ... }: {
   services.grafana = {
     enable = true;
 
@@ -34,6 +34,19 @@
               toString
               config.services.loki.configuration.server.http_listen_port
             }";
+        }
+        {
+          name = "PostgreSQL (Blocky)";
+          type = "postgres";
+          access = "proxy";
+          url = hosts.controller.config.networking.hostName;
+          user = "blocky";
+          secureJsonData = { password = "blocky"; };
+          jsonData = {
+            user = "blocky";
+            database = "blocky";
+            sslmode = "disable";
+          };
         }
       ];
       dashboards.settings.providers = [

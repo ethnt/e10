@@ -13,14 +13,11 @@ let
 in {
   # TODO: Automatically map `nixosConfigurations`
   flake.colmena = mkHive {
-    gateway = { tags = [ "@web" "@aws" ]; };
-    monitor = { tags = [ "@web" "@aws" ]; };
-    omnibus = { tags = [ "@local" "@vm" ]; };
-    htpc = { tags = [ "@local" "@vm" ]; };
-    matrix = { tags = [ "@local" "@vm" ]; };
-    controller = {
-      tags = [ "@local" ];
-      buildOnTarget = false;
-    };
+    gateway = { tags = [ "aws" "web" ]; };
+    monitor = { tags = [ "aws" "web" ]; };
+    omnibus = { tags = [ "local" "vm" ]; };
+    htpc = { tags = [ "local" "vm" ]; };
+    matrix = { tags = [ "local" "vm" ]; };
+    controller = { tags = [ "local" "web" ]; };
   };
 }

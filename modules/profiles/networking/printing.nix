@@ -3,9 +3,9 @@
     enable = true;
     drivers = with pkgs; [ brlaser ];
     browsing = true;
-    defaultShared = true;
     listenAddresses = [ "*:631" ];
     allowFrom = [ "all" ];
+    defaultShared = true;
   };
 
   hardware.printers = {
@@ -26,6 +26,7 @@
   services.avahi = {
     enable = true;
     nssmdns = true;
+    openFirewall = true;
     publish = {
       enable = true;
       userServices = true;

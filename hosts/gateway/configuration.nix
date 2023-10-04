@@ -1,6 +1,5 @@
-{ config, suites, hosts, profiles, ... }: {
-  imports = with suites;
-    core ++ web ++ aws ++ [ profiles.emulation.aarch64-linux ];
+{ config, suites, hosts, ... }: {
+  imports = with suites; core ++ web ++ aws;
 
   e10 = {
     name = "gateway";
@@ -10,18 +9,20 @@
   };
 
   services.nginx.virtualHosts = let
-    mkVirtualHost = { host, port, http2 ? true, extraConfig ? " " }: {
-      inherit http2 extraConfig;
+    mkVirtualHost =
+      { host, port, http2 ? true, extraConfig ? " ", extraSettings ? { } }:
+      {
+        inherit http2 extraConfig;
 
-      forceSSL = true;
-      enableACME = true;
+        forceSSL = true;
+        enableACME = true;
 
-      locations."/" = {
-        proxyPass =
-          "http://${host.config.networking.hostName}:${toString port}";
-        proxyWebsockets = true;
-      };
-    };
+        locations."/" = {
+          proxyPass =
+            "http://${host.config.networking.hostName}:${toString port}";
+          proxyWebsockets = true;
+        };
+      } // extraSettings;
   in {
     "e10.land" = mkVirtualHost {
       host = hosts.matrix;
@@ -36,6 +37,24 @@
     "headscale.e10.camp" = mkVirtualHost {
       host = hosts.gateway;
       port = hosts.gateway.config.services.headscale.port;
+    };
+
+    "attic.e10.camp" = mkVirtualHost {
+      host = hosts.omnibus;
+      port = 8080;
+      extraConfig = ''
+        client_header_buffer_size 64k;
+      '';
+      extraSettings = {
+        http3 = false;
+        http2 = false;
+        kTLS = true;
+      };
+    };
+
+    "blocky.e10.camp" = mkVirtualHost {
+      host = hosts.controller;
+      port = hosts.controller.config.services.blocky.settings.ports.http;
     };
 
     "prowlarr.e10.camp" = mkVirtualHost {
