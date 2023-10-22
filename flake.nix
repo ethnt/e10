@@ -53,6 +53,8 @@
 
     treefmt.url = "github:numtide/treefmt-nix";
     treefmt.inputs.nixpkgs.follows = "nixpkgs";
+
+    call-flake.url = "github:divnix/call-flake";
   };
 
   outputs = inputs@{ flake-parts, ... }:
@@ -84,7 +86,5 @@
           config.allowUnfree = true;
         };
       };
-
-      flake = { };
     };
 }

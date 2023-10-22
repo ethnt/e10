@@ -24,6 +24,21 @@
         "type": "github"
       }
     },
+    "call-flake": {
+      "locked": {
+        "lastModified": 1696123490,
+        "narHash": "sha256-bmhE1TmrJG4ba93l9WQTLuYM53kwGQAjYHRvHOeuxWU=",
+        "owner": "divnix",
+        "repo": "call-flake",
+        "rev": "6801a1180c00cc1fb033ece38fc5750ff0f525c5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "divnix",
+        "repo": "call-flake",
+        "type": "github"
+      }
+    },
     "colmena": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -602,6 +617,7 @@
     "root": {
       "inputs": {
         "attic": "attic",
+        "call-flake": "call-flake",
         "colmena": "colmena",
         "devenv": "devenv",
         "disko": "disko",

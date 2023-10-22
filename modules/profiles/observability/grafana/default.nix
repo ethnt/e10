@@ -41,7 +41,6 @@
           access = "proxy";
           url = hosts.controller.config.networking.hostName;
           user = "blocky";
-          secureJsonData = { password = "blocky"; };
           jsonData = {
             user = "blocky";
             database = "blocky";
