@@ -1,4 +1,6 @@
-{
+{ inputs, ... }: {
+  imports = [ inputs.devenv.flakeModule ];
+
   perSystem = { inputs', pkgs, ... }: {
     devenv.shells.default = _:
       {
