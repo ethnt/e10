@@ -16,7 +16,6 @@
           deadnix
           statix
           sops
-          yarr
           inputs'.attic.packages.attic
         ];
       } // {
