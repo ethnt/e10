@@ -21,9 +21,6 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    flake-registry.url = "github:NixOS/flake-registry";
-    flake-registry.flake = false;
-
     nixos-anywhere.url = "github:numtide/nixos-anywhere";
     nixos-anywhere.inputs.nixpkgs.follows = "nixpkgs";
     nixos-anywhere.inputs.disko.follows = "disko";
@@ -32,9 +29,6 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
-
-    nixos-generators.url = "github:nix-community/nixos-generators";
-    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
     haumea.url = "github:nix-community/haumea/v0.2.2";
     haumea.inputs.nixpkgs.follows = "nixpkgs";
@@ -58,9 +52,6 @@
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = with inputs; [
-        devenv.flakeModule
-        treefmt.flakeModule
-
         ./lib
 
         ./modules/development/shell.nix
@@ -74,7 +65,7 @@
         ./hosts
       ];
 
-      systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" ];
+      systems = [ "x86_64-linux" "x86_64-darwin" ];
 
       perSystem = { pkgs, system, ... }: {
         _module.args.pkgs = import inputs.nixpkgs {
@@ -84,7 +75,5 @@
           config.allowUnfree = true;
         };
       };
-
-      flake = { };
     };
 }

@@ -1,4 +1,6 @@
-{
+{ inputs, ... }: {
+  imports = [ inputs.devenv.flakeModule ];
+
   perSystem = { inputs', pkgs, ... }: {
     devenv.shells.default = _:
       {
@@ -16,7 +18,6 @@
           deadnix
           statix
           sops
-          yarr
           inputs'.attic.packages.attic
         ];
       } // {

@@ -1,4 +1,6 @@
 { inputs, ... }: {
+  imports = [ inputs.treefmt.flakeModule ];
+
   perSystem = { config, pkgs, ... }:
     let
       settings = {
