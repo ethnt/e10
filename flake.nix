@@ -60,7 +60,6 @@
 
         ./modules/deploy/shell.nix
         ./modules/deploy/configuration.nix
-        ./modules/deploy/ansible.nix
         ./modules/deploy/terraform.nix
 
         ./hosts
