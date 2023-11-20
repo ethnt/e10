@@ -1,5 +1,6 @@
 keys:
-  - &user_ethnt age1xgvn6f36rkzmq2kfqx0g2xg90qrpar4hpu6fr8xc3s2kqw6dzqcssnslsv
+  - &user_ethnt age10539mc6shf02hpa8huyjktdw3nfyavxdg8pt247wwvq4xrv8h5zs8nc0k0
+  - &user_ethnt_intel age1xgvn6f36rkzmq2kfqx0g2xg90qrpar4hpu6fr8xc3s2kqw6dzqcssnslsv
   - &host_gateway age1ex9c847ra3fkwv9qwk85a8ukt9f5jny6rusc3pn967dvkwlpwass56jrfd
   - &host_monitor age13ztzxk2f2cklrecwqztmwznvj2qdrjlrpcu6xmc698yfex8puvdqsryrcj
   - &host_omnibus age1k5nzxq4ej2u9ls97c2dhlz96j2vghv0assz5g0p4npzyc8c8fqlqld72hg
@@ -12,6 +13,7 @@ creation_rules:
     key_groups:
       - age:
         - *user_ethnt
+        - *user_ethnt_intel
         - *host_gateway
         - *host_monitor
         - *host_omnibus
