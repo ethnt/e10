@@ -1,20 +1,20 @@
 {
   description = "e10";
 
-  nixConfig = {
-    extra-substituters = [
-      "https://nix-community.cachix.org"
-      "https://e10.cachix.org"
-      "https://numtide.cachix.org"
-      "https://attic.e10.camp"
-    ];
-    extra-trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "e10.cachix.org-1:/++Tmo/ghEqnLwsQJdXn04c262agRCK5PaPYz8NcVfo="
-      "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
-      "attic.e10.camp-e10:GRxL2EezM+0vZXpa9fePFqTM1qstxiV56tc5K3eDugk="
-    ];
-  };
+  # nixConfig = {
+  #   extra-substituters = [
+  #     "https://nix-community.cachix.org"
+  #     "https://e10.cachix.org"
+  #     "https://numtide.cachix.org"
+  #     "https://attic.e10.camp"
+  #   ];
+  #   extra-trusted-public-keys = [
+  #     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+  #     "e10.cachix.org-1:/++Tmo/ghEqnLwsQJdXn04c262agRCK5PaPYz8NcVfo="
+  #     "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
+  #     "attic.e10.camp-e10:GRxL2EezM+0vZXpa9fePFqTM1qstxiV56tc5K3eDugk="
+  #   ];
+  # };
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -65,7 +65,7 @@
         ./hosts
       ];
 
-      systems = [ "x86_64-linux" "x86_64-darwin" ];
+      systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
 
       perSystem = { pkgs, system, ... }: {
         _module.args.pkgs = import inputs.nixpkgs {
