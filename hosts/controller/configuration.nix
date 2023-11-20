@@ -14,6 +14,7 @@
       profiles.databases.postgresql.default
       profiles.databases.postgresql.blocky
       profiles.telemetry.prometheus-nut-exporter
+      profiles.telemetry.prometheus-smokeping-exporter
     ] ++ [ ./disk-config.nix ./hardware-configuration.nix ];
 
   e10 = {
