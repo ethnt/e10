@@ -3,6 +3,7 @@
     core ++ web ++ aws ++ [
       profiles.monitoring.loki
       profiles.monitoring.prometheus
+      profiles.monitoring.rsyslogd
       profiles.observability.grafana.default
     ];
 
@@ -156,6 +157,18 @@
           "${hosts.controller.config.networking.hostName}:${
             toString
             hosts.controller.config.services.prometheus.exporters.nut.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "smokeping_controller";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.controller.config.networking.hostName}:${
+            toString
+            hosts.controller.config.services.prometheus.exporters.smokeping.port
           }"
         ];
       }];

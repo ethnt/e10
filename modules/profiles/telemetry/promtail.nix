@@ -10,7 +10,7 @@
       positions.filename = "/tmp/positions.yml";
 
       clients = [{
-        url = "http://${hosts.monitor.config.e10.privateAddress}:${
+        url = "http://${hosts.monitor.config.networking.hostName}:${
             toString
             hosts.monitor.config.services.loki.configuration.server.http_listen_port
           }/loki/api/v1/push";
