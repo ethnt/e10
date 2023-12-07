@@ -21,6 +21,7 @@
 
         packages = with pkgs; [
           deadnix
+          just
           statix
           sops
           inputs'.attic.packages.attic
