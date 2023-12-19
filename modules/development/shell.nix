@@ -20,6 +20,7 @@
         '';
 
         packages = with pkgs; [
+          cachix
           deadnix
           just
           statix

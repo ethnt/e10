@@ -11,11 +11,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1692225040,
-        "narHash": "sha256-jbQNvkgWGioiC6S39dZVyn6us8p/DlEvm5hQKEYkzDU=",
+        "lastModified": 1698258239,
+        "narHash": "sha256-qnhoYYIJ0L/P7H/f56lQUEvpzNlXh4sxuHpRERV+B44=",
         "owner": "zhaofengli",
         "repo": "attic",
-        "rev": "b43d12082e34bceb26038bdad0438fd68804cfcd",
+        "rev": "e9918bc6be268da6fa97af6ced15193d8a0421c0",
         "type": "github"
       },
       "original": {
