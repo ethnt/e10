@@ -16,11 +16,6 @@ with lib;
       description = "Private network address (within VPC or local network)";
     };
 
-    publicAddress = mkOption {
-      type = types.str;
-      description = "Public address on the internet";
-    };
-
     domain = mkOption {
       type = types.str;
       description = "Domain name for this host";

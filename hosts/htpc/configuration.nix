@@ -23,7 +23,6 @@
   e10 = {
     name = "htpc";
     privateAddress = "192.168.10.21";
-    publicAddress = "192.168.10.208";
     domain = "htpc.e10.camp";
   };
 

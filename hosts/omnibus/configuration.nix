@@ -21,7 +21,6 @@
   e10 = {
     name = "omnibus";
     privateAddress = "192.168.10.11";
-    publicAddress = "192.168.10.207";
     domain = "omnibus.e10.camp";
   };
 
