@@ -20,7 +20,6 @@
   e10 = {
     name = "controller";
     privateAddress = "192.168.1.201";
-    publicAddress = "192.168.1.201";
     domain = "controller";
   };
 

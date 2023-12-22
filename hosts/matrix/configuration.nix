@@ -15,7 +15,6 @@
   e10 = {
     name = "matrix";
     privateAddress = "192.168.10.31";
-    publicAddress = "192.168.10.31";
     domain = "matrix.e10.camp";
   };
 
