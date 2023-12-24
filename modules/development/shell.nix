@@ -1,7 +1,7 @@
 { inputs, ... }: {
   imports = [ inputs.devenv.flakeModule ];
 
-  perSystem = { inputs', pkgs, ... }: {
+  perSystem = { pkgs, ... }: {
     devenv.shells.default = _:
       {
         # TODO: Move this to be within the `keys/` directory?
@@ -13,20 +13,13 @@
             export ${key}=$(${sops} -d --extract '["${key}"]' ./secrets.json)
           '';
         in ''
-          export SOPS_AGE_KEY_FILE="/Users/$USER/.config/sops/age/keys.txt"
+          export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
 
           ${setSopsValueToEnvironmentVariable "AWS_ACCESS_KEY_ID"}
           ${setSopsValueToEnvironmentVariable "AWS_SECRET_ACCESS_KEY"}
         '';
 
-        packages = with pkgs; [
-          cachix
-          deadnix
-          just
-          statix
-          sops
-          inputs'.attic.packages.attic
-        ];
+        packages = with pkgs; [ cachix deadnix just statix sops ];
       } // {
         containers = pkgs.lib.mkForce { };
       };

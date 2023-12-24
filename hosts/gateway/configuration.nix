@@ -38,19 +38,6 @@
       port = hosts.gateway.config.services.headscale.port;
     };
 
-    "attic.e10.camp" = mkVirtualHost {
-      host = hosts.omnibus;
-      port = 8080;
-      extraConfig = ''
-        client_header_buffer_size 64k;
-      '';
-      extraSettings = {
-        http3 = false;
-        http2 = false;
-        kTLS = true;
-      };
-    };
-
     "blocky.e10.camp" = mkVirtualHost {
       host = hosts.controller;
       port = hosts.controller.config.services.blocky.settings.ports.http;
