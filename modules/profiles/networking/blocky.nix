@@ -85,11 +85,11 @@
           }";
       };
       ede.enable = true;
-      queryLog = {
-        type = "postgresql";
-        target = "postgres://blocky?host=/run/postgresql";
-        logRetentionDays = 90;
-      };
+      # queryLog = {
+      #   type = "postgresql";
+      #   target = "postgres://blocky?host=/run/postgresql";
+      #   logRetentionDays = 90;
+      # };
     };
   };
 

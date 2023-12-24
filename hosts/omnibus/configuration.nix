@@ -1,4 +1,4 @@
-{ config, suites, profiles, ... }: {
+{ config, pkgs, suites, profiles, ... }: {
   imports = with suites;
     core ++ homelab ++ proxmox-vm ++ [
       profiles.telemetry.smartd
@@ -10,8 +10,6 @@
       profiles.users.ethan
       profiles.users.proxmox
       profiles.databases.postgresql.default
-      profiles.databases.postgresql.atticd
-      profiles.services.atticd.default
       profiles.power.client.tripp-lite
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
@@ -63,6 +61,12 @@
     repoName = "${config.networking.hostName}-files";
     paths = [ "/data/files" ];
   };
+
+  programs.fish.shellAliases.iotop = ''
+    bash -c "sudo sysctl kernel.task_delayacct=1 && sudo ${
+      pkgs.lib.getExe pkgs.iotop
+    } ; sudo sysctl kernel.task_delayacct=0"
+  '';
 
   system.stateVersion = "23.11";
 }
