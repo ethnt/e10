@@ -1,18 +1,19 @@
-{ suites, profiles, ... }: {
+{ lib, suites, profiles, ... }: {
   imports = with suites;
     core ++ [
-      profiles.power.server.apc
-      profiles.networking.unifi
-      profiles.networking.blocky
+      profiles.databases.postgresql.blocky
+      profiles.databases.postgresql.default
+      profiles.databases.redis.blocky
       profiles.filesystems.hybrid-boot
       profiles.filesystems.zfs
-      profiles.hardware.intel
       profiles.hardware.hidpi
+      profiles.hardware.intel
       profiles.hardware.ssd
       profiles.hardware.thermald
-      profiles.databases.redis.blocky
-      profiles.databases.postgresql.default
-      profiles.databases.postgresql.blocky
+      profiles.networking.blocky
+      profiles.networking.tailscale.exit-node
+      profiles.networking.unifi
+      profiles.power.server.apc
       profiles.telemetry.prometheus-nut-exporter
       profiles.telemetry.prometheus-smokeping-exporter
     ] ++ [ ./disk-config.nix ./hardware-configuration.nix ];
