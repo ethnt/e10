@@ -26,3 +26,5 @@ repl:
 
 format:
     nix fmt
+
+alias fmt := format

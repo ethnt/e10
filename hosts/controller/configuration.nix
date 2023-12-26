@@ -1,4 +1,4 @@
-{ lib, suites, profiles, ... }: {
+{ suites, profiles, ... }: {
   imports = with suites;
     core ++ [
       profiles.databases.postgresql.blocky
