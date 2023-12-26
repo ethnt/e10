@@ -12,21 +12,21 @@ provider "aws" {
 
 provider "proxmox" {
   alias               = "anise"
-  pm_api_url          = "https://192.168.10.10:8006/api2/json"
+  pm_api_url          = "https://anise:8006/api2/json"
   pm_api_token_id     = data.sops_file.secrets.data["ANISE_PM_API_TOKEN_ID"]
   pm_api_token_secret = data.sops_file.secrets.data["ANISE_PM_API_TOKEN_SECRET"]
 }
 
 provider "proxmox" {
   alias               = "basil"
-  pm_api_url          = "https://192.168.10.20:8006/api2/json"
+  pm_api_url          = "https://basil:8006/api2/json"
   pm_api_token_id     = data.sops_file.secrets.data["BASIL_PM_API_TOKEN_ID"]
   pm_api_token_secret = data.sops_file.secrets.data["BASIL_PM_API_TOKEN_SECRET"]
 }
 
 provider "proxmox" {
   alias               = "cardamom"
-  pm_api_url          = "https://192.168.10.30:8006/api2/json"
+  pm_api_url          = "https://cardamom:8006/api2/json"
   pm_api_token_id     = data.sops_file.secrets.data["CARDAMOM_PM_API_TOKEN_ID"]
   pm_api_token_secret = data.sops_file.secrets.data["CARDAMOM_PM_API_TOKEN_SECRET"]
 }

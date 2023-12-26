@@ -6,6 +6,7 @@ provider "registry.terraform.io/carlpett/sops" {
   constraints = "0.7.2"
   hashes = [
     "h1:+A1/RJ3eNVQHDFHjol70EfC5Yh9e78WMXxh1uoxlAYQ=",
+    "h1:nWrLW+9JjGLwfss4T7pTaE+JiZlBJQGoYxt4pDe5OE8=",
     "h1:vVGdyTEh1393CXc/Dt7/INj0pG9V2kA9dZ02laGj5+c=",
     "zh:43f218054ea3a72c9756bf989aeebb9d0f23b66fd08e9fb4ae75d4f921295e82",
     "zh:57fd326388042a6b7ecd60f740f81e5ef931546c4f068f054e7df34acf65d190",
@@ -22,6 +23,7 @@ provider "registry.terraform.io/hashicorp/aws" {
   constraints = "~> 5.0"
   hashes = [
     "h1:C2XSEyqWul0FwJjRqz0o1es91fm5PLlQY1jAopatkR4=",
+    "h1:TjctPnxYpg1RZaU1dGW8BSvdmf0t0jsNGU1rEmNIXns=",
     "h1:f3SxpLlSueYKYXz5zpzP90MUN3cJ+omnTHXV9vUtOvM=",
     "zh:032424d4686ce2ff7c5a4a738491635616afbf6e06b3e7e6a754baa031d1265d",
     "zh:1e530b4020544ec94e1fe7b1e4296640eb12cf1bf4f79cd6429ff2c4e6fffaf3",
@@ -46,6 +48,7 @@ provider "registry.terraform.io/hashicorp/external" {
   hashes = [
     "h1:/4FnL0cF4qhQ1ASUYUZG/MZB2d+DvK34tKXI3DQQipY=",
     "h1:9rJggijNdRdFk//ViQPGZdK0xu9XU/9qBDijNsZJMg0=",
+    "h1:gznGscVJ0USxy4CdihpjRKPsKvyGr/zqPvBoFLJTQDc=",
     "zh:001e2886dc81fc98cf17cf34c0d53cb2dae1e869464792576e11b0f34ee92f54",
     "zh:2eeac58dd75b1abdf91945ac4284c9ccb2bfb17fa9bdb5f5d408148ff553b3ee",
     "zh:2fc39079ba61411a737df2908942e6970cb67ed2f4fb19090cd44ce2082903dd",
@@ -65,6 +68,7 @@ provider "registry.terraform.io/hashicorp/local" {
   version = "2.4.0"
   hashes = [
     "h1:Bs7LAkV/iQTLv72j+cTMrvx2U3KyXrcVHaGbdns1NcE=",
+    "h1:ZUEYUmm2t4vxwzxy1BvN1wL6SDWrDxfH7pxtzX8c6d0=",
     "h1:iPUE8YWbDWCNRq8+ArRdpbZV95TWYDvidXJin8e/ymA=",
     "zh:53604cd29cb92538668fe09565c739358dc53ca56f9f11312b9d7de81e48fab9",
     "zh:66a46e9c508716a1c98efbf793092f03d50049fa4a83cd6b2251e9a06aca2acf",
@@ -84,6 +88,7 @@ provider "registry.terraform.io/hashicorp/local" {
 provider "registry.terraform.io/hashicorp/tls" {
   version = "4.0.4"
   hashes = [
+    "h1:GZcFizg5ZT2VrpwvxGBHQ/hO9r6g0vYdQqx3bFD3anY=",
     "h1:O6ouLbudQhS4tj++kn7j9NRtg/tZ3ek7HSWcyPiUR4s=",
     "h1:Wd3RqmQW60k2QWPN4sK5CtjGuO1d+CRNXgC+D4rKtXc=",
     "zh:23671ed83e1fcf79745534841e10291bbf34046b27d6e68a5d0aab77206f4a55",
@@ -105,6 +110,7 @@ provider "registry.terraform.io/tailscale/tailscale" {
   version     = "0.13.7"
   constraints = "0.13.7"
   hashes = [
+    "h1:IRg5A6z9R59yDRJuXjPrbyEy3gLgVun+blPTl3eT2CM=",
     "h1:IzKYGNqenFIq5OmDPaCD4ylGAIxG2drVPzurMIA7wjg=",
     "h1:TGMP6qlcWe9koqh0+akztZYWPjGUM35XN8xzqcXCV/U=",
     "zh:0f1655340771851db36d2994bf04481444a873bb555b3eef20a769c3c884aff4",
@@ -129,6 +135,7 @@ provider "registry.terraform.io/telmate/proxmox" {
   constraints = "2.9.14"
   hashes = [
     "h1:KWPlH228/+BiH8OOY754MTTaUkLJLN/1krSSzqiyNsE=",
+    "h1:asZa5VKbWeCpLNv1JAutt5CdD27HaGFjxxcr6mvn8Ps=",
     "zh:0d049d33f705e5b814d30028770c084151218439424e99684ce31d7e26a720b5",
     "zh:20b1c64ed56d81de95f3f37b82b45b4654c0de26670c0e87a474c5cce13cd015",
     "zh:2946058abd1d8e50e475b9ec39781eb02576b40dbd80f4653fade4493a4514c6",
