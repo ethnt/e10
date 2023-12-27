@@ -25,10 +25,7 @@ let
     , configuration ? ./${hostname}/configuration.nix, ... }:
     withSystem system ({ pkgs, ... }:
       let
-        baseConfiguration = _: {
-          nixpkgs = { inherit pkgs; };
-          networking.hostName = hostname;
-        };
+        baseConfiguration = _: { networking.hostName = hostname; };
         modules = commonModules ++ extraModules
           ++ [ baseConfiguration configuration ];
 

@@ -14,7 +14,6 @@
       profiles.media-management.sonarr
       profiles.media-management.tautulli
       profiles.media-management.xteve
-      profiles.power.client.tripp-lite
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
