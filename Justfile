@@ -3,17 +3,17 @@ colmena_flags := "-v"
 default:
     @just --list
 
-build:
-    colmena build {{ colmena_flags }}
-
-build-host host:
+build host:
     colmena build --on={{ host }} {{ colmena_flags }}
 
-apply:
-    colmena apply {{ colmena_flags }}
+build-all:
+    colmena build {{ colmena_flags }}
 
-apply-host host:
+apply host:
     colmena apply --on={{ host }} {{ colmena_flags }}
+
+apply-all:
+    colmena apply {{ colmena_flags }}
 
 update-input input:
     nix flake lock --update-input {{ input }}
