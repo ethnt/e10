@@ -91,41 +91,6 @@ resource "proxmox_vm_qemu" "htpc" {
   }
 }
 
-resource "proxmox_vm_qemu" "builder" {
-  provider = proxmox.basil
-
-  name        = "builder"
-  target_node = "basil"
-  iso         = "omnibus:iso/latest-nixos-minimal-x86_64-linux.iso"
-  vmid        = 102
-  cpu         = "host"
-  memory      = 32768
-  balloon     = 0
-  sockets     = 1
-  cores       = 8
-  qemu_os     = "other"
-  scsihw      = "virtio-scsi-single"
-  # boot        = "order=scsi0"
-
-  onboot = true
-  agent  = 1
-
-  bios = "seabios"
-
-  network {
-    model  = "virtio"
-    bridge = "vmbr0"
-  }
-
-  disk {
-    type    = "scsi"
-    size    = "128G"
-    storage = "local-zfs"
-    discard = "on"
-    format  = "raw"
-  }
-}
-
 resource "proxmox_vm_qemu" "matrix" {
   provider = proxmox.cardamom
 

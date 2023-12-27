@@ -18,11 +18,15 @@ in {
       '';
 
       e10-ssh = pkgs.writeShellScriptBin "e10-ssh" ''
-        ssh -F ${sshConfig} $@
+        ${pkgs.lib.getExe' pkgs.openssh "ssh"} -F ${sshConfig} $@
       '';
 
       e10-mosh = pkgs.writeShellScriptBin "e10-mosh" ''
         ${pkgs.lib.getExe' pkgs.mosh "mosh"} --ssh="ssh -F ${sshConfig}" $@
+      '';
+
+      e10-scp = pkgs.writeShellScriptBin "e10-scp" ''
+        ${pkgs.lib.getExe' pkgs.openssh "scp"} -F ${sshConfig} $@
       '';
     in _: {
       env.SSH_CONFIG_FILE = sshConfig;
@@ -31,6 +35,7 @@ in {
         nixos-anywhere.packages.nixos-anywhere
         e10-ssh
         e10-mosh
+        e10-scp
       ];
     };
   };

@@ -13,7 +13,7 @@
       profiles.networking.blocky
       profiles.networking.tailscale.exit-node
       profiles.networking.unifi
-      profiles.power.server.apc
+      profiles.power.apc
       profiles.telemetry.prometheus-nut-exporter
       profiles.telemetry.prometheus-smokeping-exporter
     ] ++ [ ./disk-config.nix ./hardware-configuration.nix ];

@@ -23,12 +23,9 @@ let
   mkHost = hostname:
     { system, extraModules ? [ ]
     , configuration ? ./${hostname}/configuration.nix, ... }:
-    withSystem system ({ pkgs, ... }:
+    withSystem system ({ ... }:
       let
-        baseConfiguration = _: {
-          nixpkgs = { inherit pkgs; };
-          networking.hostName = hostname;
-        };
+        baseConfiguration = _: { networking.hostName = hostname; };
         modules = commonModules ++ extraModules
           ++ [ baseConfiguration configuration ];
 
