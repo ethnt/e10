@@ -112,9 +112,9 @@ resource "proxmox_vm_qemu" "builder" {
   bios = "seabios"
 
   network {
-    model     = "virtio"
-    bridge    = "vmbr0"
-    tag       = 10
+    model  = "virtio"
+    bridge = "vmbr0"
+    tag    = 10
     # macaddr   = "CE:22:2C:7F:DE:79"
     link_down = false
     firewall  = false
@@ -129,8 +129,8 @@ resource "proxmox_vm_qemu" "builder" {
     storage = "local-zfs"
     discard = "on"
     # file    = "vm-101-disk-0"
-    format  = "raw"
-    slot    = 0
+    format = "raw"
+    slot   = 0
     # volume  = "local-zfs:vm-101-disk-0"
   }
 }

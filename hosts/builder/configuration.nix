@@ -1,4 +1,4 @@
-{ config, lib, suites, profiles, hosts, ... }: {
+{ suites, ... }: {
   imports = with suites;
     core ++ homelab ++ proxmox-vm
     ++ [ ./hardware-configuration.nix ./disk-config.nix ];
