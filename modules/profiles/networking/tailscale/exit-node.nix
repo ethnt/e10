@@ -5,5 +5,5 @@
   };
 
   services.tailscale.extraUpFlags =
-    lib.mkAfter [ "--advertise-exit-node" "--advertise-routes=192.168.0.0/24" ];
+    lib.mkAfter [ "--advertise-exit-node" "--advertise-routes=192.168.10.0/24" ];
 }
