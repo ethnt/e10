@@ -60,6 +60,17 @@
       }];
     }
     {
+      job_name = "host_builder";
+      static_configs = [{
+        targets = [
+          "${hosts.builder.config.networking.hostName}:${
+            toString
+            hosts.builder.config.services.prometheus.exporters.node.port
+          }"
+        ];
+      }];
+    }
+    {
       job_name = "blocky";
       static_configs = [{ targets = [ "blocky.e10.camp" ]; }];
     }
