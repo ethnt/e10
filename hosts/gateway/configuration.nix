@@ -78,6 +78,11 @@
       port = hosts.htpc.config.services.tautulli.port;
     };
 
+    "cache.builder.e10.camp" = mkVirtualHost {
+      host = hosts.builder;
+      port = hosts.builder.config.services.nix-serve.port;
+    };
+
     "e10.video" = mkVirtualHost {
       host = hosts.htpc;
       port = hosts.htpc.config.services.plex.port;
