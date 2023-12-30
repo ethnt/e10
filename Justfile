@@ -34,3 +34,6 @@ age-from-host host:
 
 update-secret-files:
     find -E . -regex '^.*secrets\.(json|yml)' -execdir sops updatekeys {} -y ';'
+
+nixos-anywhere hostname host:
+    nixos-anywhere --flake .#{{ hostname }} --build-on-remote root@{{ host }}

@@ -104,7 +104,7 @@ resource "proxmox_vm_qemu" "builder" {
   cores       = 8
   qemu_os     = "other"
   scsihw      = "virtio-scsi-single"
-  # boot        = "order=scsi0"
+  boot        = "order=scsi0"
 
   onboot = true
   agent  = 1
@@ -112,15 +112,15 @@ resource "proxmox_vm_qemu" "builder" {
   bios = "seabios"
 
   network {
-    model  = "virtio"
-    bridge = "vmbr0"
-    tag    = 10
-    # macaddr   = "CE:22:2C:7F:DE:79"
+    model     = "virtio"
+    bridge    = "vmbr0"
+    tag       = 10
+    macaddr   = "3A:7D:CB:E6:11:D9"
     link_down = false
     firewall  = false
-    # mtu       = 0
-    # queues    = 0
-    # rate      = 0
+    mtu       = 0
+    queues    = 0
+    rate      = 0
   }
 
   disk {
@@ -128,10 +128,10 @@ resource "proxmox_vm_qemu" "builder" {
     size    = "2048G"
     storage = "local-zfs"
     discard = "on"
-    # file    = "vm-101-disk-0"
-    format = "raw"
-    slot   = 0
-    # volume  = "local-zfs:vm-101-disk-0"
+    file    = "vm-102-disk-0"
+    format  = "raw"
+    slot    = 0
+    volume  = "local-zfs:vm-102-disk-0"
   }
 }
 

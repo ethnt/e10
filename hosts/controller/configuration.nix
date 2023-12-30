@@ -16,6 +16,7 @@
       profiles.power.apc
       profiles.telemetry.prometheus-nut-exporter
       profiles.telemetry.prometheus-smokeping-exporter
+      profiles.nix.remote-builders.builder
     ] ++ [ ./disk-config.nix ./hardware-configuration.nix ];
 
   e10 = {

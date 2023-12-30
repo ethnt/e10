@@ -1,6 +1,6 @@
-{ suites, ... }: {
+{ suites, profiles, ... }: {
   imports = with suites;
-    core ++ homelab ++ proxmox-vm
+    core ++ homelab ++ proxmox-vm ++ [ profiles.remote-builder.builder ]
     ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
