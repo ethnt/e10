@@ -4,6 +4,8 @@
     "net.ipv6.conf.all.forwarding" = 1;
   };
 
-  services.tailscale.extraUpFlags =
-    lib.mkAfter [ "--advertise-exit-node" "--advertise-routes=192.168.0.0/24" ];
+  services.tailscale.extraUpFlags = lib.mkAfter [
+    "--advertise-exit-node"
+    "--advertise-routes=192.168.10.0/24"
+  ];
 }

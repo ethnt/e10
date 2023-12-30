@@ -28,3 +28,12 @@ format:
     nix fmt
 
 alias fmt := format
+
+age-from-host host:
+    nix shell nixpkgs#ssh-to-age --command sh -c "ssh-keyscan {{ host }} | ssh-to-age"
+
+update-secret-files:
+    find -E . -regex '^.*secrets\.(json|yml)' -execdir sops updatekeys {} -y ';'
+
+nixos-anywhere hostname host:
+    nixos-anywhere --flake .#{{ hostname }} --build-on-remote root@{{ host }}
