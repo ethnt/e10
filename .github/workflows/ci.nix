@@ -1,6 +1,6 @@
 {
   name = "CI";
-  on = { push = { }; };
+  on.push = { };
   jobs = {
     check = {
       "runs-on" = "ubuntu-latest";
@@ -11,12 +11,9 @@
         }
         {
           name = "Install Nix";
-          uses = "cachix/install-nix-action@v22";
+          uses = "DeterminateSystems/nix-installer-action@main";
           "with" = {
-            extra_nix_config = ''
-              allow-import-from-derivation = true
-            '';
-            nix_path = "nixpkgs=channel:nixos-unstable";
+            extra-conf = "allow-import-from-derivation = true";
           };
         }
         {
@@ -30,7 +27,7 @@
         }
         {
           run = ''
-            nix flake check --impure --show-trace
+            nix flake -Lv check --impure --all-systems --accept-flake-config --show-trace
           '';
         }
       ];
