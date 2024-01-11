@@ -14,7 +14,7 @@
           uses = "cachix/install-nix-action@v22";
           "with" = {
             extra_nix_config = ''
-              allow-import-from-derivation = true;
+              allow-import-from-derivation = true
             '';
             nix_path = "nixpkgs=channel:nixos-unstable";
           };
