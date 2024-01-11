@@ -53,7 +53,7 @@
         ./lib
 
         ./modules/development/shell.nix
-        ./modules/development/dhall.nix
+        ./modules/development/ci.nix
         ./modules/development/treefmt.nix
 
         ./modules/deploy/shell.nix
