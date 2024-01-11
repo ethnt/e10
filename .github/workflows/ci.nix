@@ -12,9 +12,7 @@
         {
           name = "Install Nix";
           uses = "DeterminateSystems/nix-installer-action@main";
-          "with" = {
-            extra-conf = "allow-import-from-derivation = true";
-          };
+          "with" = { extra-conf = "allow-import-from-derivation = true"; };
         }
         {
           name = "Use Cachix store";

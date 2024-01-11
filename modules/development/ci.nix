@@ -1,5 +1,5 @@
 {
-  perSystem = { pkgs, lib, ... }: {
+  perSystem = { pkgs, ... }: {
     apps = {
       generate-ci.program = pkgs.writeShellApplication {
         name = "generate-ci";
