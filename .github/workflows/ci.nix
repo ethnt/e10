@@ -25,7 +25,7 @@
         }
         {
           run = ''
-            nix flake -Lv check --impure --all-systems --accept-flake-config --show-trace
+            nix flake check --impure --all-systems --accept-flake-config --show-trace
           '';
         }
       ];
