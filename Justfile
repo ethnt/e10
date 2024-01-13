@@ -37,3 +37,6 @@ update-secret-files:
 
 nixos-anywhere hostname host:
     nixos-anywhere --flake .#{{ hostname }} --build-on-remote root@{{ host }}
+
+generate-ci:
+    nix run .#generate-ci
