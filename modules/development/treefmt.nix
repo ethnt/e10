@@ -9,6 +9,7 @@
           deadnix.enable = true;
           terraform.enable = true;
           nixfmt.enable = true;
+          statix.enable = true;
         };
       };
     in {

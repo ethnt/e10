@@ -234,7 +234,7 @@ in {
     users.users = mkIf (cfg.user == "nut") {
       nut = {
         isSystemUser = true;
-        group = cfg.group;
+        inherit (cfg) group;
         home = cfg.stateDir;
         uid = 3094;
       };

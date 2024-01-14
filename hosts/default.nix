@@ -23,7 +23,7 @@ let
   mkHost = hostname:
     { system, extraModules ? [ ]
     , configuration ? ./${hostname}/configuration.nix, ... }:
-    withSystem system ({ ... }:
+    withSystem system (_:
       let
         baseConfiguration = _: { networking.hostName = hostname; };
         modules = commonModules ++ extraModules
