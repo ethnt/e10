@@ -9,7 +9,6 @@
 
   e10 = {
     name = "monitor";
-    privateAddress = "100.122.170.88";
     domain = "monitor.e10.camp";
   };
 
