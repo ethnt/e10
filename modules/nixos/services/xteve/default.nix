@@ -47,7 +47,7 @@ in {
     users.users = mkIf (cfg.user == "xteve") {
       xteve = {
         isSystemUser = true;
-        group = cfg.group;
+        inherit (cfg) group;
         home = cfg.dataDir;
         uid = 3440;
       };

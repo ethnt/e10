@@ -34,7 +34,7 @@
 
     "headscale.e10.camp" = mkVirtualHost {
       host = hosts.gateway;
-      port = hosts.gateway.config.services.headscale.port;
+      inherit (hosts.gateway.config.services.headscale) port;
     };
 
     "blocky.e10.camp" = mkVirtualHost {
@@ -44,22 +44,22 @@
 
     "prowlarr.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
-      port = hosts.htpc.config.services.prowlarr.port;
+      inherit (hosts.htpc.config.services.prowlarr) port;
     };
 
     "radarr.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
-      port = hosts.htpc.config.services.radarr.port;
+      inherit (hosts.htpc.config.services.radarr) port;
     };
 
     "sonarr.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
-      port = hosts.htpc.config.services.sonarr.port;
+      inherit (hosts.htpc.config.services.sonarr) port;
     };
 
     "sabnzbd.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
-      port = hosts.htpc.config.services.sabnzbd.port;
+      inherit (hosts.htpc.config.services.sabnzbd) port;
       extraConfig = ''
         client_max_body_size 256M;
       '';
@@ -72,22 +72,22 @@
 
     "overseerr.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
-      port = hosts.htpc.config.services.overseerr.port;
+      inherit (hosts.htpc.config.services.overseerr) port;
     };
 
     "tautulli.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
-      port = hosts.htpc.config.services.tautulli.port;
+      inherit (hosts.htpc.config.services.tautulli) port;
     };
 
     "cache.builder.e10.camp" = mkVirtualHost {
       host = hosts.builder;
-      port = hosts.builder.config.services.nix-serve.port;
+      inherit (hosts.builder.config.services.nix-serve) port;
     };
 
     "e10.video" = mkVirtualHost {
       host = hosts.htpc;
-      port = hosts.htpc.config.services.plex.port;
+      inherit (hosts.htpc.config.services.plex) port;
       extraConfig = ''
         send_timeout 100m;
         ssl_stapling on;
