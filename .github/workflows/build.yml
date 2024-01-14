@@ -1,5 +1,6 @@
 jobs:
-  check:
+  buildSystem:
+    name: Build system
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -14,9 +15,22 @@ jobs:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         extraPullNames: e10,nix-community
         name: e10
-    - run: 'nix flake check --impure --all-systems --accept-flake-config --show-trace
+    - run: 'nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+        --accept-flake-config --show-trace
 
         '
-name: CI
+    strategy:
+      matrix:
+        host:
+        - builder
+        - controller
+        - gateway
+        - htpc
+        - matrix
+        - monitor
+        - omnibus
+name: Build
 'on':
-  push: {}
+  push:
+    branches:
+    - main
