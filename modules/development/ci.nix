@@ -24,8 +24,8 @@ in {
         }
       ];
 
-      workflow = {
-        name = "CI";
+      checkWorkflow = {
+        name = "Check";
         on.push = { };
         jobs = {
           check = {
@@ -37,6 +37,13 @@ in {
               '';
             }];
           };
+        };
+      };
+
+      buildWorkflow = {
+        name = "Build";
+        on.pull_request = { };
+        jobs = {
           buildSystem = {
             name = "Build system";
             "runs-on" = "ubuntu-latest";
@@ -49,16 +56,24 @@ in {
           };
         };
       };
-      ci = inputs.nixago.lib.${system}.make {
-        data = workflow;
-        output = ".github/workflows/ci.yml";
+
+      check = inputs.nixago.lib.${system}.make {
+        data = checkWorkflow;
+        output = ".github/workflows/check.yml";
+        format = "yaml";
+        hook.mode = "copy";
+      };
+      build = inputs.nixago.lib.${system}.make {
+        data = buildWorkflow;
+        output = ".github/workflows/build.yml";
         format = "yaml";
         hook.mode = "copy";
       };
     in {
       apps = {
         generate-ci.program = pkgs.writeShellScriptBin "generate-ci" ''
-          ${ci.shellHook}
+          ${check.shellHook}
+          ${build.shellHook}
         '';
       };
     };
