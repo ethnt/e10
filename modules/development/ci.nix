@@ -42,10 +42,7 @@ in {
 
       buildWorkflow = {
         name = "Build";
-        on = {
-          pull_request = { };
-          push.branches = [ "main" ];
-        };
+        on.push.branches = [ "main" ];
         jobs = {
           buildSystem = {
             name = "Build system";

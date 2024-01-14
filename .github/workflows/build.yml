@@ -31,7 +31,6 @@ jobs:
         - omnibus
 name: Build
 'on':
-  pull_request: {}
   push:
     branches:
     - main
