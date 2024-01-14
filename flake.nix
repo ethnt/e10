@@ -29,7 +29,7 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    haumea.url = "github:nix-community/haumea/v0.2.2";
+    haumea.url = "github:nix-community/haumea";
     haumea.inputs.nixpkgs.follows = "nixpkgs";
 
     sops-nix.url = "github:Mic92/sops-nix";

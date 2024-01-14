@@ -3,7 +3,6 @@
 
   e10 = {
     name = "gateway";
-    privateAddress = "100.119.226.120";
     domain = "gateway.e10.camp";
   };
 
@@ -61,6 +60,9 @@
     "sabnzbd.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
       port = hosts.htpc.config.services.sabnzbd.port;
+      extraConfig = ''
+        client_max_body_size 256M;
+      '';
     };
 
     "bazarr.e10.camp" = mkVirtualHost {

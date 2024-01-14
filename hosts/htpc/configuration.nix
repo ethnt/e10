@@ -26,7 +26,7 @@
   };
 
   networking.interfaces.enp6s18.ipv4.addresses = [{
-    address = "192.168.10.21";
+    address = config.e10.privateAddress;
     prefixLength = 24;
   }];
 
