@@ -10,6 +10,8 @@
       profiles.users.ethan
       profiles.users.proxmox
       profiles.databases.postgresql.default
+      profiles.databases.postgresql.atticd
+      profiles.services.atticd.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
