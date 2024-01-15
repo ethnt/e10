@@ -22,6 +22,15 @@ in {
             name = "e10";
           };
         }
+        {
+          name = "Use Attic store";
+          uses = "icewind1991/attic-action@v1";
+          "with" = {
+            name = "e10";
+            instance = "https://cache.e10.camp";
+            authToken = "\${{ secrets.ATTIC_AUTH_TOKEN }}";
+          };
+        }
       ];
 
       checkWorkflow = {
