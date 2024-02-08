@@ -10,7 +10,6 @@
       profiles.users.ethan
       profiles.users.proxmox
       profiles.databases.postgresql.default
-      profiles.telemetry.telegraf.zfs
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
