@@ -32,11 +32,6 @@
       port = hosts.matrix.config.services.miniflux.config.PORT;
     };
 
-    "headscale.e10.camp" = mkVirtualHost {
-      host = hosts.gateway;
-      inherit (hosts.gateway.config.services.headscale) port;
-    };
-
     "blocky.e10.camp" = mkVirtualHost {
       host = hosts.controller;
       port = hosts.controller.config.services.blocky.settings.ports.http;
@@ -126,6 +121,54 @@
         proxy_redirect off;
         proxy_buffering off;
       '';
+    };
+
+    "blocky.e10.network" = mkVirtualHost {
+      host = hosts.controller;
+      port = hosts.controller.config.services.blocky.settings.ports.http;
+    };
+
+    "prowlarr.e10.network" = mkVirtualHost {
+      host = hosts.htpc;
+      inherit (hosts.htpc.config.services.prowlarr) port;
+    };
+
+    "radarr.e10.network" = mkVirtualHost {
+      host = hosts.htpc;
+      inherit (hosts.htpc.config.services.radarr) port;
+    };
+
+    "sonarr.e10.network" = mkVirtualHost {
+      host = hosts.htpc;
+      inherit (hosts.htpc.config.services.sonarr) port;
+    };
+
+    "sabnzbd.e10.network" = mkVirtualHost {
+      host = hosts.htpc;
+      inherit (hosts.htpc.config.services.sabnzbd) port;
+      extraConfig = ''
+        client_max_body_size 256M;
+      '';
+    };
+
+    "bazarr.e10.network" = mkVirtualHost {
+      host = hosts.htpc;
+      port = hosts.htpc.config.services.bazarr.listenPort;
+    };
+
+    "overseerr.e10.network" = mkVirtualHost {
+      host = hosts.htpc;
+      inherit (hosts.htpc.config.services.overseerr) port;
+    };
+
+    "tautulli.e10.network" = mkVirtualHost {
+      host = hosts.htpc;
+      inherit (hosts.htpc.config.services.tautulli) port;
+    };
+
+    "cache.builder.e10.network" = mkVirtualHost {
+      host = hosts.builder;
+      inherit (hosts.builder.config.services.nix-serve) port;
     };
   };
 

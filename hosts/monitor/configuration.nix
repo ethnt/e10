@@ -28,9 +28,29 @@
         '';
       };
     };
+
+    "grafana.e10.network" = {
+      http2 = true;
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass =
+          "http://${config.services.grafana.settings.server.http_addr}:${
+            toString config.services.grafana.settings.server.http_port
+          }";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_set_header Host $host;
+        '';
+      };
+    };
   };
 
   services.prometheus.scrapeConfigs = [
+    {
+      job_name = "host_router";
+      static_configs = [{ targets = [ "router:9100" ]; }];
+    }
     {
       job_name = "host_anise";
       static_configs = [{ targets = [ "anise:9100" ]; }];
@@ -59,7 +79,7 @@
       }];
     }
     {
-      job_name = "host_builder";
+      job_name = "node_builder";
       static_configs = [{
         targets = [
           "${hosts.builder.config.networking.hostName}:${
@@ -181,7 +201,26 @@
           }"
         ];
       }];
+      scrape_interval = "5s";
     }
+    {
+      job_name = "unifi_controller";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.controller.config.networking.hostName}:${
+            toString
+            hosts.controller.config.services.prometheus.exporters.unpoller.port
+          }"
+        ];
+      }];
+    }
+    # {
+    #   job_name = "metrics_omnibus";
+    #   metrics_path = "/metrics";
+    #   static_configs =
+    #     [{ targets = [ "${hosts.omnibus.config.networking.hostName}:9273" ]; }];
+    # }
   ];
 
   e10.services.backup.jobs.system.exclude = lib.mkAfter [ "/var/lib/loki/wal" ];

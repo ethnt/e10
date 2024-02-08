@@ -2,7 +2,10 @@
   services.grafana = {
     enable = true;
 
-    declarativePlugins = with pkgs.grafanaPlugins; [ grafana-piechart-panel ];
+    declarativePlugins = with pkgs.grafanaPlugins; [
+      grafana-piechart-panel
+      grafana-clock-panel
+    ];
 
     settings = {
       server = {
@@ -56,6 +59,42 @@
         {
           name = "systemd Service Dashboard";
           options.path = ./provisioning/systemd.json;
+        }
+        {
+          name = "UPS Status";
+          options.path = ./provisioning/nut.json;
+        }
+        {
+          name = "ZFS Pool Status";
+          options.path = ./provisioning/zfs.json;
+        }
+        {
+          name = "Blocky Metrics";
+          options.path = ./provisioning/blocky.json;
+        }
+        {
+          name = "Blocky Queries";
+          options.path = ./provisioning/blocky-queries.json;
+        }
+        {
+          name = "Smokeping";
+          options.path = ./provisioning/smokeping.json;
+        }
+        {
+          name = "Unifi: Client Insights";
+          options.path = ./provisioning/unifi/clients.json;
+        }
+        {
+          name = "Unifi: Switch Insights";
+          options.path = ./provisioning/unifi/switches.json;
+        }
+        {
+          name = "Unifi: AP Insights";
+          options.path = ./provisioning/unifi/aps.json;
+        }
+        {
+          name = "Unifi: Network Site Insights";
+          options.path = ./provisioning/unifi/sites.json;
         }
       ];
     };
