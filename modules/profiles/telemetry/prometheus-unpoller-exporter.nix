@@ -4,7 +4,7 @@
       sopsFile = ./secrets.yml;
       format = "yaml";
       owner = config.services.prometheus.exporters.unpoller.user;
-      group = config.services.prometheus.exporters.unpoller.group;
+      inherit (config.services.prometheus.exporters.unpoller) group;
     };
   };
 
