@@ -13,7 +13,7 @@ apply host:
     colmena apply --on={{ host }} {{ colmena_flags }}
 
 apply-all:
-    colmena apply {{ colmena_flags }}
+    colmena apply
 
 update-input input:
     nix flake lock --update-input {{ input }}

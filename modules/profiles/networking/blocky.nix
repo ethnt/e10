@@ -30,9 +30,14 @@
           development = [ ];
         };
         whiteLists = {
-          ads = [ "l.food52.com" ];
+          ads = [
+            (pkgs.writeText "ads-allowlist.txt" ''
+              l.food52.com
+              link.dwell.com
+            '')
+          ];
           development = [
-            (pkgs.writeText "development.txt" ''
+            (pkgs.writeText "development-allowlist.txt" ''
               analytics.google.com
               googleanalytics.com
               www.googleanalytics.com
@@ -86,9 +91,10 @@
       };
       ede.enable = true;
       queryLog = {
-        type = "none";
-        # target = "postgres://blocky?host=/run/postgresql";
-        # logRetentionDays = 90;
+        # type = "none";
+        type = "postgresql";
+        target = "postgres://blocky?host=/run/postgresql";
+        logRetentionDays = 90;
       };
     };
   };
