@@ -215,12 +215,6 @@
         ];
       }];
     }
-    # {
-    #   job_name = "metrics_omnibus";
-    #   metrics_path = "/metrics";
-    #   static_configs =
-    #     [{ targets = [ "${hosts.omnibus.config.networking.hostName}:9273" ]; }];
-    # }
   ];
 
   e10.services.backup.jobs.system.exclude = lib.mkAfter [ "/var/lib/loki/wal" ];
