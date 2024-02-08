@@ -11,22 +11,40 @@ provider "aws" {
 }
 
 provider "proxmox" {
-  alias               = "anise"
-  pm_api_url          = "https://anise:8006/api2/json"
-  pm_api_token_id     = data.sops_file.secrets.data["ANISE_PM_API_TOKEN_ID"]
-  pm_api_token_secret = data.sops_file.secrets.data["ANISE_PM_API_TOKEN_SECRET"]
+  alias    = "anise"
+  endpoint = "https://anise:8006/"
+  username = data.sops_file.secrets.data["ANISE_PM_USERNAME"]
+  password = data.sops_file.secrets.data["ANISE_PM_PASSWORD"]
+  insecure = true
+
+  ssh {
+    agent    = true
+    username = "deploy"
+  }
 }
 
 provider "proxmox" {
-  alias               = "basil"
-  pm_api_url          = "https://basil:8006/api2/json"
-  pm_api_token_id     = data.sops_file.secrets.data["BASIL_PM_API_TOKEN_ID"]
-  pm_api_token_secret = data.sops_file.secrets.data["BASIL_PM_API_TOKEN_SECRET"]
+  alias    = "basil"
+  endpoint = "https://basil:8006/"
+  username = data.sops_file.secrets.data["BASIL_PM_USERNAME"]
+  password = data.sops_file.secrets.data["BASIL_PM_PASSWORD"]
+  insecure = true
+
+  ssh {
+    agent    = true
+    username = "deploy"
+  }
 }
 
 provider "proxmox" {
-  alias               = "cardamom"
-  pm_api_url          = "https://cardamom:8006/api2/json"
-  pm_api_token_id     = data.sops_file.secrets.data["CARDAMOM_PM_API_TOKEN_ID"]
-  pm_api_token_secret = data.sops_file.secrets.data["CARDAMOM_PM_API_TOKEN_SECRET"]
+  alias    = "cardamom"
+  endpoint = "https://cardamom:8006/"
+  username = data.sops_file.secrets.data["CARDAMOM_PM_USERNAME"]
+  password = data.sops_file.secrets.data["CARDAMOM_PM_PASSWORD"]
+  insecure = true
+
+  ssh {
+    agent    = true
+    username = "deploy"
+  }
 }
