@@ -1,181 +1,259 @@
-resource "proxmox_vm_qemu" "omnibus" {
+resource "proxmox_virtual_environment_vm" "omnibus" {
   provider = proxmox.anise
 
-  name        = "omnibus"
-  target_node = "anise"
-  iso         = "local:iso/latest-nixos-minimal-x86_64-linux.iso"
-  vmid        = 101
-  memory      = 57344
-  balloon     = 0
-  sockets     = 1
-  cores       = 4
-  qemu_os     = "other"
+  node_name = "anise"
 
-  onboot = true
-  agent  = 1
+  name  = "omnibus"
+  vm_id = 101
 
-  bios = "seabios"
+  scsi_hardware = "virtio-scsi-single"
 
-  boot = "order=scsi0"
+  boot_order = ["scsi0"]
+  migrate    = true
 
-  scsihw = "virtio-scsi-single"
+  cpu {
+    cores   = 4
+    sockets = 1
+    type    = "host"
+  }
 
-  network {
-    model     = "virtio"
-    bridge    = "vmbr0"
-    tag       = 10
-    macaddr   = "2E:E0:17:56:C3:51"
-    link_down = false
-    firewall  = false
-    mtu       = 0
-    queues    = 0
-    rate      = 0
+  memory {
+    dedicated = 57344
   }
 
   disk {
-    type     = "scsi"
-    size     = "1024G"
-    storage  = "local-zfs"
-    discard  = "on"
-    file     = "vm-101-disk-0"
-    format   = "raw"
-    slot     = 0
-    volume   = "local-zfs:vm-101-disk-0"
-    aio      = "threads"
-    iothread = 1
+    datastore_id = "local-zfs"
+    discard      = "on"
+    file_format  = "raw"
+    interface    = "scsi0"
+    size         = 1024
+    iothread     = true
+  }
+
+  network_device {
+    bridge   = "vmbr0"
+    firewall = false
+    model    = "virtio"
+    vlan_id  = 10
+  }
+
+  agent {
+    enabled = true
+    type    = "virtio"
+  }
+
+  operating_system {
+    type = "other"
+  }
+
+  vga {
+    enabled = true
+  }
+
+  hostpci {
+    device = "hostpci0"
+    id     = "0000:07:00"
+    pcie   = false
+    rombar = false
+    xvga   = false
+  }
+
+  hostpci {
+    device = "hostpci1"
+    id     = "0000:03:00"
+    pcie   = false
+    rombar = true
+    xvga   = false
+  }
+  hostpci {
+    device = "hostpci2"
+    id     = "0000:04:00"
+    pcie   = false
+    rombar = true
+    xvga   = false
+  }
+  hostpci {
+    device = "hostpci3"
+    id     = "0000:05:00"
+    pcie   = false
+    rombar = true
+    xvga   = false
   }
 }
 
-resource "proxmox_vm_qemu" "htpc" {
+resource "proxmox_virtual_environment_vm" "htpc" {
   provider = proxmox.basil
 
-  name        = "htpc"
-  target_node = "basil"
-  iso         = "local:iso/latest-nixos-minimal-x86_64-linux.iso"
-  vmid        = 101
-  cpu         = "host,flags=+pcid"
-  memory      = 32768
-  balloon     = 0
-  sockets     = 1
-  cores       = 16
-  qemu_os     = "other"
-  scsihw      = "virtio-scsi-single"
-  boot        = "order=scsi0"
+  node_name = "basil"
 
-  onboot = true
-  agent  = 1
+  name  = "htpc"
+  vm_id = 101
 
-  bios = "seabios"
+  scsi_hardware = "virtio-scsi-single"
 
-  network {
-    model     = "virtio"
-    bridge    = "vmbr0"
-    tag       = 10
-    macaddr   = "CE:22:2C:7F:DE:79"
-    link_down = false
-    firewall  = false
-    mtu       = 0
-    queues    = 0
-    rate      = 0
+  machine = "q35"
+
+  boot_order = ["scsi0"]
+  migrate    = true
+
+  cpu {
+    cores   = 16
+    sockets = 1
+    type    = "host"
+    flags   = ["+pcid"]
+  }
+
+  memory {
+    dedicated = 32768
   }
 
   disk {
-    type    = "scsi"
-    size    = "2048G"
-    storage = "local-zfs"
-    discard = "on"
-    file    = "vm-101-disk-0"
-    format  = "raw"
-    slot    = 0
-    volume  = "local-zfs:vm-101-disk-0"
+    datastore_id = "local-zfs"
+    discard      = "on"
+    file_format  = "raw"
+    interface    = "scsi0"
+    size         = 2048
+  }
+
+  network_device {
+    bridge   = "vmbr0"
+    firewall = false
+    model    = "virtio"
+    vlan_id  = 10
+  }
+
+  agent {
+    enabled = true
+    type    = "virtio"
+  }
+
+  operating_system {
+    type = "other"
+  }
+
+  vga {
+    enabled = true
+  }
+
+  hostpci {
+    device = "hostpci0"
+    id     = "0000:02:00"
+    pcie   = true
+    rombar = true
+    xvga   = false
   }
 }
 
-resource "proxmox_vm_qemu" "builder" {
+resource "proxmox_virtual_environment_vm" "builder" {
   provider = proxmox.basil
 
-  name        = "builder"
-  target_node = "basil"
-  iso         = "local:iso/latest-nixos-minimal-x86_64-linux.iso"
-  vmid        = 102
-  memory      = 16384
-  balloon     = 0
-  sockets     = 1
-  cores       = 8
-  qemu_os     = "other"
-  scsihw      = "virtio-scsi-single"
-  boot        = "order=scsi0"
+  node_name = "basil"
 
-  onboot = true
-  agent  = 1
+  name  = "builder"
+  vm_id = 102
 
-  bios = "seabios"
+  scsi_hardware = "virtio-scsi-single"
 
-  network {
-    model     = "virtio"
-    bridge    = "vmbr0"
-    tag       = 10
-    macaddr   = "3A:7D:CB:E6:11:D9"
-    link_down = false
-    firewall  = false
-    mtu       = 0
-    queues    = 0
-    rate      = 0
+  boot_order = ["scsi0"]
+  migrate    = true
+
+  cpu {
+    cores   = 8
+    sockets = 1
+    type    = "host"
+  }
+
+  memory {
+    dedicated = 16384
   }
 
   disk {
-    type    = "scsi"
-    size    = "2048G"
-    storage = "local-zfs"
-    discard = "on"
-    file    = "vm-102-disk-0"
-    format  = "raw"
-    slot    = 0
-    volume  = "local-zfs:vm-102-disk-0"
+    datastore_id = "local-zfs"
+    discard      = "on"
+    file_format  = "raw"
+    interface    = "scsi0"
+    size         = 2048
+  }
+
+  network_device {
+    bridge   = "vmbr0"
+    firewall = false
+    model    = "virtio"
+    vlan_id  = 10
+  }
+
+  agent {
+    enabled = true
+    type    = "virtio"
+  }
+
+  operating_system {
+    type = "other"
+  }
+
+  vga {
+    enabled = true
   }
 }
 
-resource "proxmox_vm_qemu" "matrix" {
+resource "proxmox_virtual_environment_vm" "matrix" {
   provider = proxmox.cardamom
 
-  name        = "matrix"
-  target_node = "cardamom"
-  iso         = "omnibus:iso/latest-nixos-minimal-x86_64-linux.iso"
-  vmid        = 101
-  cpu         = "host"
-  memory      = 32768
-  balloon     = 0
-  sockets     = 1
-  cores       = 8
-  qemu_os     = "other"
-  scsihw      = "virtio-scsi-single"
-  boot        = "order=scsi0"
+  node_name = "cardamom"
 
-  onboot = true
-  agent  = 1
+  name  = "matrix"
+  vm_id = 101
 
-  bios = "seabios"
+  scsi_hardware = "virtio-scsi-single"
 
-  network {
-    model     = "virtio"
-    bridge    = "vmbr0"
-    macaddr   = "06:8D:3E:8F:5F:23"
-    firewall  = false
-    link_down = false
-    mtu       = 0
-    queues    = 0
-    rate      = 0
-    tag       = 10
+  boot_order = ["scsi0"]
+  migrate    = true
+
+  cpu {
+    cores   = 8
+    sockets = 1
+    type    = "host"
+  }
+
+  memory {
+    dedicated = 32768
   }
 
   disk {
-    type    = "scsi"
-    size    = "128G"
-    storage = "local-zfs"
-    discard = "on"
-    file    = "vm-101-disk-0"
-    format  = "raw"
-    slot    = 0
-    volume  = "local-zfs:vm-101-disk-0"
+    datastore_id = "local-zfs"
+    discard      = "on"
+    file_format  = "raw"
+    interface    = "scsi0"
+    size         = 128
+  }
+
+  network_device {
+    bridge   = "vmbr0"
+    firewall = false
+    model    = "virtio"
+    vlan_id  = 10
+  }
+
+  agent {
+    enabled = true
+    type    = "virtio"
+  }
+
+  operating_system {
+    type = "other"
+  }
+
+  usb {
+    host = "04f9:0061"
+    usb3 = true
+  }
+
+  usb {
+    host = "09ae:2012"
+    usb3 = true
+  }
+
+  vga {
+    enabled = true
   }
 }
