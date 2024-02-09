@@ -43,7 +43,6 @@ in {
     htpc = mkHost "htpc" { system = "x86_64-linux"; };
     matrix = mkHost "matrix" { system = "x86_64-linux"; };
     controller = mkHost "controller" { system = "x86_64-linux"; };
-    controller-2 = mkHost "controller" { system = "x86_64-linux"; };
     builder = mkHost "builder" { system = "x86_64-linux"; };
   };
 }
