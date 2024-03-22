@@ -34,15 +34,25 @@ in {
       e10-rsync = pkgs.writeShellScriptBin "e10-rsync" ''
         ${pkgs.lib.getExe' pkgs.rsync "rsync"} -e "${ssh} -F ${sshConfig}" $@
       '';
+
+      ans = pkgs.writeShellScriptBin "ans" ''
+        set -euo pipefail
+
+        DIR=$(git rev-parse --show-toplevel)/deploy/ansible
+
+        ${pkgs.ansible}/bin/ansible e10 -i=$DIR/inventory.ini --private-key keys/id_rsa -u root "$@"
+      '';
     in _: {
       env.SSH_CONFIG_FILE = sshConfig;
       packages = with inputs'; [
+        pkgs.ansible
         colmena.packages.colmena
         nixos-anywhere.packages.nixos-anywhere
         e10-ssh
         e10-mosh
         e10-scp
         e10-rsync
+        ans
       ];
     };
   };

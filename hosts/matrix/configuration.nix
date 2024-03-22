@@ -7,6 +7,7 @@
       profiles.emulation.aarch64-linux
       profiles.power.tripp-lite
       profiles.telemetry.prometheus-nut-exporter
+      profiles.services.netbox.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

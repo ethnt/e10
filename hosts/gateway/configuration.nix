@@ -7,8 +7,8 @@
   };
 
   services.nginx.virtualHosts = let
-    mkVirtualHost =
-      { host, port, http2 ? true, extraConfig ? " ", extraSettings ? { } }:
+    mkVirtualHost = { host, port, http2 ? true, extraConfig ? " "
+      , extraRootLocationConfig ? "", extraSettings ? { } }:
       {
         inherit http2 extraConfig;
 
@@ -19,6 +19,7 @@
           proxyPass =
             "http://${host.config.networking.hostName}:${toString port}";
           proxyWebsockets = true;
+          extraConfig = extraRootLocationConfig;
         };
       } // extraSettings;
   in {
@@ -80,6 +81,16 @@
       inherit (hosts.builder.config.services.nix-serve) port;
     };
 
+    "netbox.e10.camp" = mkVirtualHost {
+      host = hosts.matrix;
+      port = 8002;
+      extraRootLocationConfig = ''
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+      '';
+    };
+
     "e10.video" = mkVirtualHost {
       host = hosts.htpc;
       inherit (hosts.htpc.config.services.plex) port;
@@ -121,54 +132,6 @@
         proxy_redirect off;
         proxy_buffering off;
       '';
-    };
-
-    "blocky.e10.network" = mkVirtualHost {
-      host = hosts.controller;
-      port = hosts.controller.config.services.blocky.settings.ports.http;
-    };
-
-    "prowlarr.e10.network" = mkVirtualHost {
-      host = hosts.htpc;
-      inherit (hosts.htpc.config.services.prowlarr) port;
-    };
-
-    "radarr.e10.network" = mkVirtualHost {
-      host = hosts.htpc;
-      inherit (hosts.htpc.config.services.radarr) port;
-    };
-
-    "sonarr.e10.network" = mkVirtualHost {
-      host = hosts.htpc;
-      inherit (hosts.htpc.config.services.sonarr) port;
-    };
-
-    "sabnzbd.e10.network" = mkVirtualHost {
-      host = hosts.htpc;
-      inherit (hosts.htpc.config.services.sabnzbd) port;
-      extraConfig = ''
-        client_max_body_size 256M;
-      '';
-    };
-
-    "bazarr.e10.network" = mkVirtualHost {
-      host = hosts.htpc;
-      port = hosts.htpc.config.services.bazarr.listenPort;
-    };
-
-    "overseerr.e10.network" = mkVirtualHost {
-      host = hosts.htpc;
-      inherit (hosts.htpc.config.services.overseerr) port;
-    };
-
-    "tautulli.e10.network" = mkVirtualHost {
-      host = hosts.htpc;
-      inherit (hosts.htpc.config.services.tautulli) port;
-    };
-
-    "cache.builder.e10.network" = mkVirtualHost {
-      host = hosts.builder;
-      inherit (hosts.builder.config.services.nix-serve) port;
     };
   };
 
