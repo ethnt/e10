@@ -73,14 +73,17 @@
           # TODO: Make this on a per-system basis, and maybe per-package
           config.allowUnfree = true;
 
-          overlays = [(final: prev: {
-            btop = prev.btop.overrideAttrs (oldAttrs: {
-              nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [prev.addOpenGLRunpath];
-              postFixup = ''
-                addOpenGLRunpath $out/bin/btop
-              '';
-            });
-          })];
+          overlays = [
+            (_final: prev: {
+              btop = prev.btop.overrideAttrs (oldAttrs: {
+                nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ])
+                  ++ [ prev.addOpenGLRunpath ];
+                postFixup = ''
+                  addOpenGLRunpath $out/bin/btop
+                '';
+              });
+            })
+          ];
         };
       };
     };
