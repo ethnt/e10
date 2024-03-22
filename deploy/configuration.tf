@@ -48,3 +48,16 @@ provider "proxmox" {
     username = "deploy"
   }
 }
+
+provider "proxmox" {
+  alias    = "dill"
+  endpoint = "https://dill:8006/"
+  username = data.sops_file.secrets.data["DILL_PM_USERNAME"]
+  password = data.sops_file.secrets.data["DILL_PM_PASSWORD"]
+  insecure = true
+
+  ssh {
+    agent    = true
+    username = "deploy"
+  }
+}

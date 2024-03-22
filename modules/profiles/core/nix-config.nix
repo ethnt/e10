@@ -14,7 +14,7 @@
 
     settings = {
       allowed-users = [ "@wheel" ];
-      auto-optimise-store = true;
+      # auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
       sandbox = true;
       system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];

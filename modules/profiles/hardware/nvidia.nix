@@ -6,6 +6,7 @@
     cudatoolkit
     linuxPackages.nvidia_x11
     nvtop
+    nvitop
   ];
 
   hardware.nvidia = {

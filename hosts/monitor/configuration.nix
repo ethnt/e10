@@ -215,21 +215,10 @@
         ];
       }];
     }
-    {
-      job_name = "unifi_controller";
-      metrics_path = "/metrics";
-      static_configs = [{
-        targets = [
-          "${hosts.controller.config.networking.hostName}:${
-            toString
-            hosts.controller.config.services.prometheus.exporters.unpoller.port
-          }"
-        ];
-      }];
-    }
   ];
 
-  e10.services.backup.jobs.system.exclude = lib.mkAfter [ "/var/lib/loki/wal" ];
+  e10.services.backup.jobs.system.exclude =
+    lib.mkAfter [ "/var/lib/loki/wal" "/var/lib/prometheus2/data/wal" ];
 
   system.stateVersion = "23.11";
 }
