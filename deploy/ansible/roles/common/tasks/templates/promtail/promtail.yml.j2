@@ -1,0 +1,24 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+{{ ansible_managed | comment }}
+
+server:
+  grpc_listen_port: 0
+  http_listen_port: 28183
+
+clients:
+  - url: http://monitor:3100/loki/api/v1/push
+
+positions:
+  filename: "/var/lib/promtail/positions.yml"
+
+scrape_configs:
+  - job_name: journal
+    journal:
+      labels:
+        host: node_{{ ansible_hostname }}
+        job: systemd-journal
+      max_age: 12h
+    relabel_configs:
+      - source_labels:
+          - __journal__systemd_unit
+        target_label: unit

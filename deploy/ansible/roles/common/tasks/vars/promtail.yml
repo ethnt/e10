@@ -1,0 +1,10 @@
+---
+promtail_version: 2.9.4
+promtail_install_dir: /opt/promtail
+go_arch_map:
+  x86_64: amd64
+  aarch64: arm64
+  armv7l: arm
+  armv6l: arm
+go_arch: "{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}"
+promtail_dist_url: https://github.com/grafana/loki/releases/download/v{{ promtail_version }}/promtail-linux-{{ go_arch }}.zip

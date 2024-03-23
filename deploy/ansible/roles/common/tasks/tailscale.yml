@@ -1,0 +1,38 @@
+---
+- name: Ensure jq is available
+  ansible.builtin.package:
+    name: jq
+    state: present
+
+- name: Add Tailscale repository key
+  ansible.builtin.apt_key:
+    url: https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}/{{ ansible_distribution_release | lower }}.noarmor.gpg
+    keyring: /usr/share/keyrings/tailscale-archive-keyring.gpg
+    state: absent
+    validate_certs: true
+
+- name: Add Tailscale repository
+  ansible.builtin.apt_repository:
+    repo:
+      deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }} {{ ansible_distribution_release
+      | lower }} main
+    state: absent
+    update_cache: true
+    validate_certs: true
+    filename: tailscale
+
+- name: Install Tailscale
+  ansible.builtin.package:
+    name: tailscale
+    state: present
+
+- name: Check Tailscale status
+  ansible.builtin.shell: tailscale status -json | jq .'Self.Online'
+  register: tailscale_status
+  ignore_errors: true
+  changed_when:
+    - '"false" in tailscale_status.stdout'
+
+- name: Start Tailscale
+  ansible.builtin.command: tailscale up --authkey={{ lookup('env', 'TAILSCALE_KEY') }}
+  when: tailscale_status.stdout == "false"

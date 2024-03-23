@@ -1,0 +1,14 @@
+[Unit]
+Description=promtail
+After=network-online.target
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutSec=5
+User=promtail
+Group=promtail
+ExecStart=/usr/local/bin/promtail -config.file=/etc/promtail/promtail.yml
+
+[Install]
+WantedBy=multi-user.target
