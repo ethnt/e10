@@ -3,8 +3,4 @@
 /keys/
 /result/
 /tmp/
-
-/**/*.terraform/
-*.tfstate
-
 result
