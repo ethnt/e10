@@ -1,0 +1,15 @@
+---
+- name: Install fish
+  ansible.builtin.package:
+    name: fish
+    state: present
+
+- name: Set fish as shell for root
+  ansible.builtin.user:
+    name: root
+    shell: /bin/fish
+
+- name: Install htop
+  ansible.builtin.package:
+    name: htop
+    state: present

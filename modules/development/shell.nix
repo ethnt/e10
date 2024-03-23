@@ -9,14 +9,18 @@
 
         enterShell = let
           sops = pkgs.lib.getExe' pkgs.sops "sops";
-          setSopsValueToEnvironmentVariable = key: ''
-            export ${key}=$(${sops} -d --extract '["${key}"]' ./secrets.json)
+          setSopsValueToEnvironmentVariable = key: secretsFile: ''
+            export ${key}=$(${sops} -d --extract '["${key}"]' ${secretsFile})
           '';
         in ''
           export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
 
-          ${setSopsValueToEnvironmentVariable "AWS_ACCESS_KEY_ID"}
-          ${setSopsValueToEnvironmentVariable "AWS_SECRET_ACCESS_KEY"}
+          ${setSopsValueToEnvironmentVariable "AWS_ACCESS_KEY_ID"
+          "./secrets.json"}
+          ${setSopsValueToEnvironmentVariable "AWS_SECRET_ACCESS_KEY"
+          "./secrets.json"}
+
+          export TAILSCALE_AUTH_KEY=$(${sops} -d --extract '["tailscale_auth_key"]' ./modules/profiles/networking/tailscale/secrets.json)
         '';
 
         packages = with pkgs; [ cachix deadnix just statix sops ];

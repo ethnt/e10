@@ -1,0 +1,16 @@
+---
+- name: Configure Proxmox nodes
+  hosts: all
+  tasks:
+    - name: Import APT tasks
+      ansible.builtin.import_tasks: roles/common/tasks/apt.yml
+    - name: Import tooling tasks
+      ansible.builtin.import_tasks: roles/common/tasks/tooling.yml
+    - name: Import Tailscale tasks
+      ansible.builtin.import_tasks: roles/common/tasks/tailscale.yml
+    - name: Import Network UPS Tools tasks
+      ansible.builtin.import_tasks: roles/common/tasks/nut.yml
+    - name: Import Prometheus Node Exporter tasks
+      ansible.builtin.import_tasks: roles/common/tasks/prometheus-node-exporter.yml
+    - name: Import Promtail tasks
+      ansible.builtin.import_tasks: roles/common/tasks/promtail.yml

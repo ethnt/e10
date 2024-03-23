@@ -1,0 +1,94 @@
+---
+- name: Include Promtail variables
+  ansible.builtin.include_vars: promtail.yml
+- name: Ensure unzip is available
+  ansible.builtin.package:
+    name: unzip
+    state: present
+
+- name: Create promtail group
+  ansible.builtin.group:
+    name: promtail
+    state: present
+    system: true
+
+- name: Create promtail user
+  ansible.builtin.user:
+    name: promtail
+    group: promtail
+    shell: /usr/sbin/nologin
+    system: true
+    createhome: false
+
+- name: Create promtail configuration directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: promtail
+    mode: "0770"
+  loop:
+    - /etc/promtail
+    - /etc/promtail/file_sd
+    - /var/lib/promtail
+
+- name: Create promtail application directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: promtail
+    group: promtail
+    mode: "0755"
+  with_items:
+    - "{{ promtail_install_dir }}"
+    - "{{ promtail_install_dir }}/{{ promtail_version }}"
+
+- name: Check if promtail binary exists
+  ansible.builtin.stat:
+    path: "{{ promtail_install_dir }}/{{ promtail_version }}/promtail-linux-{{ go_arch }}"
+  register: promtail_binary
+
+- name: Download promtail binaries
+  ansible.builtin.get_url:
+    url: "{{ promtail_dist_url }}"
+    dest: /tmp/{{ promtail_version }}_promtail-linux-{{ go_arch }}.zip
+
+- name: Unpack promtail binaries
+  ansible.builtin.unarchive:
+    src: /tmp/{{ promtail_version }}_promtail-linux-{{ go_arch }}.zip
+    dest: "{{ promtail_install_dir }}/{{ promtail_version }}"
+    creates: "{{ promtail_install_dir }}/{{ promtail_version }}/promtail-linux-{{ go_arch }}"
+    mode: "0755"
+    remote_src: true
+
+- name: Create symlink for latest version of promtail
+  ansible.builtin.file:
+    state: link
+    src: "{{ promtail_install_dir }}/{{ promtail_version }}/promtail-linux-{{ go_arch }}"
+    dest: /usr/local/bin/promtail
+    mode: "0755"
+
+- name: Write promtail configuration
+  notify:
+    - Restart promtail
+  ansible.builtin.template:
+    src: ./promtail/promtail.yml.j2
+    dest: /etc/promtail/promtail.yml
+    owner: root
+    group: promtail
+    mode: "0644"
+
+- name: Write promtail systemd service unit
+  notify:
+    - Restart promtail
+  ansible.builtin.copy:
+    src: ./promtail/promtail.service
+    dest: /etc/systemd/system/promtail.service
+    mode: "0644"
+
+- name: Start promtail
+  ansible.builtin.systemd:
+    daemon_reload: true
+    name: promtail
+    state: started
+    enabled: true

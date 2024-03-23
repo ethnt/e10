@@ -1,7 +1,7 @@
 colmena_flags := "-v"
 
 default:
-    @just --list
+    @just --choose
 
 build host:
     colmena build --on={{ host }} {{ colmena_flags }}
@@ -40,3 +40,6 @@ nixos-anywhere hostname host:
 
 generate-ci:
     nix run .#generate-ci
+
+ansible-play:
+    ansible-playbook -i deploy/ansible/inventory.yml deploy/ansible/main.yml

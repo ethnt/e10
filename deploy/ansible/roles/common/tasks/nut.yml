@@ -1,0 +1,27 @@
+---
+- name: Install Network UPS Tools
+  ansible.builtin.package:
+    name: nut
+    state: present
+
+- name: Copy nut.conf
+  ansible.builtin.copy:
+    src: ./nut/nut.conf
+    dest: /etc/nut/nut.conf
+    owner: root
+    group: nut
+    mode: "0644"
+    backup: true
+
+- name: Write upsmon.conf
+  ansible.builtin.template:
+    src: ./nut/upsmon.conf.j2
+    dest: /etc/nut/upsmon.conf
+    owner: root
+    group: nut
+    mode: "0644"
+
+- name: Ensure nut-client is running
+  ansible.builtin.systemd_service:
+    name: nut-client
+    state: started

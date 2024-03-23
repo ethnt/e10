@@ -4,7 +4,7 @@
       tf = pkgs.writeShellScriptBin "tf" ''
         set -euo pipefail
 
-        DIR=$(git rev-parse --show-toplevel)/deploy
+        DIR=$(git rev-parse --show-toplevel)/deploy/terraform
 
         ${pkgs.lib.getExe pkgs.terraform} -chdir=$DIR "$@"
       '';
