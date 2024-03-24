@@ -5,6 +5,6 @@
     state: present
 
 - name: Ensure Prometheus Node Exporter is running
-  ansible.builtin.systemd_service:
+  ansible.builtin.systemd:
     name: prometheus-node-exporter
     state: started

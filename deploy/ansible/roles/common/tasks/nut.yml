@@ -23,12 +23,12 @@
 
 - name: Ensure nut-client is running (on Debian)
   when: ansible_distribution == "Debian"
-  ansible.builtin.systemd_service:
+  ansible.builtin.systemd:
     name: nut-client
     state: started
 
-- name: Ensure nut-monitoir is running (on Arch)
+- name: Ensure nut-monitor is running (on Arch)
   when: ansible_distribution == "Archlinux"
-  ansible.builtin.systemd_service:
+  ansible.builtin.systemd:
     name: nut-monitor
     state: started

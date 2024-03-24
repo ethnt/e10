@@ -30,7 +30,7 @@
 
 - name: Ensure Tailscale is running (on Arch)
   when: ansible_distribution == 'Archlinux'
-  ansible.builtin.systemd_service:
+  ansible.builtin.systemd:
     name: tailscaled
     enabled: true
 
