@@ -5,6 +5,7 @@
     state: present
 
 - name: Add Tailscale repository key
+  when: ansible_distribution == 'Debian'
   ansible.builtin.apt_key:
     url: https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}/{{ ansible_distribution_release | lower }}.noarmor.gpg
     keyring: /usr/share/keyrings/tailscale-archive-keyring.gpg
@@ -12,6 +13,7 @@
     validate_certs: true
 
 - name: Add Tailscale repository
+  when: ansible_distribution == 'Debian'
   ansible.builtin.apt_repository:
     repo:
       deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }} {{ ansible_distribution_release
@@ -23,8 +25,14 @@
 
 - name: Install Tailscale
   ansible.builtin.package:
-    name: tailscale
+    name: "{{ tailscale_package }}"
     state: present
+
+- name: Ensure Tailscale is running (on Arch)
+  when: ansible_distribution == 'Archlinux'
+  ansible.builtin.systemd_service:
+    name: tailscaled
+    enabled: true
 
 - name: Check Tailscale status
   ansible.builtin.shell: tailscale status -json | jq .'Self.Online'

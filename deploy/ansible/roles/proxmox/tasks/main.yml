@@ -1,0 +1,7 @@
+---
+- name: Import tasks
+  ansible.builtin.include_tasks: "{{ task_file }}"
+  loop:
+    - apt.yml
+  loop_control:
+    loop_var: task_file

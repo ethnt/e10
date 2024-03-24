@@ -7,13 +7,22 @@ all:
     basil:
     cardamom:
     dill:
+    pikvm:
 
 rack:
   hosts:
     anise:
     basil:
     cardamom:
+    pikvm:
 
 networking:
   hosts:
+    dill:
+
+proxmox:
+  hosts:
+    anise:
+    basil:
+    cardamom:
     dill:

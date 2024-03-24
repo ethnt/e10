@@ -1,6 +1,4 @@
 ---
-- name: Include Promtail variables
-  ansible.builtin.include_vars: promtail.yml
 - name: Ensure unzip is available
   ansible.builtin.package:
     name: unzip
