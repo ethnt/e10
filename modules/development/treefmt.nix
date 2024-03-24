@@ -10,7 +10,10 @@
           terraform.enable = true;
           nixfmt.enable = true;
           statix.enable = true;
+          prettier.enable = true;
         };
+        settings.formatter.prettier.excludes =
+          [ "**/secrets.json" "**/secrets.yml" ];
       };
     in {
       treefmt = { config = settings; };
