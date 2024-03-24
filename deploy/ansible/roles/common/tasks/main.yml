@@ -1,0 +1,11 @@
+---
+- name: Import tasks
+  ansible.builtin.include_tasks: "{{ task_file }}"
+  loop:
+    - tooling.yml
+    - tailscale.yml
+    - nut.yml
+    - prometheus-node-exporter.yml
+    - promtail.yml
+  loop_control:
+    loop_var: task_file

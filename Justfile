@@ -41,5 +41,8 @@ nixos-anywhere hostname host:
 generate-ci:
     nix run .#generate-ci
 
-ansible-play:
-    ansible-playbook -i deploy/ansible/inventory.yml deploy/ansible/main.yml
+ansible-proxmox:
+    ansible-playbook -i deploy/ansible/inventory.yml deploy/ansible/proxmox.yml
+
+ansible-pikvm:
+    ansible-playbook -i deploy/ansible/inventory.yml deploy/ansible/pikvm.yml
