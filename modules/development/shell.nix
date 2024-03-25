@@ -1,7 +1,7 @@
 { inputs, ... }: {
   imports = [ inputs.devenv.flakeModule ];
 
-  perSystem = { pkgs, system, ... }: {
+  perSystem = { pkgs, lib, system, ... }: {
     devenv.shells.default = _:
       {
         # TODO: Move this to be within the `keys/` directory?
@@ -33,7 +33,7 @@
           nix-output-monitor
         ];
       } // {
-        containers = { };
+        containers = lib.mkForce { };
       };
   };
 }
