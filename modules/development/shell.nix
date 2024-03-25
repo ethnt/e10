@@ -1,7 +1,7 @@
 { inputs, ... }: {
   imports = [ inputs.devenv.flakeModule ];
 
-  perSystem = { pkgs, ... }: {
+  perSystem = { pkgs, lib, system, ... }: {
     devenv.shells.default = _:
       {
         # TODO: Move this to be within the `keys/` directory?
@@ -23,9 +23,17 @@
           export TAILSCALE_AUTH_KEY=$(${sops} -d --extract '["tailscale_auth_key"]' ./modules/profiles/networking/tailscale/secrets.json)
         '';
 
-        packages = with pkgs; [ cachix deadnix just statix sops ];
+        packages = with pkgs; [
+          inputs.devenv.packages.${system}.default
+          cachix
+          deadnix
+          just
+          statix
+          sops
+          nix-output-monitor
+        ];
       } // {
-        containers = pkgs.lib.mkForce { };
+        containers = lib.mkForce { };
       };
   };
 }
