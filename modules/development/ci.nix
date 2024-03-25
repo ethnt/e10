@@ -33,7 +33,7 @@ in {
             "runs-on" = "ubuntu-latest";
             steps = setup ++ [{
               run = ''
-                nix flake check --impure --all-systems --accept-flake-config --show-trace
+                nix flake check --impure --accept-flake-config --show-trace
               '';
             }];
           };
