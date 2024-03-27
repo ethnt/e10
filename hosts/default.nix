@@ -18,22 +18,26 @@ let
   commonModules = with inputs;
     [ sops-nix.nixosModules.sops disko.nixosModules.disko ] ++ nixosModules;
 
+  # https://github.com/zhaofengli/colmena/issues/60#issuecomment-1047199551
+  extraModules = with inputs; [
+    colmena.nixosModules.assertionModule
+    colmena.nixosModules.keyChownModule
+    colmena.nixosModules.deploymentOptions
+  ];
+
   suites = import ../modules/suites.nix { inherit profiles; };
 
   mkHost = hostname:
-    { system, extraModules ? [ ]
-    , configuration ? ./${hostname}/configuration.nix, ... }:
+    { system, configuration ? ./${hostname}/configuration.nix, ... }:
     withSystem system (_:
       let
         baseConfiguration = _: { networking.hostName = hostname; };
-        modules = commonModules ++ extraModules
-          ++ [ baseConfiguration configuration ];
-
+        modules = commonModules ++ [ baseConfiguration configuration ];
         specialArgs = {
           inherit inputs profiles suites;
           hosts = self.nixosConfigurations;
         };
-      in l.nixosSystem { inherit specialArgs modules system; });
+      in l.nixosSystem { inherit specialArgs modules system extraModules; });
 
 in {
   flake.nixosConfigurations = {

@@ -48,10 +48,11 @@
     nixago.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ flake-parts, ... }:
+  outputs = inputs@{ self, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = with inputs; [
         ./lib
+        ./overlays
 
         ./modules/development/shell.nix
         ./modules/development/ci.nix
@@ -74,17 +75,7 @@
           # TODO: Make this on a per-system basis, and maybe per-package
           config.allowUnfree = true;
 
-          overlays = [
-            (_final: prev: {
-              btop = prev.btop.overrideAttrs (oldAttrs: {
-                nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ])
-                  ++ [ prev.addOpenGLRunpath ];
-                postFixup = ''
-                  addOpenGLRunpath $out/bin/btop
-                '';
-              });
-            })
-          ];
+          overlays = [ self.overlays.default ];
         };
       };
     };

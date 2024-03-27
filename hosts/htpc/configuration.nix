@@ -19,20 +19,18 @@
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
-  e10 = {
-    name = "htpc";
-    privateAddress = "192.168.10.21";
-    domain = "htpc.e10.camp";
-  };
+  deployment = { tags = [ "vm" ]; };
+
+  satan.address = "192.168.10.21";
 
   networking.interfaces.enp6s18.ipv4.addresses = [{
-    address = config.e10.privateAddress;
+    inherit (config.satan) address;
     prefixLength = 24;
   }];
 
   fileSystems."/mnt/blockbuster" = {
     device =
-      "${hosts.omnibus.config.e10.privateAddress}:${hosts.omnibus.config.disko.devices.zpool.blockbuster.datasets.root.mountpoint}";
+      "${hosts.omnibus.config.satan.address}:${hosts.omnibus.config.disko.devices.zpool.blockbuster.datasets.root.mountpoint}";
     fsType = "nfs";
     options = [ "x-systemd.automount" "exec" ];
   };

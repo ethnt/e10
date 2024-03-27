@@ -1,34 +1,23 @@
-{ self, inputs, ... }:
+{ self, lib, withSystem, ... }:
+
+with lib;
+
 let
-  inherit (self.lib.colmena) mkNode metaFor;
-  l = inputs.nixpkgs.lib // builtins;
+  deployableConfigurations =
+    filterAttrs (_: c: c.config.deployment.deployable) self.nixosConfigurations;
 
-  configurations = l.removeAttrs self.nixosConfigurations [ ];
+  mkColmenaOutput = configurations:
+    ({
+      meta = {
+        nixpkgs = withSystem "x86_64-linux" (ctx: ctx.pkgs);
+        nodeNixpkgs =
+          mapAttrs (_: configuration: configuration.pkgs) configurations;
+        nodeSpecialArgs =
+          mapAttrs (_: configuration: configuration._module.specialArgs)
+          configurations;
+      };
+    } // (mapAttrs
+      (_name: configuration: { imports = configuration._module.args.modules; })
+      configurations));
 
-  mkNode' = n: mkNode configurations.${n} n;
-
-  mkHive = nodes:
-    (l.mapAttrs mkNode' nodes)
-    // (metaFor (l.intersectAttrs nodes configurations));
-in {
-  # TODO: Automatically map `nixosConfigurations`
-  flake.colmena = mkHive {
-    gateway = {
-      tags = [ "aws" "web" ];
-      buildOnTarget = false;
-    };
-    monitor = {
-      tags = [ "aws" "web" ];
-      # buildOnTarget = false;
-      # targetHost = "monitor.e10.camp";
-    };
-    omnibus = { tags = [ "local" "vm" ]; };
-    htpc = { tags = [ "local" "vm" ]; };
-    matrix = { tags = [ "local" "vm" ]; };
-    builder = { tags = [ "local" "vm" ]; };
-    controller = {
-      tags = [ "local" "web" ];
-      buildOnTarget = false;
-    };
-  };
-}
+in { flake.colmena = mkColmenaOutput deployableConfigurations; }

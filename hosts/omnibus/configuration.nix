@@ -15,14 +15,10 @@
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
-  e10 = {
-    name = "omnibus";
-    privateAddress = "192.168.10.11";
-    domain = "omnibus.e10.camp";
-  };
+  satan.address = "192.168.10.11";
 
   networking.interfaces.ens18.ipv4.addresses = [{
-    address = config.e10.privateAddress;
+    inherit (config.satan) address;
     prefixLength = 24;
   }];
 

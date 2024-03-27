@@ -7,11 +7,6 @@
       profiles.observability.grafana.default
     ];
 
-  e10 = {
-    name = "monitor";
-    domain = "monitor.e10.camp";
-  };
-
   services.nginx.virtualHosts = {
     "grafana.e10.camp" = {
       http2 = true;
