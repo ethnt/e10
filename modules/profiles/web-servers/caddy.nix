@@ -1,4 +1,4 @@
-{ config, ... }: {
+{
   services.caddy = {
     enable = true;
     globalConfig = ''
