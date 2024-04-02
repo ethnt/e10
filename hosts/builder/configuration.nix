@@ -1,4 +1,4 @@
-{ suites, profiles, ... }: {
+{ config, suites, profiles, ... }: {
   imports = with suites;
     core ++ homelab ++ proxmox-vm
     ++ [ profiles.remote-builder.builder profiles.remote-builder.substituter ]
@@ -7,14 +7,10 @@
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
-  e10 = {
-    name = "builder";
-    privateAddress = "192.168.10.22";
-    domain = "builder.e10.camp";
-  };
+  satan.address = "192.168.10.22";
 
   networking.interfaces.ens18.ipv4.addresses = [{
-    address = "192.168.10.22";
+    inherit (config.satan) address;
     prefixLength = 24;
   }];
 

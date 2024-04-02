@@ -1,11 +1,6 @@
 { config, suites, hosts, ... }: {
   imports = with suites; core ++ web ++ aws;
 
-  e10 = {
-    name = "gateway";
-    domain = "gateway.e10.camp";
-  };
-
   services.nginx.virtualHosts = let
     mkVirtualHost = { host, port, http2 ? true, extraConfig ? " "
       , extraRootLocationConfig ? "", extraSettings ? { } }:

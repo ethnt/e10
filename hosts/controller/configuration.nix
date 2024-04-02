@@ -1,4 +1,4 @@
-{ suites, profiles, ... }: {
+{ config, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.databases.postgresql.blocky
@@ -13,11 +13,7 @@
       profiles.telemetry.prometheus-unpoller-exporter
     ] ++ [ ./disk-config.nix ./hardware-configuration.nix ];
 
-  e10 = {
-    name = "controller";
-    privateAddress = "10.0.2.11";
-    domain = "controller";
-  };
+  satan.address = "192.168.1.2";
 
   networking = {
     defaultGateway = "192.168.1.1";
@@ -35,7 +31,7 @@
       }];
 
       ens18.ipv4.addresses = [{
-        address = "192.168.1.2";
+        inherit (config.satan) address;
         prefixLength = 24;
       }];
     };

@@ -13,3 +13,13 @@
   ansible.builtin.package:
     name: htop
     state: present
+
+- name: Install iperf3
+  ansible.builtin.package:
+    name: iperf3
+    state: present
+
+- name: Ensure iperf3 service is running
+  ansible.builtin.systemd:
+    name: iperf3
+    enabled: true
