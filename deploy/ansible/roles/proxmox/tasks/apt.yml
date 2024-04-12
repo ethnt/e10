@@ -28,3 +28,7 @@
   ansible.builtin.apt_repository:
     repo: deb http://security.debian.org bookworm-security main contrib non-free-firmware
     state: present
+
+- name: Update APT repositories
+  ansible.builtin.apt:
+    update_cache: yes

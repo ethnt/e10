@@ -2,8 +2,8 @@
 - name: Import tasks
   ansible.builtin.include_tasks: "{{ task_file }}"
   loop:
-    - apt.yml
-    - users.yml
-    - storage.yml
+    - aliases.yml
+    - vlans.yml
+    - dnsmasq.yml
   loop_control:
     loop_var: task_file

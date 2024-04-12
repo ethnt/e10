@@ -1,0 +1,14 @@
+---
+- name: Create alias for private networks
+  ansibleguy.opnsense.alias:
+    name: "PrivateNetworks"
+    type: "network"
+    content: ["10.0.0.0/8","192.168.1.0/16","172.16.0.0/12","192.168.0.0/16"]
+    description: "[Ansible] All RFC 1918 private network addresses"
+
+- name: Create alias for PlayStation 5
+  ansibleguy.opnsense.alias:
+    name: PS5_alias
+    type: mac
+    content: ["00:e4:21:15:bd:e8"]
+    description: "[Ansible] PlayStation 5"

@@ -34,7 +34,6 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
     bridge   = "vmbr0"
     firewall = false
     model    = "virtio"
-    vlan_id  = 10
   }
 
   agent {
@@ -65,6 +64,7 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
     rombar = true
     xvga   = false
   }
+
   hostpci {
     device = "hostpci2"
     id     = "0000:04:00"
@@ -72,6 +72,7 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
     rombar = true
     xvga   = false
   }
+
   hostpci {
     device = "hostpci3"
     id     = "0000:05:00"
@@ -119,7 +120,6 @@ resource "proxmox_virtual_environment_vm" "htpc" {
     bridge   = "vmbr0"
     firewall = false
     model    = "virtio"
-    vlan_id  = 10
   }
 
   agent {
@@ -179,7 +179,6 @@ resource "proxmox_virtual_environment_vm" "builder" {
     bridge   = "vmbr0"
     firewall = false
     model    = "virtio"
-    vlan_id  = 10
   }
 
   agent {
@@ -231,7 +230,6 @@ resource "proxmox_virtual_environment_vm" "matrix" {
     bridge   = "vmbr0"
     firewall = false
     model    = "virtio"
-    vlan_id  = 10
   }
 
   agent {
@@ -312,5 +310,72 @@ resource "proxmox_virtual_environment_vm" "controller" {
   usb {
     host = "1-2"
     usb3 = true
+  }
+}
+
+resource "proxmox_virtual_environment_vm" "router" {
+  provider = proxmox.elderflower
+
+  node_name = "elderflower"
+
+  name  = "router"
+  vm_id = 101
+
+  scsi_hardware = "virtio-scsi-single"
+  on_boot = true
+
+  migrate = true
+
+  cpu {
+    cores   = 12
+    sockets = 1
+    type    = "host"
+  }
+
+  memory {
+    dedicated = 16384
+  }
+
+  disk {
+    datastore_id = "local-zfs"
+    discard      = "ignore"
+    file_format  = "raw"
+    interface    = "scsi0"
+    size         = 256
+    iothread = true
+  }
+
+  network_device {
+    bridge   = "vmbr0"
+    firewall = false
+    model    = "virtio"
+  }
+
+  agent {
+    enabled = true
+  }
+
+  vga {
+    enabled = true
+  }
+
+  operating_system {
+    type = "l26"
+  }
+
+  hostpci {
+    device = "hostpci0"
+    id     = "0000:02:00.0"
+    pcie   = false
+    rombar = true
+    xvga   = false
+  }
+
+  hostpci {
+    device = "hostpci1"
+    id     = "0000:02:00.1"
+    pcie   = false
+    rombar = true
+    xvga   = false
   }
 }

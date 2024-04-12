@@ -1,0 +1,25 @@
+---
+- name: Check for deploy group
+  ansible.builtin.shell: pveum group list --output-format json | jq '. | any(.groupid == "deploy")'
+  register: deploy_group
+  ignore_errors: true
+  changed_when:
+    - '"false" in deploy_group.stdout'
+
+- name: Add deploy group
+  ansible.builtin.command: "pveum group add deploy"
+  when: deploy_group.stdout == "false"
+
+- name: Add ACL for deploy group
+  ansible.builtin.command: "pveum acl modify / -group deploy -role Administrator"
+
+- name: Check for deploy user
+  ansible.builtin.shell: pveum user list --output-format json | jq '. | any(.userid == "deploy@pve")'
+  register: deploy_user
+  ignore_errors: true
+  changed_when:
+    - '"false" in deploy_user.stdout'
+
+- name: Add deploy user
+  ansible.builtin.command: "pveum user add deploy@pve --groups deploy"
+  when: deploy_user.stdout == "false"
