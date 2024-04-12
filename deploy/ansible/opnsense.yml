@@ -1,0 +1,9 @@
+---
+- name: Configure OPNSense
+  hosts: opnsense
+  connection: local
+  gather_facts: no
+  module_defaults:
+    group/ansibleguy.opnsense.all: "{{ opnsense_collection_defaults }}"
+  roles:
+    - opnsense

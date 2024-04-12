@@ -1,0 +1,4 @@
+opnsense_collection_defaults:
+  firewall: "192.168.1.1"
+  api_credential_file: "/Users/ethan/Workspace/e10/keys/opnsense"
+  ssl_verify: false

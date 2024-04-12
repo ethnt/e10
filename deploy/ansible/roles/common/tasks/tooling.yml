@@ -1,4 +1,9 @@
 ---
+- name: Install mosh
+  ansible.builtin.package:
+    name: mosh
+    state: present
+
 - name: Install fish
   ansible.builtin.package:
     name: fish

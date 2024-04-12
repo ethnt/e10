@@ -9,7 +9,7 @@
   ansible.builtin.apt_key:
     url: https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}/{{ ansible_distribution_release | lower }}.noarmor.gpg
     keyring: /usr/share/keyrings/tailscale-archive-keyring.gpg
-    state: absent
+    state: present
     validate_certs: true
 
 - name: Add Tailscale repository
@@ -18,7 +18,7 @@
     repo:
       deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }} {{ ansible_distribution_release
       | lower }} main
-    state: absent
+    state: present
     update_cache: true
     validate_certs: true
     filename: tailscale
