@@ -74,3 +74,7 @@ provider "proxmox" {
     username = "deploy"
   }
 }
+
+provider "improvmx" {
+  token = data.sops_file.secrets.data["IMPROVMX_API_TOKEN"]
+}

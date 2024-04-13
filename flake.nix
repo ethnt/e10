@@ -46,6 +46,8 @@
 
     nixago.url = "github:nix-community/nixago";
     nixago.inputs.nixpkgs.follows = "nixpkgs";
+
+    flake-root.url = "github:srid/flake-root";
   };
 
   outputs = inputs@{ self, flake-parts, ... }:
@@ -57,6 +59,7 @@
         ./modules/development/shell.nix
         ./modules/development/ci.nix
         ./modules/development/treefmt.nix
+        ./modules/development/flake-root.nix
 
         ./modules/deploy/shell.nix
         ./modules/deploy/configuration.nix

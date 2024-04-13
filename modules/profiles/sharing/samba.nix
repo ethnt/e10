@@ -10,7 +10,7 @@
         server string = ${config.networking.hostName}
         netbios name = ${config.networking.hostName}
         security = user
-        hosts allow = 192., 100., localhost
+        hosts allow = 192., 100., 10., localhost
         guest account = nobody
         map to guest = bad user
       '';

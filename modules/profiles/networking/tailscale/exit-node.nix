@@ -6,6 +6,6 @@
 
   services.tailscale.extraUpFlags = lib.mkAfter [
     "--advertise-exit-node"
-    "--advertise-routes=192.168.10.0/24,10.0.2.0/24,10.0.10.0/24"
+    "--advertise-routes=192.168.10.0/24,10.2.0.0/16,10.10.0.0/16"
   ];
 }

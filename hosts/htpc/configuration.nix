@@ -1,6 +1,6 @@
 { config, lib, suites, profiles, hosts, ... }: {
   imports = with suites;
-    core ++ homelab ++ proxmox-vm ++ [
+    core ++ proxmox-vm ++ [
       profiles.hardware.nvidia
       profiles.sharing.nfs-client
       profiles.virtualisation.docker
@@ -21,16 +21,39 @@
 
   deployment = { tags = [ "vm" ]; };
 
-  satan.address = "192.168.10.21";
+  satan.address = "10.10.2.1";
 
-  networking.interfaces.enp6s18.ipv4.addresses = [{
-    inherit (config.satan) address;
-    prefixLength = 24;
-  }];
+  deployment.buildOnTarget = true;
+
+  networking = {
+    useDHCP = false;
+    nameservers = [ "10.10.0.1" ];
+
+    vlans.vlan10 = {
+      id = 10;
+      interface = "enp6s18";
+    };
+
+    interfaces = {
+      vlan10.ipv4 = {
+        routes = [{
+          address = "0.0.0.0";
+          prefixLength = 0;
+          via = "10.10.0.1";
+          options.src = "10.10.2.1";
+          options.onlink = "";
+        }];
+        addresses = [{
+          address = "10.10.2.1";
+          prefixLength = 24;
+        }];
+      };
+    };
+  };
 
   fileSystems."/mnt/blockbuster" = {
     device =
-      "${hosts.omnibus.config.satan.address}:${hosts.omnibus.config.disko.devices.zpool.blockbuster.datasets.root.mountpoint}";
+      "10.10.1.1:${hosts.omnibus.config.disko.devices.zpool.blockbuster.datasets.root.mountpoint}";
     fsType = "nfs";
     options = [ "x-systemd.automount" "exec" ];
   };

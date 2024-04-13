@@ -34,6 +34,7 @@
         whiteLists = {
           ads = [
             (pkgs.writeText "ads-allowlist.txt" ''
+              cdn.cookielaw.org
               l.food52.com
               link.dwell.com
             '')
@@ -72,14 +73,20 @@
       };
       clientLookup = {
         upstream = "192.168.1.1:5335";
+        # upstream = "192.168.1.1";
         singleNameOrder = [ 1 2 ];
       };
       conditional = {
         mapping = {
           "arpa" = "192.168.1.1:5335";
+          # "arpa" = "192.168.1.1";
           "1.168.192.in-addr.arpa" = "192.168.1.1:5335";
+          # "1.168.192.in-addr.arpa" = "192.168.1.1";
           "168.192.in-addr.arpa" = "192.168.1.1:5335";
+          # "168.192.in-addr.arpa" = "192.168.1.1";
+          "10.10.in-addr.arpa" = "192.168.1.1:5335";
           "." = "192.168.1.1:5335";
+          # "." = "192.168.1.1";
         };
       };
       prometheus = {
@@ -92,6 +99,10 @@
           }";
       };
       ede.enable = true;
+      ecs = {
+        ipv4Mask = 32;
+        ipv6Mask = 128;
+      };
       queryLog = {
         # type = "none";
         type = "postgresql";

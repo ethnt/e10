@@ -5,6 +5,7 @@
       profiles.monitoring.prometheus
       profiles.monitoring.rsyslogd
       profiles.observability.grafana.default
+      profiles.telemetry.prometheus-blackbox-exporter
     ];
 
   services.nginx.virtualHosts = {
@@ -24,21 +25,17 @@
       };
     };
 
-    "grafana.e10.network" = {
-      http2 = true;
-      forceSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass =
-          "http://${config.services.grafana.settings.server.http_addr}:${
-            toString config.services.grafana.settings.server.http_port
-          }";
-        proxyWebsockets = true;
-        extraConfig = ''
-          proxy_set_header Host $host;
-        '';
-      };
-    };
+    # "alertmanager.e10.camp" = {
+    #   http2 = true;
+    #   forceSSL = true;
+    #   enableACME = true;
+    #   locations."/" = {
+    #     proxyPass = "http://127.0.0.1:${
+    #         toString config.services.prometheus.alertmanager.port
+    #       }";
+    #     proxyWebsockets = true;
+    #   };
+    # };
   };
 
   services.prometheus.scrapeConfigs = [
@@ -209,6 +206,30 @@
           }"
         ];
       }];
+    }
+    {
+      job_name = "blackbox_blocky";
+      metrics_path = "/probe";
+      params = { module = [ "blocky" ]; };
+      static_configs =
+        [{ targets = [ "${hosts.controller.config.networking.hostName}" ]; }];
+      relabel_configs = [
+        {
+          source_labels = [ "__address__" ];
+          target_label = "__param_target";
+        }
+        {
+          source_labels = [ "__target__" ];
+          target_label = "instance";
+        }
+        {
+          target_label = "__address__";
+          replacement = "${hosts.monitor.config.networking.hostName}:${
+              toString
+              hosts.monitor.config.services.prometheus.exporters.blackbox.port
+            }";
+        }
+      ];
     }
   ];
 

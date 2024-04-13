@@ -171,6 +171,9 @@ in {
         text = ''
           [${cfg.users.leader.username}]
             password = "${cfg.users.leader.password}"
+            actions = set
+            actions = fsd
+            instcmds = all
             upsmon master
 
           [${cfg.users.follower.username}]

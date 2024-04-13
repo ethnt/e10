@@ -257,6 +257,21 @@
         "type": "github"
       }
     },
+    "flake-root": {
+      "locked": {
+        "lastModified": 1692742795,
+        "narHash": "sha256-f+Y0YhVCIJ06LemO+3Xx00lIcqQxSKJHXT/yk1RTKxw=",
+        "owner": "srid",
+        "repo": "flake-root",
+        "rev": "d9a70d9c7a5fd7f3258ccf48da9335e9b47c3937",
+        "type": "github"
+      },
+      "original": {
+        "owner": "srid",
+        "repo": "flake-root",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1659877975,
@@ -958,6 +973,7 @@
         "devenv": "devenv",
         "disko": "disko",
         "flake-parts": "flake-parts",
+        "flake-root": "flake-root",
         "haumea": "haumea",
         "nixago": "nixago",
         "nixos-anywhere": "nixos-anywhere",

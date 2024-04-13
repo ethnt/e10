@@ -1,5 +1,8 @@
-{
-  nixpkgs.config.allowUnfree = true;
+{ flake, ... }: {
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [ flake.overlays.default ];
+  };
 
   nix = {
     optimise.automatic = true;

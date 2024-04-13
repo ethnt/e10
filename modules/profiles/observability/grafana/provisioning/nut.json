@@ -34,15 +34,85 @@
           "mappings": [
             {
               "options": {
-                "0": {
-                  "color": "red",
+                "11": {
+                  "color": "dark-red",
+                  "index": 0,
+                  "text": "Alarm"
+                },
+                "21": {
+                  "color": "yellow",
                   "index": 1,
+                  "text": "Boosting Voltage"
+                },
+                "31": {
+                  "color": "green",
+                  "index": 2,
+                  "text": "Battery Bypass"
+                },
+                "41": {
+                  "color": "blue",
+                  "index": 3,
+                  "text": "Calibrating"
+                },
+                "51": {
+                  "color": "super-light-orange",
+                  "index": 4,
+                  "text": "Charging"
+                },
+                "61": {
+                  "color": "dark-orange",
+                  "index": 5,
+                  "text": "Discharging"
+                },
+                "71": {
+                  "color": "dark-red",
+                  "index": 6,
+                  "text": "Forced Shutdown"
+                },
+                "81": {
+                  "color": "semi-dark-red",
+                  "index": 7,
+                  "text": "High Battery"
+                },
+                "91": {
+                  "color": "semi-dark-red",
+                  "index": 8,
+                  "text": "Low Battery"
+                },
+                "101": {
+                  "color": "yellow",
+                  "index": 9,
+                  "text": "On Battery"
+                },
+                "111": {
+                  "color": "red",
+                  "index": 10,
                   "text": "Offline"
                 },
-                "1": {
+                "121": {
                   "color": "green",
-                  "index": 0,
+                  "index": 11,
                   "text": "Online"
+                },
+                "131": {
+                  "color": "dark-red",
+                  "index": 12,
+                  "text": "Overloaded"
+                },
+                "141": {
+                  "color": "dark-red",
+                  "index": 13,
+                  "text": "Replace Battery"
+                },
+                "151": {
+                  "color": "dark-orange",
+                  "index": 14,
+                  "text": "Shutdown Load"
+                },
+                "161": {
+                  "color": "dark-orange",
+                  "index": 15,
+                  "text": "Trimming Voltage"
                 }
               },
               "type": "value"
@@ -61,23 +131,23 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 6,
+        "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 5,
+      "id": 7,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
+        "colorMode": "background",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
           "fields": "",
-          "values": false
+          "values": true
         },
-        "textMode": "auto",
+        "textMode": "value",
         "wideLayout": true
       },
       "pluginVersion": "10.2.3",
@@ -87,20 +157,231 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "disableTextWrap": false,
-          "editorMode": "builder",
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "network_ups_tools_ups_status{flag=\"OL\", instance=~\"$instance\"}",
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"OL\"} == 1) + 120",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "L"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"OFF\"} == 1) + 110",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "K"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "disableTextWrap": false,
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"ALARM\"} == 1) + 10",
+          "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": true,
-          "legendFormat": "{{instance}}",
+          "legendFormat": "__auto",
           "range": false,
           "refId": "A",
           "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"RB\"} == 1) + 140",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "N"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"LB\"} == 1) + 90",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "I"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"BOOST\"} == 1) + 20",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"BYPASS\"} == 1) + 30",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"CAL\"} == 1) + 40",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"CHRG\"} == 1) + 50",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"DISCHRG\"} == 1) + 60",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"FSD\"} == 1) + 70",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"HB\"} == 1) + 80",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "H"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"OB\"} == 1) + 100",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "J"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"OVER\"} == 1) + 130",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "M"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"SD\"} == 1) + 150",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "O"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(network_ups_tools_ups_status{instance=~\"$instance\", flag=\"TRIM\"} == 1) + 160",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "P"
         }
       ],
-      "title": "Status",
+      "title": "UPS Status",
       "type": "stat"
     },
     {
@@ -145,8 +426,8 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 12,
-        "y": 0
+        "x": 0,
+        "y": 6
       },
       "id": 6,
       "options": {
@@ -183,85 +464,6 @@
       ],
       "title": "Power Source",
       "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 50
-              },
-              {
-                "color": "orange",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 8
-      },
-      "id": 3,
-      "options": {
-        "minVizHeight": 200,
-        "minVizWidth": 200,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "10.2.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "network_ups_tools_ups_load{instance=~\"$instance\"}",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "{{instance}}",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "title": "Load Percentage",
-      "type": "gauge"
     },
     {
       "datasource": {
@@ -307,7 +509,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 6
       },
       "id": 1,
       "options": {
@@ -343,6 +545,85 @@
         }
       ],
       "title": "Battery Charge",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "orange",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 14
+      },
+      "id": 3,
+      "options": {
+        "minVizHeight": 200,
+        "minVizWidth": 200,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "network_ups_tools_ups_load{instance=~\"$instance\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "{{instance}}",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "Load Percentage",
       "type": "gauge"
     },
     {
@@ -410,8 +691,8 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 0,
-        "y": 16
+        "x": 12,
+        "y": 14
       },
       "id": 4,
       "options": {
@@ -512,8 +793,8 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 12,
-        "y": 16
+        "x": 6,
+        "y": 22
       },
       "id": 2,
       "options": {
@@ -575,7 +856,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "Prometheus",
           "value": "PBFA97CFB590B2093"
         },
