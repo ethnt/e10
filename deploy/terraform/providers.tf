@@ -19,5 +19,10 @@ terraform {
       source  = "bpg/proxmox"
       version = "0.46.3"
     }
+
+    improvmx = {
+      source  = "issyl0/improvmx"
+      version = "0.7.1"
+    }
   }
 }

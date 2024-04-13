@@ -1,9 +1,9 @@
 ---
-- name: Copy edns0.conf
-  ansible.builtin.copy:
-    src: ./dnsmasq/edns0.conf
-    dest: /usr/local/etc/dnsmasq.conf.d/edns0.conf
-    owner: root
-    group: wheel
-    mode: "0400"
-    backup: true
+# - name: Copy edns0.conf
+#   ansible.builtin.copy:
+#     src: ./dnsmasq/edns0.conf
+#     dest: /usr/local/etc/dnsmasq.conf.d/edns0.conf
+#     owner: root
+#     group: wheel
+#     mode: "0400"
+#     backup: true

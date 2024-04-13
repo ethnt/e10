@@ -52,6 +52,14 @@
         retention_deletes_enabled = false;
         retention_period = "0s";
       };
+      ruler = {
+        storage = {
+          type = "local";
+          local.directory = "/var/lib/loki/rules";
+        };
+        rule_path = "/tmp/loki/rules";
+        ring.kvstore.store = "inmemory";
+      };
     };
   };
 

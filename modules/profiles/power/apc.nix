@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   imports = [ ./common.nix ];
 
   power.ups = {
@@ -21,5 +21,15 @@
       passwordFile = config.sops.secrets.upsmon_password.path;
       system = "apc@0.0.0.0:3493";
     };
+  };
+
+  environment = {
+    systemPackages = with pkgs; [ apcupsd ];
+
+    etc."apcupsd.conf".text = ''
+      ## apcupsd.conf v1.1 ##
+      UPSCABLE usb
+      UPSTYPE usb
+    '';
   };
 }

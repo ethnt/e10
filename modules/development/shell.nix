@@ -19,6 +19,8 @@
           "./secrets.json"}
           ${setSopsValueToEnvironmentVariable "AWS_SECRET_ACCESS_KEY"
           "./secrets.json"}
+          ${setSopsValueToEnvironmentVariable "OMNIBUS_PASSWORD"
+          "./secrets.json"}
 
           export TAILSCALE_AUTH_KEY=$(${sops} -d --extract '["tailscale_auth_key"]' ./modules/profiles/networking/tailscale/secrets.json)
         '';

@@ -1,6 +1,6 @@
 { config, lib, suites, profiles, ... }: {
   imports = with suites;
-    core ++ proxmox-vm ++ homelab ++ web ++ [
+    core ++ proxmox-vm ++ web ++ [
       profiles.services.miniflux.default
       profiles.services.e10-land
       profiles.networking.printing
@@ -13,12 +13,37 @@
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
-  satan.address = "192.168.10.31";
+  satan.address = "10.10.3.1";
 
-  networking.interfaces.ens18.ipv4.addresses = [{
-    inherit (config.satan) address;
-    prefixLength = 24;
-  }];
+  deployment.targetHost = "10.10.3.1";
+  deployment.buildOnTarget = true;
+
+  networking = {
+    useDHCP = false;
+
+    nameservers = [ "10.10.0.1" ];
+
+    vlans.vlan10 = {
+      id = 10;
+      interface = "ens18";
+    };
+
+    interfaces = {
+      vlan10.ipv4 = {
+        routes = [{
+          address = "0.0.0.0";
+          prefixLength = 0;
+          via = "10.10.0.1";
+          options.src = "10.10.3.1";
+          options.onlink = "";
+        }];
+        addresses = [{
+          address = "10.10.3.1";
+          prefixLength = 24;
+        }];
+      };
+    };
+  };
 
   e10.services.backup.jobs.system.paths = lib.mkAfter [ "/var/www" ];
 

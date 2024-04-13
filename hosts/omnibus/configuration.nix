@@ -1,6 +1,6 @@
 { config, pkgs, suites, profiles, ... }: {
   imports = with suites;
-    core ++ homelab ++ proxmox-vm ++ [
+    core ++ proxmox-vm ++ [
       profiles.telemetry.smartd
       profiles.telemetry.prometheus-smartctl-exporter
       profiles.telemetry.prometheus-zfs-exporter
@@ -15,19 +15,43 @@
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
-  satan.address = "192.168.10.11";
+  deployment.targetHost = "10.10.1.1";
+  deployment.buildOnTarget = true;
 
-  networking.interfaces.ens18.ipv4.addresses = [{
-    inherit (config.satan) address;
-    prefixLength = 24;
-  }];
+  satan.address = "10.10.1.1";
+
+  networking = {
+    useDHCP = false;
+    nameservers = [ "10.10.0.1" ];
+
+    vlans.vlan10 = {
+      id = 10;
+      interface = "ens18";
+    };
+
+    interfaces = {
+      vlan10.ipv4 = {
+        routes = [{
+          address = "0.0.0.0";
+          prefixLength = 0;
+          via = "10.10.0.1";
+          options.src = "10.10.1.1";
+          options.onlink = "";
+        }];
+        addresses = [{
+          address = "10.10.1.1";
+          prefixLength = 24;
+        }];
+      };
+    };
+  };
 
   services.nfs.server.exports = let
     options = "rw,sync,no_subtree_check,insecure,crossmnt,all_squash,anonuid=${
         toString config.users.users.blockbuster.uid
       },anongid=${toString config.users.groups.blockbuster.gid}";
   in ''
-    ${config.disko.devices.zpool.blockbuster.datasets.root.mountpoint} 192.168.0.0/16(${options}) 100.0.0.0/8(${options})
+    ${config.disko.devices.zpool.blockbuster.datasets.root.mountpoint} 192.168.0.0/16(${options}) 100.0.0.0/8(${options}) 10.10.0.0/16(${options})
   '';
 
   services.samba.shares = {

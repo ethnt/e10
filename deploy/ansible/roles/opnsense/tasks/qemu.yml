@@ -1,0 +1,5 @@
+---
+- name: Install os-qemu-guest-agent
+  ansibleguy.opnsense.package:
+    name: os-qemu-guest-agent
+    action: install

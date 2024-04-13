@@ -1,0 +1,5 @@
+---
+- name: Install os-git-backup
+  ansibleguy.opnsense.package:
+    name: os-git-backup
+    action: install

@@ -5,5 +5,9 @@
     - aliases.yml
     - vlans.yml
     - dnsmasq.yml
+    - git.yml
+    - qemu.yml
+    - mdns.yml
+    - upnp.yml
   loop_control:
     loop_var: task_file

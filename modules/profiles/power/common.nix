@@ -23,6 +23,8 @@
       leader = {
         upsmon = "master";
         passwordFile = config.sops.secrets.upsmon_password.path;
+        actions = [ "SET" "FSD" ];
+        instcmds = [ "ALL" ];
       };
 
       follower = {

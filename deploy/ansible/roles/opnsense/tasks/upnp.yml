@@ -1,0 +1,5 @@
+---
+- name: Install os-upnp
+  ansibleguy.opnsense.package:
+    name: os-upnp
+    action: install

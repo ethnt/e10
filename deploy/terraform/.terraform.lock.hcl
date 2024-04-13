@@ -118,6 +118,27 @@ provider "registry.terraform.io/hashicorp/tls" {
   ]
 }
 
+provider "registry.terraform.io/issyl0/improvmx" {
+  version = "0.7.1"
+  hashes = [
+    "h1:RGju9cH7uYTneR5yY7uL3AQ8NX1ndVGlR8TsDyUSd94=",
+    "zh:101bb92e1fdcfb927a380b0ad87f3d0bc808730afe1433208e4369fa11a44011",
+    "zh:2447477ee389f266cd830a56d84cc14130239a588c5ae84fe56aea5154993f3b",
+    "zh:287f4ac0ebf3b49f60fdf9512d8fcafa16a11c47abf7210aef55af95f7749aab",
+    "zh:330f64f3b824c8d8b1260baf2bd3662aed7cdd1bc21bae9f65dc688ba4ba4172",
+    "zh:352d908b3f646906417257564d10d891c5d87ed34c77c2e86d8d4b4d85095a5b",
+    "zh:4aecc1ddc2017c0982f9772f5bcdf70e000b9e5a316def264c0b3dddac362549",
+    "zh:4bce3e730bdb3f27c415cd2393b88048f8d250b382834800e54d3034940dbf34",
+    "zh:4ee7211a3412c77ad9e7a63f55fca05c88698326a0a09e4c95bc803ab436b1c2",
+    "zh:4f9a93ef6979b49651acf612f9dd64552440aacfef49856a89d46314be199b13",
+    "zh:5a4761b5c030dfcca67b51f0c48e73b6d90d4b25adb4a5e16dc3e7dd4361dabf",
+    "zh:7b39fecc10e006b9fc4f7f0598ea5610b0b1fa03adaee03aa056fbc6d1d2113f",
+    "zh:a879eef70758e611f483abf9090b89d995949d956af243f9db851ec3f6b6c481",
+    "zh:d0a4fa2248f62ff8ce395b9bb8944d1765984a032ec21ea9433cc760829cc65e",
+    "zh:d41c701eb9c38700f704811d207fbf9d8e88732cfd1e2901f89198f0bc0a1560",
+  ]
+}
+
 provider "registry.terraform.io/tailscale/tailscale" {
   version     = "0.13.13"
   constraints = "0.13.13"

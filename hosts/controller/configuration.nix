@@ -1,4 +1,4 @@
-{ config, suites, profiles, ... }: {
+{ flake, lib, config, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.databases.postgresql.blocky
@@ -15,27 +15,33 @@
 
   satan.address = "192.168.1.2";
 
+  deployment.targetHost = "192.168.1.2";
+  deployment.buildOnTarget = true;
+
   networking = {
     defaultGateway = "192.168.1.1";
     nameservers = [ "192.168.1.1" ];
 
-    vlans.vlan002 = {
+    vlans.vlan2 = {
       id = 2;
       interface = "ens18";
     };
 
     interfaces = {
-      vlan002.ipv4.addresses = [{
-        address = "10.0.2.11";
+      vlan2.ipv4.addresses = [{
+        address = "10.2.1.1";
         prefixLength = 24;
       }];
 
       ens18.ipv4.addresses = [{
-        inherit (config.satan) address;
+        address = "192.168.1.2";
         prefixLength = 24;
       }];
     };
   };
+
+  e10.services.backup.jobs.system.exclude =
+    lib.mkAfter [ "/var/lib/postgresql" "/var/lib/unifi/data/db" ];
 
   system.stateVersion = "23.11";
 }

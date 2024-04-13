@@ -35,6 +35,7 @@ let
         modules = commonModules ++ [ baseConfiguration configuration ];
         specialArgs = {
           inherit inputs profiles suites;
+          flake = self;
           hosts = self.nixosConfigurations;
         };
       in l.nixosSystem { inherit specialArgs modules system extraModules; });
