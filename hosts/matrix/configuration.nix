@@ -1,4 +1,4 @@
-{ config, lib, suites, profiles, ... }: {
+{ lib, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ web ++ [
       profiles.services.miniflux.default

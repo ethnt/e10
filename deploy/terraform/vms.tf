@@ -322,7 +322,7 @@ resource "proxmox_virtual_environment_vm" "router" {
   vm_id = 101
 
   scsi_hardware = "virtio-scsi-single"
-  on_boot = true
+  on_boot       = true
 
   migrate = true
 
@@ -342,7 +342,7 @@ resource "proxmox_virtual_environment_vm" "router" {
     file_format  = "raw"
     interface    = "scsi0"
     size         = 256
-    iothread = true
+    iothread     = true
   }
 
   network_device {

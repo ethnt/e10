@@ -1,4 +1,4 @@
-{ config, suites, profiles, ... }: {
+{ suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm
     ++ [ profiles.remote-builder.builder profiles.remote-builder.substituter ]

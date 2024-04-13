@@ -43,8 +43,8 @@ resource "improvmx_domain" "e10_camp" {
 }
 
 resource "improvmx_email_forward" "wildcard_e10_camp" {
-  domain = "e10.camp"
-  alias_name = "*"
+  domain            = "e10.camp"
+  alias_name        = "*"
   destination_email = "ethan.turkeltaub+e10@hey.com"
 }
 

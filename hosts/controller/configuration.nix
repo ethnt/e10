@@ -1,4 +1,4 @@
-{ flake, lib, config, suites, profiles, ... }: {
+{ lib, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.databases.postgresql.blocky
