@@ -29,9 +29,6 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    nixos-generators.url = "github:nix-community/nixos-generators";
-    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
-
     haumea.url = "github:nix-community/haumea";
     haumea.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -68,7 +65,6 @@
         ./modules/deploy/configuration.nix
         ./modules/deploy/ansible.nix
         ./modules/deploy/terraform.nix
-        ./modules/deploy/generators.nix
 
         ./hosts
       ];
