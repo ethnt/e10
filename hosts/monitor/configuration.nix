@@ -139,6 +139,17 @@
       }];
     }
     {
+      job_name = "host_satellite";
+      static_configs = [{
+        targets = [
+          "${hosts.satellite.config.networking.hostName}:${
+            toString
+            hosts.satellite.config.services.prometheus.exporters.node.port
+          }"
+        ];
+      }];
+    }
+    {
       job_name = "smartctl_omnibus";
       static_configs = [{
         targets = [
