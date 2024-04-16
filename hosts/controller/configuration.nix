@@ -29,7 +29,7 @@
 
     interfaces = {
       vlan2.ipv4.addresses = [{
-        address = "10.2.1.1";
+        address = "10.2.2.1";
         prefixLength = 24;
       }];
 

@@ -1,0 +1,5 @@
+---
+- name: Install prometheus-node-exporter
+  ansibleguy.opnsense.package:
+    name: os-node_exporter
+    action: install

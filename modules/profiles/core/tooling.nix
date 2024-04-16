@@ -5,6 +5,7 @@
     comma
     glances
     inetutils
+    iperf3
     lm_sensors
     tmux
     vim

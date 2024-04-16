@@ -47,7 +47,9 @@ in {
           buildSystem = {
             name = "Build system";
             "runs-on" = "ubuntu-latest";
-            strategy.matrix.host = l.attrNames self.nixosConfigurations;
+            strategy.matrix.host = l.attrNames (l.filterAttrs
+              (_: host: host.config.nixpkgs.system == "x86_64-linux")
+              self.nixosConfigurations);
             steps = setup ++ [{
               run = ''
                 nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace

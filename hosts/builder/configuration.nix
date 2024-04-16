@@ -1,8 +1,10 @@
 { suites, profiles, ... }: {
   imports = with suites;
-    core ++ proxmox-vm
-    ++ [ profiles.remote-builder.builder profiles.remote-builder.substituter ]
-    ++ [ ./hardware-configuration.nix ./disk-config.nix ];
+    core ++ proxmox-vm ++ [
+      profiles.emulation.aarch64-linux
+      profiles.remote-builder.builder
+      profiles.remote-builder.substituter
+    ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
