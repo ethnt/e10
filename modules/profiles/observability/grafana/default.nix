@@ -496,6 +496,10 @@
                 host = "builder";
                 uuid = "9814CF38-373F-4251-BE8A-2438D9C4A88C";
               })
+              (mkBackupRule {
+                host = "satellite";
+                uuid = "B29064EF-E210-4247-8222-22FE28AF2D76";
+              })
               {
                 uid = "f21a1838-41ba-449e-8830-143a3d86cc0b";
                 title = "Blocky is not responding successfully";
@@ -550,6 +554,114 @@
                         uid = "__expr__";
                       };
                       expression = "A";
+                      intervalMs = 1000;
+                      maxDataPoints = 43200;
+                      refId = "C";
+                      type = "threshold";
+                    };
+                  }
+                ];
+                noDataState = "NoData";
+                execErrState = "Error";
+                for = "5m";
+                annotations = {
+                  description = "";
+                  runbook_url = "";
+                  summary = "";
+                };
+                labels = { severity = "critical"; };
+                isPaused = false;
+              }
+              {
+                uid = "e1a38758-5093-49e2-8041-ae81225b1ca5";
+                title = "Packet loss is greater than 1%";
+                condition = "C";
+                data = [
+                  {
+                    refId = "A";
+                    relativeTimeRange = {
+                      from = 600;
+                      to = 0;
+                    };
+                    datasourceUid = "PBFA97CFB590B2093";
+                    model = {
+                      datasource = {
+                        type = "prometheus";
+                        uid = "PBFA97CFB590B2093";
+                      };
+                      editorMode = "code";
+                      expr = ''
+                        (smokeping_requests_total{host="1.1.1.1"} - smokeping_response_duration_seconds_count{host="1.1.1.1"})/smokeping_requests_total{host="1.1.1.1"}
+                      '';
+                      instant = false;
+                      intervalMs = 1000;
+                      legendFormat = "__auto";
+                      maxDataPoints = 43200;
+                      range = true;
+                      refId = "A";
+                    };
+                  }
+                  {
+                    refId = "B";
+                    relativeTimeRange = {
+                      from = 600;
+                      to = 0;
+                    };
+                    datasourceUid = "__expr__";
+                    model = {
+                      conditions = [{
+                        evaluator = {
+                          params = [ 0 0 ];
+                          type = "gt";
+                        };
+                        operator = { type = "and"; };
+                        query = { params = [ ]; };
+                        reducer = {
+                          params = [ ];
+                          type = "avg";
+                        };
+                        type = "query";
+                      }];
+                      datasource = {
+                        name = "Expression";
+                        type = "__expr__";
+                        uid = "__expr__";
+                      };
+                      expression = "A";
+                      intervalMs = 1000;
+                      maxDataPoints = 43200;
+                      reducer = "mean";
+                      refId = "B";
+                      type = "reduce";
+                    };
+                  }
+                  {
+                    refId = "C";
+                    relativeTimeRange = {
+                      from = 600;
+                      to = 0;
+                    };
+                    datasourceUid = "__expr__";
+                    model = {
+                      conditions = [{
+                        evaluator = {
+                          params = [ 1.0e-2 ];
+                          type = "gt";
+                        };
+                        operator = { type = "and"; };
+                        query = { params = [ ]; };
+                        reducer = {
+                          params = [ ];
+                          type = "avg";
+                        };
+                        type = "query";
+                      }];
+                      datasource = {
+                        name = "Expression";
+                        type = "__expr__";
+                        uid = "__expr__";
+                      };
+                      expression = "B";
                       intervalMs = 1000;
                       maxDataPoints = 43200;
                       refId = "C";

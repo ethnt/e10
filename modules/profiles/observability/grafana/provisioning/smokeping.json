@@ -21,12 +21,11 @@
       }
     ]
   },
-  "description": "Smoke Ping using https://github.com/SuperQ/smokeping_prober\r\nwith \r\nlatency heatmap\r\nlatency graph\r\npacket loss gragh\r\n",
+  "description": "",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "gnetId": 11335,
   "graphTooltip": 0,
-  "id": 38,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -137,7 +136,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(rate(smokeping_response_duration_seconds_bucket{host=\"${target:raw}\"}[1m])) by (le)",
+          "expr": "sum(rate(smokeping_response_duration_seconds_bucket{instance=~\"$instance\",host=\"${target:raw}\"}[1m])) by (le)",
           "format": "heatmap",
           "intervalFactor": 1,
           "legendFormat": "{{le}}",
@@ -248,7 +247,10 @@
               {
                 "id": "custom.lineStyle",
                 "value": {
-                  "dash": [10, 10],
+                  "dash": [
+                    10,
+                    10
+                  ],
                   "fill": "dash"
                 }
               }
@@ -265,7 +267,9 @@
       "id": 4,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
@@ -283,7 +287,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(smokeping_requests_total{host=\"${target:raw}\"} - smokeping_response_duration_seconds_count{host=\"${target:raw}\"})/smokeping_requests_total{host=\"${target:raw}\"} ",
+          "expr": "(smokeping_requests_total{instance=~\"$instance\",host=\"${target:raw}\"} - smokeping_response_duration_seconds_count{instance=~\"$instance\",host=\"${target:raw}\"})/smokeping_requests_total{instance=~\"$instance\",host=\"${target:raw}\"} ",
           "legendFormat": "Percentage",
           "range": true,
           "refId": "A"
@@ -294,7 +298,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(smokeping_requests_total{host=\"${target:raw}\"} - smokeping_response_duration_seconds_count{host=\"${target:raw}\"})",
+          "expr": "(smokeping_requests_total{instance=~\"$instance\",host=\"${target:raw}\"} - smokeping_response_duration_seconds_count{instance=~\"$instance\",host=\"${target:raw}\"})",
           "legendFormat": "Count",
           "range": true,
           "refId": "B"
@@ -392,7 +396,10 @@
               {
                 "id": "custom.lineStyle",
                 "value": {
-                  "dash": [10, 10],
+                  "dash": [
+                    10,
+                    10
+                  ],
                   "fill": "dash"
                 }
               }
@@ -409,7 +416,12 @@
       "id": 5,
       "options": {
         "legend": {
-          "calcs": ["mean", "lastNotNull", "max", "min"],
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
@@ -427,7 +439,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "smokeping_response_duration_seconds_sum{host=\"${target:raw}\"} / smokeping_response_duration_seconds_count{host=\"${target:raw}\"}",
+          "expr": "smokeping_response_duration_seconds_sum{instance=~\"$instance\",host=\"${target:raw}\"} / smokeping_response_duration_seconds_count{instance=~\"$instance\",host=\"${target:raw}\"}",
           "legendFormat": "{{host}}",
           "range": true,
           "refId": "A"
@@ -444,7 +456,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
@@ -470,6 +482,34 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "controller:9374",
+          "value": "controller:9374"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
+        },
+        "definition": "label_values(smokeping_requests_total,instance)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Instance",
+        "multi": false,
+        "name": "instance",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(smokeping_requests_total,instance)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -490,11 +530,21 @@
       "2h",
       "1d"
     ],
-    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
   },
   "timezone": "",
   "title": "Smokeping",
   "uid": "i5aRaLaik",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

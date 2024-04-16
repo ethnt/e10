@@ -60,6 +60,10 @@
       static_configs = [{ targets = [ "satan:9100" ]; }];
     }
     {
+      job_name = "host_elderflower";
+      static_configs = [{ targets = [ "elderflower:9100" ]; }];
+    }
+    {
       job_name = "host_controller";
       static_configs = [{
         targets = [
@@ -201,6 +205,19 @@
           "${hosts.controller.config.networking.hostName}:${
             toString
             hosts.controller.config.services.prometheus.exporters.smokeping.port
+          }"
+        ];
+      }];
+      scrape_interval = "5s";
+    }
+    {
+      job_name = "smokeping_satellite";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.satellite.config.networking.hostName}:${
+            toString
+            hosts.satellite.config.services.prometheus.exporters.smokeping.port
           }"
         ];
       }];

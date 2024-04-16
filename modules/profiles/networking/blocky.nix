@@ -104,10 +104,10 @@
         ipv6Mask = 128;
       };
       queryLog = {
-        # type = "none";
-        type = "postgresql";
-        target = "postgres://blocky?host=/run/postgresql";
-        logRetentionDays = 90;
+        type = "none";
+        # type = "postgresql";
+        # target = "postgres://blocky?host=/run/postgresql";
+        # logRetentionDays = 90;
       };
     };
   };

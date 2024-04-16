@@ -1,8 +1,14 @@
 { profiles, suites, lib, ... }: {
   imports = with suites;
-    core ++ [ ./hardware-configuration.nix ] ++ [ profiles.hardware.rpi4 ];
+    core ++ [ ./hardware-configuration.nix ] ++ [
+      profiles.hardware.rpi4
+      profiles.telemetry.prometheus-smokeping-exporter
+    ];
 
-  deployment.buildOnTarget = false;
+  deployment = {
+    buildOnTarget = false;
+    tags = [ "@remote" ];
+  };
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;

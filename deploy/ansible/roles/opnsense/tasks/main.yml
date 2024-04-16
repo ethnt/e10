@@ -9,5 +9,6 @@
     - qemu.yml
     - mdns.yml
     - upnp.yml
+    - prometheus-node-exporter.yml
   loop_control:
     loop_var: task_file
