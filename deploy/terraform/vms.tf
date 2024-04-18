@@ -379,3 +379,55 @@ resource "proxmox_virtual_environment_vm" "router" {
     xvga   = false
   }
 }
+
+
+resource "proxmox_virtual_environment_vm" "sidecar" {
+  provider = proxmox.elderflower
+
+  node_name = "elderflower"
+
+  name  = "sidecar"
+  vm_id = 102
+
+  scsi_hardware = "virtio-scsi-single"
+
+  boot_order = ["scsi0"]
+  migrate    = true
+
+  cpu {
+    cores   = 4
+    sockets = 1
+    type    = "host"
+  }
+
+  memory {
+    dedicated = 4096
+  }
+
+  disk {
+    datastore_id = "local-zfs"
+    discard      = "on"
+    file_format  = "raw"
+    interface    = "scsi0"
+    size         = 256
+  }
+
+  network_device {
+    bridge   = "vmbr0"
+    firewall = false
+    model    = "virtio"
+  }
+
+  agent {
+    enabled = true
+    type    = "virtio"
+  }
+
+  operating_system {
+    type = "other"
+  }
+
+  vga {
+    enabled = true
+  }
+}

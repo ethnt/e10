@@ -3,6 +3,8 @@
     core ++ [ ./hardware-configuration.nix ] ++ [
       profiles.hardware.rpi4
       profiles.telemetry.prometheus-smokeping-exporter
+      profiles.networking.networkd
+      profiles.networking.resolved
     ];
 
   deployment = {

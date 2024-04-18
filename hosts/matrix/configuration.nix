@@ -8,6 +8,8 @@
       profiles.power.tripp-lite
       profiles.telemetry.prometheus-nut-exporter
       profiles.services.netbox.default
+      profiles.networking.networkd
+      profiles.networking.resolved
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

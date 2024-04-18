@@ -1,9 +1,11 @@
-{ suites, profiles, ... }: {
+{ suites, profiles, lib, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.emulation.aarch64-linux
       profiles.remote-builder.builder
       profiles.remote-builder.substituter
+      profiles.networking.networkd
+      profiles.networking.resolved
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

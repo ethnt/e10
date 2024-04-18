@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
+{ profiles, pkgs, ... }: {
+  imports = [ profiles.databases.postgresql.default ];
+
   services.postgresql = {
     initialScript = pkgs.writeText "postgres-blocky-init" ''
       CREATE ROLE blocky WITH LOGIN PASSWORD 'blocky' CREATEDB;

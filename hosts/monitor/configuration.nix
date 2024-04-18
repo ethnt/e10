@@ -5,7 +5,9 @@
       profiles.monitoring.prometheus
       profiles.monitoring.rsyslogd
       profiles.observability.grafana.default
-      profiles.telemetry.prometheus-blackbox-exporter
+      # profiles.telemetry.prometheus-blackbox-exporter
+      profiles.networking.networkd
+      profiles.networking.resolved
     ];
 
   services.nginx.virtualHosts = {
@@ -154,6 +156,17 @@
       }];
     }
     {
+      job_name = "host_sidecar";
+      static_configs = [{
+        targets = [
+          "${hosts.sidecar.config.networking.hostName}:${
+            toString
+            hosts.sidecar.config.services.prometheus.exporters.node.port
+          }"
+        ];
+      }];
+    }
+    {
       job_name = "smartctl_omnibus";
       static_configs = [{
         targets = [
@@ -235,30 +248,30 @@
         ];
       }];
     }
-    {
-      job_name = "blackbox_blocky";
-      metrics_path = "/probe";
-      params = { module = [ "blocky" ]; };
-      static_configs =
-        [{ targets = [ "${hosts.controller.config.networking.hostName}" ]; }];
-      relabel_configs = [
-        {
-          source_labels = [ "__address__" ];
-          target_label = "__param_target";
-        }
-        {
-          source_labels = [ "__target__" ];
-          target_label = "instance";
-        }
-        {
-          target_label = "__address__";
-          replacement = "${hosts.monitor.config.networking.hostName}:${
-              toString
-              hosts.monitor.config.services.prometheus.exporters.blackbox.port
-            }";
-        }
-      ];
-    }
+    # {
+    #   job_name = "blackbox_blocky";
+    #   metrics_path = "/probe";
+    #   params = { module = [ "blocky" ]; };
+    #   static_configs =
+    #     [{ targets = [ "${hosts.controller.config.networking.hostName}" ]; }];
+    #   relabel_configs = [
+    #     {
+    #       source_labels = [ "__address__" ];
+    #       target_label = "__param_target";
+    #     }
+    #     {
+    #       source_labels = [ "__target__" ];
+    #       target_label = "instance";
+    #     }
+    #     {
+    #       target_label = "__address__";
+    #       replacement = "${hosts.monitor.config.networking.hostName}:${
+    #           toString
+    #           hosts.monitor.config.services.prometheus.exporters.blackbox.port
+    #         }";
+    #     }
+    #   ];
+    # }
   ];
 
   e10.services.backup.jobs.system.exclude =
