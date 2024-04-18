@@ -1,4 +1,4 @@
-{ suites, profiles, lib, ... }: {
+{ suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.emulation.aarch64-linux

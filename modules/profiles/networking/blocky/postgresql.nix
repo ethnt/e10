@@ -1,4 +1,4 @@
-{ profiles, lib, ... }: {
+{ profiles, ... }: {
   imports = [ profiles.databases.postgresql.blocky ];
 
   services.blocky.settings.queryLog = {

@@ -79,9 +79,7 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
+          "calcs": ["sum"],
           "fields": "/^cnt$/",
           "values": false
         },
@@ -139,9 +137,7 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
+          "calcs": ["sum"],
           "fields": "/^cnt$/",
           "values": false
         },
@@ -220,9 +216,7 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
+          "calcs": ["sum"],
           "fields": "",
           "values": false
         },
@@ -247,9 +241,7 @@
           "options": {
             "fields": {
               "cnt": {
-                "aggregations": [
-                  "sum"
-                ],
+                "aggregations": ["sum"],
                 "operation": "aggregate"
               },
               "response_type": {
@@ -269,9 +261,7 @@
             "alias": "BLOCKED_TOTAL",
             "mode": "reduceRow",
             "reduce": {
-              "include": [
-                "BLOCKED"
-              ],
+              "include": ["BLOCKED"],
               "reducer": "sum"
             },
             "replaceFields": false
@@ -358,9 +348,7 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
+          "calcs": ["sum"],
           "fields": "/^client_name$/",
           "values": false
         },
@@ -385,9 +373,7 @@
           "options": {
             "includeTimeField": false,
             "mode": "reduceFields",
-            "reducers": [
-              "distinctCount"
-            ]
+            "reducers": ["distinctCount"]
           }
         }
       ],
@@ -662,15 +648,11 @@
           "displayMode": "table",
           "placement": "right",
           "showLegend": true,
-          "values": [
-            "percent"
-          ]
+          "values": ["percent"]
         },
         "pieType": "donut",
         "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
+          "calcs": ["sum"],
           "fields": "",
           "values": false
         },
@@ -762,15 +744,11 @@
           "displayMode": "table",
           "placement": "right",
           "showLegend": true,
-          "values": [
-            "percent"
-          ]
+          "values": ["percent"]
         },
         "pieType": "donut",
         "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
+          "calcs": ["sum"],
           "fields": "",
           "values": false
         },
@@ -887,9 +865,7 @@
           "countRows": false,
           "enablePagination": true,
           "fields": "",
-          "reducer": [
-            "sum"
-          ],
+          "reducer": ["sum"],
           "show": false
         },
         "showHeader": true
@@ -999,9 +975,7 @@
           "countRows": false,
           "enablePagination": true,
           "fields": "",
-          "reducer": [
-            "sum"
-          ],
+          "reducer": ["sum"],
           "show": false
         },
         "showHeader": true
@@ -1111,9 +1085,7 @@
           "countRows": false,
           "enablePagination": true,
           "fields": "",
-          "reducer": [
-            "sum"
-          ],
+          "reducer": ["sum"],
           "show": false
         },
         "showHeader": true
@@ -1164,9 +1136,7 @@
           "options": {
             "fields": {
               "client_ip": {
-                "aggregations": [
-                  "allValues"
-                ],
+                "aggregations": ["allValues"],
                 "operation": "aggregate"
               },
               "client_name": {
@@ -1174,9 +1144,7 @@
                 "operation": "groupby"
               },
               "cnt": {
-                "aggregations": [
-                  "sum"
-                ],
+                "aggregations": ["sum"],
                 "operation": "aggregate"
               }
             }
@@ -1260,9 +1228,7 @@
           "countRows": false,
           "enablePagination": true,
           "fields": "",
-          "reducer": [
-            "sum"
-          ],
+          "reducer": ["sum"],
           "show": false
         },
         "showHeader": true
@@ -1305,9 +1271,7 @@
           "options": {
             "fields": {
               "client_ip": {
-                "aggregations": [
-                  "allValues"
-                ],
+                "aggregations": ["allValues"],
                 "operation": "aggregate"
               },
               "client_name": {
@@ -1315,9 +1279,7 @@
                 "operation": "groupby"
               },
               "cnt": {
-                "aggregations": [
-                  "sum"
-                ],
+                "aggregations": ["sum"],
                 "operation": "aggregate"
               }
             }
@@ -1471,9 +1433,7 @@
           "countRows": false,
           "enablePagination": true,
           "fields": "",
-          "reducer": [
-            "sum"
-          ],
+          "reducer": ["sum"],
           "show": false
         },
         "showHeader": true
@@ -1559,12 +1519,8 @@
       {
         "current": {
           "selected": true,
-          "text": [
-            "PostgreSQL (Blocky, Controller)"
-          ],
-          "value": [
-            "P049A504C390083AF"
-          ]
+          "text": ["PostgreSQL (Blocky, Controller)"],
+          "value": ["P049A504C390083AF"]
         },
         "hide": 0,
         "includeAll": true,
@@ -1582,12 +1538,8 @@
       {
         "current": {
           "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "text": ["All"],
+          "value": ["$__all"]
         },
         "datasource": {
           "type": "postgres",
@@ -1610,12 +1562,8 @@
       {
         "current": {
           "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "text": ["All"],
+          "value": ["$__all"]
         },
         "datasource": {
           "type": "postgres",
@@ -1638,12 +1586,8 @@
       {
         "current": {
           "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "text": ["All"],
+          "value": ["$__all"]
         },
         "datasource": {
           "type": "postgres",

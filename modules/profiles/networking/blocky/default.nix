@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ pkgs, lib, ... }: {
   environment.systemPackages = [ pkgs.blocky ];
 
   services.blocky = {

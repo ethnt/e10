@@ -1,4 +1,4 @@
-{ profiles, suites, lib, ... }: {
+{ profiles, suites, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.networking.blocky.default
