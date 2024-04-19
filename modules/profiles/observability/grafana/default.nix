@@ -80,10 +80,22 @@
             }";
         }
         {
-          name = "PostgreSQL (Blocky)";
+          name = "PostgreSQL (Blocky, Controller)";
           type = "postgres";
           access = "proxy";
           url = hosts.controller.config.networking.hostName;
+          user = "blocky";
+          jsonData = {
+            user = "blocky";
+            database = "blocky";
+            sslmode = "disable";
+          };
+        }
+        {
+          name = "PostgreSQL (Blocky, Sidecar)";
+          type = "postgres";
+          access = "proxy";
+          url = hosts.sidecar.config.networking.hostName;
           user = "blocky";
           jsonData = {
             user = "blocky";
@@ -184,7 +196,6 @@
 
         rules.settings = {
           apiVersion = 1;
-
           groups = [{
             orgId = 1;
             name = "Default";
@@ -500,78 +511,78 @@
                 host = "satellite";
                 uuid = "B29064EF-E210-4247-8222-22FE28AF2D76";
               })
-              {
-                uid = "f21a1838-41ba-449e-8830-143a3d86cc0b";
-                title = "Blocky is not responding successfully";
-                condition = "C";
-                data = [
-                  {
-                    refId = "A";
-                    relativeTimeRange = {
-                      from = 600;
-                      to = 0;
-                    };
-                    datasourceUid = "PBFA97CFB590B2093";
-                    model = {
-                      datasource = {
-                        type = "prometheus";
-                        uid = "PBFA97CFB590B2093";
-                      };
-                      editorMode = "code";
-                      expr =
-                        ''{job="blackbox_blocky",__name__="probe_success"}'';
-                      instant = true;
-                      intervalMs = 1000;
-                      legendFormat = "__auto";
-                      maxDataPoints = 43200;
-                      range = false;
-                      refId = "A";
-                    };
-                  }
-                  {
-                    refId = "C";
-                    relativeTimeRange = {
-                      from = 600;
-                      to = 0;
-                    };
-                    datasourceUid = "__expr__";
-                    model = {
-                      conditions = [{
-                        evaluator = {
-                          params = [ 1 ];
-                          type = "lt";
-                        };
-                        operator = { type = "and"; };
-                        query = { params = [ "C" ]; };
-                        reducer = {
-                          params = [ ];
-                          type = "last";
-                        };
-                        type = "query";
-                      }];
-                      datasource = {
-                        type = "__expr__";
-                        uid = "__expr__";
-                      };
-                      expression = "A";
-                      intervalMs = 1000;
-                      maxDataPoints = 43200;
-                      refId = "C";
-                      type = "threshold";
-                    };
-                  }
-                ];
-                noDataState = "NoData";
-                execErrState = "Error";
-                for = "5m";
-                annotations = {
-                  description = "";
-                  runbook_url = "";
-                  summary = "";
-                };
-                labels = { severity = "critical"; };
-                isPaused = false;
-              }
+              # {
+              #   uid = "f21a1838-41ba-449e-8830-143a3d86cc0b";
+              #   title = "Blocky is not responding successfully";
+              #   condition = "C";
+              #   data = [
+              #     {
+              #       refId = "A";
+              #       relativeTimeRange = {
+              #         from = 600;
+              #         to = 0;
+              #       };
+              #       datasourceUid = "PBFA97CFB590B2093";
+              #       model = {
+              #         datasource = {
+              #           type = "prometheus";
+              #           uid = "PBFA97CFB590B2093";
+              #         };
+              #         editorMode = "code";
+              #         expr =
+              #           ''{job="blackbox_blocky",__name__="probe_success"}'';
+              #         instant = true;
+              #         intervalMs = 1000;
+              #         legendFormat = "__auto";
+              #         maxDataPoints = 43200;
+              #         range = false;
+              #         refId = "A";
+              #       };
+              #     }
+              #     {
+              #       refId = "C";
+              #       relativeTimeRange = {
+              #         from = 600;
+              #         to = 0;
+              #       };
+              #       datasourceUid = "__expr__";
+              #       model = {
+              #         conditions = [{
+              #           evaluator = {
+              #             params = [ 1 ];
+              #             type = "lt";
+              #           };
+              #           operator = { type = "and"; };
+              #           query = { params = [ "C" ]; };
+              #           reducer = {
+              #             params = [ ];
+              #             type = "last";
+              #           };
+              #           type = "query";
+              #         }];
+              #         datasource = {
+              #           type = "__expr__";
+              #           uid = "__expr__";
+              #         };
+              #         expression = "A";
+              #         intervalMs = 1000;
+              #         maxDataPoints = 43200;
+              #         refId = "C";
+              #         type = "threshold";
+              #       };
+              #     }
+              #   ];
+              #   noDataState = "NoData";
+              #   execErrState = "Error";
+              #   for = "5m";
+              #   annotations = {
+              #     description = "";
+              #     runbook_url = "";
+              #     summary = "";
+              #   };
+              #   labels = { severity = "critical"; };
+              #   isPaused = false;
+              # }
               {
                 uid = "e1a38758-5093-49e2-8041-ae81225b1ca5";
                 title = "Packet loss is greater than 1%";

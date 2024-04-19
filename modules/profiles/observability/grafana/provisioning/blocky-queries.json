@@ -4,8 +4,8 @@
       {
         "builtIn": 1,
         "datasource": {
-          "type": "datasource",
-          "uid": "grafana"
+          "type": "grafana",
+          "uid": "-- Grafana --"
         },
         "enable": true,
         "hide": true,
@@ -21,13 +21,364 @@
       }
     ]
   },
+  "description": "Grafana dashboard for Blocky with PostgreSQL query logging",
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": 17996,
   "graphTooltip": 0,
-  "id": 48,
+  "id": 71,
   "links": [],
   "liveNow": false,
   "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 24,
+      "panels": [],
+      "title": "Dashboard",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["sum"],
+          "fields": "/^cnt$/",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 14,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Queries",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "id": 22,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["sum"],
+          "fields": "/^cnt$/",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 14,
+          "refId": "A"
+        }
+      ],
+      "title": "Queries Blocked",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "BLOCKED"
+                  }
+                },
+                "fieldName": "response_type"
+              }
+            ],
+            "match": "all",
+            "type": "include"
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "id": 34,
+      "maxDataPoints": 200,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["sum"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 14,
+          "refId": "A"
+        }
+      ],
+      "title": "Percentage Blocked",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "cnt": {
+                "aggregations": ["sum"],
+                "operation": "aggregate"
+              },
+              "response_type": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
+          "id": "rowsToFields",
+          "options": {}
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "BLOCKED_TOTAL",
+            "mode": "reduceRow",
+            "reduce": {
+              "include": ["BLOCKED"],
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Sum",
+            "mode": "reduceRow",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "REAL_TOTAL",
+            "binary": {
+              "left": "Sum",
+              "operator": "-",
+              "reducer": "sum",
+              "right": "BLOCKED_TOTAL"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "binary": {
+              "left": "BLOCKED_TOTAL",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "REAL_TOTAL"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "id": 35,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["sum"],
+          "fields": "/^client_name$/",
+          "values": false
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 16,
+          "refId": "A"
+        }
+      ],
+      "title": "Active Clients",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "mode": "reduceFields",
+            "reducers": ["distinctCount"]
+          }
+        }
+      ],
+      "type": "stat"
+    },
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
@@ -40,35 +391,266 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 1,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.labels.response_type}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 14,
+      "maxDataPoints": 200,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select \n  $__timeGroupAlias(t.request_ts, '$__interval'), \n  t.response_type, count(*) as cnt\nfrom log_entries t\nWHERE $__timeFilter(t.request_ts) AND \n  t.question_type in ($dns_types) AND\n  t.client_name in ($client_names) AND \n  t.response_type in ($response_types) AND \n  (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\ngroup by time, t.response_type \norder by time asc;",
+          "refId": "response",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Total Queries",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 1,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.labels.client_name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 16,
+      "maxDataPoints": 200,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select \n  $__timeGroupAlias(t.request_ts, '$__interval'), \n  t.client_name, count(*) as cnt\nfrom log_entries t\nWHERE $__timeFilter(t.request_ts) AND \n  t.question_type in ($dns_types) AND\n  t.client_name in ($client_names) AND \n  t.response_type in ($response_types) AND \n  (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\ngroup by time, t.client_name \norder by cnt desc;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Client Actvity",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             }
           },
-          "displayName": "${__field.labels.response_type}",
-          "mappings": [],
-          "unit": "short"
+          "mappings": []
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
+        "w": 12,
         "x": 0,
-        "y": 0
+        "y": 20
       },
-      "id": 14,
-      "links": [],
+      "id": 10,
       "options": {
         "displayLabels": [],
         "legend": {
           "displayMode": "table",
           "placement": "right",
           "showLegend": true,
-          "values": ["value"]
+          "values": ["percent"]
         },
-        "pieType": "pie",
+        "pieType": "donut",
         "reduceOptions": {
           "calcs": ["sum"],
           "fields": "",
@@ -79,40 +661,54 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "8.1.2",
-      "repeatDirection": "v",
       "targets": [
         {
           "datasource": {
             "type": "grafana-postgresql-datasource",
             "uid": "${DS_POSTGRESQL}"
           },
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
+          "editorMode": "code",
+          "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT  t.response_type, max(t.request_Ts) as time, count(*) as cnt from log_entries t \n  WHERE $__timeFilter(t.request_Ts) and \n        t.response_type in ($response_type) and \n        t.client_name in ($client_name) and \n        (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\n        group by t.response_type\n        order by time",
+          "rawSql": "SELECT\n  t.question_type,\n  COUNT(*) as cnt\nFROM\n  log_entries t\nWHERE\n  $__timeFilter(t.request_ts)\n  AND t.question_type in ($dns_types)\n  AND t.client_name in ($client_names)\n  AND t.response_type in ($response_types)\n  AND (\n    length('$question') = 0\n    or POSITION(lower('$question') IN t.question_name) > 0\n  )\nGROUP BY\n  t.question_type;",
           "refId": "A",
-          "select": [
-            [
+          "sql": {
+            "columns": [
               {
-                "params": ["value"],
-                "type": "column"
+                "parameters": [],
+                "type": "function"
               }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
         }
       ],
-      "title": "Query count by response type",
-      "transformations": [],
+      "title": "Query Types",
+      "transformations": [
+        {
+          "id": "rowsToFields",
+          "options": {
+            "mappings": [
+              {
+                "fieldName": "question_type",
+                "handlerKey": "field.name"
+              },
+              {
+                "fieldName": "cnt",
+                "handlerKey": "field.value"
+              }
+            ]
+          }
+        }
+      ],
       "type": "piechart"
     },
     {
@@ -138,22 +734,21 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 6,
-        "x": 6,
-        "y": 0
+        "w": 12,
+        "x": 12,
+        "y": 20
       },
-      "id": 16,
+      "id": 12,
       "options": {
-        "displayLabels": [],
         "legend": {
           "displayMode": "table",
           "placement": "right",
           "showLegend": true,
-          "values": ["value"]
+          "values": ["percent"]
         },
-        "pieType": "pie",
+        "pieType": "donut",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": ["sum"],
           "fields": "",
           "values": false
         },
@@ -169,20 +764,10 @@
             "uid": "${DS_POSTGRESQL}"
           },
           "editorMode": "code",
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
+          "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT max(t.request_ts) AS time,\n       case when t.reason  like 'BLOCKED%' then SPLIT_PART(SPLIT_PART(t.reason,'(',-1), ')',1) else '' end AS metric,\n       count(t.reason) AS cnt\nFROM log_entries t\nWHERE t.response_type ='BLOCKED'\n  AND $__timeFilter(t.request_Ts)\n  AND t.client_name in ($client_name)\n  AND (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\nGROUP BY 2\nORDER BY time",
+          "rawSql": "SELECT reason, COUNT(*) as cnt\nFROM log_entries t\nWHERE $__timeFilter(t.request_ts) AND \n  t.question_type in ($dns_types) AND\n  t.client_name in ($client_names) AND \n  t.response_type in ($response_types) AND \n  (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\nGROUP BY reason\n;",
           "refId": "A",
-          "select": [
-            [
-              {
-                "params": ["duration_ms"],
-                "type": "column"
-              }
-            ]
-          ],
           "sql": {
             "columns": [
               {
@@ -199,20 +784,27 @@
               }
             ],
             "limit": 50
-          },
-          "table": "log_entries",
-          "timeColumn": "request_ts",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
+          }
         }
       ],
-      "title": "Blocked by Blacklist",
+      "title": "Responses",
+      "transformations": [
+        {
+          "id": "rowsToFields",
+          "options": {
+            "mappings": [
+              {
+                "fieldName": "reason",
+                "handlerKey": "field.name"
+              },
+              {
+                "fieldName": "cnt",
+                "handlerKey": "field.value"
+              }
+            ]
+          }
+        }
+      ],
       "type": "piechart"
     },
     {
@@ -220,549 +812,19 @@
         "type": "grafana-postgresql-datasource",
         "uid": "${DS_POSTGRESQL}"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 0
-      },
-      "id": 13,
-      "links": [],
-      "options": {
-        "displayMode": "gradient",
-        "maxVizHeight": 300,
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "namePlacement": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": true
-        },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "text": {},
-        "valueMode": "color"
-      },
-      "pluginVersion": "10.2.3",
-      "repeatDirection": "v",
-      "targets": [
-        {
-          "datasource": {
-            "type": "grafana-postgresql-datasource",
-            "uid": "${DS_POSTGRESQL}"
-          },
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT  max(t.request_Ts) as time, t.client_name as metric, count(*) as cnt from log_entries t \n  WHERE $__timeFilter(t.request_Ts) and \n        t.response_type in ($response_type) and \n        t.client_name in ($client_name) and \n        (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\n  group by t.client_name\n  order by 3 desc",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": ["value"],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Query count by client",
-      "transformations": [],
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "grafana-postgresql-datasource",
-        "uid": "${DS_POSTGRESQL}"
-      },
-      "description": "Top 20 effective top level domain plus one more label",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
           "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "axisSoftMin": 0,
-            "fillOpacity": 67,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 2,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "displayName": "count",
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 8
-      },
-      "id": 11,
-      "options": {
-        "barRadius": 0,
-        "barWidth": 0.26,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "orientation": "horizontal",
-        "showValue": "never",
-        "stacking": "none",
-        "text": {
-          "valueSize": 10
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "grafana-postgresql-datasource",
-            "uid": "${DS_POSTGRESQL}"
-          },
-          "format": "table",
-          "group": [],
-          "hide": false,
-          "metricColumn": "question_name",
-          "rawQuery": true,
-          "rawSql": "SELECT t.effective_tldp as metric, count(*) as value from log_entries t \nWHERE $__timeFilter(t.request_Ts) \n    and t.response_type in ($response_type) \n    and t.client_name in ($client_name) \n    and (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0) \n    group by t.effective_tldp order by count(*) desc limit 20",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": ["value"],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "log_entries",
-          "timeColumn": "request_ts",
-          "where": []
-        }
-      ],
-      "title": "Top 20 effective TLD+1",
-      "type": "barchart"
-    },
-    {
-      "datasource": {
-        "type": "grafana-postgresql-datasource",
-        "uid": "${DS_POSTGRESQL}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "axisSoftMin": 0,
-            "fillOpacity": 67,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 2,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "displayName": "count",
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 8
-      },
-      "id": 8,
-      "options": {
-        "barRadius": 0,
-        "barWidth": 0.26,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "orientation": "horizontal",
-        "showValue": "never",
-        "stacking": "none",
-        "text": {
-          "valueSize": 10
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "grafana-postgresql-datasource",
-            "uid": "${DS_POSTGRESQL}"
-          },
-          "format": "table",
-          "group": [],
-          "hide": false,
-          "metricColumn": "question_name",
-          "rawQuery": true,
-          "rawSql": "SELECT t.question_name as metric, count(*) as value from log_entries t \n  WHERE $__timeFilter(t.request_Ts) and \n  t.response_type in ($response_type) and \n  t.client_name in ($client_name) and \n  (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0) \n  group by t.question_name order by count(*) desc limit 20",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": ["value"],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "log_entries",
-          "timeColumn": "request_ts",
-          "where": []
-        }
-      ],
-      "title": "Top 20 queried domains",
-      "type": "barchart"
-    },
-    {
-      "datasource": {
-        "type": "grafana-postgresql-datasource",
-        "uid": "${DS_POSTGRESQL}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "queries count",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 35,
-            "gradientMode": "hue",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 12,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": 3600000,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "displayName": "${__field.labels.client_name}",
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 24,
-        "x": 0,
-        "y": 16
-      },
-      "id": 12,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "right",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "8.1.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "grafana-postgresql-datasource",
-            "uid": "${DS_POSTGRESQL}"
-          },
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n $__timeGroupAlias(t.request_Ts, '30m'),\n  t.client_name,\n  count(*) as c\nFROM log_entries t\nWHERE\n  $__timeFilter(t.request_Ts) and \n  t.response_type in ($response_type) and \n  t.client_name in ($client_name) and \n  (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\nGROUP BY 1,2\nORDER BY 1",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": ["duration_ms"],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "log_entries",
-          "timeColumn": "request_ts",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Queries number per client (30m)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "grafana-postgresql-datasource",
-        "uid": "${DS_POSTGRESQL}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": -1,
-            "drawStyle": "bars",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "stepBefore",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "line"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "dtdurationms"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 23
-      },
-      "id": 10,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "grafana-postgresql-datasource",
-            "uid": "${DS_POSTGRESQL}"
-          },
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  EXTRACT(EPOCH from t.request_Ts) as time,\n  t.duration_ms\nFROM log_entries t\nWHERE\n  $__timeFilter(t.request_Ts) and \n  t.response_type in ($response_type) and \n  t.client_name in ($client_name) and \n  (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\nORDER BY request_ts",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": ["duration_ms"],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "log_entries",
-          "timeColumn": "request_ts",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Query duration",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "grafana-postgresql-datasource",
-        "uid": "${DS_POSTGRESQL}"
-      },
-      "description": "Last 100 queries, newest on top",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
+            "align": "auto",
             "cellOptions": {
               "type": "auto"
             },
-            "filterable": false,
-            "inspect": false
+            "filterable": true,
+            "inspect": false,
+            "minWidth": 50
           },
           "mappings": [],
           "thresholds": {
@@ -778,29 +840,30 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byName",
-              "options": "time"
+              "id": "byType",
+              "options": "number"
             },
             "properties": [
               {
-                "id": "unit",
-                "value": "dateTimeAsIsoNoDateIfToday"
+                "id": "custom.width",
+                "value": 150
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 8,
-        "w": 24,
+        "h": 13,
+        "w": 12,
         "x": 0,
-        "y": 31
+        "y": 28
       },
-      "id": 4,
+      "id": 8,
       "options": {
         "cellHeight": "sm",
         "footer": {
           "countRows": false,
+          "enablePagination": true,
           "fields": "",
           "reducer": ["sum"],
           "show": false
@@ -816,19 +879,9 @@
           },
           "editorMode": "code",
           "format": "table",
-          "group": [],
-          "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT EXTRACT(EPOCH from t.request_Ts) as \"time\", \n       t.client_ip as \"client IP\", \n       t.client_name as \"client name\", \n       t.duration_ms as \"duration in ms\", \n       t.response_type as \"response type\", \n       t.question_type as \"question type\", \n       t.question_name as \"question name\", \n       t.effective_tldp as \"effective TLD+1\", \n       t.answer as \"answer\" from log_entries t \n       WHERE $__timeFilter(t.request_Ts) and \n       t.response_type in ($response_type) and \n       t.client_name in ($client_name) and \n       (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0) \n       order by t.request_Ts desc\n       limit 100",
+          "rawSql": "SELECT question_name, COUNT(*) FROM log_entries t\nwhere response_type!='BLOCKED' AND\n  $__timeFilter(t.request_ts) AND \n  t.question_type in ($dns_types) AND\n  t.client_name in ($client_names) AND \n  t.response_type in ($response_types) AND \n  (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\nGROUP BY question_name ORDER by count desc LIMIT 100;",
           "refId": "A",
-          "select": [
-            [
-              {
-                "params": ["value"],
-                "type": "column"
-              }
-            ]
-          ],
           "sql": {
             "columns": [
               {
@@ -845,105 +898,717 @@
               }
             ],
             "limit": 50
-          },
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
+          }
         }
       ],
-      "title": "Last queries",
+      "title": "Top Permitted Domains",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "count": "Hits",
+              "question_name": "Domain"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false,
+            "minWidth": 50
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byType",
+              "options": "number"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 12,
+        "x": 12,
+        "y": 28
+      },
+      "id": 6,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT question_name, COUNT(*) FROM log_entries t\nwhere response_type='BLOCKED' AND\n  $__timeFilter(t.request_ts) AND \n  t.question_type in ($dns_types) AND\n  t.client_name in ($client_names) AND \n  t.response_type in ($response_types) AND \n  (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\nGROUP BY question_name ORDER by count desc LIMIT 100; ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Top Blocked Domains",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "count": "Hits",
+              "question_name": "Domain"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false,
+            "minWidth": 50
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byType",
+              "options": "number"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 12,
+        "x": 0,
+        "y": 41
+      },
+      "id": 2,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT t.client_name, t.client_ip, COUNT(*) as cnt \nFROM log_entries t\nWHERE $__timeFilter(t.request_ts) AND \n  t.question_type in ($dns_types) AND\n  t.client_name in ($client_names) AND \n  t.response_type in ($response_types) AND \n  (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\nGROUP BY t.client_name, t.client_ip\nORDER by cnt desc \nLIMIT 100;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "name": "COUNT",
+                "parameters": [
+                  {
+                    "name": "id",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "client_name",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "log_entries"
+        }
+      ],
+      "title": "Top Clients (Total)",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "client_ip": {
+                "aggregations": ["allValues"],
+                "operation": "aggregate"
+              },
+              "client_name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "cnt": {
+                "aggregations": ["sum"],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "client_ip": true,
+              "client_ip (allValues)": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "client_ip (allValues)": "Client IP",
+              "client_name": "Client",
+              "cnt": "Requests",
+              "cnt (sum)": "Requests",
+              "count": "Requests"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false,
+            "minWidth": 50
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byType",
+              "options": "number"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 12,
+        "x": 12,
+        "y": 41
+      },
+      "id": 4,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT t.client_name, t.client_ip, COUNT(*) as cnt\nFROM log_entries t\nwhere response_type='BLOCKED' AND\n  $__timeFilter(t.request_ts) AND \n  t.question_type in ($dns_types) AND\n  t.client_name in ($client_names) AND \n  t.response_type in ($response_types) AND \n  (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\nGROUP BY t.client_name, t.client_ip \nORDER by cnt desc \nLIMIT 100 ;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Top Clients (Blocked only)",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "client_ip": {
+                "aggregations": ["allValues"],
+                "operation": "aggregate"
+              },
+              "client_name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "cnt": {
+                "aggregations": ["sum"],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "client_ip": true,
+              "client_ip (allValues)": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "client_ip (allValues)": "Client IP",
+              "client_name": "Client",
+              "cnt": "Requests",
+              "cnt (sum)": "Requests",
+              "count": "Requests"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 54
+      },
+      "id": 30,
+      "panels": [],
+      "title": "Queries",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              },
+              {
+                "id": "unit",
+                "value": "dateTimeAsIsoNoDateIfToday"
+              },
+              {
+                "id": "custom.filterable"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Type"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 75
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Client IP"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 130
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Duration"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 75
+              },
+              {
+                "id": "unit",
+                "value": "ms"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 55
+      },
+      "id": 32,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.2.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select * FROM log_entries t\nWHERE $__timeFilter(t.request_ts) AND \n  t.question_type in ($dns_types) AND\n  t.client_name in ($client_names) AND \n  t.response_type in ($response_types) AND \n(length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\nORDER BY request_ts desc limit 100;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Recent queries",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "answer": true,
+              "effective_tldp": true,
+              "id": true,
+              "response_code": true,
+              "response_type": true
+            },
+            "indexByName": {
+              "answer": 9,
+              "client_ip": 4,
+              "client_name": 3,
+              "duration_ms": 7,
+              "effective_tldp": 8,
+              "id": 11,
+              "question_name": 2,
+              "question_type": 1,
+              "reason": 6,
+              "request_ts": 0,
+              "response_code": 10,
+              "response_type": 5
+            },
+            "renameByName": {
+              "client_ip": "Client IP",
+              "client_name": "Client",
+              "duration_ms": "Duration",
+              "question_name": "Domain",
+              "question_type": "Type",
+              "reason": "Response",
+              "request_ts": "Time",
+              "response_type": "Status"
+            }
+          }
+        }
+      ],
       "type": "table"
     }
   ],
-  "refresh": "",
+  "refresh": "1m",
   "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "PostgreSQL (Blocky)",
-          "value": "PB785D96FD948DAFC"
+          "selected": true,
+          "text": ["PostgreSQL (Blocky, Controller)"],
+          "value": ["P049A504C390083AF"]
         },
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "Data source",
-        "multi": false,
+        "multi": true,
         "name": "DS_POSTGRESQL",
         "options": [],
         "query": "grafana-postgresql-datasource",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "type": "datasource"
       },
       {
-        "allValue": "",
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
         },
         "datasource": {
-          "type": "grafana-postgresql-datasource",
-          "uid": "PB785D96FD948DAFC"
+          "type": "postgres",
+          "uid": "P049A504C390083AF"
         },
-        "definition": "select distinct client_name from log_entries",
+        "definition": "SELECT distinct t.question_type \nFROM log_entries t;",
+        "hide": 0,
+        "includeAll": true,
+        "label": "DNS Type",
+        "multi": true,
+        "name": "dns_types",
+        "options": [],
+        "query": "SELECT distinct t.question_type \nFROM log_entries t;",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "P049A504C390083AF"
+        },
+        "definition": "SELECT distinct t.client_name \nFROM log_entries t\nWHERE $__timeFilter(t.request_ts) ;",
         "hide": 0,
         "includeAll": true,
         "label": "Client name",
         "multi": true,
-        "name": "client_name",
+        "name": "client_names",
         "options": [],
-        "query": "select distinct client_name from log_entries",
+        "query": "SELECT distinct t.client_name \nFROM log_entries t\nWHERE $__timeFilter(t.request_ts) ;",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
         },
         "datasource": {
-          "type": "grafana-postgresql-datasource",
-          "uid": "PB785D96FD948DAFC"
+          "type": "postgres",
+          "uid": "P049A504C390083AF"
         },
-        "definition": "select distinct response_type from log_entries",
+        "definition": "SELECT distinct t.response_type \nFROM log_entries t;",
         "hide": 0,
         "includeAll": true,
         "label": "Response type",
         "multi": true,
-        "name": "response_type",
+        "name": "response_types",
         "options": [],
-        "query": "select distinct response_type from log_entries",
-        "refresh": 2,
+        "query": "SELECT distinct t.response_type \nFROM log_entries t;",
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "",
-          "value": ""
-        },
+        "current": {},
         "hide": 0,
         "label": "Domain (contains)",
         "name": "question",
@@ -967,7 +1632,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "Blocky Queries",
-  "uid": "AVmWSVWgz",
-  "version": 2,
+  "uid": "NhdNWqTVl",
+  "version": 3,
   "weekStart": ""
 }

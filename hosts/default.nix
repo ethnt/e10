@@ -50,5 +50,6 @@ in {
     controller = mkHost "controller" { system = "x86_64-linux"; };
     builder = mkHost "builder" { system = "x86_64-linux"; };
     satellite = mkHost "satellite" { system = "aarch64-linux"; };
+    sidecar = mkHost "sidecar" { system = "x86_64-linux"; };
   };
 }

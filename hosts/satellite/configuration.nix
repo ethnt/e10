@@ -3,12 +3,18 @@
     core ++ [ ./hardware-configuration.nix ] ++ [
       profiles.hardware.rpi4
       profiles.telemetry.prometheus-smokeping-exporter
+      profiles.networking.networkd
+      profiles.networking.resolved
+      profiles.virtualisation.docker
+      profiles.services.homebridge
     ];
 
   deployment = {
     buildOnTarget = false;
     tags = [ "@remote" ];
   };
+
+  networking.nameservers = [ "192.168.1.1" ];
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;

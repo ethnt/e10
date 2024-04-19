@@ -6,7 +6,7 @@
       profiles.virtualisation.docker
       profiles.users.blockbuster
       profiles.media-management.bazarr
-      profiles.media-management.overseerr
+      # profiles.media-management.overseerr
       profiles.media-management.plex
       profiles.media-management.prowlarr
       profiles.media-management.radarr
@@ -14,6 +14,8 @@
       profiles.media-management.sonarr
       profiles.media-management.tautulli
       profiles.media-management.xteve
+      profiles.networking.networkd
+      profiles.networking.resolved
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

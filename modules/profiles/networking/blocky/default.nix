@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, lib, ... }: {
   environment.systemPackages = [ pkgs.blocky ];
 
   services.blocky = {
@@ -93,30 +93,13 @@
         enable = true;
         path = "/metrics";
       };
-      redis = {
-        address = "${config.services.redis.servers.blocky.bind}:${
-            toString config.services.redis.servers.blocky.port
-          }";
-      };
       ede.enable = true;
       ecs = {
+        useAsClient = true;
         ipv4Mask = 32;
         ipv6Mask = 128;
       };
-      queryLog = {
-        type = "none";
-        # type = "postgresql";
-        # target = "postgres://blocky?host=/run/postgresql";
-        # logRetentionDays = 90;
-      };
-    };
-  };
-
-  systemd.services.blocky = {
-    after = [ "postgresql.service" ];
-    serviceConfig = {
-      Restart = "on-failure";
-      RestartSec = "1";
+      queryLog.type = lib.mkDefault "console";
     };
   };
 

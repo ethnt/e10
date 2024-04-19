@@ -1,5 +1,7 @@
-{ config, suites, hosts, ... }: {
-  imports = with suites; core ++ web ++ aws;
+{ config, suites, hosts, profiles, ... }: {
+  imports = with suites;
+    core ++ web ++ aws
+    ++ [ profiles.networking.networkd profiles.networking.resolved ];
 
   services.nginx.virtualHosts = let
     mkVirtualHost = { host, port, http2 ? true, extraConfig ? " "
