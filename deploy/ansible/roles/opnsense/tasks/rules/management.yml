@@ -1,0 +1,19 @@
+---
+- name: Allow Management to any
+  ansibleguy.opnsense.rule:
+    interface: opt1
+    source_net: opt1
+    destination_net: any
+    protocol: any
+    description: "[Ansible] Management to any rule"
+    match_fields: ["description"]
+
+- name: Allow Management IPv6 to any
+  ansibleguy.opnsense.rule:
+    interface: opt1
+    source_net: opt1
+    destination_net: any
+    protocol: any
+    description: "[Ansible] Management IPv6 to any rule"
+    match_fields: ["description"]
+    ip_protocol: inet6

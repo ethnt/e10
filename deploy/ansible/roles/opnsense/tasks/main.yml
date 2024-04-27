@@ -10,5 +10,8 @@
     - mdns.yml
     - upnp.yml
     - prometheus-node-exporter.yml
+    - ddclient.yml
+    - acme.yml
+    - rules.yml
   loop_control:
     loop_var: task_file

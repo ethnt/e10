@@ -63,47 +63,40 @@
 
     provision = {
       enable = true;
-      datasources.settings.datasources = [
-        {
-          name = "Prometheus";
-          type = "prometheus";
-          access = "proxy";
-          url = "http://0.0.0.0:${toString config.services.prometheus.port}";
-        }
-        {
-          name = "Loki";
-          type = "loki";
-          access = "proxy";
-          url = "http://0.0.0.0:${
-              toString
-              config.services.loki.configuration.server.http_listen_port
-            }";
-        }
-        {
-          name = "PostgreSQL (Blocky, Controller)";
-          type = "postgres";
-          access = "proxy";
-          url = hosts.controller.config.networking.hostName;
-          user = "blocky";
-          jsonData = {
+      datasources.settings = {
+        datasources = [
+          {
+            name = "Prometheus";
+            type = "prometheus";
+            access = "proxy";
+            url = "http://${hosts.monitor.config.networking.hostName}:${
+                toString config.services.prometheus.port
+              }";
+          }
+          {
+            name = "Loki";
+            type = "loki";
+            access = "proxy";
+            url = "http://${hosts.monitor.config.networking.hostName}:${
+                toString
+                config.services.loki.configuration.server.http_listen_port
+              }";
+          }
+          {
+            name = "PostgreSQL";
+            type = "postgres";
+            access = "proxy";
+            url = hosts.controller.config.networking.hostName;
             user = "blocky";
-            database = "blocky";
-            sslmode = "disable";
-          };
-        }
-        {
-          name = "PostgreSQL (Blocky, Sidecar)";
-          type = "postgres";
-          access = "proxy";
-          url = hosts.sidecar.config.networking.hostName;
-          user = "blocky";
-          jsonData = {
-            user = "blocky";
-            database = "blocky";
-            sslmode = "disable";
-          };
-        }
-      ];
+            postgresVersion = 1500;
+            jsonData = {
+              user = "blocky";
+              database = "blocky";
+              sslmode = "disable";
+            };
+          }
+        ];
+      };
       dashboards.settings.providers = [
         {
           name = "Nodes";
@@ -602,7 +595,7 @@
                       };
                       editorMode = "code";
                       expr = ''
-                        (smokeping_requests_total{host="1.1.1.1"} - smokeping_response_duration_seconds_count{host="1.1.1.1"})/smokeping_requests_total{host="1.1.1.1"}
+                        (smokeping_requests_total{host="1.1.1.1", job="smokeping_controller"} - smokeping_response_duration_seconds_count{host="1.1.1.1", job="smokeping_controller"})/smokeping_requests_total{host="1.1.1.1", job="smokeping_controller"}
                       '';
                       instant = false;
                       intervalMs = 1000;

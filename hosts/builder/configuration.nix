@@ -15,6 +15,8 @@
 
   deployment.buildOnTarget = true;
 
+  nix.gc.automatic = false;
+
   networking = {
     useDHCP = false;
     nameservers = [ "10.10.0.1" ];

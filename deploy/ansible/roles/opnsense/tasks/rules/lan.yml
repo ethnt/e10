@@ -1,0 +1,19 @@
+---
+- name: Allow LAN to any
+  ansibleguy.opnsense.rule:
+    interface: lan
+    source_net: lan
+    destination_net: any
+    protocol: any
+    description: "[Ansible] LAN to any rule"
+    match_fields: ["description"]
+
+- name: Allow LAN IPv6 to any
+  ansibleguy.opnsense.rule:
+    interface: lan
+    source_net: lan
+    destination_net: any
+    protocol: any
+    description: "[Ansible] LAN IPv6 to any rule"
+    ip_protocol: inet6
+    match_fields: ["description"]

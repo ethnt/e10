@@ -1,0 +1,19 @@
+---
+- name: Allow IoT to any
+  ansibleguy.opnsense.rule:
+    interface: opt5
+    source_net: opt5
+    destination_net: any
+    protocol: any
+    description: "[Ansible] IoT to any rule"
+    match_fields: ["description"]
+
+- name: Allow IoT IPv6 to any
+  ansibleguy.opnsense.rule:
+    interface: opt5
+    source_net: opt5
+    destination_net: any
+    protocol: any
+    description: "[Ansible] IoT IPv6 to any rule"
+    ip_protocol: inet6
+    match_fields: ["description"]

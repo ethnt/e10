@@ -7,6 +7,4 @@
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
   };
-
-  swapDevices = [ ];
 }

@@ -1,0 +1,5 @@
+---
+- name: Install os-acme-client
+  ansibleguy.opnsense.package:
+    name: os-acme-client
+    action: install
