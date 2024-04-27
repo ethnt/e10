@@ -9,6 +9,8 @@
     profiles.networking.mosh
     profiles.shell.fish
     profiles.users.root
+    profiles.networking.networkd
+    profiles.networking.resolved
     profiles.networking.tailscale.default
     profiles.security.fail2ban
     profiles.telemetry.prometheus-node-exporter
@@ -25,6 +27,8 @@
     profiles.core.nix-config
     profiles.core.tooling
     profiles.core.caching
+    profiles.networking.networkd
+    profiles.networking.resolved
     profiles.networking.openssh
     profiles.shell.fish
     profiles.users.root

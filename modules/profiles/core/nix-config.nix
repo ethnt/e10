@@ -1,4 +1,4 @@
-{ flake, ... }: {
+{ flake, lib, ... }: {
   nixpkgs = {
     config.allowUnfree = true;
     overlays = [ flake.overlays.default ];
@@ -6,7 +6,7 @@
 
   nix = {
     optimise.automatic = true;
-    gc.automatic = true;
+    gc.automatic = lib.mkDefault true;
 
     extraOptions = ''
       min-free = 536870912
@@ -17,7 +17,6 @@
 
     settings = {
       allowed-users = [ "@wheel" ];
-      # auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
       sandbox = true;
       system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];

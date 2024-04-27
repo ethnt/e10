@@ -10,6 +10,7 @@
       profiles.services.netbox.default
       profiles.networking.networkd
       profiles.networking.resolved
+      profiles.services.rustdesk
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
@@ -17,7 +18,6 @@
 
   satan.address = "10.10.3.1";
 
-  deployment.targetHost = "10.10.3.1";
   deployment.buildOnTarget = true;
 
   networking = {

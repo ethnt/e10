@@ -164,7 +164,7 @@ resource "proxmox_virtual_environment_vm" "builder" {
   }
 
   memory {
-    dedicated = 16384
+    dedicated = 65536
   }
 
   disk {
@@ -256,63 +256,6 @@ resource "proxmox_virtual_environment_vm" "matrix" {
   }
 }
 
-
-resource "proxmox_virtual_environment_vm" "controller" {
-  provider = proxmox.dill
-
-  node_name = "dill"
-
-  name  = "controller"
-  vm_id = 101
-
-  scsi_hardware = "virtio-scsi-single"
-
-  boot_order = ["scsi0"]
-  migrate    = true
-
-  cpu {
-    cores   = 12
-    sockets = 1
-    type    = "host"
-  }
-
-  memory {
-    dedicated = 12288
-  }
-
-  disk {
-    datastore_id = "local-zfs"
-    discard      = "on"
-    file_format  = "raw"
-    interface    = "scsi0"
-    size         = 1024
-  }
-
-  network_device {
-    bridge   = "vmbr0"
-    firewall = false
-    model    = "virtio"
-  }
-
-  agent {
-    enabled = true
-    type    = "virtio"
-  }
-
-  operating_system {
-    type = "other"
-  }
-
-  vga {
-    enabled = true
-  }
-
-  usb {
-    host = "1-2"
-    usb3 = true
-  }
-}
-
 resource "proxmox_virtual_environment_vm" "router" {
   provider = proxmox.elderflower
 
@@ -380,13 +323,12 @@ resource "proxmox_virtual_environment_vm" "router" {
   }
 }
 
-
-resource "proxmox_virtual_environment_vm" "sidecar" {
+resource "proxmox_virtual_environment_vm" "controller" {
   provider = proxmox.elderflower
 
   node_name = "elderflower"
 
-  name  = "sidecar"
+  name  = "controller"
   vm_id = 102
 
   scsi_hardware = "virtio-scsi-single"
@@ -429,5 +371,10 @@ resource "proxmox_virtual_environment_vm" "sidecar" {
 
   vga {
     enabled = true
+  }
+
+  usb {
+    host = "051d:0002"
+    usb3 = true
   }
 }

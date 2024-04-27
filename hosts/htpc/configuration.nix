@@ -1,12 +1,12 @@
-{ config, lib, suites, profiles, hosts, ... }: {
+{ lib, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.hardware.nvidia
       profiles.sharing.nfs-client
       profiles.virtualisation.docker
-      profiles.users.blockbuster
+      profiles.filesystems.blockbuster
       profiles.media-management.bazarr
-      # profiles.media-management.overseerr
+      profiles.media-management.overseerr
       profiles.media-management.plex
       profiles.media-management.prowlarr
       profiles.media-management.radarr
@@ -14,18 +14,20 @@
       profiles.media-management.sonarr
       profiles.media-management.tautulli
       profiles.media-management.xteve
-      profiles.networking.networkd
-      profiles.networking.resolved
+      profiles.telemetry.prometheus-bazarr-exporter.default
+      profiles.telemetry.prometheus-sonarr-exporter.default
+      profiles.telemetry.prometheus-radarr-exporter.default
+      profiles.telemetry.prometheus-prowlarr-exporter.default
+      profiles.telemetry.prometheus-plex-media-server-exporter.default
+      profiles.telemetry.prometheus-sabnzbd-exporter.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
-  boot.loader.grub.devices =
-    [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
-
-  deployment = { tags = [ "vm" ]; };
+  deployment = {
+    tags = [ "vm" ];
+    buildOnTarget = true;
+  };
 
   satan.address = "10.10.2.1";
-
-  deployment.buildOnTarget = true;
 
   networking = {
     useDHCP = false;
@@ -51,13 +53,6 @@
         }];
       };
     };
-  };
-
-  fileSystems."/mnt/blockbuster" = {
-    device =
-      "10.10.1.1:${hosts.omnibus.config.disko.devices.zpool.blockbuster.datasets.root.mountpoint}";
-    fsType = "nfs";
-    options = [ "x-systemd.automount" "exec" ];
   };
 
   e10.services.backup.jobs.system.exclude =

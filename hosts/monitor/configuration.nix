@@ -26,18 +26,6 @@
         '';
       };
     };
-
-    # "alertmanager.e10.camp" = {
-    #   http2 = true;
-    #   forceSSL = true;
-    #   enableACME = true;
-    #   locations."/" = {
-    #     proxyPass = "http://127.0.0.1:${
-    #         toString config.services.prometheus.alertmanager.port
-    #       }";
-    #     proxyWebsockets = true;
-    #   };
-    # };
   };
 
   services.prometheus.scrapeConfigs = [
@@ -66,17 +54,6 @@
       static_configs = [{ targets = [ "elderflower:9100" ]; }];
     }
     {
-      job_name = "host_controller";
-      static_configs = [{
-        targets = [
-          "${hosts.controller.config.networking.hostName}:${
-            toString
-            hosts.controller.config.services.prometheus.exporters.node.port
-          }"
-        ];
-      }];
-    }
-    {
       job_name = "node_builder";
       static_configs = [{
         targets = [
@@ -89,7 +66,13 @@
     }
     {
       job_name = "blocky";
-      static_configs = [{ targets = [ "blocky.e10.camp" ]; }];
+      static_configs = [{
+        targets = [
+          "${hosts.controller.config.networking.hostName}:${
+            toString hosts.controller.config.services.blocky.settings.ports.http
+          }"
+        ];
+      }];
     }
     {
       job_name = "node_gateway";
@@ -98,6 +81,17 @@
           "${hosts.gateway.config.networking.hostName}:${
             toString
             hosts.gateway.config.services.prometheus.exporters.node.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "node_controller";
+      static_configs = [{
+        targets = [
+          "${hosts.controller.config.networking.hostName}:${
+            toString
+            hosts.controller.config.services.prometheus.exporters.node.port
           }"
         ];
       }];
@@ -151,17 +145,6 @@
           "${hosts.satellite.config.networking.hostName}:${
             toString
             hosts.satellite.config.services.prometheus.exporters.node.port
-          }"
-        ];
-      }];
-    }
-    {
-      job_name = "host_sidecar";
-      static_configs = [{
-        targets = [
-          "${hosts.sidecar.config.networking.hostName}:${
-            toString
-            hosts.sidecar.config.services.prometheus.exporters.node.port
           }"
         ];
       }];
@@ -237,7 +220,7 @@
       scrape_interval = "5s";
     }
     {
-      job_name = "unifi_controller";
+      job_name = "satan_controller";
       metrics_path = "/metrics";
       static_configs = [{
         targets = [
@@ -248,30 +231,90 @@
         ];
       }];
     }
-    # {
-    #   job_name = "blackbox_blocky";
-    #   metrics_path = "/probe";
-    #   params = { module = [ "blocky" ]; };
-    #   static_configs =
-    #     [{ targets = [ "${hosts.controller.config.networking.hostName}" ]; }];
-    #   relabel_configs = [
-    #     {
-    #       source_labels = [ "__address__" ];
-    #       target_label = "__param_target";
-    #     }
-    #     {
-    #       source_labels = [ "__target__" ];
-    #       target_label = "instance";
-    #     }
-    #     {
-    #       target_label = "__address__";
-    #       replacement = "${hosts.monitor.config.networking.hostName}:${
-    #           toString
-    #           hosts.monitor.config.services.prometheus.exporters.blackbox.port
-    #         }";
-    #     }
-    #   ];
-    # }
+    {
+      job_name = "lawsonnet_controller";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.satellite.config.networking.hostName}:${
+            toString
+            hosts.satellite.config.services.prometheus.exporters.unpoller.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "sonarr";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.htpc.config.networking.hostName}:${
+            toString
+            hosts.htpc.config.services.prometheus.exporters.exportarr-sonarr.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "radarr";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.htpc.config.networking.hostName}:${
+            toString
+            hosts.htpc.config.services.prometheus.exporters.exportarr-radarr.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "bazarr";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.htpc.config.networking.hostName}:${
+            toString
+            hosts.htpc.config.services.prometheus.exporters.exportarr-bazarr.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "prowlarr";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.htpc.config.networking.hostName}:${
+            toString
+            hosts.htpc.config.services.prometheus.exporters.exportarr-prowlarr.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "plex";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.htpc.config.networking.hostName}:${
+            toString
+            hosts.htpc.config.services.prometheus.exporters.plex-media-server.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "sabnzbd";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.htpc.config.networking.hostName}:${
+            toString
+            hosts.htpc.config.services.prometheus.exporters.exportarr-sabnzbd.port
+          }"
+        ];
+      }];
+    }
   ];
 
   e10.services.backup.jobs.system.exclude =

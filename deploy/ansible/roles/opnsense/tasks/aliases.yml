@@ -1,14 +1,35 @@
 ---
 - name: Create alias for private networks
   ansibleguy.opnsense.alias:
-    name: "PrivateNetworks"
-    type: "network"
+    name: PrivateNetworks
+    type: network
     content: ["10.0.0.0/8", "192.168.1.0/16", "172.16.0.0/12", "192.168.0.0/16"]
     description: "[Ansible] All RFC 1918 private network addresses"
 
 - name: Create alias for PlayStation 5
   ansibleguy.opnsense.alias:
-    name: PS5_alias
+    name: PS5_Host
     type: mac
     content: ["00:e4:21:15:bd:e8"]
     description: "[Ansible] PlayStation 5"
+
+- name: Create alias for Matrix
+  ansibleguy.opnsense.alias:
+    name: Matrix_Host
+    type: host
+    content: ["10.10.3.1"]
+    description: "[Ansible] Matrix"
+
+- name: Create alias for Rustdesk TCP ports
+  ansibleguy.opnsense.alias:
+    name: Rustdesk_TCP_Port
+    type: port
+    content: ["21115:21119"]
+    description: "[Ansible] Rustdesk TCP ports"
+
+- name: Create alias for Rustdesk UDP port
+  ansibleguy.opnsense.alias:
+    name: Rustdesk_UDP_Port
+    type: port
+    content: ["21116"]
+    description: "[Ansible] Rustdesk UDP port"

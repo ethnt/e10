@@ -10,16 +10,20 @@ in {
     port = mkOption {
       type = types.port;
       default = 8581;
+      description = "Port to use for Homebridge web interface";
     };
 
     stateDir = mkOption {
       type = types.path;
       default = "/var/lib/homebridge";
+      description = "Directory to use for Homebridge's state";
     };
 
     openFirewall = mkOption {
       type = types.bool;
       default = false;
+      description =
+        "Whether or not to open the firewall for all ports necessary";
     };
   };
 
@@ -37,12 +41,12 @@ in {
     };
 
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ 5353 cfg.port 51241 ];
+      allowedTCPPorts = [ cfg.port 5353 51241 ];
       allowedTCPPortRanges = [{
         from = 52100;
         to = 52150;
       }];
-      allowedUDPPorts = [ 5353 cfg.port 51241 ];
+      allowedUDPPorts = [ cfg.port 5353 51241 ];
       allowedUDPPortRanges = [{
         from = 52100;
         to = 52150;

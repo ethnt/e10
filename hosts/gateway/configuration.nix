@@ -68,6 +68,11 @@
       inherit (hosts.htpc.config.services.overseerr) port;
     };
 
+    "requests.e10.camp" = mkVirtualHost {
+      host = hosts.htpc;
+      inherit (hosts.htpc.config.services.overseerr) port;
+    };
+
     "tautulli.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
       inherit (hosts.htpc.config.services.tautulli) port;

@@ -10,12 +10,6 @@ in {
       description = "Port that sabnzbd is running on";
       default = 8080;
     };
-
-    openFirewall = mkOption {
-      type = types.bool;
-      description = "Open ports in the firewall for the sabnzbd web interface";
-      default = false;
-    };
   };
 
   config = mkIf cfg.enable {

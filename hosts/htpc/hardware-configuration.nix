@@ -1,5 +1,7 @@
 {
   boot = {
+    loader.grub.devices = [ "/dev/sda" ];
+
     initrd.availableKernelModules = [
       "ahci"
       "ehci_pci"

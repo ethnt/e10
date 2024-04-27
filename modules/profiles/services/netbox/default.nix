@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   sops.secrets = {
     netbox_secret_key = {
       sopsFile = ./secrets.json;
@@ -8,6 +8,7 @@
 
   services.netbox = {
     enable = true;
+    package = pkgs.netbox_3_7;
     settings = {
       CSRF_TRUSTED_ORIGINS = [
         "https://netbox.e10.camp"

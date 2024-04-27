@@ -26,7 +26,6 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 17996,
   "graphTooltip": 0,
-  "id": 71,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -83,10 +82,11 @@
           "fields": "/^cnt$/",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -98,7 +98,6 @@
         }
       ],
       "title": "Total Queries",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -141,10 +140,11 @@
           "fields": "/^cnt$/",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -220,10 +220,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -352,10 +353,11 @@
           "fields": "/^client_name$/",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -465,7 +467,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "select \n  $__timeGroupAlias(t.request_ts, '$__interval'), \n  t.response_type, count(*) as cnt\nfrom log_entries t\nWHERE $__timeFilter(t.request_ts) AND \n  t.question_type in ($dns_types) AND\n  t.client_name in ($client_names) AND \n  t.response_type in ($response_types) AND \n  (length('$question') = 0 or POSITION(lower('$question') IN t.question_name) > 0)\ngroup by time, t.response_type \norder by time asc;",
+          "rawSql": "select \n  $__timeGroupAlias(t.request_ts, '$__interval'), \n  t.response_type, count(*) as cnt\nfrom log_entries t\nWHERE $__timeFilter(t.request_ts) AND \n  t.question_type in ($dns_types) AND\n  t.client_name in ($client_names)\ngroup by time, t.response_type \norder by time asc;",
           "refId": "response",
           "sql": {
             "columns": [
@@ -870,7 +872,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -980,7 +982,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1051,8 +1053,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -1194,8 +1195,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -1519,8 +1519,8 @@
       {
         "current": {
           "selected": true,
-          "text": ["PostgreSQL (Blocky, Controller)"],
-          "value": ["P049A504C390083AF"]
+          "text": ["PostgreSQL"],
+          "value": ["P4924E2B52FDD1FBE"]
         },
         "hide": 0,
         "includeAll": true,
@@ -1542,8 +1542,8 @@
           "value": ["$__all"]
         },
         "datasource": {
-          "type": "postgres",
-          "uid": "P049A504C390083AF"
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_POSTGRESQL}"
         },
         "definition": "SELECT distinct t.question_type \nFROM log_entries t;",
         "hide": 0,
@@ -1566,8 +1566,8 @@
           "value": ["$__all"]
         },
         "datasource": {
-          "type": "postgres",
-          "uid": "P049A504C390083AF"
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_POSTGRESQL}"
         },
         "definition": "SELECT distinct t.client_name \nFROM log_entries t\nWHERE $__timeFilter(t.request_ts) ;",
         "hide": 0,
@@ -1590,8 +1590,8 @@
           "value": ["$__all"]
         },
         "datasource": {
-          "type": "postgres",
-          "uid": "P049A504C390083AF"
+          "type": "grafana-postgresql-datasource",
+          "uid": "${DS_POSTGRESQL}"
         },
         "definition": "SELECT distinct t.response_type \nFROM log_entries t;",
         "hide": 0,
@@ -1633,6 +1633,6 @@
   "timezone": "",
   "title": "Blocky Queries",
   "uid": "NhdNWqTVl",
-  "version": 3,
+  "version": 1,
   "weekStart": ""
 }

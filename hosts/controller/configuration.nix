@@ -1,33 +1,23 @@
-{ lib, suites, profiles, ... }: {
+{ profiles, suites, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
-      profiles.databases.postgresql.default
+      profiles.networking.networkd
+      profiles.networking.resolved
+      profiles.networking.tailscale.exit-node
       profiles.networking.blocky.default
       profiles.networking.blocky.redis
       profiles.networking.blocky.postgresql
-      profiles.networking.tailscale.exit-node
       profiles.networking.unifi
+      profiles.telemetry.prometheus-smokeping-exporter
+      profiles.telemetry.prometheus-unpoller-exporter.satan
       profiles.power.apc
       profiles.telemetry.prometheus-nut-exporter
-      profiles.telemetry.prometheus-smokeping-exporter
-      profiles.networking.networkd
-      profiles.networking.resolved
-      profiles.telemetry.prometheus-unpoller-exporter
     ] ++ [ ./disk-config.nix ./hardware-configuration.nix ];
 
-  satan.address = "192.168.1.2";
-
-  deployment.targetHost = "192.168.1.2";
-  deployment.buildOnTarget = true;
+  deployment.buildOnTarget = false;
 
   services.resolved.extraConfig = ''
-    [Resolve]
-    DNS=127.0.0.52
-  '';
-
-  networking.firewall.extraCommands = ''
-    iptables -t nat -A OUTPUT -d 127.0.0.52 -p udp -m udp --dport 53 -j REDIRECT --to-ports 52
-    iptables -t nat -A OUTPUT -d 127.0.0.52 -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 52
+    DNSStubListener=no
   '';
 
   networking = {
@@ -35,7 +25,8 @@
       address = "192.168.1.1";
       interface = "ens18";
     };
-    nameservers = [ "192.168.1.1" ];
+
+    nameservers = [ "9.9.9.9" ];
 
     vlans.vlan2 = {
       id = 2;
@@ -44,7 +35,7 @@
 
     interfaces = {
       vlan2.ipv4.addresses = [{
-        address = "10.2.2.1";
+        address = "10.2.1.2";
         prefixLength = 24;
       }];
 
@@ -54,9 +45,6 @@
       }];
     };
   };
-
-  e10.services.backup.jobs.system.exclude =
-    lib.mkAfter [ "/var/lib/postgresql" "/var/lib/unifi/data/db" ];
 
   system.stateVersion = "23.11";
 }

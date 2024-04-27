@@ -2,11 +2,12 @@
   imports = with suites;
     core ++ [ ./hardware-configuration.nix ] ++ [
       profiles.hardware.rpi4
-      profiles.telemetry.prometheus-smokeping-exporter
       profiles.networking.networkd
       profiles.networking.resolved
       profiles.virtualisation.docker
       profiles.services.homebridge
+      profiles.telemetry.prometheus-smokeping-exporter
+      profiles.telemetry.prometheus-unpoller-exporter.lawsonnet
     ];
 
   deployment = {
@@ -14,7 +15,21 @@
     tags = [ "@remote" ];
   };
 
-  networking.nameservers = [ "192.168.1.1" ];
+  networking = {
+    defaultGateway = {
+      address = "192.168.1.1";
+      interface = "end0";
+    };
+
+    nameservers = [ "192.168.1.1" ];
+
+    interfaces = {
+      end0.ipv4.addresses = [{
+        address = "192.168.1.2";
+        prefixLength = 24;
+      }];
+    };
+  };
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;

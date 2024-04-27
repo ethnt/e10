@@ -1,0 +1,19 @@
+---
+- name: Allow Homelab to any
+  ansibleguy.opnsense.rule:
+    interface: opt2
+    source_net: opt2
+    destination_net: any
+    protocol: any
+    description: "[Ansible] Homelab to any rule"
+    match_fields: ["description"]
+
+- name: Allow Homelab IPv6 to any
+  ansibleguy.opnsense.rule:
+    interface: opt2
+    source_net: opt2
+    destination_net: any
+    protocol: any
+    description: "[Ansible] Homelab IPv6 to any rule"
+    match_fields: ["description"]
+    ip_protocol: inet6

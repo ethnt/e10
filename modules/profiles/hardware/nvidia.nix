@@ -5,7 +5,7 @@
     pciutils
     cudatoolkit
     linuxPackages.nvidia_x11
-    nvtop
+    nvtopPackages.full
     nvitop
   ];
 

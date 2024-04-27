@@ -71,7 +71,6 @@
         "overrides": []
       },
       "id": 26,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -83,10 +82,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -155,7 +155,6 @@
         "y": 0
       },
       "id": 43,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -167,10 +166,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -211,7 +211,7 @@
         "content": "<style type=\"text/css\">\n  .blocky_btn {\n    border: none;\n    cursor: pointer; \n    padding: 12px;\n    font-size: 16px;\n    min-width: 100px\n  }\n\n  .blocky_greenbtn { \n    background-color: #4CAF50;\n    color: white;\n  }\n\n  .blocky_redbtn { \n    background-color: #AF504C;\n    color: white;\n  }\n\n  .blocky_alert {\n    font-size: 14px\n  }\n</style>\n<div class=\"blocky_alert blocky_alert-warning fade in\">\n  <a href=\"#\" class=\"close\" data-dismiss=\"blocky_alert\" aria-label=\"close\" style=\"text-decoration:none\">&times;</a>Done!\n</div>\n<div>\n   <button class=\"blocky_btn blocky_greenbtn\" onclick=\"blocky_status_enable()\">On</button>\n   <button class=\"blocky_btn blocky_redbtn\" onclick=\"blocky_status_disable5m()\">Off 5m</button>\n   <button class=\"blocky_btn blocky_redbtn\" onclick=\"blocky_status_disable30m()\">Off 30m</button>\n<div>\n\n\n<script type=\"text/javascript\">\n  function blocky_status_disable() {\n    blocky_status_switch(false, 0)\n  }\n\n  function blocky_status_disable5m() {\n    blocky_status_switch(false, 5*60)\n  }\n\n  function blocky_status_disable30m() {\n    blocky_status_switch(false, 30*60)\n  }\n\n  function blocky_status_enable() {\n    blocky_status_switch(true, 0)\n  }\n\n  function blocky_status_switch(enable, duration) {\n    var url = '$blocky_url';\n    op = enable ? 'enable' : 'disable?duration='+duration+\"s\"\n    $.get(url + '/api/blocking/'+op, function(data) {\n      showAlert()\n    })\n    .fail(function() {\n      alert( \"error\" );\n    })\n  }\n\n  var showAlert = function() {\n    // first show the alert\n    $('.blocky_alert').show().fadeTo(500, 1);\n    \n    // Now set a timeout to hide it\n    window.setTimeout(function() {\n      $(\".blocky_alert\").fadeTo(500, 0).slideUp(500, function() {\n        $(this).hide();\n      });\n    }, 3000);\n  }\n\n  // start with the alert hidden\n  $('.blocky_alert').hide();\n</script>",
         "mode": "html"
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -223,120 +223,6 @@
       "title": "Blocking status",
       "transparent": true,
       "type": "text"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "fillOpacity": 70,
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineWidth": 0,
-            "spanNulls": false
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "red",
-                  "index": 1,
-                  "text": "Down"
-                },
-                "1": {
-                  "color": "green",
-                  "index": 0,
-                  "text": "Up"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 24,
-        "x": 0,
-        "y": 3
-      },
-      "id": 59,
-      "options": {
-        "alignValue": "center",
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "mergeValues": true,
-        "rowHeight": 0.9,
-        "showValue": "always",
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "probe_success{job=\"blackbox_blocky\"}",
-          "format": "table",
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Uptime",
-      "transformations": [
-        {
-          "id": "groupingToMatrix",
-          "options": {
-            "columnField": "instance",
-            "emptyValue": "null",
-            "rowField": "Time",
-            "valueField": "Value"
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "time",
-                "targetField": "Time\\instance"
-              }
-            ],
-            "fields": {}
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "state-timeline"
     },
     {
       "datasource": {
@@ -367,7 +253,7 @@
         "h": 3,
         "w": 6,
         "x": 0,
-        "y": 8
+        "y": 3
       },
       "id": 55,
       "options": {
@@ -380,10 +266,11 @@
           "fields": "/^version$/",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "repeatDirection": "v",
       "targets": [
         {
@@ -454,10 +341,9 @@
         "h": 3,
         "w": 6,
         "x": 6,
-        "y": 8
+        "y": 3
       },
       "id": 24,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -469,10 +355,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -528,10 +415,9 @@
         "h": 3,
         "w": 6,
         "x": 12,
-        "y": 8
+        "y": 3
       },
       "id": 30,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -543,10 +429,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -602,10 +489,9 @@
         "h": 3,
         "w": 6,
         "x": 18,
-        "y": 8
+        "y": 3
       },
       "id": 28,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -617,10 +503,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -683,10 +570,9 @@
         "h": 3,
         "w": 6,
         "x": 0,
-        "y": 11
+        "y": 6
       },
       "id": 34,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -698,10 +584,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -757,11 +644,10 @@
         "h": 3,
         "w": 6,
         "x": 6,
-        "y": 11
+        "y": 6
       },
       "hideTimeOverride": true,
       "id": 4,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -773,10 +659,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -821,7 +708,7 @@
         "h": 3,
         "w": 6,
         "x": 12,
-        "y": 11
+        "y": 6
       },
       "id": 45,
       "options": {
@@ -834,10 +721,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -888,7 +776,7 @@
         "h": 3,
         "w": 6,
         "x": 18,
-        "y": 11
+        "y": 6
       },
       "id": 47,
       "options": {
@@ -901,10 +789,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -969,10 +858,9 @@
         "h": 3,
         "w": 6,
         "x": 0,
-        "y": 14
+        "y": 9
       },
       "id": 36,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -984,10 +872,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1032,7 +921,7 @@
         "h": 3,
         "w": 6,
         "x": 6,
-        "y": 14
+        "y": 9
       },
       "id": 53,
       "options": {
@@ -1045,10 +934,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1096,7 +986,7 @@
         "h": 3,
         "w": 6,
         "x": 12,
-        "y": 14
+        "y": 9
       },
       "id": 51,
       "options": {
@@ -1109,10 +999,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1162,7 +1053,7 @@
         "h": 3,
         "w": 6,
         "x": 18,
-        "y": 14
+        "y": 9
       },
       "id": 58,
       "options": {
@@ -1175,10 +1066,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1225,7 +1117,7 @@
         "h": 3,
         "w": 6,
         "x": 6,
-        "y": 17
+        "y": 12
       },
       "id": 57,
       "options": {
@@ -1238,10 +1130,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1286,7 +1179,7 @@
         "h": 3,
         "w": 6,
         "x": 12,
-        "y": 17
+        "y": 12
       },
       "id": 49,
       "options": {
@@ -1299,10 +1192,11 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1386,7 +1280,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 15
       },
       "id": 10,
       "options": {
@@ -1486,7 +1380,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 22
       },
       "id": 52,
       "options": {
@@ -1554,7 +1448,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 29
       },
       "heatmap": {},
       "hideZeroBuckets": false,
@@ -1662,10 +1556,9 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 43
+        "y": 38
       },
       "id": 2,
-      "links": [],
       "maxDataPoints": 3,
       "options": {
         "legend": {
@@ -1733,10 +1626,9 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 43
+        "y": 38
       },
       "id": 8,
-      "links": [],
       "maxDataPoints": 3,
       "options": {
         "legend": {
@@ -1804,10 +1696,9 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 51
+        "y": 46
       },
       "id": 32,
-      "links": [],
       "maxDataPoints": 3,
       "options": {
         "legend": {
@@ -1875,10 +1766,9 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 51
+        "y": 46
       },
       "id": 14,
-      "links": [],
       "maxDataPoints": 3,
       "options": {
         "legend": {
@@ -1946,11 +1836,10 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 59
+        "y": 54
       },
       "id": 38,
       "interval": "",
-      "links": [],
       "maxDataPoints": 3,
       "options": {
         "legend": {
@@ -2018,10 +1907,9 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 59
+        "y": 54
       },
       "id": 12,
-      "links": [],
       "maxDataPoints": 3,
       "options": {
         "legend": {

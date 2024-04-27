@@ -10,6 +10,10 @@ resource "aws_route53_zone" "e10_land" {
   name = "e10.land"
 }
 
+resource "aws_route53_zone" "satan_network" {
+  name = "satan.network"
+}
+
 resource "aws_route53_record" "root_e10_video" {
   zone_id = aws_route53_zone.e10_video.zone_id
   name    = "e10.video"
