@@ -1,8 +1,6 @@
 { profiles, suites, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
-      profiles.networking.networkd
-      profiles.networking.resolved
       profiles.networking.tailscale.exit-node
       profiles.networking.blocky.default
       profiles.networking.blocky.redis
@@ -14,7 +12,10 @@
       profiles.telemetry.prometheus-nut-exporter
     ] ++ [ ./disk-config.nix ./hardware-configuration.nix ];
 
-  deployment.buildOnTarget = false;
+  deployment = {
+    buildOnTarget = false;
+    tags = [ "vm" ];
+  };
 
   services.resolved.extraConfig = ''
     DNSStubListener=no

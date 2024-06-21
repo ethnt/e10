@@ -3,22 +3,22 @@
   ansibleguy.opnsense.interface_vlan:
     name: Management
     vlan: 2
-    parent: ixl1
+    parent: igc0
 
 - name: Create Homelab VLAN (vlan10)
   ansibleguy.opnsense.interface_vlan:
     name: Homelab
     vlan: 10
-    parent: ixl1
+    parent: igc0
 
 - name: Create Guest VLAN (vlan50)
   ansibleguy.opnsense.interface_vlan:
     name: Guest
     vlan: 50
-    parent: ixl1
+    parent: igc0
 
 - name: Create IoT VLAN (vlan100)
   ansibleguy.opnsense.interface_vlan:
     name: IoT
     vlan: 100
-    parent: ixl1
+    parent: igc0

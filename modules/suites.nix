@@ -20,7 +20,8 @@
     profiles.system.earlyoom
   ];
 
-  web = [ profiles.web-servers.nginx ];
+  web =
+    [ profiles.telemetry.prometheus-nginx-exporter profiles.web-servers.nginx ];
 
   minimal = [
     profiles.core.common

@@ -27,7 +27,7 @@
     buildOnTarget = true;
   };
 
-  satan.address = "10.10.2.1";
+  satan.address = "10.10.2.101";
 
   networking = {
     useDHCP = false;
@@ -44,11 +44,11 @@
           address = "0.0.0.0";
           prefixLength = 0;
           via = "10.10.0.1";
-          options.src = "10.10.2.1";
+          options.src = "10.10.2.101";
           options.onlink = "";
         }];
         addresses = [{
-          address = "10.10.2.1";
+          address = "10.10.2.101";
           prefixLength = 24;
         }];
       };

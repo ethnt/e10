@@ -1,4 +1,5 @@
 collections/
 galaxy_cache/
+tmp/
 
 galaxy_token

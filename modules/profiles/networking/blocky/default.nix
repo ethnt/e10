@@ -73,21 +73,22 @@
       };
       clientLookup = {
         upstream = "192.168.1.1:5335";
-        # upstream = "192.168.1.1";
         singleNameOrder = [ 1 2 ];
       };
       conditional = {
-        mapping = {
-          "arpa" = "192.168.1.1:5335";
-          # "arpa" = "192.168.1.1";
-          "1.168.192.in-addr.arpa" = "192.168.1.1:5335";
-          # "1.168.192.in-addr.arpa" = "192.168.1.1";
-          "168.192.in-addr.arpa" = "192.168.1.1:5335";
-          # "168.192.in-addr.arpa" = "192.168.1.1";
-          "10.10.in-addr.arpa" = "192.168.1.1:5335";
-          "." = "192.168.1.1:5335";
-          # "." = "192.168.1.1";
-        };
+        mapping = let
+          reverseDnsServer = "192.168.1.1:5335";
+          addresses = [
+            "arpa"
+            "1.168.192.in-addr.arpa"
+            "168.192.in-addr.arpa"
+            "10.10.in-addr.arpa"
+            "."
+          ];
+        in builtins.listToAttrs (map (name: {
+          inherit name;
+          value = reverseDnsServer;
+        }) addresses);
       };
       prometheus = {
         enable = true;

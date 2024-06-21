@@ -8,7 +8,6 @@
     - git.yml
     - qemu.yml
     - mdns.yml
-    - upnp.yml
     - prometheus-node-exporter.yml
     - ddclient.yml
     - acme.yml

@@ -127,6 +127,10 @@
           options.path = ./provisioning/smokeping.json;
         }
         {
+          name = "HTPC";
+          options.path = ./provisioning/htpc.json;
+        }
+        {
           name = "Unifi: Client Insights";
           options.path = ./provisioning/unifi/clients.json;
         }
@@ -141,6 +145,14 @@
         {
           name = "Unifi: Network Site Insights";
           options.path = ./provisioning/unifi/sites.json;
+        }
+        {
+          name = "NGINX";
+          options.path = ./provisioning/nginx.json;
+        }
+        {
+          name = "Proxmox";
+          options.path = ./provisioning/proxmox.json;
         }
       ];
 
@@ -323,7 +335,7 @@
                     };
                   }
                 ];
-                noDataState = "NoData";
+                noDataState = "OK";
                 execErrState = "Error";
                 for = "30s";
                 annotations = {
@@ -396,7 +408,7 @@
                     };
                   }
                 ];
-                noDataState = "NoData";
+                noDataState = "OK";
                 execErrState = "Error";
                 for = "30s";
                 annotations = {

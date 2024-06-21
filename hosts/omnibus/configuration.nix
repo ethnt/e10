@@ -10,17 +10,17 @@
       profiles.users.ethan
       profiles.users.proxmox
       profiles.databases.postgresql.default
-      profiles.networking.networkd
-      profiles.networking.resolved
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
-  deployment.targetHost = "10.10.1.1";
-  deployment.buildOnTarget = true;
+  deployment = {
+    buildOnTarget = true;
+    tags = [ "vm" ];
+  };
 
-  satan.address = "10.10.1.1";
+  satan.address = "10.10.1.101";
 
   networking = {
     useDHCP = false;
@@ -37,11 +37,11 @@
           address = "0.0.0.0";
           prefixLength = 0;
           via = "10.10.0.1";
-          options.src = "10.10.1.1";
+          options.src = "10.10.1.101";
           options.onlink = "";
         }];
         addresses = [{
-          address = "10.10.1.1";
+          address = "10.10.1.101";
           prefixLength = 24;
         }];
       };
@@ -81,6 +81,7 @@
   e10.services.backup.jobs.files = {
     repoName = "${config.networking.hostName}-files";
     paths = [ "/data/files" ];
+    pruneKeep = { monthly = -1; };
   };
 
   programs.fish.shellAliases.iotop = ''
