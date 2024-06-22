@@ -59,7 +59,7 @@ in {
               "Options to pass to `services.borgbackup.jobs.<name>.prune.keep`";
             default = {
               within = "1d";
-              daily = 7;
+              daily = 1;
               weekly = 4;
               monthly = -1;
             };

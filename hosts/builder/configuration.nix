@@ -4,16 +4,17 @@
       profiles.emulation.aarch64-linux
       profiles.remote-builder.builder
       profiles.remote-builder.substituter
-      profiles.networking.networkd
-      profiles.networking.resolved
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
-  satan.address = "10.10.2.2";
+  satan.address = "10.10.2.102";
 
-  deployment.buildOnTarget = true;
+  deployment = {
+    buildOnTarget = true;
+    tags = [ "vm" ];
+  };
 
   nix.gc.automatic = false;
 
@@ -32,11 +33,11 @@
           address = "0.0.0.0";
           prefixLength = 0;
           via = "10.10.0.1";
-          options.src = "10.10.2.2";
+          options.src = "10.10.2.102";
           options.onlink = "";
         }];
         addresses = [{
-          address = "10.10.2.2";
+          address = "10.10.2.102";
           prefixLength = 24;
         }];
       };

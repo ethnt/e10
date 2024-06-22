@@ -5,9 +5,8 @@
       profiles.monitoring.prometheus
       profiles.monitoring.rsyslogd
       profiles.observability.grafana.default
-      # profiles.telemetry.prometheus-blackbox-exporter
-      profiles.networking.networkd
-      profiles.networking.resolved
+      profiles.telemetry.prometheus-pve-exporter.default
+      profiles.telemetry.prometheus-redis-exporter
     ];
 
   services.nginx.virtualHosts = {
@@ -194,6 +193,18 @@
       }];
     }
     {
+      job_name = "nut_satellite";
+      metrics_path = "/ups_metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.satellite.config.networking.hostName}:${
+            toString
+            hosts.satellite.config.services.prometheus.exporters.nut.port
+          }"
+        ];
+      }];
+    }
+    {
       job_name = "smokeping_controller";
       metrics_path = "/metrics";
       static_configs = [{
@@ -314,6 +325,91 @@
           }"
         ];
       }];
+    }
+    {
+      job_name = "nginx_gateway";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.gateway.config.networking.hostName}:${
+            toString
+            hosts.gateway.config.services.prometheus.exporters.nginx.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "nginx_monitor";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.monitor.config.networking.hostName}:${
+            toString
+            hosts.monitor.config.services.prometheus.exporters.nginx.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "nginx_matrix";
+      metrics_path = "/metrics";
+      static_configs = [{
+        targets = [
+          "${hosts.matrix.config.networking.hostName}:${
+            toString
+            hosts.matrix.config.services.prometheus.exporters.nginx.port
+          }"
+        ];
+      }];
+    }
+    {
+      job_name = "pve";
+      metrics_path = "/pve";
+      static_configs =
+        [{ targets = [ "anise" "basil" "cardamom" "elderflower" ]; }];
+      params = {
+        module = [ "default" ];
+        node = [ "anise" "basil" "cardamom" "elderflower" ];
+      };
+      relabel_configs = [
+        {
+          source_labels = [ "__address__" ];
+          target_label = "__param_target";
+        }
+        {
+          source_labels = [ "__param_target" ];
+          target_label = "instance";
+        }
+        {
+          target_label = "__address__";
+          replacement = "${hosts.monitor.config.networking.hostName}:${
+              toString
+              hosts.monitor.config.services.prometheus.exporters.pve.port
+            }";
+        }
+      ];
+    }
+    {
+      job_name = "redis";
+      metrics_path = "/scrape";
+      static_configs = [{ targets = [ "redis://controller:6379" ]; }];
+      relabel_configs = [
+        {
+          source_labels = [ "__address__" ];
+          target_label = "__param_target";
+        }
+        {
+          source_labels = [ "__param_target" ];
+          target_label = "instance";
+        }
+        {
+          target_label = "__address__";
+          replacement = "${hosts.monitor.config.networking.hostName}:${
+              toString
+              hosts.monitor.config.services.prometheus.exporters.redis.port
+            }";
+        }
+      ];
     }
   ];
 

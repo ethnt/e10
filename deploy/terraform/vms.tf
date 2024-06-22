@@ -264,28 +264,46 @@ resource "proxmox_virtual_environment_vm" "router" {
   name  = "router"
   vm_id = 101
 
+  machine = "q35"
+  bios    = "ovmf"
+
   scsi_hardware = "virtio-scsi-single"
   on_boot       = true
 
   migrate = true
 
+  startup {
+    down_delay = -1
+    order      = 1
+    up_delay   = -1
+  }
+
   cpu {
-    cores   = 12
+    cores   = 8
     sockets = 1
-    type    = "host"
+    type    = "x86-64-v2-AES"
+    flags   = ["+aes"]
   }
 
   memory {
-    dedicated = 16384
+    dedicated = 32768
   }
 
   disk {
     datastore_id = "local-zfs"
-    discard      = "ignore"
+    discard      = "on"
     file_format  = "raw"
     interface    = "scsi0"
     size         = 256
     iothread     = true
+    ssd          = true
+  }
+
+  efi_disk {
+    datastore_id      = "local-zfs"
+    file_format       = "raw"
+    pre_enrolled_keys = false
+    type              = "4m"
   }
 
   network_device {
@@ -308,7 +326,7 @@ resource "proxmox_virtual_environment_vm" "router" {
 
   hostpci {
     device = "hostpci0"
-    id     = "0000:02:00.0"
+    id     = "0000:02:00"
     pcie   = false
     rombar = true
     xvga   = false
@@ -316,7 +334,15 @@ resource "proxmox_virtual_environment_vm" "router" {
 
   hostpci {
     device = "hostpci1"
-    id     = "0000:02:00.1"
+    id     = "0000:06:00"
+    pcie   = false
+    rombar = true
+    xvga   = false
+  }
+
+  hostpci {
+    device = "hostpci2"
+    id     = "0000:00:1f.3"
     pcie   = false
     rombar = true
     xvga   = false
@@ -343,7 +369,7 @@ resource "proxmox_virtual_environment_vm" "controller" {
   }
 
   memory {
-    dedicated = 4096
+    dedicated = 8192
   }
 
   disk {
@@ -376,5 +402,11 @@ resource "proxmox_virtual_environment_vm" "controller" {
   usb {
     host = "051d:0002"
     usb3 = true
+  }
+
+  startup {
+    down_delay = -1
+    order      = 2
+    up_delay   = -1
   }
 }

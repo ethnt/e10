@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
+    angle-grinder
     btop
     bind
     comma
@@ -7,6 +8,7 @@
     inetutils
     iperf3
     lm_sensors
+    lnav
     tmux
     vim
   ];

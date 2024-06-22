@@ -1,11 +1,9 @@
-{ config, suites, hosts, profiles, ... }: {
-  imports = with suites;
-    core ++ web ++ aws
-    ++ [ profiles.networking.networkd profiles.networking.resolved ];
+{ config, suites, hosts, ... }: {
+  imports = with suites; core ++ web ++ aws;
 
   services.nginx.virtualHosts = let
     mkVirtualHost = { host, port, http2 ? true, extraConfig ? " "
-      , extraRootLocationConfig ? "", extraSettings ? { } }:
+      , extraSettings ? { }, extraRootLocationConfig ? "" }:
       {
         inherit http2 extraConfig;
 
@@ -68,7 +66,7 @@
       inherit (hosts.htpc.config.services.overseerr) port;
     };
 
-    "requests.e10.camp" = mkVirtualHost {
+    "requests.e10.video" = mkVirtualHost {
       host = hosts.htpc;
       inherit (hosts.htpc.config.services.overseerr) port;
     };

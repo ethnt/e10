@@ -2,10 +2,10 @@
   imports = with suites;
     core ++ [ ./hardware-configuration.nix ] ++ [
       profiles.hardware.rpi4
-      profiles.networking.networkd
-      profiles.networking.resolved
       profiles.virtualisation.docker
       profiles.services.homebridge
+      profiles.power.lawsonnet
+      profiles.telemetry.prometheus-nut-exporter
       profiles.telemetry.prometheus-smokeping-exporter
       profiles.telemetry.prometheus-unpoller-exporter.lawsonnet
     ];
@@ -37,7 +37,7 @@
   };
 
   services.tailscale.extraUpFlags =
-    lib.mkAfter [ "--advertise-routes=192.168.0.0/16" ];
+    lib.mkAfter [ "--advertise-exit-node" "--advertise-routes=192.168.0.0/16" ];
 
   system.stateVersion = "23.11";
 }

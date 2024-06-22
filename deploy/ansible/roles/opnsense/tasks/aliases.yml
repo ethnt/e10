@@ -13,11 +13,25 @@
     content: ["00:e4:21:15:bd:e8"]
     description: "[Ansible] PlayStation 5"
 
+- name: Create alias for HTPC
+  ansibleguy.opnsense.alias:
+    name: HTPC_Host
+    type: host
+    content: ["10.10.2.101"]
+    description: "[Ansible] HTPC"
+
+- name: Create alias for Plex port
+  ansibleguy.opnsense.alias:
+    name: Plex_Port
+    type: port
+    content: ["32400"]
+    description: "[Ansible] Plex ports"
+
 - name: Create alias for Matrix
   ansibleguy.opnsense.alias:
     name: Matrix_Host
     type: host
-    content: ["10.10.3.1"]
+    content: ["10.10.3.101"]
     description: "[Ansible] Matrix"
 
 - name: Create alias for Rustdesk TCP ports

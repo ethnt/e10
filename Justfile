@@ -27,8 +27,6 @@ repl:
 format:
     nix fmt
 
-alias fmt := format
-
 age-from-host host:
     nix shell nixpkgs#ssh-to-age --command sh -c "ssh-keyscan {{ host }} | ssh-to-age"
 
@@ -41,8 +39,8 @@ nixos-anywhere hostname host:
 generate-ci:
     nix run .#generate-ci
 
-ansible-proxmox:
-    ansible-playbook -i deploy/ansible/inventory.yml deploy/ansible/proxmox.yml
+ansible playbook:
+    ansible-playbook -i deploy/ansible/inventory.yml deploy/ansible/{{ playbook }}.yml
 
-ansible-pikvm:
-    ansible-playbook -i deploy/ansible/inventory.yml deploy/ansible/pikvm.yml
+ssh host:
+    ssh -F $SSH_CONFIG_FILE root@{{ host }}

@@ -8,17 +8,18 @@
       profiles.power.tripp-lite
       profiles.telemetry.prometheus-nut-exporter
       profiles.services.netbox.default
-      profiles.networking.networkd
-      profiles.networking.resolved
-      profiles.services.rustdesk
+      profiles.virtualisation.docker
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
-  satan.address = "10.10.3.1";
+  satan.address = "10.10.3.101";
 
-  deployment.buildOnTarget = true;
+  deployment = {
+    buildOnTarget = true;
+    tags = [ "vm" ];
+  };
 
   networking = {
     useDHCP = false;
@@ -36,11 +37,11 @@
           address = "0.0.0.0";
           prefixLength = 0;
           via = "10.10.0.1";
-          options.src = "10.10.3.1";
+          options.src = "10.10.3.101";
           options.onlink = "";
         }];
         addresses = [{
-          address = "10.10.3.1";
+          address = "10.10.3.101";
           prefixLength = 24;
         }];
       };
