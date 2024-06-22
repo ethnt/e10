@@ -25,9 +25,8 @@
         };
         blackLists = {
           ads = [
-            "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
-            "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-            "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/multi.txt"
+            "https://big.oisd.nl/domainswild"
+            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt"
           ];
           development = [ ];
         };

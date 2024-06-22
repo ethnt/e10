@@ -2,7 +2,7 @@
 
 buildGoModule rec {
   pname = "blocky";
-  version = "0.23";
+  version = "0.24";
 
   src = fetchFromGitHub {
     owner = "0xERR0R";
