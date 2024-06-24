@@ -24,10 +24,7 @@
           timeout = "30s";
         };
         blackLists = {
-          ads = [
-            "https://big.oisd.nl/domainswild"
-            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt"
-          ];
+          ads = [ "https://big.oisd.nl/domainswild" ];
           development = [ ];
         };
         whiteLists = {
