@@ -20,8 +20,5 @@
   # Even though we're not using xserver, this is required to load the driver
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-  };
+  hardware.graphics.enable = true;
 }

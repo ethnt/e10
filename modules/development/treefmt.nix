@@ -8,7 +8,10 @@
         programs = {
           deadnix.enable = true;
           terraform.enable = true;
-          nixfmt.enable = true;
+          nixfmt = {
+            enable = true;
+            package = pkgs.nixfmt-classic;
+          };
           statix.enable = true;
           prettier.enable = true;
         };
