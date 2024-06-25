@@ -3,7 +3,6 @@
     core ++ [ ./hardware-configuration.nix ] ++ [
       profiles.hardware.rpi4
       profiles.virtualisation.docker
-      profiles.services.homebridge
       profiles.power.lawsonnet
       profiles.telemetry.prometheus-nut-exporter
       profiles.telemetry.prometheus-smokeping-exporter

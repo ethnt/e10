@@ -18,7 +18,7 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
   }
 
   memory {
-    dedicated = 57344
+    dedicated = 53248
   }
 
   disk {

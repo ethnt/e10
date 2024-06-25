@@ -1,10 +1,12 @@
 { config, ... }: {
-  services.nfs.server = {
-    enable = true;
-    statdPort = 4000;
-    lockdPort = 4001;
+  services.nfs = {
+    settings.nfsd.upd = "y";
 
-    extraNfsdConfig = "upd=y";
+    server = {
+      enable = true;
+      statdPort = 4000;
+      lockdPort = 4001;
+    };
   };
 
   networking.firewall = let
