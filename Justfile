@@ -44,3 +44,6 @@ ansible playbook:
 
 ssh host:
     ssh -F $SSH_CONFIG_FILE root@{{ host }}
+
+image name:
+    nom build .#packages.x86_64-linux.{{ name }}-image

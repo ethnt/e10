@@ -35,7 +35,15 @@
     profiles.users.root
   ];
 
-  homelab = [ profiles.networking.satan ];
+  # homelab = [ profiles.networking.satan ];
+
+  nuc = [
+    profiles.filesystems.hybrid-boot
+    profiles.filesystems.zfs
+    profiles.hardware.intel
+    profiles.hardware.hidpi
+    profiles.hardware.ssd
+  ];
 
   aws = [ profiles.virtualisation.aws profiles.networking.quad9 ];
 
