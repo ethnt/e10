@@ -1,6 +1,7 @@
-{ suites, profiles, ... }: {
+{ lib, suites, profiles, ... }: {
   imports = with suites;
-    core ++ nuc ++ [ ./hardware-configuration.nix ./disk-config.nix ];
+    core ++ nuc ++ [ profiles.hypervisors.proxmox-ve ]
+    ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/nvme-CT4000P3SSD8_2322E6DDD8FE" ];
@@ -20,7 +21,11 @@
       interface = "enp86s0";
     };
 
+    bridges.vmbr0.interfaces = [ "enp86s0" ];
+
     interfaces = {
+      vmbr0.useDHCP = lib.mkDefault true;
+
       vlan10.ipv4 = {
         routes = [{
           address = "0.0.0.0";
