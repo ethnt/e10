@@ -17,6 +17,16 @@
           extraConfig = extraRootLocationConfig;
         };
       } // extraSettings;
+
+    mkRedirect = { destination, status ? 301 }: {
+      http2 = true;
+
+      forceSSL = true;
+      enableACME = true;
+
+      globalRedirect = destination;
+      redirectCode = status;
+    };
   in {
     "e10.land" = mkVirtualHost {
       host = hosts.matrix;
@@ -61,10 +71,7 @@
       port = hosts.htpc.config.services.bazarr.listenPort;
     };
 
-    "overseerr.e10.camp" = mkVirtualHost {
-      host = hosts.htpc;
-      inherit (hosts.htpc.config.services.overseerr) port;
-    };
+    "overseerr.e10.camp" = mkRedirect { destination = "requests.e10.video"; };
 
     "requests.e10.video" = mkVirtualHost {
       host = hosts.htpc;
