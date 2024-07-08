@@ -1,8 +1,11 @@
 { lib, ... }: {
   boot = {
-    initrd.availableKernelModules =
-      [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
-    initrd.kernelModules = [ ];
+    initrd = {
+      availableKernelModules =
+        [ "xhci_pci" "thunderbolt" "ahci" "nvme" "usbhid" "uas" "sd_mod" ];
+      kernelModules = [ ];
+    };
+
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
   };
