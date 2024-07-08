@@ -87,8 +87,7 @@
           # TODO: Make this on a per-system basis, and maybe per-package
           config.allowUnfree = true;
 
-          overlays =
-            [ self.overlays.default inputs.proxmox-nixos.overlays.${system} ];
+          overlays = [ self.overlays.default ];
         };
       };
     };
