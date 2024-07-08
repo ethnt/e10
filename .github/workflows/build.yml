@@ -24,6 +24,7 @@ jobs:
         host:
         - builder
         - controller
+        - dill
         - gateway
         - htpc
         - matrix
