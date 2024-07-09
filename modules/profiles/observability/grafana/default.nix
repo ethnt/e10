@@ -292,11 +292,11 @@
                       from = 600;
                       to = 0;
                     };
-                    datasourceUid = "PBFA97CFB590B2093";
+                    datasourceUid = "P5DCFC7561CCDE821";
                     model = {
                       datasource = {
                         type = "prometheus";
-                        uid = "PBFA97CFB590B2093";
+                        uid = "P5DCFC7561CCDE821";
                       };
                       editorMode = "code";
                       expr = ''
@@ -365,11 +365,11 @@
                       from = 600;
                       to = 0;
                     };
-                    datasourceUid = "PBFA97CFB590B2093";
+                    datasourceUid = "P5DCFC7561CCDE821";
                     model = {
                       datasource = {
                         type = "prometheus";
-                        uid = "PBFA97CFB590B2093";
+                        uid = "P5DCFC7561CCDE821";
                       };
                       editorMode = "code";
                       expr = ''
@@ -535,11 +535,11 @@
               #         from = 600;
               #         to = 0;
               #       };
-              #       datasourceUid = "PBFA97CFB590B2093";
+              #       datasourceUid = "P5DCFC7561CCDE821";
               #       model = {
               #         datasource = {
               #           type = "prometheus";
-              #           uid = "PBFA97CFB590B2093";
+              #           uid = "P5DCFC7561CCDE821";
               #         };
               #         editorMode = "code";
               #         expr =
@@ -607,11 +607,11 @@
                       from = 600;
                       to = 0;
                     };
-                    datasourceUid = "PBFA97CFB590B2093";
+                    datasourceUid = "P5DCFC7561CCDE821";
                     model = {
                       datasource = {
                         type = "prometheus";
-                        uid = "PBFA97CFB590B2093";
+                        uid = "P5DCFC7561CCDE821";
                       };
                       editorMode = "code";
                       expr = ''
