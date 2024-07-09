@@ -184,7 +184,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -832,7 +832,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
           "expr": "(network_ups_tools_ups_power_nominal{instance=~\"$instance\"} or network_ups_tools_ups_realpower_nominal{instance=\"$instance\"}) * (network_ups_tools_ups_load{instance=\"$instance\"} / 100)",
@@ -956,8 +956,8 @@
       {
         "current": {
           "selected": false,
-          "text": "Prometheus",
-          "value": "PBFA97CFB590B2093"
+          "text": "Thanos",
+          "value": "P5DCFC7561CCDE821"
         },
         "hide": 0,
         "includeAll": false,

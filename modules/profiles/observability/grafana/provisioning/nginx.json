@@ -26,7 +26,7 @@
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "P5DCFC7561CCDE821"
       },
       "gridPos": {
         "h": 1,
@@ -40,7 +40,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "refId": "A"
         }
@@ -51,7 +51,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "P5DCFC7561CCDE821"
       },
       "description": "",
       "fieldConfig": {
@@ -122,7 +122,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "expr": "nginx_up{instance=~\"$instance\"}",
           "format": "time_series",
@@ -138,7 +138,7 @@
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "P5DCFC7561CCDE821"
       },
       "gridPos": {
         "h": 1,
@@ -152,7 +152,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "refId": "A"
         }
@@ -163,7 +163,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "P5DCFC7561CCDE821"
       },
       "description": "",
       "fieldConfig": {
@@ -246,7 +246,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "expr": "irate(nginx_connections_accepted{instance=~\"$instance\"}[5m])",
           "format": "time_series",
@@ -258,7 +258,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "expr": "irate(nginx_connections_handled{instance=~\"$instance\"}[5m])",
           "format": "time_series",
@@ -274,7 +274,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -356,7 +356,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "expr": "nginx_connections_active{instance=~\"$instance\"}",
           "format": "time_series",
@@ -367,7 +367,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "expr": "nginx_connections_reading{instance=~\"$instance\"}",
           "format": "time_series",
@@ -378,7 +378,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "expr": "nginx_connections_waiting{instance=~\"$instance\"}",
           "format": "time_series",
@@ -389,7 +389,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "expr": "nginx_connections_writing{instance=~\"$instance\"}",
           "format": "time_series",
@@ -404,7 +404,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -485,7 +485,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "expr": "irate(nginx_http_requests_total{instance=~\"$instance\"}[5m])",
           "format": "time_series",
@@ -506,8 +506,8 @@
       {
         "current": {
           "selected": false,
-          "text": "Prometheus",
-          "value": "PBFA97CFB590B2093"
+          "text": "Thanos",
+          "value": "P5DCFC7561CCDE821"
         },
         "hide": 0,
         "includeAll": false,
@@ -529,7 +529,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
+          "uid": "P5DCFC7561CCDE821"
         },
         "definition": "label_values(nginx_up, instance)",
         "hide": 0,

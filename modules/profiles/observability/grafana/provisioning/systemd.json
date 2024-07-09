@@ -20,7 +20,6 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 1617,
   "graphTooltip": 0,
-  "id": 8,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -61,6 +60,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -74,6 +74,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 3,
@@ -115,7 +116,6 @@
         "y": 1
       },
       "id": 2,
-      "links": [],
       "options": {
         "legend": {
           "calcs": ["mean", "lastNotNull", "max", "min"],
@@ -124,6 +124,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "multi",
           "sort": "asc"
         }
@@ -225,7 +226,6 @@
         "y": 13
       },
       "id": 3,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "background",
@@ -237,9 +237,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -263,7 +265,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -306,7 +308,6 @@
         "y": 13
       },
       "id": 4,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "none",
@@ -318,14 +319,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
           "expr": "sum(node_systemd_unit_state{instance=~\"^$node$\", state=\"active\"})",
@@ -344,7 +347,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -370,8 +373,7 @@
                 "value": null
               },
               {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": null
+                "color": "rgba(237, 129, 40, 0.89)"
               },
               {
                 "color": "rgba(245, 54, 54, 0.9)"
@@ -389,7 +391,6 @@
         "y": 13
       },
       "id": 5,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "background",
@@ -401,14 +402,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
           "expr": "sum(node_systemd_unit_state{instance=~\"^$node$\", state=\"failed\"})",
@@ -427,7 +430,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -470,7 +473,6 @@
         "y": 13
       },
       "id": 6,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "none",
@@ -482,14 +484,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
           "expr": "sum(node_systemd_unit_state{instance=~\"^$node$\", state=\"inactive\"})",
@@ -507,16 +511,15 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
           "selected": false,
-          "text": "100.122.170.88:9100",
-          "value": "100.122.170.88:9100"
+          "text": "monitor:9100",
+          "value": "monitor:9100"
         },
         "datasource": {
           "type": "prometheus",
@@ -544,17 +547,18 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "Prometheus",
-          "value": "Prometheus"
+          "selected": true,
+          "text": "Thanos",
+          "value": "P5DCFC7561CCDE821"
         },
         "hide": 0,
         "includeAll": false,
-        "label": "datasource",
+        "label": "Data source",
         "multi": false,
         "name": "DS_PROMETHEUS",
         "options": [],
         "query": "prometheus",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -562,7 +566,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "node_monitor",
           "value": "node_monitor"
         },
@@ -593,6 +597,7 @@
     "from": "now-5m",
     "to": "now"
   },
+  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {
     "refresh_intervals": [
       "5s",
@@ -611,6 +616,6 @@
   "timezone": "browser",
   "title": "systemd Service Dashboard",
   "uid": "d8ffbcc9-3217-4636-a7e7-44d39bc20990",
-  "version": 6,
+  "version": 1,
   "weekStart": ""
 }

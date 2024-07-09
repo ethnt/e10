@@ -56,7 +56,7 @@
       "dataFormat": "tsbuckets",
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -86,7 +86,6 @@
       "legend": {
         "show": false
       },
-      "links": [],
       "options": {
         "calculate": false,
         "calculation": {},
@@ -115,7 +114,8 @@
         },
         "showValue": "never",
         "tooltip": {
-          "show": true,
+          "maxHeight": 600,
+          "mode": "single",
           "showColorScale": false,
           "yHistogram": false
         },
@@ -127,13 +127,13 @@
           "unit": "s"
         }
       },
-      "pluginVersion": "10.2.3",
+      "pluginVersion": "11.0.0",
       "reverseYBuckets": false,
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "sum(rate(smokeping_response_duration_seconds_bucket{instance=~\"$instance\",host=\"${target:raw}\"}[1m])) by (le)",
@@ -165,7 +165,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -270,6 +270,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "multi",
           "sort": "none"
         }
@@ -279,7 +280,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "(smokeping_requests_total{instance=~\"$instance\",host=\"${target:raw}\"} - smokeping_response_duration_seconds_count{instance=~\"$instance\",host=\"${target:raw}\"})/smokeping_requests_total{instance=~\"$instance\",host=\"${target:raw}\"} ",
@@ -290,7 +291,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "(smokeping_requests_total{instance=~\"$instance\",host=\"${target:raw}\"} - smokeping_response_duration_seconds_count{instance=~\"$instance\",host=\"${target:raw}\"})",
@@ -305,7 +306,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -414,6 +415,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "multi",
           "sort": "none"
         }
@@ -423,7 +425,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "smokeping_response_duration_seconds_sum{instance=~\"$instance\",host=\"${target:raw}\"} / smokeping_response_duration_seconds_count{instance=~\"$instance\",host=\"${target:raw}\"}",
@@ -443,13 +445,13 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
+          "uid": "P5DCFC7561CCDE821"
         },
         "definition": "label_values(smokeping_requests_total, host)",
         "hide": 0,
@@ -478,7 +480,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
+          "uid": "P5DCFC7561CCDE821"
         },
         "definition": "label_values(smokeping_requests_total,instance)",
         "hide": 0,
@@ -497,6 +499,24 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Thanos",
+          "value": "P5DCFC7561CCDE821"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Data source",
+        "multi": false,
+        "name": "DS_PROMETHEUS",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
       }
     ]
   },
@@ -504,6 +524,7 @@
     "from": "now-15m",
     "to": "now"
   },
+  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {
     "refresh_intervals": [
       "5s",
