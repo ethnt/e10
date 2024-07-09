@@ -19,7 +19,7 @@
 
     store = {
       enable = true;
-      http.port = 19193;
+      http.port = 19191;
       grpc.port = 10901;
       objstore.config-file =
         config.sops.secrets.thanos_sidecar_object_storage_configuration.path;
@@ -33,6 +33,13 @@
         config.services.thanos.sidecar.grpc-address
         config.services.thanos.store.grpc-address
       ];
+    };
+
+    compact = {
+      enable = true;
+      http.port = 19193;
+      objstore.config-file =
+        config.sops.secrets.thanos_sidecar_object_storage_configuration.path;
     };
   };
 }
