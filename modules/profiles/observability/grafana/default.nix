@@ -65,12 +65,20 @@
       enable = true;
       datasources.settings = {
         datasources = [
+          # {
+          #   name = "Prometheus";
+          #   type = "prometheus";
+          #   access = "proxy";
+          #   url = "http://${hosts.monitor.config.networking.hostName}:${
+          #       toString config.services.prometheus.port
+          #     }";
+          # }
           {
-            name = "Prometheus";
+            name = "Thanos";
             type = "prometheus";
             access = "proxy";
             url = "http://${hosts.monitor.config.networking.hostName}:${
-                toString config.services.prometheus.port
+                toString config.services.thanos.query.http.port
               }";
           }
           {
@@ -284,11 +292,11 @@
                       from = 600;
                       to = 0;
                     };
-                    datasourceUid = "PBFA97CFB590B2093";
+                    datasourceUid = "P5DCFC7561CCDE821";
                     model = {
                       datasource = {
                         type = "prometheus";
-                        uid = "PBFA97CFB590B2093";
+                        uid = "P5DCFC7561CCDE821";
                       };
                       editorMode = "code";
                       expr = ''
@@ -357,11 +365,11 @@
                       from = 600;
                       to = 0;
                     };
-                    datasourceUid = "PBFA97CFB590B2093";
+                    datasourceUid = "P5DCFC7561CCDE821";
                     model = {
                       datasource = {
                         type = "prometheus";
-                        uid = "PBFA97CFB590B2093";
+                        uid = "P5DCFC7561CCDE821";
                       };
                       editorMode = "code";
                       expr = ''
@@ -527,11 +535,11 @@
               #         from = 600;
               #         to = 0;
               #       };
-              #       datasourceUid = "PBFA97CFB590B2093";
+              #       datasourceUid = "P5DCFC7561CCDE821";
               #       model = {
               #         datasource = {
               #           type = "prometheus";
-              #           uid = "PBFA97CFB590B2093";
+              #           uid = "P5DCFC7561CCDE821";
               #         };
               #         editorMode = "code";
               #         expr =
@@ -599,11 +607,11 @@
                       from = 600;
                       to = 0;
                     };
-                    datasourceUid = "PBFA97CFB590B2093";
+                    datasourceUid = "P5DCFC7561CCDE821";
                     model = {
                       datasource = {
                         type = "prometheus";
-                        uid = "PBFA97CFB590B2093";
+                        uid = "P5DCFC7561CCDE821";
                       };
                       editorMode = "code";
                       expr = ''
