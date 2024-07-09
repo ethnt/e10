@@ -1,7 +1,7 @@
 { config, lib, profiles, suites, hosts, ... }: {
   imports = with suites;
     core ++ web ++ aws ++ [
-      profiles.monitoring.loki
+      profiles.monitoring.loki.default
       profiles.monitoring.prometheus
       profiles.monitoring.rsyslogd
       profiles.monitoring.thanos.default

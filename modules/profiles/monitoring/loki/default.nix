@@ -1,6 +1,16 @@
 { config, ... }: {
+  sops.secrets = {
+    loki_environment_file = {
+      format = "yaml";
+      sopsFile = ./secrets.yml;
+      mode = "0777";
+      owner = "loki";
+    };
+  };
+
   services.loki = {
     enable = true;
+    extraFlags = [ "-config.expand-env=true" "-log.level=warn" ];
     configuration = {
       auth_enabled = false;
       server = { http_listen_port = 3100; };
@@ -19,16 +29,28 @@
         chunk_retain_period = "30s";
       };
       schema_config = {
-        configs = [{
-          from = "2024-04-20";
-          store = "tsdb";
-          object_store = "filesystem";
-          schema = "v13";
-          index = {
-            prefix = "index_";
-            period = "24h";
-          };
-        }];
+        configs = [
+          {
+            from = "2024-04-20";
+            store = "tsdb";
+            object_store = "filesystem";
+            schema = "v13";
+            index = {
+              prefix = "index_";
+              period = "24h";
+            };
+          }
+          {
+            from = "2024-07-09";
+            store = "tsdb";
+            object_store = "aws";
+            schema = "v13";
+            index = {
+              prefix = "index_";
+              period = "24h";
+            };
+          }
+        ];
       };
       compactor = { working_directory = "/var/lib/loki/compactor"; };
       storage_config = {
@@ -37,6 +59,10 @@
           cache_location = "/var/lib/loki/tsdb/cache";
         };
         filesystem = { directory = "/var/lib/loki/chunks"; };
+        aws = {
+          s3 =
+            "s3://\${AWS_ACCESS_KEY_ID}:\${AWS_SECRET_ACCESS_KEY}@us-east-2/storage.loki.e10.camp";
+        };
       };
       limits_config = {
         reject_old_samples = true;
@@ -56,6 +82,9 @@
       };
     };
   };
+
+  systemd.services.loki.serviceConfig.EnvironmentFile =
+    config.sops.secrets.loki_environment_file.path;
 
   networking.firewall = {
     allowedTCPPorts =
