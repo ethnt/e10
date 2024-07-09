@@ -28,7 +28,7 @@ in {
     };
 
     store = {
-      http = mkAddressPortOption { defaultPort = 19193; };
+      http = mkAddressPortOption { defaultPort = 19191; };
       grpc = mkAddressPortOption { defaultPort = 10901; };
     };
 
@@ -36,6 +36,8 @@ in {
       http = mkAddressPortOption { defaultPort = 19192; };
       grpc = mkAddressPortOption { defaultPort = 10902; };
     };
+
+    compact = { http = mkAddressPortOption { defaultPort = 19193; }; };
   };
 
   config = {
@@ -61,6 +63,10 @@ in {
           "${cfg.query.grpc.address}:${toString cfg.query.grpc.port}";
       };
 
+      compact = mkIf cfg.compact.enable {
+        http-address =
+          "${cfg.compact.http.address}:${toString cfg.compact.http.port}";
+      };
     };
   };
 }

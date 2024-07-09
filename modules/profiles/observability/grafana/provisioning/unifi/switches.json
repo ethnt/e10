@@ -52,7 +52,7 @@
       "columns": [],
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "${DS_PROMETHEUS}"
       },
       "description": "If you have access points and gateways they will also show up here because they have switch ports.",
       "editable": true,
@@ -296,7 +296,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (ip,mac,model,name,serial,site_name,type,version,source) (unpoller_device_info{site_name=~\"$Site\", name=~\"$Switch\"})",
           "format": "table",
@@ -308,7 +308,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (ip,mac,model,name,serial,site_name,type,version,source) (unpoller_device_uptime_seconds{site_name=~\"$Site\", name=~\"$Switch\"})",
           "format": "table",
@@ -320,7 +320,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (ip,mac,model,name,serial,site_name,type,version,source) (unpoller_device_bytes_total{site_name=~\"$Site\", name=~\"$Switch\"})",
           "format": "table",
@@ -337,7 +337,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "${DS_PROMETHEUS}"
       },
       "description": "Shows data transferred for selected switch ports.",
       "fieldConfig": {
@@ -454,7 +454,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "rate(unpoller_device_port_transmit_bytes_total{site_name=~\"$Site\", name=~\"$Switch\", port_id=~\"$Port\"}[$__rate_interval])",
@@ -466,7 +466,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "expr": "rate(unpoller_device_port_receive_bytes_total{site_name=~\"$Site\", name=~\"$Switch\", port_id=~\"$Port\"}[$__rate_interval])",
@@ -483,7 +483,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -652,7 +652,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "unpoller_device_load_average_1{site_name=~\"$Site\",name=~\"$Switch\"}",
           "interval": "$Smooth",
@@ -662,7 +662,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "unpoller_device_load_average_5{site_name=~\"$Site\",name=~\"$Switch\"}",
           "hide": true,
@@ -673,7 +673,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "unpoller_device_load_average_15{site_name=~\"$Site\",name=~\"$Switch\"}",
           "hide": false,
@@ -695,7 +695,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "${DS_PROMETHEUS}"
       },
       "decimals": 0,
       "description": "",
@@ -747,7 +747,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "unpoller_device_memory_utilization_ratio{type=\"usw\", site_name=~\"$Site\",name=~\"$Switch\",type=~\"usw|udm|udmp\"}",
           "interval": "$Smooth",
@@ -799,7 +799,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "${DS_PROMETHEUS}"
       },
       "decimals": 0,
       "description": "",
@@ -851,7 +851,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "unpoller_device_cpu_utilization_ratio{site_name=~\"$Site\",name=~\"$Switch\",type=~\"usw|udm|udmp\"}",
           "interval": "$Smooth",
@@ -897,7 +897,7 @@
       "columns": [],
       "datasource": {
         "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "uid": "${DS_PROMETHEUS}"
       },
       "description": "This panel displays lifetime totals and current data as of now.",
       "fontSize": "90%",
@@ -1290,7 +1290,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_receive_bytes_total{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1300,7 +1300,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_transmit_bytes_total{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1311,7 +1311,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_receive_dropped_total{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1322,7 +1322,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_transmit_dropped_total{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1333,7 +1333,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_receive_broadcast_total{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1344,7 +1344,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_transmit_broadcast_total{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1355,7 +1355,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_receive_errors_total{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1366,7 +1366,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_transmit_errors_total{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1377,7 +1377,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_receive_packets_total{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1388,7 +1388,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_transmit_packets_total{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1399,7 +1399,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_poe_amperes{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1410,7 +1410,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_poe_volts{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1421,7 +1421,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "expr": "sum by (name,port_num,port_name,site_name,source) (unpoller_device_port_poe_watts{site_name=~\"$Site\",name=~\"$Switch\"})",
           "format": "table",
@@ -1452,7 +1452,7 @@
           "columns": [],
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "These are total \"lifetime\" counters.",
           "fontSize": "90%",
@@ -1620,7 +1620,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_port_speed_bps{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1632,7 +1632,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_poe_amperes{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1645,7 +1645,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_poe_volts{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1658,7 +1658,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_poe_watts{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1671,7 +1671,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_transmit_broadcast_total{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1683,7 +1683,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_transmit_multicast_total{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1695,7 +1695,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_receive_dropped_total{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1707,7 +1707,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_transmit_dropped_total{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1719,7 +1719,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_transmit_errors_total+unpoller_device_port_receive_errors_total{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1731,7 +1731,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_receive_packets_total{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1743,7 +1743,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_transmit_packets_total{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1756,7 +1756,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_receive_bytes_total{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1769,7 +1769,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_transmit_bytes_total{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1782,7 +1782,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_satisfaction_percent{port_id=\"$Port\", site_name=~\"$Site\"}",
               "format": "time_series",
@@ -1800,7 +1800,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "Shows data transfer rate per second for Switch $Port. TX on positive axis and RX on negative axis.",
           "fieldConfig": {
@@ -1897,7 +1897,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "rate(unpoller_device_port_receive_bytes_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__rate_interval])",
@@ -1909,7 +1909,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "rate(unpoller_device_port_transmit_bytes_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__rate_interval])",
@@ -1925,7 +1925,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "Shows broadcast and multicast packets per second for Switch $Port. TX on positive axis and RX on negative axis.",
           "fieldConfig": {
@@ -2022,7 +2022,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "rate(unpoller_device_port_receive_broadcast_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__rate_interval])",
@@ -2034,7 +2034,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "rate(unpoller_device_port_transmit_broadcast_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__rate_interval])",
@@ -2046,7 +2046,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "rate(unpoller_device_port_receive_multicast_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__interval])",
               "interval": "$Smooth",
@@ -2056,7 +2056,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "rate(unpoller_device_port_transmit_multicast_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__interval])",
               "interval": "$Smooth",
@@ -2070,7 +2070,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "Shows errors and dropped packets for Switch $Port. RX on negative axis.",
           "fieldConfig": {
@@ -2187,7 +2187,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "rate(unpoller_device_port_receive_dropped_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__rate_interval])",
@@ -2199,7 +2199,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "rate(unpoller_device_port_transmit_dropped_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__rate_interval])",
@@ -2211,7 +2211,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "rate(unpoller_device_port_transmit_errors_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__interval])",
               "interval": "$Smooth",
@@ -2221,7 +2221,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "rate(unpoller_device_port_receive_errors_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__interval])",
               "interval": "$Smooth",
@@ -2235,7 +2235,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "Shows packet counters for Switch $Port. TX on positive axis and RX on negative axis.",
           "fieldConfig": {
@@ -2332,7 +2332,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "rate(unpoller_device_port_receive_packets_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__rate_interval])",
@@ -2344,7 +2344,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "rate(unpoller_device_port_transmit_packets_total{site_name=~\"$Site\", port_id=~\"$Port\"}[$__rate_interval])",
@@ -2360,7 +2360,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "Display POE Power for Switch $Port.",
           "fieldConfig": {
@@ -2444,7 +2444,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_poe_watts{site_name=~\"$Site\", port_id=~\"$Port\"}",
               "interval": "$Smooth",
@@ -2458,7 +2458,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "Display POE Voltage for Switch $Port.",
           "fieldConfig": {
@@ -2563,7 +2563,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_poe_volts{site_name=~\"$Site\", port_id=~\"$Port\"}",
               "interval": "$Smooth",
@@ -2577,7 +2577,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "Display POE Current for Switch $Port.",
           "fieldConfig": {
@@ -2661,7 +2661,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "unpoller_device_port_poe_amperes{site_name=~\"$Site\", port_id=~\"$Port\"}",
               "interval": "$Smooth",
@@ -2724,7 +2724,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values(unpoller_device_info,source)",
         "hide": 2,
@@ -2789,7 +2789,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values(unpoller_device_info{source=~\"$Controller\"},site_name)",
         "hide": 0,
@@ -2816,7 +2816,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values(unpoller_device_info{site_name=~\"$Site\", type=~\"$Devices\"},name)",
         "hide": 0,
@@ -2843,7 +2843,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values(unpoller_device_port_port_speed_bps{site_name=~\"$Site\", name=~\"$Switch\"},port_id)",
         "hide": 0,
