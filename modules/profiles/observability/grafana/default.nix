@@ -65,12 +65,20 @@
       enable = true;
       datasources.settings = {
         datasources = [
+          # {
+          #   name = "Prometheus";
+          #   type = "prometheus";
+          #   access = "proxy";
+          #   url = "http://${hosts.monitor.config.networking.hostName}:${
+          #       toString config.services.prometheus.port
+          #     }";
+          # }
           {
-            name = "Prometheus";
+            name = "Thanos";
             type = "prometheus";
             access = "proxy";
             url = "http://${hosts.monitor.config.networking.hostName}:${
-                toString config.services.prometheus.port
+                toString config.services.thanos.query.http.port
               }";
           }
           {

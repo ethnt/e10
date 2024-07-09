@@ -47,3 +47,6 @@ ssh host:
 
 image name:
     nom build .#packages.x86_64-linux.{{ name }}-image
+
+terraform *args:
+    terraform -chdir=./deploy/terraform/ {{ args }}

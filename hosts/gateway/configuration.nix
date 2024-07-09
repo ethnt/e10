@@ -66,10 +66,10 @@
       '';
     };
 
-    "bazarr.e10.camp" = mkVirtualHost {
-      host = hosts.htpc;
-      port = hosts.htpc.config.services.bazarr.listenPort;
-    };
+    # "bazarr.e10.camp" = mkVirtualHost {
+    #   host = hosts.htpc;
+    #   port = hosts.htpc.config.services.bazarr.listenPort;
+    # };
 
     "overseerr.e10.camp" = mkRedirect { destination = "requests.e10.video"; };
 

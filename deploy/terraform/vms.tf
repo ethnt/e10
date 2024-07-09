@@ -105,7 +105,7 @@ resource "proxmox_virtual_environment_vm" "htpc" {
   }
 
   memory {
-    dedicated = 32768
+    dedicated = 49152
   }
 
   disk {
@@ -164,7 +164,7 @@ resource "proxmox_virtual_environment_vm" "builder" {
   }
 
   memory {
-    dedicated = 65536
+    dedicated = 32768
   }
 
   disk {
