@@ -1,4 +1,6 @@
-{ config, pkgs, hosts, ... }: {
+{ config, profiles, hosts, ... }: {
+  imports = [ profiles.observability.grafana ];
+
   sops.secrets = {
     pushover_user_key = {
       sopsFile = ./secrets.yml;
@@ -30,49 +32,21 @@
   };
 
   services.grafana = {
-    enable = true;
-
-    declarativePlugins = with pkgs.grafanaPlugins; [
-      grafana-piechart-panel
-      grafana-clock-panel
-    ];
-
-    settings = {
-      server = {
-        domain = "localhost";
-        http_port = 2342;
-        http_addr = "127.0.0.1";
-      };
-
-      panels = {
-        enable_alpha = "true";
-        disable_sanitize_html = "true";
-      };
-
-      smtp = {
-        enabled = true;
-        host = "email-smtp.us-east-2.amazonaws.com:465";
-        user = "$__file{${config.sops.secrets.aws_ses_smtp_username.path}}";
-        password = "$__file{${config.sops.secrets.aws_ses_smtp_password.path}}";
-        startTLS_policy = "MandatoryStartTLS";
-        skip_verify = true;
-        from_address = "monitor@e10.camp";
-        from_name = "Grafana";
-      };
+    settings.smtp = {
+      enabled = true;
+      host = "email-smtp.us-east-2.amazonaws.com:465";
+      user = "$__file{${config.sops.secrets.aws_ses_smtp_username.path}}";
+      password = "$__file{${config.sops.secrets.aws_ses_smtp_password.path}}";
+      startTLS_policy = "MandatoryStartTLS";
+      skip_verify = true;
+      from_address = "monitor@e10.camp";
+      from_name = "Grafana";
     };
 
     provision = {
       enable = true;
       datasources.settings = {
         datasources = [
-          # {
-          #   name = "Prometheus";
-          #   type = "prometheus";
-          #   access = "proxy";
-          #   url = "http://${hosts.monitor.config.networking.hostName}:${
-          #       toString config.services.prometheus.port
-          #     }";
-          # }
           {
             name = "Thanos";
             type = "prometheus";
