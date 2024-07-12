@@ -1,4 +1,4 @@
-{ lib, suites, profiles, ... }: {
+{ suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.hardware.nvidia
@@ -54,9 +54,6 @@
       };
     };
   };
-
-  e10.services.backup.jobs.system.exclude =
-    lib.mkAfter [ "/var/lib/plex/Plex Media Server/Cache" ];
 
   system.stateVersion = "23.11";
 }
