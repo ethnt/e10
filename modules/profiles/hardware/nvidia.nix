@@ -9,11 +9,14 @@
     nvitop
   ];
 
+  hardware.graphics.enable32Bit = true;
+
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     modesetting.enable = true;
     nvidiaSettings = true;
+    open = false;
     nvidiaPersistenced = true;
   };
 
@@ -21,4 +24,8 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.graphics.enable = true;
+
+  virtualisation.docker.enableNvidia = true;
+
+  hardware.nvidia-container-toolkit.enable = true;
 }

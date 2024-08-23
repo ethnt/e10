@@ -3,7 +3,8 @@
     core ++ proxmox-vm ++ [
       profiles.hardware.nvidia
       profiles.sharing.nfs-client
-      profiles.virtualisation.docker
+      # profiles.virtualisation.docker
+      profiles.virtualisation.podman
       profiles.filesystems.blockbuster
       profiles.media-management.bazarr
       profiles.media-management.overseerr
@@ -14,6 +15,7 @@
       profiles.media-management.sonarr
       profiles.media-management.tautulli
       profiles.media-management.xteve
+      profiles.media-management.fileflows
       profiles.telemetry.prometheus-bazarr-exporter.default
       profiles.telemetry.prometheus-sonarr-exporter.default
       profiles.telemetry.prometheus-radarr-exporter.default
