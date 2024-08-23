@@ -1,5 +1,10 @@
-{ profiles, hosts, ... }: {
+{ config, profiles, hosts, ... }: {
   imports = [ profiles.web-servers.nginx ];
+
+  sops.secrets.nginx_fileflows_basic_auth_file = {
+    sopsFile = ./secrets.yml;
+    format = "yaml";
+  };
 
   services.nginx.virtualHosts = let
     mkVirtualHost = { host, port, http2 ? true, extraConfig ? " "
@@ -88,6 +93,9 @@
     "fileflows.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
       inherit (hosts.htpc.config.services.fileflows) port;
+      extraRootLocationConfig = {
+        basicAuthFile = config.sops.secrets.nginx_fileflows_basic_auth_file.path;
+      };
     };
 
     "netbox.e10.camp" = mkVirtualHost {
