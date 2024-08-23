@@ -135,9 +135,19 @@ resource "proxmox_virtual_environment_vm" "htpc" {
     enabled = true
   }
 
+  # Quadro P4000
   hostpci {
     device = "hostpci0"
     id     = "0000:02:00"
+    pcie   = true
+    rombar = true
+    xvga   = false
+  }
+
+  # GeForce RTX 4060 Ti
+  hostpci {
+    device = "hostpci1"
+    id     = "0000:01:00"
     pcie   = true
     rombar = true
     xvga   = false
@@ -343,6 +353,14 @@ resource "proxmox_virtual_environment_vm" "router" {
   hostpci {
     device = "hostpci2"
     id     = "0000:00:1f.3"
+    pcie   = false
+    rombar = true
+    xvga   = false
+  }
+
+  hostpci {
+    device = "hostpci3"
+    id     = "0000:05:00"
     pcie   = false
     rombar = true
     xvga   = false
