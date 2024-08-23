@@ -44,7 +44,7 @@ in {
       environment = { TZ = config.time.timeZone; };
       ports = [ "${toString cfg.port}:5000" ];
       volumes = [ "${cfg.dataDir}:/app/Data" ] ++ cfg.extraVolumes;
-    } // lib.attrsets.optionalAttrs (cfg.enableNvidia) {
+    } // lib.attrsets.optionalAttrs cfg.enableNvidia {
       environment = {
         NVIDIA_DRIVER_CAPABILITIES = "compute,video,utility";
         NVIDIA_VISIBLE_DEVICES = "all";

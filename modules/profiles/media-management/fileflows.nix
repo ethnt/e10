@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+_: {
   services.fileflows = {
     enable = true;
     enableNvidia = true;
