@@ -85,6 +85,11 @@
       inherit (hosts.builder.config.services.nix-serve) port;
     };
 
+    "fileflows.e10.camp" = mkVirtualHost {
+      host = hosts.htpc;
+      inherit (hosts.htpc.config.services.fileflows) port;
+    };
+
     "netbox.e10.camp" = mkVirtualHost {
       host = hosts.matrix;
       port = 8002;
