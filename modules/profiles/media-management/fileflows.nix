@@ -1,4 +1,4 @@
-_: {
+{
   services.fileflows = {
     enable = true;
     enableNvidia = true;
