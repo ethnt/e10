@@ -4,11 +4,13 @@
   sops.secrets.nginx_fileflows_basic_auth_file = {
     sopsFile = ./secrets.yml;
     format = "yaml";
+    owner = config.services.nginx.user;
+    inherit (config.services.nginx) group;
   };
 
   services.nginx.virtualHosts = let
-    mkVirtualHost = { host, port, http2 ? true, extraConfig ? " "
-      , extraSettings ? { }, extraRootLocationConfig ? "" }:
+    mkVirtualHost = { host, port, http2 ? true, basicAuthFile ? null
+      , extraConfig ? " ", extraSettings ? { }, extraRootLocationConfig ? "" }:
       {
         inherit http2 extraConfig;
 
@@ -16,6 +18,8 @@
         enableACME = true;
 
         locations."/" = {
+          inherit basicAuthFile;
+
           proxyPass =
             "http://${host.config.networking.hostName}:${toString port}";
           proxyWebsockets = true;
@@ -93,9 +97,7 @@
     "fileflows.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
       inherit (hosts.htpc.config.services.fileflows) port;
-      extraRootLocationConfig = {
-        basicAuthFile = config.sops.secrets.nginx_fileflows_basic_auth_file.path;
-      };
+      basicAuthFile = config.sops.secrets.nginx_fileflows_basic_auth_file.path;
     };
 
     "netbox.e10.camp" = mkVirtualHost {
