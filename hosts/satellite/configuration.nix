@@ -10,6 +10,7 @@
     ];
 
   deployment = {
+    deployable = false;
     buildOnTarget = false;
     tags = [ "@remote" ];
   };

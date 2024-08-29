@@ -14,13 +14,13 @@ creation_rules:
   - path_regex: '^.*secrets\.(json|yml)'
     key_groups:
       - age:
-        - *user_ethnt
-        - *host_gateway
-        - *host_monitor
-        - *host_omnibus
-        - *host_htpc
-        - *host_matrix
-        - *host_controller
-        - *host_builder
-        - *host_satellite
-        - *host_dill
+          - *user_ethnt
+          - *host_gateway
+          - *host_monitor
+          - *host_omnibus
+          - *host_htpc
+          - *host_matrix
+          - *host_controller
+          - *host_builder
+          - *host_satellite
+          - *host_dill
