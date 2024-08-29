@@ -656,11 +656,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1718803059,
-        "narHash": "sha256-MYvDgSPWdF0hP6vzOhpqY+2a66ZLELFj+MUP5S/+dBY=",
+        "lastModified": 1724687279,
+        "narHash": "sha256-3YKbbL6y5AWK46e6B1MNAl5PC5ik2ws1Lzoq03J4Cq8=",
         "owner": "numtide",
         "repo": "nixos-anywhere",
-        "rev": "ce18c086d8ca143d43ab20b3db20ab1e3e62c519",
+        "rev": "2991be5b522c88244b8833dd662cac406e3d5d28",
         "type": "github"
       },
       "original": {
