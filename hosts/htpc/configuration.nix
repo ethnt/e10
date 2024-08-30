@@ -15,6 +15,7 @@
       profiles.media-management.tautulli
       profiles.media-management.xteve
       profiles.media-management.fileflows
+      profiles.media-management.recyclarr.default
       profiles.telemetry.prometheus-bazarr-exporter.default
       profiles.telemetry.prometheus-sonarr-exporter.default
       profiles.telemetry.prometheus-radarr-exporter.default
