@@ -7,6 +7,7 @@
     [ "/dev/disk/by-id/nvme-CT4000P3SSD8_2322E6DDD8FE" ];
 
   deployment = {
+    deployable = false;
     buildOnTarget = true;
     tags = [ "hypervisor" ];
   };

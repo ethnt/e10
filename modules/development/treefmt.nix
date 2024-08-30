@@ -16,7 +16,7 @@
           prettier.enable = true;
         };
         settings.formatter.prettier.excludes =
-          [ "**/secrets.json" "**/secrets.yml" ];
+          [ "secrets.json" "**/secrets.json" "**/secrets.yml" ];
       };
     in {
       treefmt = { config = settings; };
