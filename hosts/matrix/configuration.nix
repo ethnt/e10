@@ -1,6 +1,7 @@
 { lib, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ web ++ [
+      profiles.virtualisation.podman
       profiles.services.miniflux.default
       profiles.services.e10-land
       profiles.networking.printing
@@ -8,7 +9,6 @@
       profiles.power.tripp-lite
       profiles.telemetry.prometheus-nut-exporter
       profiles.services.netbox.default
-      profiles.virtualisation.docker
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

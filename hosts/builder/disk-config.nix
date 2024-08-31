@@ -1,11 +1,11 @@
 _:
-let disks = { sda = "/dev/sda"; };
+let disks = { scsi = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0"; };
 in {
   disko.devices = {
     disk = {
-      sda = {
+      root = {
         type = "disk";
-        device = disks.sda;
+        device = disks.scsi;
         content = {
           type = "gpt";
           partitions = {

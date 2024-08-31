@@ -164,6 +164,8 @@ resource "proxmox_virtual_environment_vm" "builder" {
 
   scsi_hardware = "virtio-scsi-single"
 
+  machine = "q35"
+
   boot_order = ["scsi0"]
   migrate    = true
 
@@ -171,6 +173,7 @@ resource "proxmox_virtual_environment_vm" "builder" {
     cores   = 8
     sockets = 1
     type    = "host"
+    flags   = ["+pcid"]
   }
 
   memory {
