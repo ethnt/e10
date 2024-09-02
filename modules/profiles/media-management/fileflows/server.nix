@@ -1,5 +1,5 @@
 {
-  services.fileflows = {
+  services.fileflows-server = {
     enable = true;
     enableNvidia = true;
     openFirewall = true;

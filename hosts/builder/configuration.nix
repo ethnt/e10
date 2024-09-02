@@ -24,7 +24,7 @@
 
     vlans.vlan10 = {
       id = 10;
-      interface = "ens18";
+      interface = "enp6s18";
     };
 
     interfaces = {

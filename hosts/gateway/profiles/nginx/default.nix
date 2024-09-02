@@ -96,7 +96,7 @@
 
     "fileflows.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
-      inherit (hosts.htpc.config.services.fileflows) port;
+      inherit (hosts.htpc.config.services.fileflows-server) port;
       basicAuthFile = config.sops.secrets.nginx_fileflows_basic_auth_file.path;
     };
 

@@ -136,6 +136,10 @@
           name = "Proxmox";
           options.path = ./provisioning/proxmox.json;
         }
+        {
+          name = "Nvidia";
+          options.path = ./provisioning/nvidia.json;
+        }
       ];
 
       alerting = {

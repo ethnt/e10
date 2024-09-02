@@ -9,7 +9,10 @@
     nvitop
   ];
 
-  hardware.graphics.enable32Bit = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -20,12 +23,10 @@
     nvidiaPersistenced = true;
   };
 
+  hardware.nvidia-container-toolkit.enable = true;
+
   # Even though we're not using xserver, this is required to load the driver
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  hardware.graphics.enable = true;
-
   virtualisation.docker.enableNvidia = true;
-
-  hardware.nvidia-container-toolkit.enable = true;
 }

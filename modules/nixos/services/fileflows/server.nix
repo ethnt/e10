@@ -2,10 +2,10 @@
 
 with lib;
 
-let cfg = config.services.fileflows;
+let cfg = config.services.fileflows-server;
 in {
-  options.services.fileflows = {
-    enable = mkEnableOption "Enable Fileflows";
+  options.services.fileflows-server = {
+    enable = mkEnableOption "Enable Fileflows server";
 
     port = mkOption {
       type = types.port;
@@ -38,7 +38,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    virtualisation.oci-containers.containers.fileflows = {
+    systemd.tmpfiles.rules = [ "d '${cfg.dataDir}' 0777 podman podman - -" ];
+
+    virtualisation.oci-containers.containers.fileflows-server = {
       image =
         "revenz/fileflows@sha256:002190c887d602422483e86cde1928a17263605cda0666b88e55897d323719d5";
       environment = { TZ = config.time.timeZone; };

@@ -5,7 +5,7 @@ keys:
   - &host_omnibus age1k5nzxq4ej2u9ls97c2dhlz96j2vghv0assz5g0p4npzyc8c8fqlqld72hg
   - &host_htpc age1gkzp905yqkla54l52m4xkqtxpn0sndkx0vh6qqa8d2tu29x8f35q354gpe
   - &host_matrix age1c4d93hmawmx8nt8g2sjrxcngfl7qx7y6vwxpqqg7grrkhjen6fvstljgg9
-  - &host_builder age1kqzvvxxmlv7gudllrsnle8q2hct8vx7pl3ehswkn2gaqkuxhxpcqplglyk
+  - &host_builder age10jhawn266e3wr6rx0lndkl9a47ewtk6jgh35d2582uu2l7dtn4tqdqc29c
   - &host_satellite age1a4r3d5m0eu94vwsrse83k09fgclcfmthkz93p6h0m5vqyptq2yxswptzjf
   - &host_controller age15jjykch8km3l8atssu0n9us6d2xg58z0ds9s0djtdh9l954sud5szqxv29
   - &host_dill age12yvljlgg94z8qfwyezz6mtmrpldxvfcqwzsuyfekszu296fg6upseeyc0t

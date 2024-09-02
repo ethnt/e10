@@ -14,7 +14,7 @@
       profiles.media-management.sonarr
       profiles.media-management.tautulli
       profiles.media-management.xteve
-      profiles.media-management.fileflows
+      profiles.media-management.fileflows.server
       profiles.media-management.recyclarr.default
       profiles.telemetry.prometheus-bazarr-exporter.default
       profiles.telemetry.prometheus-sonarr-exporter.default
@@ -22,6 +22,7 @@
       profiles.telemetry.prometheus-prowlarr-exporter.default
       profiles.telemetry.prometheus-plex-media-server-exporter.default
       profiles.telemetry.prometheus-sabnzbd-exporter.default
+      profiles.telemetry.prometheus-dcgm-exporter
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   deployment = {
