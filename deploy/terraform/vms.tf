@@ -101,7 +101,7 @@ resource "proxmox_virtual_environment_vm" "htpc" {
     cores   = 16
     sockets = 1
     type    = "host"
-    flags   = ["+pcid"]
+    flags   = ["+pcid", "+spec-ctrl", "+ssbd"]
   }
 
   memory {
@@ -173,7 +173,7 @@ resource "proxmox_virtual_environment_vm" "builder" {
     cores   = 8
     sockets = 1
     type    = "host"
-    flags   = ["+pcid"]
+    flags   = ["+pcid", "+spec-ctrl", "+ssbd"]
   }
 
   memory {
@@ -266,6 +266,14 @@ resource "proxmox_virtual_environment_vm" "matrix" {
 
   vga {
     enabled = true
+  }
+
+  hostpci {
+    device = "hostpci0"
+    id     = "0000:00:02"
+    pcie   = false
+    rombar = true
+    xvga   = false
   }
 }
 

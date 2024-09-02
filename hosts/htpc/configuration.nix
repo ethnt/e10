@@ -22,6 +22,7 @@
       profiles.telemetry.prometheus-prowlarr-exporter.default
       profiles.telemetry.prometheus-plex-media-server-exporter.default
       profiles.telemetry.prometheus-sabnzbd-exporter.default
+      profiles.telemetry.prometheus-dcgm-exporter
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   deployment = {
