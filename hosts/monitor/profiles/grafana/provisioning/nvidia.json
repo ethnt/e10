@@ -93,11 +93,7 @@
       "id": 12,
       "options": {
         "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": ["mean", "lastNotNull", "max"],
           "displayMode": "table",
           "placement": "right",
           "showLegend": true
@@ -170,9 +166,7 @@
         "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
@@ -267,11 +261,7 @@
       "id": 10,
       "options": {
         "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": ["mean", "lastNotNull", "max"],
           "displayMode": "table",
           "placement": "right",
           "showLegend": true
@@ -345,9 +335,7 @@
         "minVizWidth": 75,
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
+          "calcs": ["sum"],
           "fields": "",
           "values": false
         },
@@ -443,11 +431,7 @@
       "interval": "",
       "options": {
         "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": ["mean", "lastNotNull", "max"],
           "displayMode": "table",
           "placement": "right",
           "showLegend": true
@@ -547,11 +531,7 @@
       "id": 6,
       "options": {
         "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max"
-          ],
+          "calcs": ["mean", "lastNotNull", "max"],
           "displayMode": "table",
           "placement": "right",
           "showLegend": true
@@ -647,10 +627,7 @@
       "id": 18,
       "options": {
         "legend": {
-          "calcs": [
-            "mean",
-            "max"
-          ],
+          "calcs": ["mean", "max"],
           "displayMode": "list",
           "placement": "right",
           "showLegend": true
@@ -704,12 +681,8 @@
       {
         "current": {
           "selected": false,
-          "text": [
-            "htpc:9400"
-          ],
-          "value": [
-            "htpc:9400"
-          ]
+          "text": ["htpc:9400"],
+          "value": ["htpc:9400"]
         },
         "datasource": {
           "type": "prometheus",
@@ -735,12 +708,8 @@
       {
         "current": {
           "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "text": ["All"],
+          "value": ["$__all"]
         },
         "datasource": {
           "type": "prometheus",
