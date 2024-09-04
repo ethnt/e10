@@ -6,9 +6,22 @@
       profiles.monitoring.thanos.default
       profiles.telemetry.prometheus-pve-exporter.default
       profiles.telemetry.prometheus-redis-exporter
+      profiles.services.uptime-kuma
     ] ++ [ ./profiles/prometheus.nix ./profiles/grafana/default.nix ];
 
   services.nginx.virtualHosts = {
+    "status.e10.camp" = {
+      http2 = true;
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://localhost:${
+            toString config.services.uptime-kuma.settings.PORT
+          }";
+        proxyWebsockets = true;
+      };
+    };
+
     "grafana.e10.camp" = {
       http2 = true;
       forceSSL = true;
