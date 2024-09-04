@@ -24,7 +24,7 @@ resource "tls_private_key" "builder_key" {
 }
 
 resource "local_sensitive_file" "builder_key" {
-  content         = tls_private_key.builder_key.private_key_pem
+  content         = tls_private_key.builder_key.private_key_openssh
   filename        = "${path.module}/../../keys/builder_rsa"
   file_permission = "0600"
 }

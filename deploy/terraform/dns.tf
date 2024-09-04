@@ -70,6 +70,14 @@ resource "aws_route53_record" "grafana_e10_camp" {
   records = [aws_instance.monitor.public_ip]
 }
 
+resource "aws_route53_record" "status_e10_camp" {
+  zone_id = aws_route53_zone.e10_camp.zone_id
+  name    = "status.e10.camp"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.monitor.public_ip]
+}
+
 resource "aws_route53_record" "wildcard_e10_camp" {
   zone_id = aws_route53_zone.e10_camp.zone_id
   name    = "*.e10.camp"
