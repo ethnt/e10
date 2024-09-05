@@ -38,7 +38,7 @@ in {
         Type = "exec";
         StateDirectory = "overseerr";
         WorkingDirectory = "${cfg.package}/libexec/overseerr/deps/overseerr";
-        ExecStart = "${cfg.package}/bin/overseerr";
+        ExecStart = lib.getExe cfg.package;
         BindPaths = [
           "/var/lib/overseerr/:${cfg.package}/libexec/overseerr/deps/overseerr/config/"
         ];

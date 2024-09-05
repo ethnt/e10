@@ -17,7 +17,7 @@ mkYarnPackage rec {
     hash = "sha256-SZwhC6djgU5qshtDhQnkz/INeklp/c+BKjn7ao0r5IE=";
   };
 
-  env = { CYPRESS_INSTALL_BINARY = 0; };
+  env.CYPRESS_INSTALL_BINARY = 0;
 
   nativeBuildInputs = [ nodejs makeWrapper ];
 
@@ -65,7 +65,7 @@ mkYarnPackage rec {
       "Request management and media discovery tool for the Plex ecosystem";
     homepage = "https://github.com/sct/overseerr";
     license = lib.licenses.mit;
-    mainProgram = "start";
+    mainProgram = "overseerr";
     maintainers = with lib.maintainers; [ caarlos0 ];
   };
 }
