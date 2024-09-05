@@ -1,4 +1,4 @@
-{ suites, profiles, ... }: {
+{ pkgs, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.hardware.nvidia
@@ -29,6 +29,8 @@
     tags = [ "vm" ];
     buildOnTarget = true;
   };
+
+  environment.systemPackages = [ pkgs.overseerr ];
 
   satan.address = "10.10.2.101";
 
