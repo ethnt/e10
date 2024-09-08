@@ -34,6 +34,7 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
     bridge   = "vmbr0"
     firewall = false
     model    = "virtio"
+    queues   = 4
   }
 
   agent {
@@ -115,6 +116,7 @@ resource "proxmox_virtual_environment_vm" "htpc" {
     interface    = "scsi0"
     size         = 2048
     ssd          = true
+    cache        = "writeback"
   }
 
   network_device {

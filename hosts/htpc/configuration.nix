@@ -58,5 +58,8 @@
     };
   };
 
+  e10.services.backup.jobs.system.exclude =
+    [ "/var/lib/sabnzbd/downloads" "/var/lib/plex/transcodes" ];
+
   system.stateVersion = "23.11";
 }

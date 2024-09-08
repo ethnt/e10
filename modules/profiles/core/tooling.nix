@@ -3,6 +3,7 @@
     btop
     bind
     comma
+    dust
     glances
     inetutils
     iperf3
