@@ -6,6 +6,7 @@
       profiles.telemetry.prometheus-zfs-exporter
       profiles.sharing.nfs-server
       profiles.users.blockbuster
+      profiles.users.files
       profiles.sharing.samba
       profiles.users.ethan
       profiles.users.proxmox
@@ -49,11 +50,17 @@
   };
 
   services.nfs.server.exports = let
-    options = "rw,sync,no_subtree_check,insecure,crossmnt,all_squash,anonuid=${
+    blockbusterOptions =
+      "rw,sync,no_subtree_check,insecure,crossmnt,all_squash,anonuid=${
         toString config.users.users.blockbuster.uid
       },anongid=${toString config.users.groups.blockbuster.gid}";
+    filesOptions =
+      "rw,sync,no_subtree_check,insecure,crossmnt,all_squash,anonuid=${
+        toString config.users.users.files.uid
+      },anongid=${toString config.users.groups.files.gid}";
   in ''
-    ${config.disko.devices.zpool.blockbuster.datasets.root.mountpoint} 192.168.0.0/16(${options}) 100.0.0.0/8(${options}) 10.10.0.0/16(${options})
+    ${config.disko.devices.zpool.blockbuster.datasets.root.mountpoint} 192.168.0.0/16(${blockbusterOptions}) 100.0.0.0/8(${blockbusterOptions}) 10.10.0.0/16(${blockbusterOptions})
+    ${config.disko.devices.zpool.files.datasets.root.mountpoint} 192.168.0.0/16(${filesOptions}) 100.0.0.0/8(${filesOptions}) 10.10.0.0/16(${filesOptions})
   '';
 
   services.samba.shares = {
