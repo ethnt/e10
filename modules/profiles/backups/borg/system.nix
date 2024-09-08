@@ -6,6 +6,7 @@
       "/var/lib/docker"
       "/var/lib/systemd"
       "/var/lib/libvirt"
+      "/var/logs"
       "'**/.cache'"
       "'**/.nix-profile'"
     ];

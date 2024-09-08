@@ -15,7 +15,7 @@
       forceSSL = true;
       enableACME = true;
       locations."/" = {
-        proxyPass = "http://localhost:${
+        proxyPass = "http://${config.networking.hostName}:${
             toString config.services.uptime-kuma.settings.PORT
           }";
         proxyWebsockets = true;
@@ -27,14 +27,25 @@
       forceSSL = true;
       enableACME = true;
       locations."/" = {
-        proxyPass =
-          "http://${config.services.grafana.settings.server.http_addr}:${
+        proxyPass = "http://${config.networking.hostName}:${
             toString config.services.grafana.settings.server.http_port
           }";
         proxyWebsockets = true;
         extraConfig = ''
           proxy_set_header Host $host;
         '';
+      };
+    };
+
+    "status.e10.video" = {
+      http2 = true;
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://${config.networking.hostName}:${
+            toString config.services.uptime-kuma.settings.PORT
+          }";
+        proxyWebsockets = true;
       };
     };
   };

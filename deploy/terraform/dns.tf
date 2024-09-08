@@ -22,6 +22,14 @@ resource "aws_route53_record" "root_e10_video" {
   records = [aws_instance.gateway.public_ip]
 }
 
+resource "aws_route53_record" "status_e10_video" {
+  zone_id = aws_route53_zone.e10_video.zone_id
+  name    = "status.e10.video"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.monitor.public_ip]
+}
+
 resource "aws_route53_record" "wildcard_e10_video" {
   zone_id = aws_route53_zone.e10_video.zone_id
   name    = "*.e10.video"

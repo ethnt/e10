@@ -78,10 +78,16 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [ yt-dlp ];
+
   e10.services.backup.jobs.files = {
     repoName = "${config.networking.hostName}-files";
     paths = [ "/data/files" ];
-    pruneKeep = { monthly = -1; };
+    pruneKeep = {
+      monthly = 1;
+      weekly = 0;
+      daily = 0;
+    };
   };
 
   programs.fish.shellAliases.iotop = ''
