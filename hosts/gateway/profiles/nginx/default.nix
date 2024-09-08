@@ -100,6 +100,22 @@
       basicAuthFile = config.sops.secrets.nginx_fileflows_basic_auth_file.path;
     };
 
+    "paperless.e10.camp" = mkVirtualHost {
+      host = hosts.matrix;
+      inherit (hosts.matrix.config.services.paperless) port;
+      extraConfig = ''
+        client_max_body_size 100M;
+      '';
+      extraRootLocationConfig = ''
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $server_name;
+        add_header Referrer-Policy "strict-origin-when-cross-origin";
+      '';
+    };
+
     "netbox.e10.camp" = mkVirtualHost {
       host = hosts.matrix;
       port = 8002;

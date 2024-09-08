@@ -2,8 +2,10 @@
   imports = with suites;
     core ++ proxmox-vm ++ web ++ [
       profiles.virtualisation.podman
+      profiles.filesystems.files
       profiles.services.miniflux.default
       profiles.services.e10-land
+      profiles.services.paperless.default
       profiles.networking.printing
       profiles.emulation.aarch64-linux
       profiles.power.tripp-lite
