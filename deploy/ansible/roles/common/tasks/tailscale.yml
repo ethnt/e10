@@ -42,5 +42,5 @@
     - '"false" in tailscale_status.stdout'
 
 - name: Start Tailscale
-  ansible.builtin.command: tailscale up --authkey={{ lookup('env', 'TAILSCALE_KEY') }}
+  ansible.builtin.command: tailscale up --authkey={{ lookup('env', 'TAILSCALE_AUTH_KEY') }}
   when: tailscale_status.stdout == "false"

@@ -65,7 +65,10 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = with inputs; [
         ./lib
-        ./overlays
+
+        ./modules/packages/default.nix
+
+        ./modules/overlays
 
         ./modules/development/shell.nix
         ./modules/development/ci.nix
