@@ -1,5 +1,5 @@
-{ inputs, ... }: {
-  perSystem = { pkgs, system, ... }: {
+_: {
+  perSystem = { pkgs, ... }: {
     packages = { overseerr = pkgs.callPackage ./overseerr { }; };
   };
 }

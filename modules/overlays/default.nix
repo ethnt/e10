@@ -1,4 +1,4 @@
-{ flake, inputs, ... }: {
+{ inputs, ... }: {
   imports = [ inputs.flake-parts.flakeModules.easyOverlay ];
 
   perSystem = { system, self', ... }: {
