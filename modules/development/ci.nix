@@ -14,6 +14,15 @@ in {
           "with" = { extra-conf = "allow-import-from-derivation = true"; };
         }
         {
+          name = "Setup Attic cache";
+          uses = "ryanccn/attic-action@v0";
+          "with" = {
+            endpoint = "https://cache.e10.camp";
+            cache = "e10";
+            token = "\${{ secrets.ATTIC_TOKEN }}";
+          };
+        }
+        {
           name = "Use Cachix store";
           uses = "cachix/cachix-action@v12";
           "with" = {

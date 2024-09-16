@@ -131,6 +131,14 @@
       '';
     };
 
+    "cache.e10.camp" = mkVirtualHost {
+      host = hosts.omnibus;
+      port = 8080;
+      extraConfig = ''
+        client_max_body_size 10G;
+      '';
+    };
+
     "e10.video" = mkVirtualHost {
       host = hosts.htpc;
       inherit (hosts.htpc.config.services.plex) port;

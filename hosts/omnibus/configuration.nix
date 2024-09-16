@@ -1,6 +1,7 @@
 { config, pkgs, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
+      profiles.services.attic-watch-store.default
       profiles.telemetry.smartd
       profiles.telemetry.prometheus-smartctl-exporter
       profiles.telemetry.prometheus-zfs-exporter
@@ -11,6 +12,7 @@
       profiles.users.ethan
       profiles.users.proxmox
       profiles.databases.postgresql.default
+      profiles.services.atticd.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
@@ -18,7 +20,7 @@
 
   deployment = {
     buildOnTarget = true;
-    tags = [ "vm" ];
+    tags = [ "@vm" "@build-on-target" ];
   };
 
   satan.address = "10.10.1.101";

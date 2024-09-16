@@ -54,6 +54,9 @@
     nixago.url = "github:nix-community/nixago";
     nixago.inputs.nixpkgs.follows = "nixpkgs";
 
+    attic.url = "github:zhaofengli/attic";
+    attic.inputs.nixpkgs.follows = "nixpkgs";
+
     flake-root.url = "github:srid/flake-root";
   };
 
