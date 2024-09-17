@@ -1,10 +1,7 @@
-{ config, inputs, flake, lib, ... }: {
+{ config, flake, lib, ... }: {
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [
-      flake.overlays.default
-      inputs.proxmox-nixos.overlays.${config.nixpkgs.system}
-    ];
+    overlays = [ flake.overlays.default ];
   };
 
   nix = {

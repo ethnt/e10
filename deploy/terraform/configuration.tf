@@ -50,19 +50,6 @@ provider "proxmox" {
 }
 
 provider "proxmox" {
-  alias    = "dill"
-  endpoint = "https://dill:8006/"
-  username = data.sops_file.secrets.data["DILL_PM_USERNAME"]
-  password = data.sops_file.secrets.data["DILL_PM_PASSWORD"]
-  insecure = true
-
-  ssh {
-    agent    = true
-    username = "deploy"
-  }
-}
-
-provider "proxmox" {
   alias    = "elderflower"
   endpoint = "https://elderflower:8006/"
   username = data.sops_file.secrets.data["ELDERFLOWER_PM_USERNAME"]
