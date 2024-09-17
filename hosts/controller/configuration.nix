@@ -1,6 +1,7 @@
 { profiles, suites, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
+      profiles.services.attic-watch-store.default
       profiles.networking.tailscale.exit-node
       profiles.networking.blocky.default
       profiles.networking.blocky.redis
@@ -14,7 +15,7 @@
 
   deployment = {
     buildOnTarget = false;
-    tags = [ "vm" ];
+    tags = [ "@vm" "@build-on-target" ];
   };
 
   services.resolved.extraConfig = ''

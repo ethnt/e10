@@ -1,6 +1,7 @@
 { suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
+      profiles.services.attic-watch-store.default
       profiles.emulation.aarch64-linux
       profiles.remote-builder.builder
       profiles.remote-builder.substituter
@@ -13,7 +14,7 @@
 
   deployment = {
     buildOnTarget = true;
-    tags = [ "vm" ];
+    tags = [ "@vm" "@build-on-target" ];
   };
 
   nix.gc.automatic = false;

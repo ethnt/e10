@@ -23,10 +23,11 @@
       profiles.telemetry.prometheus-plex-media-server-exporter.default
       profiles.telemetry.prometheus-sabnzbd-exporter.default
       profiles.telemetry.prometheus-dcgm-exporter
+      profiles.services.attic-watch-store.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   deployment = {
-    tags = [ "vm" ];
+    tags = [ "@vm" "@build-on-target" ];
     buildOnTarget = true;
   };
 

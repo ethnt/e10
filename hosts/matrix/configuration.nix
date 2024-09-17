@@ -1,6 +1,7 @@
 { lib, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ web ++ [
+      profiles.services.attic-watch-store.default
       profiles.virtualisation.podman
       profiles.filesystems.files
       profiles.services.miniflux.default
@@ -20,7 +21,7 @@
 
   deployment = {
     buildOnTarget = true;
-    tags = [ "vm" ];
+    tags = [ "@vm" "@build-on-target" ];
   };
 
   networking = {

@@ -39,6 +39,7 @@ in {
       packages = with inputs'; [
         colmena.packages.colmena
         nixos-anywhere.packages.nixos-anywhere
+        attic.packages.attic
         e10-ssh
         e10-mosh
         e10-scp
