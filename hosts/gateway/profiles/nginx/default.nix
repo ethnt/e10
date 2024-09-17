@@ -67,6 +67,11 @@
       inherit (hosts.htpc.config.services.sonarr) port;
     };
 
+    "bazarr.e10.camp" = mkVirtualHost {
+      host = hosts.htpc;
+      port = hosts.htpc.config.services.bazarr.listenPort;
+    };
+
     "sabnzbd.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
       inherit (hosts.htpc.config.services.sabnzbd) port;
