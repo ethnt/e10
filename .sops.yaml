@@ -8,7 +8,6 @@ keys:
   - &host_builder age10jhawn266e3wr6rx0lndkl9a47ewtk6jgh35d2582uu2l7dtn4tqdqc29c
   - &host_satellite age1a4r3d5m0eu94vwsrse83k09fgclcfmthkz93p6h0m5vqyptq2yxswptzjf
   - &host_controller age15jjykch8km3l8atssu0n9us6d2xg58z0ds9s0djtdh9l954sud5szqxv29
-  - &host_dill age12yvljlgg94z8qfwyezz6mtmrpldxvfcqwzsuyfekszu296fg6upseeyc0t
 
 creation_rules:
   - path_regex: '^.*secrets\.(json|yml)'
@@ -23,4 +22,3 @@ creation_rules:
           - *host_controller
           - *host_builder
           - *host_satellite
-          - *host_dill

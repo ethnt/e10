@@ -123,16 +123,6 @@
       }];
     }
     {
-      job_name = "host_dill";
-      static_configs = [{
-        targets = [
-          "${hosts.dill.config.networking.hostName}:${
-            toString hosts.dill.config.services.prometheus.exporters.node.port
-          }"
-        ];
-      }];
-    }
-    {
       job_name = "smartctl_omnibus";
       static_configs = [{
         targets = [
