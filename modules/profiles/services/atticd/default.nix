@@ -1,4 +1,6 @@
-{ config, inputs, profiles, ... }: {
+{ config, inputs, profiles, ... }:
+let storagePath = "/data/files/services/atticd/storage";
+in {
   imports =
     [ inputs.attic.nixosModules.atticd profiles.databases.postgresql.atticd ];
 
@@ -8,6 +10,10 @@
       sopsFile = ./secrets.yml;
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d ${storagePath} 0777 ${config.services.atticd.user} ${config.services.atticd.group}"
+  ];
 
   services.atticd = {
     enable = true;
@@ -25,7 +31,7 @@
 
       storage = {
         type = "local";
-        path = "/data/files/services/atticd/storage";
+        path = storagePath;
       };
 
       # Data chunking
