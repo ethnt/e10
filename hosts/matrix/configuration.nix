@@ -9,7 +9,7 @@
       profiles.services.paperless.default
       profiles.networking.printing
       profiles.emulation.aarch64-linux
-      profiles.power.tripp-lite
+      profiles.power.tripp-lite-smart1500lcd
       profiles.telemetry.prometheus-nut-exporter
       profiles.services.netbox.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
