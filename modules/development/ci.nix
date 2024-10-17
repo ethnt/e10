@@ -6,16 +6,16 @@ in {
       setup = [
         {
           name = "Checkout code";
-          uses = "actions/checkout@v3";
+          uses = "actions/checkout@v4.2.1";
         }
         {
           name = "Install Nix";
-          uses = "DeterminateSystems/nix-installer-action@main";
+          uses = "DeterminateSystems/nix-installer-action@v14";
           "with" = { extra-conf = "allow-import-from-derivation = true"; };
         }
         {
           name = "Setup Attic cache";
-          uses = "ryanccn/attic-action@v0";
+          uses = "ryanccn/attic-action@v0.3.1";
           "with" = {
             endpoint = "https://cache.e10.camp";
             cache = "e10";
@@ -24,11 +24,12 @@ in {
         }
         {
           name = "Use Cachix store";
-          uses = "cachix/cachix-action@v12";
+          uses = "cachix/cachix-action@v15";
           "with" = {
             authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
-            extraPullNames = "e10,nix-community";
             name = "e10";
+            installCommand =
+              "nix profile install github:NixOS/nixpkgs/nixpkgs-unstable#cachix";
           };
         }
       ];
