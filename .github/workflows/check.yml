@@ -16,9 +16,10 @@ jobs:
         endpoint: https://cache.e10.camp
         token: ${{ secrets.ATTIC_TOKEN }}
     - name: Use Cachix store
-      uses: cachix/cachix-action@v14
+      uses: cachix/cachix-action@v15
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        installCommand: nix profile install github:NixOS/nixpkgs/nixpkgs-unstable#cachix
         name: e10
     - run: 'nix flake check --impure --accept-flake-config --show-trace
 

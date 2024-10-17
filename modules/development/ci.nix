@@ -24,10 +24,12 @@ in {
         }
         {
           name = "Use Cachix store";
-          uses = "cachix/cachix-action@v14";
+          uses = "cachix/cachix-action@v15";
           "with" = {
             authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
             name = "e10";
+            installCommand =
+              "nix profile install github:NixOS/nixpkgs/nixpkgs-unstable#cachix";
           };
         }
       ];
