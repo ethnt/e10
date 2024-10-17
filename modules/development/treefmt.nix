@@ -15,8 +15,12 @@
           statix.enable = true;
           prettier.enable = true;
         };
-        settings.formatter.prettier.excludes =
-          [ "secrets.json" "**/secrets.json" "**/secrets.yml" ];
+        settings.formatter.prettier.excludes = [
+          ".github/workflows/*.yml"
+          "secrets.json"
+          "**/secrets.json"
+          "**/secrets.yml"
+        ];
       };
     in {
       treefmt = { config = settings; };
