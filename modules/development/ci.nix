@@ -27,7 +27,6 @@ in {
           uses = "cachix/cachix-action@v15";
           "with" = {
             authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
-            extraPullNames = "e10,nix-community";
             name = "e10";
           };
         }

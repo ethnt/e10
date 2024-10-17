@@ -19,7 +19,6 @@ jobs:
       uses: cachix/cachix-action@v15
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        extraPullNames: e10,nix-community
         name: e10
     - run: 'nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
         --accept-flake-config --show-trace
