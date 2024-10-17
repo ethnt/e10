@@ -10,7 +10,7 @@ in {
         }
         {
           name = "Install Nix";
-          uses = "DeterminateSystems/nix-installer-action@main";
+          uses = "DeterminateSystems/nix-installer-action@v14";
           "with" = { extra-conf = "allow-import-from-derivation = true"; };
         }
         {
@@ -24,7 +24,7 @@ in {
         }
         {
           name = "Use Cachix store";
-          uses = "cachix/cachix-action@v15";
+          uses = "cachix/cachix-action@v14";
           "with" = {
             authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
             name = "e10";
