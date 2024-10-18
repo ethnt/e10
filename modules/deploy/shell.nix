@@ -23,9 +23,9 @@ in {
         ${ssh} -F ${sshConfig} $@
       '';
 
-      e10-mosh = pkgs.writeShellScriptBin "e10-mosh" ''
-        ${pkgs.lib.getExe' pkgs.mosh "mosh"} --ssh="ssh -F ${sshConfig}" $@
-      '';
+      # e10-mosh = pkgs.writeShellScriptBin "e10-mosh" ''
+      #   ${pkgs.lib.getExe' pkgs.mosh "mosh"} --ssh="ssh -F ${sshConfig}" $@
+      # '';
 
       e10-scp = pkgs.writeShellScriptBin "e10-scp" ''
         ${pkgs.lib.getExe' pkgs.openssh "scp"} -F ${sshConfig} $@
@@ -41,7 +41,7 @@ in {
         nixos-anywhere.packages.nixos-anywhere
         attic.packages.attic
         e10-ssh
-        e10-mosh
+        # e10-mosh
         e10-scp
         e10-rsync
       ];
