@@ -9,7 +9,7 @@
       profiles.networking.unifi
       profiles.telemetry.prometheus-smokeping-exporter
       profiles.telemetry.prometheus-unpoller-exporter.satan
-      profiles.power.apc
+      profiles.power.apc-back-ups-xs-1500
       profiles.telemetry.prometheus-nut-exporter
     ] ++ [ ./disk-config.nix ./hardware-configuration.nix ];
 
