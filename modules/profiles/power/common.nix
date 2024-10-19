@@ -21,14 +21,14 @@
 
     users = {
       leader = {
-        upsmon = "master";
+        upsmon = "primary";
         passwordFile = config.sops.secrets.upsmon_password.path;
         actions = [ "SET" "FSD" ];
         instcmds = [ "ALL" ];
       };
 
       follower = {
-        upsmon = "slave";
+        upsmon = "secondary";
         passwordFile = config.sops.secrets.upsmon_password.path;
       };
     };
