@@ -4,7 +4,6 @@
 
     samba = {
       enable = true;
-      securityType = "user";
       settings.global = {
         workgroup = "WORKGROUP";
         "server string" = "${config.networking.hostName}";
