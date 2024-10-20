@@ -52,8 +52,7 @@ in {
 
       buildWorkflow = {
         name = "Build";
-        # on.push.branches = [ "main" ];
-        on.push = { };
+        on.push.branches = [ "main" ];
         jobs = {
           buildSystem = {
             name = "Build system";

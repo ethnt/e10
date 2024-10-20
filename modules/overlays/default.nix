@@ -20,7 +20,7 @@
 
       inherit (nixpkgs-24-05) prometheus-pve-exporter;
 
-      inherit (self'.packages) overseerr;
+      inherit (self'.packages) overseerr mongodb-ce-6_0;
     };
   };
 }
