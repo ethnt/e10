@@ -8,8 +8,18 @@
 
         config.allowUnfree = true;
       };
+
+      nixpkgs-24-05 = import inputs.nixpkgs-24-05 {
+        inherit system;
+
+        config.allowUnfree = true;
+      };
     in {
-      inherit (nixpkgs-master) prowlarr radarr sabnzbd sonarr;
+      inherit (nixpkgs-master) prowlarr radarr sabnzbd sonarr netbox;
+      inherit (nixpkgs-master.python312Packages) pymdown-extensions;
+
+      inherit (nixpkgs-24-05) prometheus-pve-exporter;
+
       inherit (self'.packages) overseerr;
     };
   };

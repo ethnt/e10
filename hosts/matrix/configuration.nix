@@ -53,5 +53,5 @@
 
   e10.services.backup.jobs.system.paths = lib.mkAfter [ "/var/www" ];
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }

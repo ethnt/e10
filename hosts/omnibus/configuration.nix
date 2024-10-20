@@ -103,5 +103,5 @@
     bash -c "sudo sysctl kernel.task_delayacct=1 && sudo ${pkgs.iotop}/bin/iotop ; sudo sysctl kernel.task_delayacct=0"
   '';
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }

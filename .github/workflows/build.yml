@@ -37,6 +37,4 @@ jobs:
         - omnibus
 name: Build
 'on':
-  push:
-    branches:
-    - main
+  push: {}

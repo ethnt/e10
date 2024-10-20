@@ -39,5 +39,5 @@
   services.tailscale.extraUpFlags =
     lib.mkAfter [ "--advertise-exit-node" "--advertise-routes=192.168.0.0/16" ];
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }

@@ -8,7 +8,7 @@
 
   services.netbox = {
     enable = true;
-    package = pkgs.netbox_3_7;
+    package = pkgs.netbox;
     settings = {
       CSRF_TRUSTED_ORIGINS = [
         "https://netbox.e10.camp"
