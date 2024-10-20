@@ -65,7 +65,7 @@
     ${config.disko.devices.zpool.files.datasets.root.mountpoint} 192.168.0.0/16(${filesOptions}) 100.0.0.0/8(${filesOptions}) 10.10.0.0/16(${filesOptions})
   '';
 
-  services.samba.shares = {
+  services.samba.settings = {
     proxmox = {
       path = "/data/files/proxmox";
       browseable = "yes";
@@ -103,5 +103,5 @@
     bash -c "sudo sysctl kernel.task_delayacct=1 && sudo ${pkgs.iotop}/bin/iotop ; sudo sysctl kernel.task_delayacct=0"
   '';
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }
