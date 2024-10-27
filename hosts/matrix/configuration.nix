@@ -6,8 +6,9 @@
       profiles.filesystems.files
       profiles.services.miniflux.default
       profiles.services.e10-land
+      profiles.databases.postgresql.default
       profiles.services.paperless.default
-      profiles.services.immich
+      profiles.media-management.immich
       profiles.networking.printing
       profiles.emulation.aarch64-linux
       profiles.power.tripp-lite-smart1500lcd
