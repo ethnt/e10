@@ -121,6 +121,14 @@
       '';
     };
 
+    "immich.e10.camp" = mkVirtualHost {
+      host = hosts.matrix;
+      inherit (hosts.matrix.config.services.immich) port;
+      extraConfig = ''
+        client_max_body_size 50000M;
+      '';
+    };
+
     "netbox.e10.camp" = mkVirtualHost {
       host = hosts.matrix;
       port = 8002;

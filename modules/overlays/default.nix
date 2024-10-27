@@ -16,7 +16,7 @@
       };
     in {
       inherit (nixpkgs-master) prowlarr radarr sabnzbd sonarr netbox;
-      inherit (nixpkgs-master.python312Packages) pymdown-extensions;
+      inherit (nixpkgs-master.python312Packages) pymdown-extensions onnx;
 
       inherit (nixpkgs-24-05) prometheus-pve-exporter;
 

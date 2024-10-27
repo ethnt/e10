@@ -50,3 +50,6 @@ image name:
 
 terraform *args:
     terraform -chdir=./deploy/terraform/ {{ args }}
+
+edit-secret file:
+    EDITOR="code --wait" sops {{ file }}

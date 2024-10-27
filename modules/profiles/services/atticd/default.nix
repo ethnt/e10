@@ -1,8 +1,7 @@
-{ config, inputs, profiles, ... }:
+{ config, profiles, ... }:
 let storagePath = "/data/files/services/atticd/storage";
 in {
-  imports =
-    [ inputs.attic.nixosModules.atticd profiles.databases.postgresql.atticd ];
+  imports = [ profiles.databases.postgresql.atticd ];
 
   sops.secrets = {
     atticd_credentials_file = {
@@ -18,7 +17,7 @@ in {
   services.atticd = {
     enable = true;
 
-    credentialsFile = config.sops.secrets.atticd_credentials_file.path;
+    environmentFile = config.sops.secrets.atticd_credentials_file.path;
 
     settings = {
       allowed-hosts = [ ];
