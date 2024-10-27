@@ -12,5 +12,7 @@
     adminCredentialsFile = config.sops.secrets.miniflux_admin_credentials.path;
   };
 
+  services.postgresqlBackup.databases = [ "miniflux" ];
+
   networking.firewall = { allowedTCPPorts = [ 8070 ]; };
 }

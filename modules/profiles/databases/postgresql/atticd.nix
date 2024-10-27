@@ -1,6 +1,8 @@
 { profiles, pkgs, ... }: {
   imports = [ profiles.databases.postgresql.default ];
 
+  services.postgresqlBackup.databases = [ "atticd" ];
+
   services.postgresql = {
     initialScript = pkgs.writeText "postgres-atticd-init" ''
       CREATE ROLE atticd WITH LOGIN PASSWORD 'atticd' CREATEDB;

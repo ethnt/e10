@@ -1,4 +1,4 @@
-{
+{ lib, ... }: {
   services.postgresql = {
     enable = true;
     enableTCPIP = true;
@@ -10,5 +10,12 @@
     '';
   };
 
-  networking.firewall = { allowedTCPPorts = [ 5432 ]; };
+  services.postgresqlBackup = {
+    enable = true;
+    databases = lib.mkDefault
+      [ ]; # Set individually so the service produces individual SQL files
+    startAt = "*-*-* 00:15:00";
+  };
+
+  networking.firewall.allowedTCPPorts = [ 5432 ];
 }

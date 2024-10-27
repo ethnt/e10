@@ -6,6 +6,8 @@
     };
   };
 
+  services.postgresqlBackup.databases = [ "netbox" ];
+
   services.netbox = {
     enable = true;
     package = pkgs.netbox;

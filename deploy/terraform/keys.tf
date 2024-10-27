@@ -34,3 +34,19 @@ resource "local_sensitive_file" "builder_public_key" {
   filename        = "${path.module}/../../keys/builder_rsa.pub"
   file_permission = "0600"
 }
+
+resource "tls_private_key" "rsync_net_key" {
+  algorithm = "RSA"
+}
+
+resource "local_sensitive_file" "rsync_net_key" {
+  content         = tls_private_key.rsync_net_key.private_key_openssh
+  filename        = "${path.module}/../../keys/rsync_net_rsa"
+  file_permission = "0600"
+}
+
+resource "local_sensitive_file" "rsync_net_public_key" {
+  content         = tls_private_key.rsync_net_key.public_key_openssh
+  filename        = "${path.module}/../../keys/rsync_net_rsa.pub"
+  file_permission = "0600"
+}

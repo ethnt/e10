@@ -61,7 +61,7 @@ in {
               within = "1d";
               daily = 1;
               weekly = 4;
-              monthly = -1;
+              monthly = 3;
             };
           };
 
