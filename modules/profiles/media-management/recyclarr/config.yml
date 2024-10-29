@@ -22,16 +22,20 @@ radarr:
         min_format_score: 0
         quality_sort: top
         qualities:
+          - name: Remux-2160p
           - name: Bluray-2160p
           - name: WEB 2160p
             qualities:
               - WEBDL-2160p
               - WEBRip-2160p
+          - name: HDTV-2160p
           - name: Remux-1080p
+          - name: Bluray-1080p
           - name: WEB 1080p
             qualities:
               - WEBDL-1080p
               - WEBRip-1080p
+          - name: HDTV-1080p
     custom_formats:
       - trash_ids:
           # All HDR Formats
@@ -196,6 +200,7 @@ sonarr:
             qualities:
               - Bluray-2160p
               - Bluray-2160p Remux
+          - name: HDTV-2160p
           - name: Remux-1080p
             qualities:
               - Bluray-1080p
@@ -204,6 +209,7 @@ sonarr:
             qualities:
               - WEBDL-1080p
               - WEBRip-1080p
+          - name: HDTV-1080p
       - name: SD/HD
         reset_unmatched_scores:
           enabled: true
@@ -214,16 +220,50 @@ sonarr:
         min_format_score: 0
         quality_sort: top
         qualities:
+          - name: Remux-1080p
+            qualities:
+              - Bluray-1080p
+              - Bluray-1080p Remux
           - name: WEB 1080p
             qualities:
               - WEBDL-1080p
               - WEBRip-1080p
           - name: HDTV-1080p
+          - name: Bluray-720p
           - name: WEB 720p
             qualities:
               - WEBDL-720p
               - WEBRip-720p
           - name: HDTV-720p
+          - name: Bluray-480p
+          - name: WEB 480p
+            qualities:
+              - WEBDL-480p
+              - WEBRip-480p
+          - name: DVD
+      - name: SD
+        reset_unmatched_scores:
+          enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Bluray-720p
+          until_score: 10000
+        min_format_score: 0
+        quality_sort: top
+        qualities:
+          - name: Bluray-720p
+          - name: WEB 720p
+            qualities:
+              - WEBDL-720p
+              - WEBRip-720p
+          - name: HDTV-720p
+          - name: Bluray-480p
+          - name: WEB 480p
+            qualities:
+              - WEBDL-480p
+              - WEBRip-480p
+          - name: DVD
+          - name: SDTV
     custom_formats:
       # Common formats for both 1080p and 2160p
       - trash_ids:
