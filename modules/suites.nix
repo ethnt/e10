@@ -1,23 +1,23 @@
 { profiles }: {
   core = [
+    profiles.backups.borgmatic.system
+    profiles.core.caching
     profiles.core.common
     profiles.core.nix-config
     profiles.core.sops
     profiles.core.tooling
-    profiles.core.caching
-    profiles.networking.openssh
     profiles.networking.mosh
-    profiles.shell.fish
-    profiles.users.root
     profiles.networking.networkd
+    profiles.networking.openssh
     profiles.networking.resolved
     profiles.networking.tailscale.default
     profiles.security.fail2ban
+    profiles.shell.fish
+    profiles.system.earlyoom
+    profiles.telemetry.prometheus-borgmatic-exporter
     profiles.telemetry.prometheus-node-exporter
     profiles.telemetry.promtail
-    profiles.backups.borg.default
-    profiles.backups.borg.system
-    profiles.system.earlyoom
+    profiles.users.root
   ];
 
   web =
