@@ -140,6 +140,14 @@
           name = "Nvidia";
           options.path = ./provisioning/nvidia.json;
         }
+        {
+          name = "Borgmatic Logs";
+          options.path = ./provisioning/borgmatic/logs.json;
+        }
+        {
+          name = "Borgmatic Backups";
+          options.path = ./provisioning/borgmatic/logs.json;
+        }
       ];
 
       alerting = {
