@@ -140,6 +140,14 @@
           name = "Nvidia";
           options.path = ./provisioning/nvidia.json;
         }
+        {
+          name = "Borgmatic Logs";
+          options.path = ./provisioning/borgmatic/logs.json;
+        }
+        {
+          name = "Borgmatic Backups";
+          options.path = ./provisioning/borgmatic/logs.json;
+        }
       ];
 
       alerting = {
@@ -187,77 +195,115 @@
 
         rules.settings = {
           apiVersion = 1;
+          deleteRules = [ ];
           groups = [{
             orgId = 1;
             name = "Default";
             interval = "60s";
             folder = "Homelab";
             rules = let
-              mkBackupRule = { host, uuid }: {
-                uid = uuid;
-                title = "System failed to backup on ${host}";
-                condition = "A";
-                data = [
-                  {
-                    refId = "A";
-                    queryType = "instant";
-                    relativeTimeRange = {
-                      from = 86400;
-                      to = 0;
-                    };
-                    datasourceUid = "P8E80F9AEF21F6940";
-                    model = {
-                      editorMode = "code";
-                      expr = ''
-                        count_over_time({host="host_${host}",unit="borgbackup-job-system.service"} |= "exitStatus=1" [24h])
-                      '';
-                      intervalMs = 1000;
-                      maxDataPoints = 43200;
-                      queryType = "instant";
+              mkBackupRule = { host, uuid }:
+                let hostname = host.config.networking.hostName;
+                in {
+                  uid = uuid;
+                  title = "System failed to backup on ${hostname}";
+                  condition = "C";
+                  data = [
+                    {
                       refId = "A";
-                    };
-                  }
-                  {
-                    refId = "B";
-                    datasourceUid = "__expr__";
-                    model = {
-                      conditions = [{
-                        evaluator = {
-                          params = [ 0 0 ];
-                          type = "gt";
-                        };
-                        operator = { type = "and"; };
-                        query = { params = [ ]; };
-                        reducer = {
-                          params = [ ];
-                          type = "avg";
-                        };
-                        type = "query";
-                      }];
-                      datasource = {
-                        name = "Expression";
-                        type = "__expr__";
-                        uid = "__expr__";
+                      queryType = "range";
+                      relativeTimeRange = {
+                        from = 86400;
+                        to = 0;
                       };
-                      expression = "A";
-                      intervalMs = 1000;
-                      maxDataPoints = 43200;
+                      datasourceUid = "P8E80F9AEF21F6940";
+                      model = {
+                        editorMode = "code";
+                        expr = ''
+                          count_over_time({application="borgmatic", host="${hostname}"} |~ "Failed backup" [$__auto])'';
+                        intervalMs = 1000;
+                        maxDataPoints = 43200;
+                        queryType = "range";
+                        refId = "A";
+                      };
+                    }
+                    {
                       refId = "B";
-                      type = "threshold";
-                    };
-                  }
-                ];
-                noDataState = "OK";
-                execErrState = "Error";
-                for = "5m";
-                annotations = {
-                  description = "";
-                  runbook_url = "";
-                  summary = "";
+                      relativeTimeRange = {
+                        from = 86400;
+                        to = 0;
+                      };
+                      datasourceUid = "__expr__";
+                      model = {
+                        conditions = [{
+                          evaluator = {
+                            params = [ ];
+                            type = "gt";
+                          };
+                          operator = { type = "and"; };
+                          query = { params = [ "B" ]; };
+                          reducer = {
+                            params = [ ];
+                            type = "last";
+                          };
+                          type = "query";
+                        }];
+                        datasource = {
+                          type = "__expr__";
+                          uid = "__expr__";
+                        };
+                        expression = "A";
+                        intervalMs = 1000;
+                        maxDataPoints = 43200;
+                        reducer = "count";
+                        refId = "B";
+                        type = "reduce";
+                      };
+                    }
+                    {
+                      refId = "C";
+                      relativeTimeRange = {
+                        from = 86400;
+                        to = 0;
+                      };
+                      datasourceUid = "__expr__";
+                      model = {
+                        conditions = [{
+                          evaluator = {
+                            params = [ 0 ];
+                            type = "gt";
+                          };
+                          operator = { type = "and"; };
+                          query = { params = [ "C" ]; };
+                          reducer = {
+                            params = [ ];
+                            type = "last";
+                          };
+                          type = "query";
+                        }];
+                        datasource = {
+                          type = "__expr__";
+                          uid = "__expr__";
+                        };
+                        expression = "B";
+                        intervalMs = 1000;
+                        maxDataPoints = 43200;
+                        refId = "C";
+                        type = "threshold";
+                      };
+                    }
+                  ];
+                  noDataState = "OK";
+                  execErrState = "Error";
+                  for = "5m";
+                  annotations = {
+                    description = "";
+                    runbook_url = "";
+                    summary = "";
+                  };
+                  labels = { };
+                  isPaused = false;
                 };
-                labels = { };
-                isPaused = false;
-              };
             in [
               {
                 uid = "a0513fe1-c679-4411-8512-d52334814942";
@@ -405,175 +451,34 @@
                 labels = { severity = "critical"; };
                 isPaused = false;
               }
-              {
-                uid = "c4ce282f-6326-419d-819d-cc4a7b44b87c";
-                title = "Files failed to backup on omnibus";
-                condition = "A";
-                data = [
-                  {
-                    refId = "A";
-                    queryType = "instant";
-                    relativeTimeRange = {
-                      from = 86400;
-                      to = 0;
-                    };
-                    datasourceUid = "P8E80F9AEF21F6940";
-                    model = {
-                      editorMode = "code";
-                      expr = ''
-                        count_over_time({host="host_omnibus",unit="borgbackup-job-files.service"} |= "exitStatus=1" [24h])
-                      '';
-                      intervalMs = 1000;
-                      maxDataPoints = 43200;
-                      queryType = "instant";
-                      refId = "A";
-                    };
-                  }
-                  {
-                    refId = "B";
-                    datasourceUid = "__expr__";
-                    model = {
-                      conditions = [{
-                        evaluator = {
-                          params = [ 0 0 ];
-                          type = "gt";
-                        };
-                        operator = { type = "and"; };
-                        query = { params = [ ]; };
-                        reducer = {
-                          params = [ ];
-                          type = "avg";
-                        };
-                        type = "query";
-                      }];
-                      datasource = {
-                        name = "Expression";
-                        type = "__expr__";
-                        uid = "__expr__";
-                      };
-                      expression = "A";
-                      intervalMs = 1000;
-                      maxDataPoints = 43200;
-                      refId = "B";
-                      type = "threshold";
-                    };
-                  }
-                ];
-                noDataState = "OK";
-                execErrState = "Error";
-                for = "5m";
-                annotations = {
-                  description = "";
-                  runbook_url = "";
-                  summary = "";
-                };
-                labels = { "" = ""; };
-                isPaused = false;
-              }
               (mkBackupRule {
-                host = "omnibus";
-                uuid = "D7DC99E9-DA03-4BE5-BFAF-08CDF031E86F";
+                host = hosts.omnibus;
+                uuid = "5166671F-AEF3-434D-99B4-18C7A32BD708";
               })
               (mkBackupRule {
-                host = "gateway";
-                uuid = "91085D4E-4D6B-4F5E-9872-77EED2EB9E64";
-              })
-              (mkBackupRule {
-                host = "monitor";
+                host = hosts.monitor;
                 uuid = "9FEB48CD-F6ED-4B7A-86DA-A912D67D142C";
               })
               (mkBackupRule {
-                host = "htpc";
+                host = hosts.htpc;
                 uuid = "77EE3CEA-A817-4A48-86D6-62839DE1A713";
               })
               (mkBackupRule {
-                host = "matrix";
+                host = hosts.matrix;
                 uuid = "32B02B4C-282B-447C-91E9-98B196B9390F";
               })
               (mkBackupRule {
-                host = "controller";
+                host = hosts.controller;
                 uuid = "E52329A1-393E-47B0-B849-7DB025FA47A0";
               })
               (mkBackupRule {
-                host = "builder";
+                host = hosts.builder;
                 uuid = "9814CF38-373F-4251-BE8A-2438D9C4A88C";
               })
               (mkBackupRule {
-                host = "satellite";
-                uuid = "B29064EF-E210-4247-8222-22FE28AF2D76";
+                host = hosts.gateway;
+                uuid = "75AA8FE9-04D2-4502-B59D-4F2F5BD1DFE0";
               })
-              # {
-              #   uid = "f21a1838-41ba-449e-8830-143a3d86cc0b";
-              #   title = "Blocky is not responding successfully";
-              #   condition = "C";
-              #   data = [
-              #     {
-              #       refId = "A";
-              #       relativeTimeRange = {
-              #         from = 600;
-              #         to = 0;
-              #       };
-              #       datasourceUid = "P5DCFC7561CCDE821";
-              #       model = {
-              #         datasource = {
-              #           type = "prometheus";
-              #           uid = "P5DCFC7561CCDE821";
-              #         };
-              #         editorMode = "code";
-              #         expr =
-              #           ''{job="blackbox_blocky",__name__="probe_success"}'';
-              #         instant = true;
-              #         intervalMs = 1000;
-              #         legendFormat = "__auto";
-              #         maxDataPoints = 43200;
-              #         range = false;
-              #         refId = "A";
-              #       };
-              #     }
-              #     {
-              #       refId = "C";
-              #       relativeTimeRange = {
-              #         from = 600;
-              #         to = 0;
-              #       };
-              #       datasourceUid = "__expr__";
-              #       model = {
-              #         conditions = [{
-              #           evaluator = {
-              #             params = [ 1 ];
-              #             type = "lt";
-              #           };
-              #           operator = { type = "and"; };
-              #           query = { params = [ "C" ]; };
-              #           reducer = {
-              #             params = [ ];
-              #             type = "last";
-              #           };
-              #           type = "query";
-              #         }];
-              #         datasource = {
-              #           type = "__expr__";
-              #           uid = "__expr__";
-              #         };
-              #         expression = "A";
-              #         intervalMs = 1000;
-              #         maxDataPoints = 43200;
-              #         refId = "C";
-              #         type = "threshold";
-              #       };
-              #     }
-              #   ];
-              #   noDataState = "NoData";
-              #   execErrState = "Error";
-              #   for = "5m";
-              #   annotations = {
-              #     description = "";
-              #     runbook_url = "";
-              #     summary = "";
-              #   };
-              #   labels = { severity = "critical"; };
-              #   isPaused = false;
-              # }
               {
                 uid = "e1a38758-5093-49e2-8041-ae81225b1ca5";
                 title = "Packet loss is greater than 1%";

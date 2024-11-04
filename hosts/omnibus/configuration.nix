@@ -95,13 +95,24 @@
     pruneKeep = {
       monthly = 1;
       weekly = 0;
-      daily = 0;
+      daily = 1;
     };
   };
 
   programs.fish.shellAliases.iotop = ''
     bash -c "sudo sysctl kernel.task_delayacct=1 && sudo ${pkgs.iotop}/bin/iotop ; sudo sysctl kernel.task_delayacct=0"
   '';
+
+  services.borgmatic.configurations.files = {
+    source_directories = [ "/data/files" ];
+    repositories = [{
+      label = "rsync.net";
+      path = "ssh://de2228@de2228.rsync.net/./omnibus-files";
+    }];
+    keep_daily = 1;
+    keep_weekly = 2;
+    keep_monthly = 3;
+  };
 
   system.stateVersion = "24.05";
 }

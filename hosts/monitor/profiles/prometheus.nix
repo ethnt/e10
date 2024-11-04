@@ -396,5 +396,78 @@
         ];
       }];
     }
+    {
+      job_name = "borgmatic_builder";
+      static_configs = [{
+        targets = [
+          "${hosts.builder.config.networking.hostName}:${
+            toString
+            hosts.builder.config.services.prometheus.exporters.borgmatic.port
+          }"
+        ];
+      }];
+      scrape_interval = "1m";
+    }
+    {
+      job_name = "borgmatic_matrix";
+      static_configs = [{
+        targets = [
+          "${hosts.matrix.config.networking.hostName}:${
+            toString
+            hosts.matrix.config.services.prometheus.exporters.borgmatic.port
+          }"
+        ];
+      }];
+      scrape_interval = "1m";
+    }
+    {
+      job_name = "borgmatic_gateway";
+      static_configs = [{
+        targets = [
+          "${hosts.gateway.config.networking.hostName}:${
+            toString
+            hosts.gateway.config.services.prometheus.exporters.borgmatic.port
+          }"
+        ];
+      }];
+      scrape_interval = "1m";
+    }
+    {
+      job_name = "borgmatic_htpc";
+      static_configs = [{
+        targets = [
+          "${hosts.htpc.config.networking.hostName}:${
+            toString
+            hosts.htpc.config.services.prometheus.exporters.borgmatic.port
+          }"
+        ];
+      }];
+      scrape_interval = "1m";
+    }
+    {
+      job_name = "borgmatic_omnibus";
+      static_configs = [{
+        targets = [
+          "${hosts.omnibus.config.networking.hostName}:${
+            toString
+            hosts.omnibus.config.services.prometheus.exporters.borgmatic.port
+          }"
+        ];
+      }];
+      scrape_interval = "1m";
+    }
+    {
+      job_name = "borgmatic_controller";
+      static_configs = [{
+        targets = [
+          "${hosts.controller.config.networking.hostName}:${
+            toString
+            hosts.controller.config.services.prometheus.exporters.borgmatic.port
+          }"
+        ];
+      }];
+      scrape_interval = "1m";
+    }
+
   ];
 }
