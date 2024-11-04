@@ -59,7 +59,7 @@
     };
   };
 
-  e10.services.backup.jobs.system.exclude =
+  services.borgmatic.configurations.system.exclude_patterns =
     [ "/var/lib/sabnzbd/downloads" "/var/lib/plex/transcodes" ];
 
   system.stateVersion = "24.05";

@@ -3,7 +3,7 @@
     core ++ proxmox-vm ++ web ++ [
       profiles.services.attic-watch-store.default
       profiles.virtualisation.podman
-      profiles.filesystems.files
+      profiles.filesystems.files.services
       profiles.services.miniflux.default
       profiles.services.e10-land
       profiles.databases.postgresql.default

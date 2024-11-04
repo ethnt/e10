@@ -9,6 +9,8 @@
       profiles.services.uptime-kuma
     ] ++ [ ./profiles/prometheus.nix ./profiles/grafana/default.nix ];
 
+  deployment.tags = [ "@external" ];
+
   services.nginx.virtualHosts = {
     "status.e10.camp" = {
       http2 = true;
