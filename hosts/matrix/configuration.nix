@@ -53,7 +53,8 @@
     };
   };
 
-  e10.services.backup.jobs.system.paths = lib.mkAfter [ "/var/www" ];
+  services.borgmatic.configurations.system.source_directories =
+    lib.mkAfter [ "/var/www" ];
 
   system.stateVersion = "24.05";
 }

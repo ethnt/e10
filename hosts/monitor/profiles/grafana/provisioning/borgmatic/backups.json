@@ -18,9 +18,142 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 47,
+  "id": 52,
   "links": [],
   "panels": [
+    {
+      "datasource": {
+        "default": false,
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 2,
+        "x": 0,
+        "y": 0
+      },
+      "id": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.2.2+security-01",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by () (borg_total_backups{instance=~\"$instance\"})",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Backup Count",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 2,
+        "y": 0
+      },
+      "id": 101,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.2.2+security-01",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sum by () (borg_total_deduplicated_compressed_size{instance=~\"$instance\"})",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Deduplicated Compressed Size",
+      "type": "stat"
+    },
     {
       "datasource": {
         "default": false,
@@ -106,12 +239,12 @@
         ]
       },
       "gridPos": {
-        "h": 9,
-        "w": 24,
-        "x": 0,
+        "h": 8,
+        "w": 20,
+        "x": 4,
         "y": 0
       },
-      "id": 5,
+      "id": 99,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -131,7 +264,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "borg_last_backup_timestamp{instance=~\"$instance\"} * 1000",
+          "expr": "borg_last_backup_timestamp{instance=~\"$instance\", repository=\"$repository\"} * 1000",
           "format": "table",
           "instant": false,
           "legendFormat": "__auto",
@@ -280,28 +413,25 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
-          }
+          },
+          "unit": "decbytes"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
-        "w": 6,
-        "x": 0,
-        "y": 9
+        "h": 4,
+        "w": 2,
+        "x": 2,
+        "y": 4
       },
-      "id": 1,
+      "id": 102,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
-        "orientation": "horizontal",
+        "orientation": "auto",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
@@ -319,29 +449,38 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "borg_total_backups{instance=~\"$instance\"}",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": true,
-          "legendFormat": "{{repository}}",
-          "range": false,
-          "refId": "A",
-          "useBackend": false
+          "editorMode": "code",
+          "expr": "sum by () (borg_total_size{instance=~\"$instance\"})",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
         }
       ],
-      "title": "Total Backups",
+      "title": "Total Size",
       "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 1,
+      "panels": [],
+      "repeat": "repository",
+      "repeatDirection": "h",
+      "title": "Details for $repository",
+      "type": "row"
     },
     {
       "datasource": {
         "default": false,
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "P5DCFC7561CCDE821"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -356,23 +495,22 @@
                 "value": null
               }
             ]
-          },
-          "unit": "decbytes"
+          }
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
-        "w": 6,
-        "x": 6,
+        "h": 5,
+        "w": 2,
+        "x": 0,
         "y": 9
       },
       "id": 2,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
-        "orientation": "horizontal",
+        "orientation": "auto",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
@@ -388,23 +526,319 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "P5DCFC7561CCDE821"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "exemplar": false,
-          "expr": "borg_total_deduplicated_compressed_size{instance=~\"$instance\"}",
+          "expr": "sum by(repository) (borg_total_backups{instance=~\"$instance\", repository=~\"$repository\"})",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
-          "legendFormat": "{{repository}}",
-          "range": false,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
           "refId": "A",
           "useBackend": false
         }
       ],
-      "title": "Total deduplicated compressed size",
+      "title": "Total Backups",
       "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 2,
+        "y": 9
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "borg_total_size{instance=~\"$instance\", repository=~\"$repository\"}",
+          "instant": false,
+          "legendFormat": "{{repository}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Repository Raw Size",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 9,
+        "y": 9
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "borg_total_compressed_size{instance=~\"$instance\", repository=~\"$repository\"}",
+          "instant": false,
+          "legendFormat": "{{repository}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Repository Total Compressed Size",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 16,
+        "y": 9
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "borg_total_deduplicated_compressed_size{instance=~\"$instance\", repository=~\"$repository\"}",
+          "instant": false,
+          "legendFormat": "{{repository}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Repository Total Deduplicated and Compressed Size",
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -436,15 +870,15 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
-        "w": 6,
-        "x": 12,
-        "y": 9
+        "h": 5,
+        "w": 2,
+        "x": 0,
+        "y": 14
       },
-      "id": 4,
+      "id": 21,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
+        "colorMode": "background_solid",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
@@ -465,16 +899,312 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "time() - borg_last_backup_timestamp{instance=~\"$instance\"}",
-          "instant": true,
+          "expr": "time() - max by(repository) (borg_last_backup_timestamp{instance=~\"$instance\", repository=~\"$repository\"})",
+          "instant": false,
           "legendFormat": "{{repository}}",
-          "range": false,
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Time since last backup",
+      "title": "Time Since Last Backup",
       "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 2,
+        "y": 14
+      },
+      "id": 49,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "borg_last_backup_size{instance=~\"$instance\", repository=~\"$repository\"}",
+          "instant": false,
+          "legendFormat": "{{repository}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Last Backup Raw Size",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 9,
+        "y": 14
+      },
+      "id": 50,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "borg_last_backup_compressed_size{instance=~\"$instance\", repository=~\"$repository\"}",
+          "instant": false,
+          "legendFormat": "{{repository}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Last Backup Compressed Size",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 16,
+        "y": 14
+      },
+      "id": 60,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "borg_last_backup_deduplicated_compressed_size{instance=~\"$instance\", repository=~\"$repository\"}",
+          "instant": false,
+          "legendFormat": "{{repository}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Repository Last Backup Deduplicated and Compressed Size",
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -497,22 +1227,22 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "dateTimeAsSystem"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
-        "w": 6,
-        "x": 18,
-        "y": 9
+        "h": 5,
+        "w": 2,
+        "x": 0,
+        "y": 19
       },
-      "id": 3,
+      "id": 34,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
-        "orientation": "horizontal",
+        "orientation": "auto",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
@@ -520,6 +1250,7 @@
           "values": false
         },
         "showPercentChange": false,
+        "text": {},
         "textMode": "auto",
         "wideLayout": true
       },
@@ -530,20 +1261,15 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "borg_total_size{instance=~\"$instance\"}",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": true,
+          "editorMode": "code",
+          "expr": "max by(repository) (borg_last_backup_timestamp{instance=~\"$instance\", repository=~\"$repository\"} * 1000)",
+          "instant": false,
           "legendFormat": "{{repository}}",
-          "range": false,
-          "refId": "A",
-          "useBackend": false
+          "range": true,
+          "refId": "A"
         }
       ],
-      "title": "Total size",
+      "title": "Last Backup Timestamp",
       "type": "stat"
     },
     {
@@ -581,7 +1307,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": 3600000,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -590,7 +1316,6 @@
               "mode": "off"
             }
           },
-          "decimals": 0,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -605,17 +1330,17 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "none"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 24,
-        "x": 0,
+        "h": 5,
+        "w": 7,
+        "x": 2,
         "y": 19
       },
-      "id": 7,
+      "id": 61,
       "options": {
         "legend": {
           "calcs": [],
@@ -635,14 +1360,15 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "borg_total_backups{instance=~\"$instance\"}",
+          "exemplar": false,
+          "expr": "borg_last_backup_files{instance=~\"$instance\", repository=~\"$repository\"}",
           "instant": false,
           "legendFormat": "{{repository}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total Backups",
+      "title": "Last Backup Number of Files",
       "type": "timeseries"
     },
     {
@@ -680,7 +1406,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": 3600000,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -703,17 +1429,17 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "s"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 25
+        "h": 5,
+        "w": 7,
+        "x": 9,
+        "y": 19
       },
-      "id": 6,
+      "id": 62,
       "options": {
         "legend": {
           "calcs": [],
@@ -733,114 +1459,15 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "borg_total_size{instance=~\"$instance\"}",
+          "exemplar": false,
+          "expr": "borg_last_backup_duration{instance=~\"$instance\", repository=~\"$repository\"}",
           "instant": false,
           "legendFormat": "{{repository}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Total Size",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "default": false,
-        "type": "prometheus",
-        "uid": "P5DCFC7561CCDE821"
-      },
-      "description": "Size of repository on disk",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": 3600000,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 25
-      },
-      "id": 8,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P5DCFC7561CCDE821"
-          },
-          "editorMode": "code",
-          "expr": "borg_total_deduplicated_compressed_size{instance=~\"$instance\"}",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "{{repository}}",
-          "range": true,
-          "refId": "C"
-        }
-      ],
-      "title": "Deduplicated Compressed Size",
+      "title": "Last Backup Duration",
       "type": "timeseries"
     }
   ],
@@ -868,9 +1495,9 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": ["builder:9996"],
-          "value": ["builder:9996"]
+          "selected": false,
+          "text": "builder:9996",
+          "value": "builder:9996"
         },
         "datasource": {
           "type": "prometheus",
@@ -893,6 +1520,34 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "/mnt/files/backup/builder-system",
+          "value": "/mnt/files/backup/builder-system"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(borg_total_backups{instance=~\"$instance\"},repository)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Repository",
+        "multi": true,
+        "name": "repository",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(borg_total_backups{instance=~\"$instance\"},repository)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -903,7 +1558,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "Borgmatic Backups",
-  "uid": "ee2gordu5atc0f",
-  "version": 7,
+  "uid": "de31iu9c481z4c",
+  "version": 15,
   "weekStart": ""
 }

@@ -446,6 +446,7 @@
     }
     {
       job_name = "borgmatic_omnibus";
+      scrape_timeout = "30s";
       static_configs = [{
         targets = [
           "${hosts.omnibus.config.networking.hostName}:${

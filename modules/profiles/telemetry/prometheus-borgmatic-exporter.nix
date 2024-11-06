@@ -3,8 +3,7 @@
     enable = true;
     openFirewall = true;
 
-    # TODO: Monitor all configuration files
-    configFile = "/etc/borgmatic.d/system.yaml";
+    configFile = "/etc/borgmatic.d/";
   };
 
   systemd.services.prometheus-borgmatic-exporter.serviceConfig = {

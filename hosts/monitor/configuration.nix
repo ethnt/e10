@@ -4,7 +4,7 @@
       profiles.monitoring.loki.default
       profiles.monitoring.rsyslogd
       profiles.monitoring.thanos.default
-      profiles.telemetry.prometheus-pve-exporter.default
+      # profiles.telemetry.prometheus-pve-exporter.default
       profiles.telemetry.prometheus-redis-exporter
       profiles.services.uptime-kuma
     ] ++ [ ./profiles/prometheus.nix ./profiles/grafana/default.nix ];

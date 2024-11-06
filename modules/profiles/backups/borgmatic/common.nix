@@ -13,6 +13,13 @@
       mode = "0400";
       owner = "borgmatic";
     };
+
+    apprise_url_ses = {
+      format = "yaml";
+      sopsFile = ./secrets.yml;
+      mode = "0777";
+      owner = "borgmatic";
+    };
   };
 
   users = {
@@ -57,6 +64,12 @@
           config = "__config";
         };
       };
+      on_error = [''
+        ${lib.getExe pkgs.apprise} \
+          --title "[E10] Backup failed for ${config.networking.hostName}" \
+          --body "Backup failed for ${config.networking.hostName} on {repository}" \
+          $(cat ${config.sops.secrets.apprise_url_ses.path})
+      ''];
     };
   };
 }

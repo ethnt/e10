@@ -146,7 +146,7 @@
         }
         {
           name = "Borgmatic Backups";
-          options.path = ./provisioning/borgmatic/logs.json;
+          options.path = ./provisioning/borgmatic/backups.json;
         }
       ];
 
@@ -195,116 +195,27 @@
 
         rules.settings = {
           apiVersion = 1;
-          deleteRules = [ ];
+          deleteRules = [
+            { uid = "5166671F-AEF3-434D-99B4-18C7A32BD708"; }
+
+            { uid = "9FEB48CD-F6ED-4B7A-86DA-A912D67D142C"; }
+
+            { uid = "77EE3CEA-A817-4A48-86D6-62839DE1A713"; }
+
+            { uid = "32B02B4C-282B-447C-91E9-98B196B9390F"; }
+
+            { uid = "E52329A1-393E-47B0-B849-7DB025FA47A0"; }
+
+            { uid = "9814CF38-373F-4251-BE8A-2438D9C4A88C"; }
+
+            { uid = "75AA8FE9-04D2-4502-B59D-4F2F5BD1DFE0"; }
+          ];
           groups = [{
             orgId = 1;
             name = "Default";
             interval = "60s";
             folder = "Homelab";
-            rules = let
-              mkBackupRule = { host, uuid }:
-                let hostname = host.config.networking.hostName;
-                in {
-                  uid = uuid;
-                  title = "System failed to backup on ${hostname}";
-                  condition = "C";
-                  data = [
-                    {
-                      refId = "A";
-                      queryType = "range";
-                      relativeTimeRange = {
-                        from = 86400;
-                        to = 0;
-                      };
-                      datasourceUid = "P8E80F9AEF21F6940";
-                      model = {
-                        editorMode = "code";
-                        expr = ''
-                          count_over_time({application="borgmatic", host="${hostname}"} |~ "Failed backup" [$__auto])'';
-                        intervalMs = 1000;
-                        maxDataPoints = 43200;
-                        queryType = "range";
-                        refId = "A";
-                      };
-                    }
-                    {
-                      refId = "B";
-                      relativeTimeRange = {
-                        from = 86400;
-                        to = 0;
-                      };
-                      datasourceUid = "__expr__";
-                      model = {
-                        conditions = [{
-                          evaluator = {
-                            params = [ ];
-                            type = "gt";
-                          };
-                          operator = { type = "and"; };
-                          query = { params = [ "B" ]; };
-                          reducer = {
-                            params = [ ];
-                            type = "last";
-                          };
-                          type = "query";
-                        }];
-                        datasource = {
-                          type = "__expr__";
-                          uid = "__expr__";
-                        };
-                        expression = "A";
-                        intervalMs = 1000;
-                        maxDataPoints = 43200;
-                        reducer = "count";
-                        refId = "B";
-                        type = "reduce";
-                      };
-                    }
-                    {
-                      refId = "C";
-                      relativeTimeRange = {
-                        from = 86400;
-                        to = 0;
-                      };
-                      datasourceUid = "__expr__";
-                      model = {
-                        conditions = [{
-                          evaluator = {
-                            params = [ 0 ];
-                            type = "gt";
-                          };
-                          operator = { type = "and"; };
-                          query = { params = [ "C" ]; };
-                          reducer = {
-                            params = [ ];
-                            type = "last";
-                          };
-                          type = "query";
-                        }];
-                        datasource = {
-                          type = "__expr__";
-                          uid = "__expr__";
-                        };
-                        expression = "B";
-                        intervalMs = 1000;
-                        maxDataPoints = 43200;
-                        refId = "C";
-                        type = "threshold";
-                      };
-                    }
-                  ];
-                  noDataState = "OK";
-                  execErrState = "Error";
-                  for = "5m";
-                  annotations = {
-                    description = "";
-                    runbook_url = "";
-                    summary = "";
-                  };
-                  labels = { };
-                  isPaused = false;
-                };
-            in [
+            rules = [
               {
                 uid = "a0513fe1-c679-4411-8512-d52334814942";
                 title = "Rack UPS is on battery power";
@@ -451,34 +362,6 @@
                 labels = { severity = "critical"; };
                 isPaused = false;
               }
-              (mkBackupRule {
-                host = hosts.omnibus;
-                uuid = "5166671F-AEF3-434D-99B4-18C7A32BD708";
-              })
-              (mkBackupRule {
-                host = hosts.monitor;
-                uuid = "9FEB48CD-F6ED-4B7A-86DA-A912D67D142C";
-              })
-              (mkBackupRule {
-                host = hosts.htpc;
-                uuid = "77EE3CEA-A817-4A48-86D6-62839DE1A713";
-              })
-              (mkBackupRule {
-                host = hosts.matrix;
-                uuid = "32B02B4C-282B-447C-91E9-98B196B9390F";
-              })
-              (mkBackupRule {
-                host = hosts.controller;
-                uuid = "E52329A1-393E-47B0-B849-7DB025FA47A0";
-              })
-              (mkBackupRule {
-                host = hosts.builder;
-                uuid = "9814CF38-373F-4251-BE8A-2438D9C4A88C";
-              })
-              (mkBackupRule {
-                host = hosts.gateway;
-                uuid = "75AA8FE9-04D2-4502-B59D-4F2F5BD1DFE0";
-              })
               {
                 uid = "e1a38758-5093-49e2-8041-ae81225b1ca5";
                 title = "Packet loss is greater than 1%";
