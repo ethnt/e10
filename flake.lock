@@ -971,22 +971,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-24-05": {
-      "locked": {
-        "lastModified": 1729691686,
-        "narHash": "sha256-BAuPWW+9fa1moZTU+jFh+1cUtmsuF8asgzFwejM4wac=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "32e940c7c420600ef0d1ef396dc63b04ee9cad37",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-24.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1727825735,
@@ -1001,11 +985,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1729999895,
-        "narHash": "sha256-G+NKsdtdw0nRuthtRyo4w9sjo4fwK61apWTN8Cu4p9c=",
+        "lastModified": 1730780403,
+        "narHash": "sha256-+mYcXx+APQgK+erYG7zt0ur1HvV+nXmIxniw8vrwz90=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "4c01c31a433a8cb85fba9b2694a47db478ef38e9",
+        "rev": "dd52e79ae101c3237228e374b2d044d35a75de3a",
         "type": "github"
       },
       "original": {
@@ -1262,7 +1246,6 @@
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
-        "nixpkgs-24-05": "nixpkgs-24-05",
         "nixpkgs-master": "nixpkgs-master",
         "sops-nix": "sops-nix",
         "treefmt": "treefmt"

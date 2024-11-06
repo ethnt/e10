@@ -85,19 +85,19 @@
       "directory mask" = "0755";
       "force user" = config.users.users.ethan.name;
     };
+
+    backup = {
+      path = "/data/files/backup";
+      browseable = "yes";
+      "read only" = "no";
+      "guest ok" = "no";
+      "create mask" = "0644";
+      "directory mask" = "0755";
+      "force user" = config.users.users.ethan.name;
+    };
   };
 
   environment.systemPackages = with pkgs; [ yt-dlp ];
-
-  e10.services.backup.jobs.files = {
-    repoName = "${config.networking.hostName}-files";
-    paths = [ "/data/files" ];
-    pruneKeep = {
-      monthly = 1;
-      weekly = 0;
-      daily = 1;
-    };
-  };
 
   programs.fish.shellAliases.iotop = ''
     bash -c "sudo sysctl kernel.task_delayacct=1 && sudo ${pkgs.iotop}/bin/iotop ; sudo sysctl kernel.task_delayacct=0"
@@ -105,6 +105,7 @@
 
   services.borgmatic.configurations.files = {
     source_directories = [ "/data/files" ];
+    exclude_patterns = [ "/data/files/backup" ];
     repositories = [{
       label = "rsync.net";
       path = "ssh://de2228@de2228.rsync.net/./omnibus-files";

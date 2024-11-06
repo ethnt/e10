@@ -21,11 +21,7 @@
       }
       {
         label = "omnibus";
-        # If backing up omnibus, just back up to the already-present directory
-        path = if config.networking.hostName == "omnibus" then
-          "/data/files/backup/${config.networking.hostName}-system"
-        else
-          "/mnt/files/backup/${config.networking.hostName}-system";
+        path = "/mnt/files/backup/${config.networking.hostName}-system";
       }
     ];
     keep_daily = 7;

@@ -14,5 +14,6 @@
     globalConfig.external_labels.prometheus = "${config.networking.hostName}";
   };
 
-  e10.services.backup.jobs.system.exclude = [ "/var/lib/prometheus2/data/wal" ];
+  services.borgmatic.configurations.system.exclude_patterns =
+    [ "/var/lib/prometheus2/data/wal" ];
 }
