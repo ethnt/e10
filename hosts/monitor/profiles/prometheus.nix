@@ -469,6 +469,10 @@
       }];
       scrape_interval = "1m";
     }
-
+    {
+      job_name = "garage";
+      static_configs =
+        [{ targets = [ "${hosts.omnibus.config.networking.hostName}:3903" ]; }];
+    }
   ];
 }

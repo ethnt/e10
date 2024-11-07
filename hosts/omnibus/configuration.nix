@@ -13,6 +13,7 @@
       profiles.users.proxmox
       profiles.databases.postgresql.default
       profiles.services.atticd.default
+      profiles.services.garage.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

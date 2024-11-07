@@ -1,11 +1,18 @@
 { config, profiles, hosts, ... }: {
   imports = [ profiles.web-servers.nginx ];
 
-  sops.secrets.nginx_fileflows_basic_auth_file = {
-    sopsFile = ./secrets.yml;
-    format = "yaml";
-    owner = config.services.nginx.user;
-    inherit (config.services.nginx) group;
+  sops.secrets = {
+    nginx_fileflows_basic_auth_file = {
+      sopsFile = ./secrets.yml;
+      format = "yaml";
+      owner = config.services.nginx.user;
+      inherit (config.services.nginx) group;
+    };
+
+    lego_route53_credentials = {
+      sopsFile = ./secrets.yml;
+      format = "yaml";
+    };
   };
 
   services.nginx.virtualHosts = let
@@ -129,6 +136,32 @@
       '';
     };
 
+    "web.garage.e10.camp" = {
+      forceSSL = true;
+      useACMEHost = "web.garage.e10.camp";
+      serverAliases = [ "*.web.garage.e10.camp" ];
+
+      locations."/" = {
+        proxyPass =
+          "http://${hosts.omnibus.config.networking.hostName}:${toString 3900}";
+      };
+    };
+
+    "s3.garage.e10.camp" = {
+      forceSSL = true;
+      useACMEHost = "s3.garage.e10.camp";
+      serverAliases = [ "*.s3.garage.e10.camp" ];
+
+      locations."/" = {
+        proxyPass =
+          "http://${hosts.omnibus.config.networking.hostName}:${toString 3900}";
+        extraConfig = ''
+          proxy_max_temp_file_size 0;
+          client_max_body_size 5G;
+        '';
+      };
+    };
+
     "netbox.e10.camp" = mkVirtualHost {
       host = hosts.matrix;
       port = 8002;
@@ -188,6 +221,26 @@
         proxy_redirect off;
         proxy_buffering off;
       '';
+    };
+  };
+
+  security.acme.certs = {
+    "s3.garage.e10.camp" = {
+      domain = "s3.garage.e10.camp";
+      extraDomainNames = [ "*.s3.garage.e10.camp" ];
+      dnsProvider = "route53";
+      credentialsFile = config.sops.secrets.lego_route53_credentials.path;
+
+      group = "nginx";
+    };
+
+    "web.garage.e10.camp" = {
+      domain = "web.garage.e10.camp";
+      extraDomainNames = [ "*.web.garage.e10.camp" ];
+      dnsProvider = "route53";
+      credentialsFile = config.sops.secrets.lego_route53_credentials.path;
+
+      group = "nginx";
     };
   };
 }
