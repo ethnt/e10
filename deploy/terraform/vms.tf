@@ -47,7 +47,8 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
   }
 
   vga {
-    enabled = true
+    memory = 16
+    type   = "std"
   }
 
   hostpci {
@@ -77,6 +78,14 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
   hostpci {
     device = "hostpci3"
     id     = "0000:05:00"
+    pcie   = false
+    rombar = true
+    xvga   = false
+  }
+
+  hostpci {
+    device = "hostpci4"
+    id     = "0000:06:00"
     pcie   = false
     rombar = true
     xvga   = false
@@ -135,7 +144,8 @@ resource "proxmox_virtual_environment_vm" "htpc" {
   }
 
   vga {
-    enabled = true
+    memory = 16
+    type   = "std"
   }
 
   # Quadro P4000
@@ -207,7 +217,8 @@ resource "proxmox_virtual_environment_vm" "builder" {
   }
 
   vga {
-    enabled = true
+    memory = 16
+    type   = "std"
   }
 }
 
@@ -268,7 +279,8 @@ resource "proxmox_virtual_environment_vm" "matrix" {
   }
 
   vga {
-    enabled = true
+    memory = 16
+    type   = "std"
   }
 
   hostpci {
@@ -341,7 +353,8 @@ resource "proxmox_virtual_environment_vm" "router" {
   }
 
   vga {
-    enabled = true
+    memory = 16
+    type   = "std"
   }
 
   operating_system {
@@ -428,11 +441,12 @@ resource "proxmox_virtual_environment_vm" "controller" {
   }
 
   vga {
-    enabled = true
+    memory = 16
+    type   = "std"
   }
 
   usb {
-    host = "051d:0002"
+    host = "0463:ffff"
     usb3 = true
   }
 
