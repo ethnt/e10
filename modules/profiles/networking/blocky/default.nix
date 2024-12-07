@@ -17,11 +17,22 @@
       };
       bootstrapDns = "208.67.222.222";
       filtering.queryTypes = [ "AAAA" ];
+      customDNS = {
+        mapping = {
+          "anise.satan.network" = "10.10.1.0";
+          "basil.satan.network" = "10.10.2.0";
+          "cardamom.satan.network" = "10.10.3.0";
+          "elderflower.satan.network" = "10.2.1.0";
+        };
+      };
       blocking = {
-        loading.downloads = {
-          attempts = 5;
-          cooldown = "2s";
-          timeout = "30s";
+        loading = {
+          downloads = {
+            attempts = 5;
+            cooldown = "2s";
+            timeout = "30s";
+          };
+          concurrency = 16;
         };
         blackLists = {
           ads = [ "https://big.oisd.nl/domainswild" ];
@@ -57,7 +68,6 @@
           default = [ "ads" ];
           "st-eturkeltaub2*" = [ "ads" "development" ];
         };
-        loading.concurrency = 16;
       };
       caching = {
         prefetching = true;
