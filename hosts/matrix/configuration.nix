@@ -6,6 +6,8 @@
       profiles.filesystems.files.services
       profiles.services.miniflux.default
       profiles.services.e10-land
+      profiles.services.homebridge
+      profiles.services.netbox.default
       profiles.databases.postgresql.default
       profiles.services.paperless.default
       profiles.media-management.immich
@@ -13,7 +15,6 @@
       profiles.emulation.aarch64-linux
       profiles.power.tripp-lite-smart1500lcd
       profiles.telemetry.prometheus-nut-exporter
-      profiles.services.netbox.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
