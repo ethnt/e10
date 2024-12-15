@@ -91,7 +91,10 @@
           inherit system;
 
           # TODO: Make this on a per-system basis, and maybe per-package
-          config.allowUnfree = true;
+          config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [ "dotnet-sdk-6.0.428" ];
+          };
 
           overlays = [ self.overlays.default ];
         };
