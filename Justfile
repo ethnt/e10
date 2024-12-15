@@ -17,7 +17,6 @@ apply-all:
 
 update-input input:
     nix flake lock --update-input {{ input }}
-    direnv reload
     git commit -am 'Update `{{ input }}`'
 
 check:
