@@ -1,6 +1,10 @@
 { config, flake, lib, ... }: {
   nixpkgs = {
-    config.allowUnfree = true;
+    config = {
+      allowUnfree = true;
+      permittedInsecurePackages =
+        [ "dotnet-sdk-6.0.428" "aspnetcore-runtime-6.0.36" ];
+    };
     overlays = [ flake.overlays.default ];
   };
 
