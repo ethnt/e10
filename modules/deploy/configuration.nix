@@ -1,4 +1,4 @@
-{ self, lib, withSystem, ... }:
+{ self, lib, withSystem, inputs, ... }:
 
 with lib;
 
@@ -25,4 +25,9 @@ let
   mkColmenaOutput = configurations:
     (mkColmenaMeta configurations // mkColmenaNodes configurations);
 
-in { flake.colmena = mkColmenaOutput deployableConfigurations; }
+in {
+  flake = {
+    colmena = mkColmenaOutput deployableConfigurations;
+    colmenaHive = inputs.colmena.lib.makeHive self.outputs.colmena;
+  };
+}
