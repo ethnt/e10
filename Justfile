@@ -1,4 +1,4 @@
-colmena_flags := "-v"
+colmena_flags := "-v --experimental-flake-eval"
 
 default:
     @just --choose
@@ -13,7 +13,7 @@ apply host:
     colmena apply --on={{ host }} {{ colmena_flags }}
 
 apply-all:
-    colmena apply
+    colmena apply --experimental-flake-eval
 
 update-input input:
     nix flake lock --update-input {{ input }}

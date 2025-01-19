@@ -2,7 +2,6 @@
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.services.attic-watch-store.default
-      profiles.networking.tailscale.exit-node
       profiles.networking.blocky.default
       profiles.networking.blocky.redis
       profiles.networking.blocky.postgresql

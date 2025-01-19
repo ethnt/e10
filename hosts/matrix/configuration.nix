@@ -6,7 +6,6 @@
       profiles.filesystems.files.services
       profiles.services.miniflux.default
       profiles.services.e10-land
-      profiles.services.homebridge
       profiles.services.netbox.default
       profiles.databases.postgresql.default
       profiles.services.paperless.default
