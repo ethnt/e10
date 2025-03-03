@@ -9,9 +9,9 @@
 
     settings = {
       server = {
-        domain = "localhost";
+        domain = "grafana.e10.camp";
         http_port = 2342;
-        http_addr = "127.0.0.1";
+        http_addr = "0.0.0.0";
       };
 
       panels = {

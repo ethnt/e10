@@ -154,6 +154,30 @@ resource "aws_route53_record" "spf_turkeltaub_me" {
   ttl     = 300
 }
 
+resource "aws_route53_record" "root_turkeltaub_me" {
+  name    = "turkeltaub.me"
+  zone_id = aws_route53_zone.turkeltaub_me.zone_id
+  type    = "A"
+
+  alias {
+    name                   = aws_s3_bucket_website_configuration.turkeltaub_me_website.website_domain
+    zone_id                = aws_s3_bucket.turkeltaub_me.hosted_zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "www_turkeltaub_me" {
+  name    = "www.turkeltaub.me"
+  zone_id = aws_route53_zone.turkeltaub_me.zone_id
+  type    = "A"
+
+  alias {
+    name                   = aws_s3_bucket_website_configuration.www_turkeltaub_me_website.website_domain
+    zone_id                = aws_s3_bucket.www_turkeltaub_me.hosted_zone_id
+    evaluate_target_health = true
+  }
+}
+
 resource "aws_route53_record" "root_mx_turkeltaub_dev" {
   zone_id = aws_route53_zone.turkeltaub_dev.zone_id
   name    = "turkeltaub.dev"

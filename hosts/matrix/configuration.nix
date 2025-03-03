@@ -1,19 +1,24 @@
 { lib, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ web ++ [
-      profiles.services.attic-watch-store.default
-      profiles.virtualisation.podman
-      profiles.filesystems.files.services
-      profiles.services.miniflux.default
-      profiles.services.e10-land
-      profiles.services.netbox.default
       profiles.databases.postgresql.default
-      profiles.services.paperless.default
-      profiles.media-management.immich
-      profiles.networking.printing
       profiles.emulation.aarch64-linux
+      profiles.filesystems.blockbuster
+      profiles.filesystems.files.services
+      profiles.hardware.intel
+      profiles.media-management.fileflows.node
+      profiles.media-management.immich
+      profiles.services.change-detection.default
+      profiles.networking.printing
       profiles.power.tripp-lite-smart1500lcd
+      profiles.services.attic-watch-store.default
+      profiles.services.e10-land
+      profiles.services.miniflux.default
+      profiles.services.netbox.default
+      profiles.services.paperless.default
       profiles.telemetry.prometheus-nut-exporter
+      profiles.virtualisation.docker
+      profiles.web-servers.nginx
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
@@ -52,6 +57,8 @@
       };
     };
   };
+
+  services.fileflows-node.enableIntelQuickSync = true;
 
   services.borgmatic.configurations.system.source_directories =
     lib.mkAfter [ "/var/www" ];

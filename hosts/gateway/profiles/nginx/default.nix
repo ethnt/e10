@@ -172,6 +172,11 @@
       '';
     };
 
+    "change-detection.e10.camp" = mkVirtualHost {
+      host = hosts.matrix;
+      inherit (hosts.matrix.config.services.changedetection-io) port;
+    };
+
     "cache.e10.camp" = mkVirtualHost {
       host = hosts.omnibus;
       port = 8080;
@@ -242,5 +247,6 @@
 
       group = "nginx";
     };
+
   };
 }

@@ -24,8 +24,8 @@
         path = "/mnt/files/backup/${config.networking.hostName}-system";
       }
     ];
-    keep_daily = 7;
-    keep_weekly = 4;
-    keep_monthly = 3;
+    keep_daily = 3;
+    keep_weekly = 2;
+    keep_monthly = 2;
   };
 }
