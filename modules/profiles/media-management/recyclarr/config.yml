@@ -1,7 +1,7 @@
 radarr:
   movies:
-    base_url: !env_var RADARR_BASE_URL
-    api_key: !env_var RADARR_API_KEY
+    # base_url:
+    # api_key:
     delete_old_custom_formats: true
     replace_existing_custom_formats: true
     media_naming:
@@ -167,8 +167,8 @@ radarr:
 
 sonarr:
   tv:
-    base_url: !env_var SONARR_BASE_URL
-    api_key: !env_var SONARR_API_KEY
+    # base_url:
+    # api_key:
     delete_old_custom_formats: true
     replace_existing_custom_formats: true
     media_naming:
