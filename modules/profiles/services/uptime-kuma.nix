@@ -1,7 +1,10 @@
 {
   services.uptime-kuma = {
     enable = true;
-    settings.PORT = "3001";
+    settings = {
+      HOST = "0.0.0.0";
+      PORT = "3001";
+    };
     appriseSupport = true;
   };
 }

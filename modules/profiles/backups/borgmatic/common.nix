@@ -45,14 +45,13 @@
       encryption_passcommand = "${
           lib.getExe' pkgs.coreutils "cat"
         } ${config.sops.secrets.borg_backup_passphrase.path}";
+
       compression = "auto,lzma";
+
       ssh_command = "ssh -i ${config.sops.secrets.rsync_net_ssh_key.path}";
-      before_backup = [
-        "${
-          lib.getExe' pkgs.borgmatic "borgmatic"
-        } rcreate --encryption repokey-blake2"
-      ];
+
       remote_path = "/usr/local/bin/borg1/borg1";
+
       loki = {
         url = "http://${hosts.monitor.config.networking.hostName}:${
             toString
@@ -64,11 +63,21 @@
           config = "__config";
         };
       };
-      on_error = [''
-        ${lib.getExe pkgs.apprise} \
+
+      before_backup = [
+        "${
+          lib.getExe' pkgs.borgmatic "borgmatic"
+        } rcreate --encryption repokey-blake2"
+      ];
+
+      on_error = let
+        apprise = lib.getExe pkgs.apprise;
+        cat = lib.getExe' pkgs.coreutils "cat";
+      in [''
+        ${apprise} \
           --title "[E10] Backup failed for ${config.networking.hostName}" \
           --body "Backup failed for ${config.networking.hostName} on {repository}" \
-          $(cat ${config.sops.secrets.apprise_url_ses.path})
+          $(${cat} ${config.sops.secrets.apprise_url_ses.path})
       ''];
     };
   };

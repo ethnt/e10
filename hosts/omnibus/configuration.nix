@@ -10,10 +10,12 @@
       profiles.users.files
       profiles.sharing.samba
       profiles.users.ethan
+      profiles.users.nicole
       profiles.users.proxmox
       profiles.databases.postgresql.default
       profiles.services.atticd.default
       profiles.services.garage.default
+      profiles.communications.postfix.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
@@ -69,7 +71,7 @@
   services.samba.settings = {
     proxmox = {
       path = "/data/files/proxmox";
-      browseable = "yes";
+      browseable = "no";
       "read only" = "no";
       "guest ok" = "no";
       "create mask" = "0644";
@@ -79,7 +81,18 @@
 
     personal = {
       path = "/data/files/personal";
-      browseable = "yes";
+      browseable = "no";
+      "read only" = "no";
+      "guest ok" = "no";
+      "create mask" = "0644";
+      "directory mask" = "0755";
+      "force user" = config.users.users.ethan.name;
+      "valid users" = config.users.users.ethan.name;
+    };
+
+    backup = {
+      path = "/data/files/backup";
+      browseable = "no";
       "read only" = "no";
       "guest ok" = "no";
       "create mask" = "0644";
@@ -87,14 +100,15 @@
       "force user" = config.users.users.ethan.name;
     };
 
-    backup = {
-      path = "/data/files/backup";
+    nicole = {
+      path = "/data/files/nicole";
       browseable = "yes";
       "read only" = "no";
       "guest ok" = "no";
       "create mask" = "0644";
       "directory mask" = "0755";
-      "force user" = config.users.users.ethan.name;
+      "force user" = config.users.users.nicole.name;
+      "force group" = config.users.users.nicole.group;
     };
   };
 
@@ -113,7 +127,7 @@
     }];
     keep_daily = 1;
     keep_weekly = 2;
-    keep_monthly = 3;
+    keep_monthly = 2;
   };
 
   system.stateVersion = "24.05";

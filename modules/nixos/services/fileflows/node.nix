@@ -44,8 +44,7 @@ in {
     systemd.tmpfiles.rules = [ "d '${cfg.dataDir}' 0777 podman podman - -" ];
 
     virtualisation.oci-containers.containers.fileflows-node = {
-      image =
-        "revenz/fileflows@sha256:002190c887d602422483e86cde1928a17263605cda0666b88e55897d323719d5";
+      image = "revenz/fileflows:latest";
       environment = {
         TZ = config.time.timeZone;
         ServerUrl = cfg.serverUrl;
@@ -59,7 +58,7 @@ in {
         NVIDIA_VISIBLE_DEVICES = "all";
       };
 
-      extraOptions = [ "--gpus=all" ];
+      extraOptions = [ "--device=nvidia.com/gpu=all" ];
     } // lib.attrsets.optionalAttrs cfg.enableIntelQuickSync {
       extraOptions = [ "--device=/dev/dri:/dev/dri" ];
     };

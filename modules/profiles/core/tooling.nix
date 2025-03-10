@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
+    autojump
     bat
     btop
     bind

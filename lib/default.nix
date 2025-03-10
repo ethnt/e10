@@ -1,11 +1,5 @@
-{ inputs, self, config, withSystem, ... }:
+{ inputs, ... }:
 let
   haumea = inputs.haumea.lib;
-  lib = haumea.load {
-    src = ./src;
-    inputs = {
-      inherit withSystem;
-      flake = { inherit self inputs config; };
-    };
-  };
+  lib = haumea.load { src = ./src; };
 in { flake.lib = lib; }

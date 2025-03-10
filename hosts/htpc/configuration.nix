@@ -3,7 +3,7 @@
     core ++ proxmox-vm ++ [
       profiles.hardware.nvidia
       profiles.sharing.nfs-client
-      profiles.virtualisation.podman
+      profiles.virtualisation.docker
       profiles.filesystems.blockbuster
       profiles.media-management.bazarr
       profiles.media-management.overseerr

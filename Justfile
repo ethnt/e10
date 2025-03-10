@@ -45,6 +45,15 @@ ansible playbook:
 ssh host:
     ssh -F $SSH_CONFIG_FILE root@{{ host }}
 
+scp *args:
+    scp -F $SSH_CONFIG_FILE {{ args }}
+
+rsync *args:
+    rsync -e "ssh -F $SSH_CONFIG_FILE" {{ args }}
+
+sync-e10-land:
+    rsync -rtu --delete --progress -e "ssh -F $SSH_CONFIG_FILE" ~/Documents/e10.land/ matrix:/var/www/e10.land/
+
 image name:
     nom build .#packages.x86_64-linux.{{ name }}-image
 
@@ -52,4 +61,4 @@ terraform *args:
     terraform -chdir=./deploy/terraform/ {{ args }}
 
 edit-secret file:
-    EDITOR="code --wait" sops {{ file }}
+    EDITOR="zed --wait" sops {{ file }}

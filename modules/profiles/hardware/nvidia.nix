@@ -27,6 +27,4 @@
 
   # Even though we're not using xserver, this is required to load the driver
   services.xserver.videoDrivers = [ "nvidia" ];
-
-  virtualisation.docker.enableNvidia = true;
 }

@@ -229,7 +229,7 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "sum by(host) (count_over_time({application=\"borgmatic\", host=~\"$host\"} |~ \"Failed backup\" | __error__=\"\" [$__interval])) or vector(0)",
+          "expr": "(count_over_time({application=\"borgmatic\", host=~\"$host\"} |~ \"Failed backup\" | __error__=\"\" [$__interval]))",
           "legendFormat": "{{host}}",
           "queryType": "range",
           "refId": "A"
