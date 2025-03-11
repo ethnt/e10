@@ -54,11 +54,6 @@
       port = hosts.matrix.config.services.miniflux.config.PORT;
     };
 
-    "blocky.e10.camp" = mkVirtualHost {
-      host = hosts.controller;
-      port = hosts.controller.config.services.blocky.settings.ports.http;
-    };
-
     "prowlarr.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
       inherit (hosts.htpc.config.services.prowlarr) port;
