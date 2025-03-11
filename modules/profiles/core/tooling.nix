@@ -2,8 +2,8 @@
   environment.systemPackages = with pkgs; [
     autojump
     bat
-    btop
     bind
+    btop
     comma
     dust
     glances
@@ -11,6 +11,7 @@
     iperf3
     lm_sensors
     lnav
+    ripgrep
     tmux
     tree
     vim
