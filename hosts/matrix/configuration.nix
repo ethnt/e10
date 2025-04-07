@@ -1,6 +1,6 @@
 { lib, suites, profiles, ... }: {
   imports = with suites;
-    core ++ proxmox-vm ++ web ++ [
+    core ++ proxmox-vm ++ [
       profiles.databases.postgresql.default
       profiles.emulation.aarch64-linux
       profiles.filesystems.blockbuster
@@ -18,7 +18,9 @@
       profiles.services.paperless.default
       profiles.telemetry.prometheus-nut-exporter
       profiles.virtualisation.docker
-      profiles.web-servers.nginx
+      # profiles.web-servers.nginx
+      profiles.web-servers.caddy
+      profiles.services.glance.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

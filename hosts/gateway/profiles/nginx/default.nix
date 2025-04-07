@@ -1,4 +1,4 @@
-{ config, profiles, hosts, ... }: {
+{ config, profiles, lib, hosts, ... }: {
   imports = [ profiles.web-servers.nginx ];
 
   sops.secrets = {
@@ -16,23 +16,97 @@
   };
 
   services.nginx.virtualHosts = let
-    mkVirtualHost = { host, port, http2 ? true, basicAuthFile ? null
-      , extraConfig ? " ", extraSettings ? { }, extraRootLocationConfig ? "" }:
-      {
+    genericProxyConfiguration = ''
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+    '';
+    autheliaProxyHeaders = ''
+      proxy_set_header X-Original-Method $request_method;
+      proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header Content-Length "";
+      # proxy_set_header Connection "upgrade";
+    '';
+    autheliaProxyConfiguration = ''
+      proxy_pass_request_body off;
+      proxy_next_upstream error timeout invalid_header http_500 http_502 http_503; # Timeout if the real server is dead
+      proxy_redirect http:// $scheme://;
+      # proxy_http_version 1.1;
+      proxy_cache_bypass $cookie_session;
+      proxy_no_cache $cookie_session;
+      proxy_buffers 4 32k;
+      client_body_buffer_size 128k;
+    '';
+    autheliaAdvancedProxyConfiguration = ''
+      send_timeout 5m;
+      proxy_read_timeout 240;
+      proxy_send_timeout 240;
+      proxy_connect_timeout 240;
+    '';
+    autheliaInternalLocationConfig = ''
+      internal;
+      proxy_pass http://localhost:9091/api/authz/auth-request;
+
+      ${autheliaProxyHeaders}
+      ${autheliaProxyConfiguration}
+      ${autheliaAdvancedProxyConfiguration}
+    '';
+    autheliaLocationConfig = ''
+      ${autheliaProxyHeaders}
+      ${autheliaProxyConfiguration}
+      ${autheliaAdvancedProxyConfiguration}
+
+      ## Send a subrequest to Authelia to verify if the user is authenticated and has permission to access the resource.
+      auth_request /internal/authelia/authz;
+
+      ## Save the upstream metadata response headers from Authelia to variables.
+      auth_request_set $user $upstream_http_remote_user;
+      auth_request_set $groups $upstream_http_remote_groups;
+      auth_request_set $name $upstream_http_remote_name;
+      auth_request_set $email $upstream_http_remote_email;
+
+      ## Inject the metadata response headers from the variables into the request made to the backend.
+      proxy_set_header Remote-User $user;
+      proxy_set_header Remote-Groups $groups;
+      proxy_set_header Remote-Email $email;
+      proxy_set_header Remote-Name $name;
+
+      auth_request_set $redirection_url $upstream_http_location;
+
+      error_page 401 =302 $redirection_url;
+    '';
+    mkVirtualHost = { host, port, http2 ? true, protected ? false
+      , extraConfig ? " ", extraHostConfiguration ? { }
+      , extraRootLocationConfig ? "" }:
+      let
+        resolvedHost = if host == hosts.gateway then
+          "localhost"
+        else
+          host.config.networking.hostName;
+      in {
         inherit http2 extraConfig;
 
         forceSSL = true;
         enableACME = true;
 
-        locations."/" = {
-          inherit basicAuthFile;
+        locations = {
+          "/internal/authelia/authz" = lib.mkIf protected {
+            extraConfig = autheliaInternalLocationConfig;
+          };
 
-          proxyPass =
-            "http://${host.config.networking.hostName}:${toString port}";
-          proxyWebsockets = true;
-          extraConfig = extraRootLocationConfig;
+          "/" = {
+            proxyPass = "http://${resolvedHost}:${toString port}";
+            # proxyWebsockets = true;
+            extraConfig = ''
+              ${genericProxyConfiguration}
+
+              ${extraRootLocationConfig}
+              ${lib.optionalString protected autheliaLocationConfig}
+            '';
+          };
         };
-      } // extraSettings;
+      } // extraHostConfiguration;
 
     mkRedirect = { destination, status ? 301 }: {
       http2 = true;
@@ -104,7 +178,7 @@
     "fileflows.e10.camp" = mkVirtualHost {
       host = hosts.htpc;
       inherit (hosts.htpc.config.services.fileflows-server) port;
-      basicAuthFile = config.sops.secrets.nginx_fileflows_basic_auth_file.path;
+      protected = true;
     };
 
     "paperless.e10.camp" = mkVirtualHost {
@@ -180,6 +254,67 @@
       '';
     };
 
+    "glance.e10.camp" = mkVirtualHost {
+      host = hosts.matrix;
+      inherit (hosts.matrix.config.services.glance.settings.server) port;
+      # protected = true;
+    };
+
+    "ldap.e10.camp" = mkVirtualHost {
+      host = hosts.gateway;
+      port = hosts.controller.config.services.lldap.settings.http_port;
+    };
+
+    "auth.e10.camp" = {
+      forceSSL = true;
+      enableACME = true;
+
+      locations = {
+        "/" = {
+          proxyPass = "http://localhost:9091";
+          extraConfig = ''
+            ## Headers
+            proxy_set_header Host $host;
+            proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Host $http_host;
+            proxy_set_header X-Forwarded-URI $request_uri;
+            proxy_set_header X-Forwarded-Ssl on;
+            proxy_set_header X-Forwarded-For $remote_addr;
+            proxy_set_header X-Real-IP $remote_addr;
+
+            ## Basic Proxy Configuration
+            client_body_buffer_size 128k;
+            proxy_next_upstream error timeout invalid_header http_500 http_502 http_503; ## Timeout if the real server is dead.
+            proxy_redirect  http://  $scheme://;
+            # proxy_http_version 1.1;
+            proxy_cache_bypass $cookie_session;
+            proxy_no_cache $cookie_session;
+            proxy_buffers 64 256k;
+
+            ## Trusted Proxies Configuration
+            ## Please read the following documentation before configuring this:
+            ##     https://www.authelia.com/integration/proxies/nginx/#trusted-proxies
+            # set_real_ip_from 10.0.0.0/8;
+            # set_real_ip_from 172.16.0.0/12;
+            # set_real_ip_from 192.168.0.0/16;
+            # set_real_ip_from fc00::/7;
+            real_ip_header X-Forwarded-For;
+            real_ip_recursive on;
+
+            ## Advanced Proxy Configuration
+            send_timeout 5m;
+            proxy_read_timeout 360;
+            proxy_send_timeout 360;
+            proxy_connect_timeout 360;
+          '';
+        };
+
+        "/api/verify".proxyPass = "http://localhost:9091";
+        "/api/authz/".proxyPass = "http://localhost:9091";
+      };
+    };
+
     "e10.video" = mkVirtualHost {
       host = hosts.htpc;
       inherit (hosts.htpc.config.services.plex) port;
@@ -215,9 +350,8 @@
         proxy_set_header X-Plex-Provides $http_x_plex_provides;
         proxy_set_header X-Plex-Device-Vendor $http_x_plex_device_vendor;
         proxy_set_header X-Plex-Model $http_x_plex_model;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_http_version 1.1;
+        # proxy_set_header Connection "upgrade";
+        # proxy_http_version 1.1;
         proxy_redirect off;
         proxy_buffering off;
       '';

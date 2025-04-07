@@ -1,18 +1,10 @@
 {
-  services.nginx.virtualHosts = {
-    "e10.land" = {
-      listen = [{
-        addr = "0.0.0.0";
-        port = 8090;
-      }];
-
-      locations."/" = {
-        root = "/var/www/e10.land";
-        extraConfig = ''
-          autoindex on;
-          fancyindex on;
-        '';
-      };
+  services.caddy.virtualHosts = {
+    "http://e10.land:8090" = {
+      extraConfig = ''
+        file_server browse
+        root * /var/www/e10.land/
+      '';
     };
   };
 

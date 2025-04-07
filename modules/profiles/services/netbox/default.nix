@@ -14,7 +14,9 @@
     settings = {
       CSRF_TRUSTED_ORIGINS = [
         "https://netbox.e10.camp"
-        "http://${config.networking.hostName}:8001"
+        "http://${config.networking.hostName}:${
+          toString config.services.netbox.port
+        }"
         "http://${config.networking.hostName}:8002"
       ];
     };
@@ -22,19 +24,20 @@
     listenAddress = "0.0.0.0";
   };
 
-  services.nginx.group = "netbox";
-  services.nginx.virtualHosts = {
-    "netbox.e10.camp" = {
-      listen = [{
-        addr = "0.0.0.0";
-        port = 8002;
-      }];
+  services.caddy.virtualHosts."http://netbox.e10.camp:8002" = {
+    extraConfig = ''
+      encode gzip zstd
 
-      locations."/".proxyPass =
-        "http://localhost:${toString config.services.netbox.port}";
-      locations."/static".root = "${config.services.netbox.dataDir}";
-    };
+      file_server /static {
+        root ${config.services.netbox.dataDir}
+      }
+
+      reverse_proxy * http://localhost:${toString config.services.netbox.port}
+    '';
   };
+
+  # Needed so Caddy can read Netbox's static files
+  users.groups.netbox.members = [ config.services.caddy.user ];
 
   networking.firewall.allowedTCPPorts = [ config.services.netbox.port 8002 ];
 }

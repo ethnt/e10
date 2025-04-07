@@ -61,4 +61,4 @@ terraform *args:
     terraform -chdir=./deploy/terraform/ {{ args }}
 
 edit-secret file:
-    EDITOR="zed --wait" sops {{ file }}
+    EDITOR="code --wait" sops {{ file }}

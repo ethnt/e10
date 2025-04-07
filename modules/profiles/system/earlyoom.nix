@@ -1,1 +1,6 @@
-{ services.earlyoom.enable = true; }
+{
+  services.earlyoom = {
+    enable = true;
+    enableDebugInfo = true;
+  };
+}

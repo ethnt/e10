@@ -325,6 +325,18 @@
       }];
     }
     {
+      job_name = "authelia_gateway";
+      metrics_path = "/metrics";
+      static_configs =
+        [{ targets = [ "${hosts.gateway.config.networking.hostName}:9959" ]; }];
+    }
+    {
+      job_name = "caddy_gateway";
+      metrics_path = "/metrics";
+      static_configs =
+        [{ targets = [ "${hosts.gateway.config.networking.hostName}:2019" ]; }];
+    }
+    {
       job_name = "nginx_matrix";
       metrics_path = "/metrics";
       static_configs = [{

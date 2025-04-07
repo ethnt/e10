@@ -67,6 +67,15 @@
       limits_config = {
         reject_old_samples = true;
         reject_old_samples_max_age = "168h";
+        per_stream_rate_limit = "512M";
+        per_stream_rate_limit_burst = "1024M";
+        cardinality_limit = 200000;
+        ingestion_burst_size_mb = 1000;
+        ingestion_rate_mb = 10000;
+        max_entries_limit_per_query = 1000000;
+        max_label_value_length = 20480;
+        max_label_name_length = 10240;
+        max_label_names_per_series = 300;
       };
       table_manager = {
         retention_deletes_enabled = false;

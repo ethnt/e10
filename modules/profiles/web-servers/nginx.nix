@@ -1,8 +1,9 @@
 { pkgs, ... }: {
   services.nginx = {
     enable = true;
-    package =
-      pkgs.nginx.override { modules = [ pkgs.nginxModules.fancyindex ]; };
+    package = pkgs.nginx.override {
+      modules = with pkgs.nginxModules; [ fancyindex develkit set-misc ];
+    };
     statusPage = true;
   };
 
