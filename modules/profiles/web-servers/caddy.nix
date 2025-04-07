@@ -8,9 +8,8 @@
       hash = "sha256-fB4HuGbjK9df+rIv0eCMyDvLaISaEeINyjwz+H8lM3g=";
     };
     globalConfig = ''
-      # Admin is required to be on so Nix can reload the configuration instead of restart the whole process
       admin :2019 {
-        origins 0.0.0.0
+        origins 127.0.0.1 100.0.0.0/8
       }
 
       debug

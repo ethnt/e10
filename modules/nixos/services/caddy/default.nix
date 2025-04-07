@@ -2,11 +2,9 @@
 
 with lib;
 
-let cfg = config.services.caddy-proxy;
+let cfg = config.services.caddy;
 in {
-  options.services.caddy-proxy = {
-    enable = mkEnableOption "Enable proxying with Caddy";
-
+  options.services.caddy = {
     proxies = mkOption {
       type = types.attrsOf (types.submodule {
         options = {
@@ -46,8 +44,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.caddy = { enable = true; };
-
     services.caddy.virtualHosts = mapAttrs (name: value:
       let
         resolvedHost = if config.networking.hostName

@@ -129,10 +129,6 @@
           options.path = ./provisioning/unifi/sites.json;
         }
         {
-          name = "NGINX";
-          options.path = ./provisioning/nginx.json;
-        }
-        {
           name = "Proxmox";
           options.path = ./provisioning/proxmox.json;
         }

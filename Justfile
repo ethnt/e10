@@ -27,6 +27,9 @@ repl:
 format:
     nix fmt
 
+lint:
+    statix check .
+
 age-from-host host:
     nix shell nixpkgs#ssh-to-age --command sh -c "ssh-keyscan {{ host }} | ssh-to-age"
 

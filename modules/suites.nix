@@ -20,8 +20,7 @@
     profiles.users.root
   ];
 
-  web =
-    [ profiles.telemetry.prometheus-nginx-exporter profiles.web-servers.nginx ];
+  web = [ profiles.security.acme profiles.web-servers.caddy ];
 
   minimal = [
     profiles.core.common

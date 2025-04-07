@@ -18,7 +18,6 @@
       profiles.services.paperless.default
       profiles.telemetry.prometheus-nut-exporter
       profiles.virtualisation.docker
-      # profiles.web-servers.nginx
       profiles.web-servers.caddy
       profiles.services.glance.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
