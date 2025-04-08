@@ -129,10 +129,6 @@
           options.path = ./provisioning/unifi/sites.json;
         }
         {
-          name = "NGINX";
-          options.path = ./provisioning/nginx.json;
-        }
-        {
           name = "Proxmox";
           options.path = ./provisioning/proxmox.json;
         }
@@ -147,6 +143,10 @@
         {
           name = "Borgmatic Backups";
           options.path = ./provisioning/borgmatic/backups.json;
+        }
+        {
+          name = "Caddy";
+          options.path = ./provisioning/caddy.json;
         }
       ];
 

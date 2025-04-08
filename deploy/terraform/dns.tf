@@ -6,6 +6,14 @@ resource "aws_route53_zone" "e10_video" {
   name = "e10.video"
 }
 
+resource "aws_route53_zone" "e10_computer" {
+  name = "e10.computer"
+}
+
+resource "aws_route53_zone" "e10_llc" {
+  name = "e10.llc"
+}
+
 resource "aws_route53_zone" "e10_land" {
   name = "e10.land"
 }
@@ -101,6 +109,14 @@ resource "aws_route53_record" "status_e10_camp" {
 resource "aws_route53_record" "wildcard_e10_camp" {
   zone_id = aws_route53_zone.e10_camp.zone_id
   name    = "*.e10.camp"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.gateway.public_ip]
+}
+
+resource "aws_route53_record" "unifi_satan_network" {
+  zone_id = aws_route53_zone.satan_network.zone_id
+  name    = "unifi.satan.network"
   type    = "A"
   ttl     = 300
   records = [aws_instance.gateway.public_ip]
@@ -221,6 +237,102 @@ resource "aws_route53_record" "fm3_domainkey_turkeltaub_dev" {
 resource "aws_route53_record" "spf_turkeltaub_dev" {
   zone_id = aws_route53_zone.turkeltaub_dev.zone_id
   name    = "turkeltaub.dev"
+  type    = "TXT"
+  records = ["v=spf1 include:spf.messagingengine.com ?all"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "root_mx_e10_computer" {
+  zone_id = aws_route53_zone.e10_computer.zone_id
+  name    = "e10.computer"
+  type    = "MX"
+  records = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "wildcard_mx_e10_computer" {
+  zone_id = aws_route53_zone.e10_computer.zone_id
+  name    = "*.e10.computer"
+  type    = "MX"
+  records = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm1_domainkey_e10_computer" {
+  zone_id = aws_route53_zone.e10_computer.zone_id
+  name    = "fm1._domainkey.e10.computer"
+  type    = "CNAME"
+  records = ["fm1.e10.computer.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm2_domainkey_e10_computer" {
+  zone_id = aws_route53_zone.e10_computer.zone_id
+  name    = "fm2._domainkey.e10.computer"
+  type    = "CNAME"
+  records = ["fm2.e10.computer.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm3_domainkey_e10_computer" {
+  zone_id = aws_route53_zone.e10_computer.zone_id
+  name    = "fm3._domainkey.e10.computer"
+  type    = "CNAME"
+  records = ["fm3.e10.computer.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "spf_e10_computer" {
+  zone_id = aws_route53_zone.e10_computer.zone_id
+  name    = "e10.computer"
+  type    = "TXT"
+  records = ["v=spf1 include:spf.messagingengine.com ?all"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "root_mx_e10_llc" {
+  zone_id = aws_route53_zone.e10_llc.zone_id
+  name    = "e10.llc"
+  type    = "MX"
+  records = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "wildcard_mx_e10_llc" {
+  zone_id = aws_route53_zone.e10_llc.zone_id
+  name    = "*.e10.llc"
+  type    = "MX"
+  records = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm1_domainkey_e10_llc" {
+  zone_id = aws_route53_zone.e10_llc.zone_id
+  name    = "fm1._domainkey.e10.llc"
+  type    = "CNAME"
+  records = ["fm1.e10.llc.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm2_domainkey_e10_llc" {
+  zone_id = aws_route53_zone.e10_llc.zone_id
+  name    = "fm2._domainkey.e10.llc"
+  type    = "CNAME"
+  records = ["fm2.e10.llc.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm3_domainkey_e10_llc" {
+  zone_id = aws_route53_zone.e10_llc.zone_id
+  name    = "fm3._domainkey.e10.llc"
+  type    = "CNAME"
+  records = ["fm3.e10.llc.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "spf_e10_llc" {
+  zone_id = aws_route53_zone.e10_llc.zone_id
+  name    = "e10.llc"
   type    = "TXT"
   records = ["v=spf1 include:spf.messagingengine.com ?all"]
   ttl     = 300

@@ -27,6 +27,9 @@ repl:
 format:
     nix fmt
 
+lint:
+    statix check .
+
 age-from-host host:
     nix shell nixpkgs#ssh-to-age --command sh -c "ssh-keyscan {{ host }} | ssh-to-age"
 
@@ -61,4 +64,4 @@ terraform *args:
     terraform -chdir=./deploy/terraform/ {{ args }}
 
 edit-secret file:
-    EDITOR="zed --wait" sops {{ file }}
+    EDITOR="code --wait" sops {{ file }}

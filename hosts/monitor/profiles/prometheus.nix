@@ -301,40 +301,28 @@
       }];
     }
     {
-      job_name = "nginx_gateway";
+      job_name = "authelia_gateway";
       metrics_path = "/metrics";
-      static_configs = [{
-        targets = [
-          "${hosts.gateway.config.networking.hostName}:${
-            toString
-            hosts.gateway.config.services.prometheus.exporters.nginx.port
-          }"
-        ];
-      }];
+      static_configs =
+        [{ targets = [ "${hosts.gateway.config.networking.hostName}:9959" ]; }];
     }
     {
-      job_name = "nginx_monitor";
+      job_name = "caddy_gateway";
       metrics_path = "/metrics";
-      static_configs = [{
-        targets = [
-          "${hosts.monitor.config.networking.hostName}:${
-            toString
-            hosts.monitor.config.services.prometheus.exporters.nginx.port
-          }"
-        ];
-      }];
+      static_configs =
+        [{ targets = [ "${hosts.gateway.config.networking.hostName}:2019" ]; }];
     }
     {
-      job_name = "nginx_matrix";
+      job_name = "caddy_matrix";
       metrics_path = "/metrics";
-      static_configs = [{
-        targets = [
-          "${hosts.matrix.config.networking.hostName}:${
-            toString
-            hosts.matrix.config.services.prometheus.exporters.nginx.port
-          }"
-        ];
-      }];
+      static_configs =
+        [{ targets = [ "${hosts.matrix.config.networking.hostName}:2019" ]; }];
+    }
+    {
+      job_name = "caddy_monitor";
+      metrics_path = "/metrics";
+      static_configs =
+        [{ targets = [ "${hosts.monitor.config.networking.hostName}:2019" ]; }];
     }
     {
       job_name = "pve";

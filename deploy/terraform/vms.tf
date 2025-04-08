@@ -124,7 +124,7 @@ resource "proxmox_virtual_environment_vm" "htpc" {
     file_format  = "raw"
     interface    = "scsi0"
     size         = 2048
-    ssd          = true
+    ssd          = false
     cache        = "writeback"
   }
 
