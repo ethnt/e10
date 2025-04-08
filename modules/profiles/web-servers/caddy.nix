@@ -14,7 +14,9 @@
 
       debug
 
-      metrics
+      metrics {
+        per_host
+      }
 
       servers {
         trusted_proxies static private_ranges 100.0.0.0/8

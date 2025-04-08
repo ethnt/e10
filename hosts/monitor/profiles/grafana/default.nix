@@ -144,6 +144,10 @@
           name = "Borgmatic Backups";
           options.path = ./provisioning/borgmatic/backups.json;
         }
+        {
+          name = "Caddy";
+          options.path = ./provisioning/caddy.json;
+        }
       ];
 
       alerting = {

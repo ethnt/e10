@@ -18,6 +18,10 @@ in {
             type = types.bool;
             default = false;
           };
+          skipTLSVerify = mkOption {
+            type = types.bool;
+            default = false;
+          };
           acme = mkOption {
             type = types.submodule {
               options = {
@@ -68,7 +72,15 @@ in {
         extraConfig = ''
           ${optionalString value.protected autheliaForwardAuth}
 
-          reverse_proxy ${resolvedHost}:${toString value.port}
+          reverse_proxy ${resolvedHost}:${toString value.port} {
+            ${
+              optionalString value.skipTLSVerify ''
+                transport http {
+                  tls_insecure_skip_verify
+                }
+              ''
+            }
+          }
 
           ${value.extraConfig}
         '';

@@ -159,6 +159,12 @@
       '';
     };
 
+    "unifi.satan.network" = {
+      host = hosts.controller;
+      port = 8443;
+      skipTLSVerify = true;
+    };
+
     "e10.video" = {
       host = hosts.htpc;
       inherit (hosts.htpc.config.services.plex) port;

@@ -28,11 +28,17 @@
     extraConfig = ''
       encode gzip zstd
 
-      file_server /static {
-        root ${config.services.netbox.dataDir}
+      root * ${config.services.netbox.dataDir}
+
+      @proxied {
+        not path /static/*
       }
 
-      reverse_proxy * http://localhost:${toString config.services.netbox.port}
+      reverse_proxy @proxied http://localhost:${
+        toString config.services.netbox.port
+      }
+
+      file_server
     '';
   };
 

@@ -114,6 +114,14 @@ resource "aws_route53_record" "wildcard_e10_camp" {
   records = [aws_instance.gateway.public_ip]
 }
 
+resource "aws_route53_record" "unifi_satan_network" {
+  zone_id = aws_route53_zone.satan_network.zone_id
+  name    = "unifi.satan.network"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.gateway.public_ip]
+}
+
 resource "aws_route53_record" "root_mx_turkeltaub_me" {
   zone_id = aws_route53_zone.turkeltaub_me.zone_id
   name    = "turkeltaub.me"

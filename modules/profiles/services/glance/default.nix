@@ -1,4 +1,4 @@
-{
+{ hosts, ... }: {
   services.glance = {
     enable = true;
     settings = {
@@ -55,7 +55,7 @@
                   }
                   {
                     title = "Fileflows";
-                    url = "https://fileflows.e10.camp";
+                    url = "https://fileflows.e10.camp/manifest.json";
                     icon = "di:fileflows";
                   }
                   {
@@ -94,14 +94,28 @@
                     icon = "di:changedetection";
                   }
                   {
-                    title = "Change Detection";
-                    url = "https://change-detection.e10.camp";
-                    icon = "di:changedetection";
-                  }
-                  {
                     title = "Garage";
                     url = "https://admin.garage.e10.camp/health";
                     icon = "di:garage";
+                  }
+                  {
+                    title = "Attic";
+                    url = "https://cache.e10.camp";
+                    icon = "di:nixos";
+                  }
+                  {
+                    title = "UniFi";
+                    url = "https://unifi.satan.network";
+                    icon = "di:unifi";
+                  }
+                  {
+                    title = "Blocky";
+                    url =
+                      "http://${hosts.controller.config.networking.hostName}:${
+                        toString
+                        hosts.controller.config.services.blocky.settings.ports.http
+                      }/api/blocking/status";
+                    icon = "di:blocky";
                   }
                 ];
               }
