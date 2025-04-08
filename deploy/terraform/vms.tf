@@ -115,7 +115,7 @@ resource "proxmox_virtual_environment_vm" "htpc" {
   }
 
   memory {
-    dedicated = 49152
+    dedicated = 65536
   }
 
   disk {

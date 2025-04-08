@@ -16,6 +16,13 @@
       owner = "grafana";
     };
 
+    grafana_to_ntfy_password = {
+      sopsFile = ./secrets.yml;
+      format = "yaml";
+      mode = "0700";
+      owner = "grafana";
+    };
+
     aws_ses_smtp_username = {
       sopsFile = ./secrets.yml;
       format = "yaml";
@@ -176,6 +183,20 @@
                 };
               }];
             }
+            {
+              name = "Ntfy";
+              receivers = [{
+                uid = "20";
+                type = "webhook";
+                settings = {
+                  httpMethod = "POST";
+                  url = "http://0.0.0.0:8000";
+                  username = "admin";
+                  password =
+                    "$__file{${config.sops.secrets.grafana_to_ntfy_password.path}}";
+                };
+              }];
+            }
           ];
         };
 
@@ -186,10 +207,16 @@
             orgId = 1;
             receiver = "Email";
             group_by = [ "grafana_folder" "alertname" ];
-            routes = [{
-              receiver = "Pushover";
-              object_matchers = [[ "severity" "=" "critical" ]];
-            }];
+            routes = [
+              {
+                receiver = "Ntfy";
+                object_matchers = [[ "severity" "=" "critical" ]];
+              }
+              {
+                receiver = "Pushover";
+                object_matchers = [[ "severity" "=" "critical" ]];
+              }
+            ];
           }];
         };
 
