@@ -1,6 +1,4 @@
-{ config, profiles, hosts, ... }: {
-  imports = [ profiles.observability.grafana ];
-
+{ config, hosts, ... }: {
   sops.secrets = {
     pushover_user_key = {
       sopsFile = ./secrets.yml;

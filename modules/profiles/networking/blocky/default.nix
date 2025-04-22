@@ -34,11 +34,8 @@
           };
           concurrency = 16;
         };
-        blackLists = {
-          ads = [ "https://big.oisd.nl/domainswild" ];
-          development = [ ];
-        };
-        whiteLists = {
+        denylists = { ads = [ "https://big.oisd.nl/domainswild" ]; };
+        allowlists = {
           ads = [
             (pkgs.writeText "ads-allowlist.txt" ''
               cdn.cookielaw.org
@@ -46,28 +43,8 @@
               link.dwell.com
             '')
           ];
-          development = [
-            (pkgs.writeText "development-allowlist.txt" ''
-              analytics.google.com
-              googleanalytics.com
-              www.googleanalytics.com
-              google-analytics.com
-              www.google-analytics.com
-              googletagmanager.com
-              www.googletagmanager.com
-              px.ads.linkedin.com
-              ad.doubleclick.net
-              munchkin.marketo.net
-              stats.g.doubleclick.net
-              p.adsymptotic.com
-              adservice.google.com
-            '')
-          ];
         };
-        clientGroupsBlock = {
-          default = [ "ads" ];
-          "st-eturkeltaub2*" = [ "ads" "development" ];
-        };
+        clientGroupsBlock = { default = [ "ads" ]; };
       };
       caching = {
         prefetching = true;

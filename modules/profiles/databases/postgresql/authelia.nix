@@ -1,9 +1,10 @@
-{ config, ... }: {
+{ profiles, ... }: {
+  imports = [ profiles.databases.postgresql.default ];
+
   services.postgresql = {
-    enable = true;
-    ensureDatabases = [ config.services.authelia.instances.main.user ];
+    ensureDatabases = [ "authelia-gateway" ];
     ensureUsers = [{
-      name = config.services.authelia.instances.main.user;
+      name = "authelia-gateway";
       ensureDBOwnership = true;
     }];
   };

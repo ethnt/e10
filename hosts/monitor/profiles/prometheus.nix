@@ -112,17 +112,6 @@
       }];
     }
     {
-      job_name = "host_satellite";
-      static_configs = [{
-        targets = [
-          "${hosts.satellite.config.networking.hostName}:${
-            toString
-            hosts.satellite.config.services.prometheus.exporters.node.port
-          }"
-        ];
-      }];
-    }
-    {
       job_name = "smartctl_omnibus";
       static_configs = [{
         targets = [
@@ -167,18 +156,6 @@
       }];
     }
     {
-      job_name = "nut_satellite";
-      metrics_path = "/ups_metrics";
-      static_configs = [{
-        targets = [
-          "${hosts.satellite.config.networking.hostName}:${
-            toString
-            hosts.satellite.config.services.prometheus.exporters.nut.port
-          }"
-        ];
-      }];
-    }
-    {
       job_name = "smokeping_controller";
       metrics_path = "/metrics";
       static_configs = [{
@@ -192,19 +169,6 @@
       scrape_interval = "5s";
     }
     {
-      job_name = "smokeping_satellite";
-      metrics_path = "/metrics";
-      static_configs = [{
-        targets = [
-          "${hosts.satellite.config.networking.hostName}:${
-            toString
-            hosts.satellite.config.services.prometheus.exporters.smokeping.port
-          }"
-        ];
-      }];
-      scrape_interval = "5s";
-    }
-    {
       job_name = "satan_controller";
       metrics_path = "/metrics";
       static_configs = [{
@@ -212,18 +176,6 @@
           "${hosts.controller.config.networking.hostName}:${
             toString
             hosts.controller.config.services.prometheus.exporters.unpoller.port
-          }"
-        ];
-      }];
-    }
-    {
-      job_name = "lawsonnet_controller";
-      metrics_path = "/metrics";
-      static_configs = [{
-        targets = [
-          "${hosts.satellite.config.networking.hostName}:${
-            toString
-            hosts.satellite.config.services.prometheus.exporters.unpoller.port
           }"
         ];
       }];

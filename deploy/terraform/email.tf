@@ -10,8 +10,16 @@ resource "aws_ses_email_identity" "alerts_e10_camp" {
   email = "alerts@e10.camp"
 }
 
+resource "aws_ses_email_identity" "auth_e10_camp" {
+  email = "auth@e10.camp"
+}
+
 resource "aws_ses_email_identity" "ethan_turkeltaub_e10_hey_com" {
   email = "ethan.turkeltaub+e10@hey.com"
+}
+
+resource "aws_ses_email_identity" "ethan_turkeltaub_me" {
+  email = "ethan@turkeltaub.me"
 }
 
 resource "aws_route53_record" "ses_verification" {
@@ -45,7 +53,7 @@ resource "improvmx_domain" "e10_camp" {
 resource "improvmx_email_forward" "wildcard_e10_camp" {
   domain            = "e10.camp"
   alias_name        = "*"
-  destination_email = "ethan.turkeltaub+e10@hey.com"
+  destination_email = "e10@turkeltaub.me"
 }
 
 resource "aws_iam_user" "mailer" {
