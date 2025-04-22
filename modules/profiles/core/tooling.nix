@@ -18,5 +18,6 @@
   ];
 
   programs.htop.enable = true;
+  programs.iotop.enable = true;
   programs.mtr.enable = true;
 }

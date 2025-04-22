@@ -1,13 +1,14 @@
 { config, profiles, suites, hosts, ... }: {
   imports = with suites;
     core ++ aws ++ web ++ [
+      profiles.communications.grafana-to-ntfy.default
+      profiles.communications.ntfy
       profiles.monitoring.loki.default
       profiles.monitoring.rsyslogd
       profiles.monitoring.thanos.default
-      profiles.telemetry.prometheus-redis-exporter
+      profiles.observability.grafana
       profiles.services.uptime-kuma
-      profiles.communications.ntfy
-      profiles.communications.grafana-to-ntfy.default
+      profiles.telemetry.prometheus-redis-exporter
     ] ++ [ ./profiles/prometheus.nix ./profiles/grafana/default.nix ];
 
   deployment.tags = [ "@external" ];

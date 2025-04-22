@@ -1,4 +1,9 @@
 { config, lib, profiles, ... }: {
+  imports = [
+    profiles.databases.postgresql.authelia
+    profiles.databases.redis.authelia
+  ];
+
   sops.secrets = {
     authelia_jwt_secret = {
       sopsFile = ./secrets.yml;
@@ -78,6 +83,26 @@
         user = "uid=authelia,ou=people,dc=e10,dc=camp";
       };
 
+      default_2fa_method = "webauthn";
+
+      webauthn = {
+        disable = false;
+        display_name = "Two-Factor Authentication (2FA)";
+        attestation_conveyance_preference = "indirect";
+        user_verification = "preferred";
+        timeout = "30s";
+      };
+
+      # identity_providers.oidc = {
+      #   clients = [{
+      #     client_id = "tailscale";
+      #     client_name = "Tailscale";
+      #     client_secret = "";
+      #     redirect_uris = [ "https://login.tailscale.com/a/oauth_response" ];
+      #     scopes = [ "openid" "email" "profile" ];
+      #   }];
+      # };
+
       access_control = {
         default_policy = "bypass";
 
@@ -90,7 +115,7 @@
         rules = lib.mkAfter [
           {
             domain = "fileflows.e10.camp";
-            policy = "one_factor";
+            policy = "two_factor";
           }
           {
             domain = "fileflows.e10.camp";
@@ -109,7 +134,7 @@
           }
           {
             domain = "glance.e10.camp";
-            policy = "one_factor";
+            policy = "two_factor";
           }
           # {
           #   domain = "auth.e10.camp";
@@ -130,7 +155,7 @@
       session = {
         redis = {
           host = "0.0.0.0";
-          port = "6380";
+          port = toString config.services.redis.servers.authelia-gateway.port;
         };
         cookies = [{
           domain = "e10.camp";
@@ -143,12 +168,14 @@
 
       notifier = {
         # FIXME
-        disable_startup_check = true;
-        smtp = {
-          address = "smtp://email-smtp.us-east-2.amazonaws.com:465";
-          username = "AKIASLA22YHPQNBNENNK";
-          sender = "admin@e10.camp";
-        };
+        # disable_startup_check = true;
+        # smtp = {
+        #   address = "smtp://email-smtp.us-east-2.amazonaws.com:465";
+        #   username = "AKIASLA22YHPQNBNENNK";
+        #   sender = "auth@e10.camp";
+        #   startup_check_address = "ethan@turkeltaub.me";
+        # };
+        filesystem.filename = "/var/lib/authelia-gateway/notifications.log";
       };
 
       telemetry = {
@@ -162,33 +189,18 @@
     environmentVariables = {
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE =
         config.sops.secrets.authelia_ldap_password.path;
-      AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE =
-        config.sops.secrets.aws_ses_smtp_password.path;
+      # AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE =
+      #   config.sops.secrets.aws_ses_smtp_password.path;
     };
   };
 
-  imports = [ profiles.databases.postgresql.default ];
-
-  services.postgresql = {
-    ensureDatabases = [ "authelia-gateway" ];
-    ensureUsers = [{
-      name = "authelia-gateway";
-      ensureDBOwnership = true;
-    }];
+  systemd.services.authelia = let
+    deps =
+      [ "postgresql.service" "redis-authelia-gateway.service" "lldap.service" ];
+  in {
+    requires = deps;
+    after = deps;
   };
-
-  services.redis.servers.authelia-gateway = {
-    enable = true;
-    openFirewall = true;
-    bind = "0.0.0.0";
-    port = 6380;
-    settings = { protected-mode = false; };
-  };
-
-  systemd.services.authelia.requires =
-    [ "postgresql.service" "redis-authelia-gateway.service" "lldap.service" ];
-  systemd.services.authelia.after =
-    [ "postgresql.service" "redis-authelia-gateway.service" "lldap.service" ];
 
   networking.firewall.allowedTCPPorts = [ 9959 ];
 }

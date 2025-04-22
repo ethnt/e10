@@ -114,9 +114,9 @@
 
   environment.systemPackages = with pkgs; [ yt-dlp ];
 
-  programs.fish.shellAliases.iotop = ''
-    bash -c "sudo sysctl kernel.task_delayacct=1 && sudo ${pkgs.iotop}/bin/iotop ; sudo sysctl kernel.task_delayacct=0"
-  '';
+  # programs.fish.shellAliases.iotop = ''
+  #   bash -c "sudo sysctl kernel.task_delayacct=1 && sudo ${pkgs.iotop}/bin/iotop ; sudo sysctl kernel.task_delayacct=0"
+  # '';
 
   services.borgmatic.configurations.files = {
     source_directories = [ "/data/files" ];
