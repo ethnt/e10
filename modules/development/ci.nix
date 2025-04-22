@@ -52,11 +52,15 @@ in {
 
       buildWorkflow = {
         name = "Build";
-        on.push.branches = [ "main" ];
+        on.push = { };
         jobs = {
           buildSystem = {
             name = "Build system";
             "runs-on" = "ubuntu-latest";
+            "if" = ''
+              github.ref == 'refs/heads/main' ||
+              contains(github.event.head_commit.message, '[build]')
+            '';
             strategy.matrix.host = l.attrNames (l.filterAttrs
               (_: host: host.config.nixpkgs.system == "x86_64-linux")
               self.nixosConfigurations);
