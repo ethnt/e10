@@ -101,6 +101,11 @@
         inherit (hosts.htpc.config.services.sonarr) port;
       };
 
+      "huntarr.e10.camp" = {
+        host = hosts.htpc;
+        inherit (hosts.htpc.config.services.huntarr) port;
+      };
+
       "bazarr.e10.camp" = {
         host = hosts.htpc;
         port = hosts.htpc.config.services.bazarr.listenPort;
@@ -138,6 +143,21 @@
             max_size 2GiB
           }
         '';
+      };
+
+      "readarr.e10.camp" = {
+        host = hosts.htpc;
+        port = 8787;
+      };
+
+      "calibre.e10.camp" = {
+        host = hosts.htpc;
+        inherit (hosts.htpc.config.services.calibre-web.listen) port;
+      };
+
+      "calibre-server.e10.camp" = {
+        host = hosts.htpc;
+        inherit (hosts.htpc.config.services.calibre-server) port;
       };
 
       "fileflows.e10.camp" = {
