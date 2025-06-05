@@ -10,6 +10,8 @@
       '';
     };
 
-    devenv.shells.default.packages = [ config.packages.tf pkgs.terraform ];
+    devShells.terraform = pkgs.mkShell {
+      nativeBuildInputs = with pkgs; [ config.packages.tf pkgs.terraform ];
+    };
   };
 }
