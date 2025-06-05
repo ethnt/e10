@@ -6,10 +6,14 @@
       profiles.virtualisation.docker
       profiles.filesystems.blockbuster
       profiles.media-management.bazarr
+      profiles.media-management.huntarr
       profiles.media-management.overseerr
       profiles.media-management.plex
       profiles.media-management.prowlarr
       profiles.media-management.radarr
+      profiles.media-management.readarr
+      profiles.media-management.calibre-server
+      profiles.media-management.calibre-web
       profiles.media-management.sabnzbd
       profiles.media-management.sonarr
       profiles.media-management.tautulli
@@ -32,6 +36,8 @@
   };
 
   satan.address = "10.10.2.101";
+
+  boot.kernel.sysctl."kernel.sysrq" = 502;
 
   networking = {
     useDHCP = false;

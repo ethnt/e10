@@ -65,3 +65,5 @@ terraform *args:
 
 edit-secret file:
     EDITOR="code --wait" sops {{ file }}
+
+alias fmt := format
