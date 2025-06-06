@@ -66,4 +66,8 @@ terraform *args:
 edit-secret file:
     EDITOR="code --wait" sops {{ file }}
 
+push-result-to-cache:
+    cachix push e10 result
+    attic push e10 result
+
 alias fmt := format

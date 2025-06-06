@@ -27,8 +27,10 @@
 
       formatter = inputs.treefmt.lib.mkWrapper pkgs settings;
 
-      devenv.shells.default.packages = with pkgs;
-        [ config.treefmt.build.wrapper ]
-        ++ (builtins.attrValues config.treefmt.build.programs);
+      devShells.treefmt = pkgs.mkShell {
+        nativeBuildInputs = with pkgs;
+          [ config.treefmt.build.wrapper ]
+          ++ (builtins.attrValues config.treefmt.build.programs);
+      };
     };
 }
