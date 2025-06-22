@@ -214,6 +214,11 @@
         protected = true;
       };
 
+      "gist.e10.camp" = {
+        host = hosts.matrix;
+        port = hosts.matrix.config.services.opengist.settings."http.port";
+      };
+
       "ldap.e10.camp" = {
         host = hosts.gateway;
         port = hosts.controller.config.services.lldap.settings.http_port;
