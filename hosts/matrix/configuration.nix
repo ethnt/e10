@@ -8,18 +8,19 @@
       profiles.hardware.intel
       profiles.media-management.fileflows.node
       profiles.media-management.immich
-      profiles.services.change-detection.default
       profiles.networking.printing
       profiles.power.tripp-lite-smart1500lcd
       profiles.services.attic-watch-store.default
+      profiles.services.change-detection.default
       profiles.services.e10-land
+      profiles.services.glance.default
       profiles.services.miniflux.default
       profiles.services.netbox.default
+      profiles.services.opengist.default
       profiles.services.paperless.default
       profiles.telemetry.prometheus-nut-exporter
       profiles.virtualisation.docker
       profiles.web-servers.caddy
-      profiles.services.glance.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

@@ -61,9 +61,9 @@
       storageEncryptionKeyFile =
         config.sops.secrets.authelia_storage_encryption_key.path;
       sessionSecretFile = config.sops.secrets.authelia_session_secret.path;
-      # oidcHmacSecretFile = config.sops.secrets.authelia_oidc_hmac_secret.path;
-      # oidcIssuerPrivateKeyFile =
-      #   config.sops.secrets.authelia_issuer_private_key.path;
+      oidcHmacSecretFile = config.sops.secrets.authelia_oidc_hmac_secret.path;
+      oidcIssuerPrivateKeyFile =
+        config.sops.secrets.authelia_issuer_private_key.path;
     };
     settings = {
       log.level = "debug";
@@ -93,15 +93,20 @@
         timeout = "30s";
       };
 
-      # identity_providers.oidc = {
-      #   clients = [{
-      #     client_id = "tailscale";
-      #     client_name = "Tailscale";
-      #     client_secret = "";
-      #     redirect_uris = [ "https://login.tailscale.com/a/oauth_response" ];
-      #     scopes = [ "openid" "email" "profile" ];
-      #   }];
-      # };
+      identity_providers.oidc.clients = [{
+        client_id = "opengist";
+        client_name = "Opengist";
+        client_secret =
+          "$pbkdf2-sha512$310000$zLrxDpiootQD8uDfes59Sg$eA7kxuydW7RPbDFBl3Wr5VT1GbzB3etfVjjPMM16zvlOIxJBBHAU/DBJY5oOyan8VRY4mu678FLVPJsaCDBm5Q";
+        public = false;
+        authorization_policy = "two_factor";
+        redirect_uris =
+          [ "https://gist.e10.camp/oauth/openid-connect/callback" ];
+        scopes = [ "openid" "profile" "email" ];
+        response_types = [ "code" ];
+        grant_types = [ "authorization_code" ];
+        response_modes = [ "form_post" "query" "fragment" ];
+      }];
 
       access_control = {
         default_policy = "bypass";
@@ -136,11 +141,6 @@
             domain = "glance.e10.camp";
             policy = "two_factor";
           }
-          # {
-          #   domain = "auth.e10.camp";
-          #   policy = "bypass";
-          #   resources = [ "^/api/.*" ];
-          # }
         ];
       };
 
