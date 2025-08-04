@@ -10,6 +10,7 @@
       profiles.media-management.immich
       profiles.networking.printing
       profiles.power.tripp-lite-smart1500lcd
+      profiles.services.actual
       profiles.services.attic-watch-store.default
       profiles.services.change-detection.default
       profiles.services.e10-land
@@ -18,6 +19,7 @@
       profiles.services.netbox.default
       profiles.services.opengist.default
       profiles.services.paperless.default
+      profiles.services.stirling-pdf
       profiles.telemetry.prometheus-nut-exporter
       profiles.virtualisation.docker
       profiles.web-servers.caddy

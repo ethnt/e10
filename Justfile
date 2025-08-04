@@ -1,4 +1,4 @@
-colmena_flags := "-v --experimental-flake-eval"
+colmena_flags := "-v"
 
 default:
     @just --choose

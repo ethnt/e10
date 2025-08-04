@@ -3,7 +3,7 @@
 
   services.blocky.settings.queryLog = {
     type = "postgresql";
-    target = "postgres://blocky?host=/run/postgresql";
+    target = "postgres://blocky:blocky@localhost:5432/blocky";
     logRetentionDays = 90;
     flushInterval = "5s";
   };

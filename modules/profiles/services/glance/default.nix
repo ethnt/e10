@@ -24,9 +24,9 @@
                     icon = "di:plex";
                   }
                   {
-                    title = "Overseerr";
+                    title = "Jellyseerr";
                     url = "https://requests.e10.video";
-                    icon = "di:overseerr";
+                    icon = "di:jellyseerr";
                   }
                   {
                     title = "Sabnzbd";
@@ -55,7 +55,8 @@
                   }
                   {
                     title = "Fileflows";
-                    url = "https://fileflows.e10.camp/manifest.json";
+                    url = "https://fileflows.e10.camp";
+                    check-url = "https://fileflows.e10.camp/manifest.json";
                     icon = "di:fileflows";
                   }
                   {

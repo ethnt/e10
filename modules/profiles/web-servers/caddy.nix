@@ -5,7 +5,7 @@
       plugins = [
         "github.com/mholt/caddy-ratelimit@v0.1.1-0.20250318145942-a8e9f68d7bed"
       ];
-      hash = "sha256-fB4HuGbjK9df+rIv0eCMyDvLaISaEeINyjwz+H8lM3g=";
+      hash = "sha256-fGWEtofpGTaovOu+FL+Dx7k44T7ZsS4ThO6evaVCvIQ=";
     };
     globalConfig = ''
       admin :2019 {

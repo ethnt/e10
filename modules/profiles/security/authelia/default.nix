@@ -120,6 +120,11 @@
         rules = lib.mkAfter [
           {
             domain = "fileflows.e10.camp";
+            policy = "bypass";
+            resources = [ "^/manifest.json" "^/api([/?].*)?$" ];
+          }
+          {
+            domain = "fileflows.e10.camp";
             policy = "two_factor";
           }
           {
@@ -128,17 +133,16 @@
             methods = [ "HEAD" ];
           }
           {
-            domain = "fileflows.e10.camp";
-            policy = "bypass";
-            resources = [ "^/manifest.json" "^/api([/?].*)?$" ];
-          }
-          {
             domain = "*.e10.camp";
             policy = "bypass";
             methods = [ "HEAD" ];
           }
           {
             domain = "glance.e10.camp";
+            policy = "two_factor";
+          }
+          {
+            domain = "pdf.e10.camp";
             policy = "two_factor";
           }
         ];

@@ -123,7 +123,14 @@
 
       "requests.e10.video" = {
         host = hosts.htpc;
-        inherit (hosts.htpc.config.services.overseerr) port;
+        inherit (hosts.htpc.config.services.jellyseerr) port;
+        acme.environmentFile =
+          config.sops.secrets.e10_video_lego_route53_credentials.path;
+      };
+
+      "join.e10.video" = {
+        host = hosts.htpc;
+        inherit (hosts.htpc.config.services.wizarr) port;
         acme.environmentFile =
           config.sops.secrets.e10_video_lego_route53_credentials.path;
       };
@@ -224,6 +231,13 @@
         port = hosts.controller.config.services.lldap.settings.http_port;
       };
 
+      "pdf.e10.camp" = {
+        host = hosts.matrix;
+        port =
+          hosts.matrix.config.services.stirling-pdf.environment.SERVER_PORT;
+        protected = true;
+      };
+
       "auth.e10.camp" = {
         host = hosts.gateway;
         port = 9091;
@@ -238,6 +252,11 @@
         host = hosts.controller;
         port = 8443;
         skipTLSVerify = true;
+      };
+
+      "budget.e10.camp" = {
+        host = hosts.matrix;
+        inherit (hosts.matrix.config.services.actual.settings) port;
       };
 
       "e10.video" = {

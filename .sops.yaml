@@ -1,7 +1,7 @@
 keys:
   - &user_ethnt age10539mc6shf02hpa8huyjktdw3nfyavxdg8pt247wwvq4xrv8h5zs8nc0k0
-  - &host_gateway age17lsd78hka8rmuvmmx6d03cqjl2h55lsvrnzdfq0ge4acujf6nffswdwvr0
-  - &host_monitor age10jmr8lvn5wmxv6w0lk3vapawljnqfvws095ale94mthcgxueza9sscqq3h
+  - &host_gateway age1cxs9kx4nezjunv8a7m9cz07vd5843dxx239elz2wt0ms6u5ls97q9ud6k7
+  - &host_monitor age134vfx7ce3z7fpzqpcm4nlwcav0apm00g95nrrgm2y0m8wa7rvy6s765gl8
   - &host_omnibus age1k5nzxq4ej2u9ls97c2dhlz96j2vghv0assz5g0p4npzyc8c8fqlqld72hg
   - &host_htpc age1gkzp905yqkla54l52m4xkqtxpn0sndkx0vh6qqa8d2tu29x8f35q354gpe
   - &host_matrix age1c4d93hmawmx8nt8g2sjrxcngfl7qx7y6vwxpqqg7grrkhjen6fvstljgg9

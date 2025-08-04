@@ -1,33 +1,34 @@
 { suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
-      profiles.hardware.nvidia
-      profiles.sharing.nfs-client
-      profiles.virtualisation.docker
       profiles.filesystems.blockbuster
+      profiles.hardware.nvidia
       profiles.media-management.bazarr
+      profiles.media-management.calibre-server
+      profiles.media-management.calibre-web
+      profiles.media-management.fileflows.server
       profiles.media-management.huntarr
-      profiles.media-management.overseerr
+      profiles.media-management.jellyseerr
       profiles.media-management.plex
       profiles.media-management.prowlarr
       profiles.media-management.radarr
       profiles.media-management.readarr
-      profiles.media-management.calibre-server
-      profiles.media-management.calibre-web
+      profiles.media-management.recyclarr.default
       profiles.media-management.sabnzbd
       profiles.media-management.sonarr
       profiles.media-management.tautulli
+      profiles.media-management.wizarr
       profiles.media-management.xteve
-      profiles.media-management.fileflows.server
-      profiles.media-management.recyclarr.default
-      profiles.telemetry.prometheus-bazarr-exporter.default
-      profiles.telemetry.prometheus-sonarr-exporter.default
-      profiles.telemetry.prometheus-radarr-exporter.default
-      profiles.telemetry.prometheus-prowlarr-exporter.default
-      profiles.telemetry.prometheus-plex-media-server-exporter.default
-      profiles.telemetry.prometheus-sabnzbd-exporter.default
-      profiles.telemetry.prometheus-dcgm-exporter
       profiles.services.attic-watch-store.default
+      profiles.sharing.nfs-client
+      profiles.telemetry.prometheus-bazarr-exporter.default
+      profiles.telemetry.prometheus-dcgm-exporter
+      profiles.telemetry.prometheus-plex-media-server-exporter.default
+      profiles.telemetry.prometheus-prowlarr-exporter.default
+      profiles.telemetry.prometheus-radarr-exporter.default
+      profiles.telemetry.prometheus-sabnzbd-exporter.default
+      profiles.telemetry.prometheus-sonarr-exporter.default
+      profiles.virtualisation.docker
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   deployment = {

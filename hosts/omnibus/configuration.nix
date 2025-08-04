@@ -1,21 +1,21 @@
 { config, pkgs, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
-      profiles.services.attic-watch-store.default
-      profiles.telemetry.smartd
-      profiles.telemetry.prometheus-smartctl-exporter
-      profiles.telemetry.prometheus-zfs-exporter
-      profiles.sharing.nfs-server
-      profiles.users.blockbuster
-      profiles.users.files
-      profiles.sharing.samba
-      profiles.users.ethan
-      profiles.users.nicole
-      profiles.users.proxmox
+      profiles.communications.postfix.default
       profiles.databases.postgresql.default
+      profiles.services.attic-watch-store.default
       profiles.services.atticd.default
       profiles.services.garage.default
-      profiles.communications.postfix.default
+      profiles.sharing.nfs-server
+      profiles.sharing.samba
+      profiles.telemetry.prometheus-smartctl-exporter
+      profiles.telemetry.prometheus-zfs-exporter
+      profiles.telemetry.smartd
+      profiles.users.blockbuster
+      profiles.users.ethan
+      profiles.users.files
+      profiles.users.nicole
+      profiles.users.proxmox
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
