@@ -54,8 +54,8 @@ in {
         name = "Build";
         on.push = { };
         jobs = {
-          buildSystem = {
-            name = "Build system";
+          buildX86System = {
+            name = "Build system (x86)";
             "runs-on" = "ubuntu-latest";
             "if" = ''
               github.ref == 'refs/heads/main' ||
@@ -63,6 +63,22 @@ in {
             '';
             strategy.matrix.host = l.attrNames (l.filterAttrs
               (_: host: host.config.nixpkgs.system == "x86_64-linux")
+              self.nixosConfigurations);
+            steps = setup ++ [{
+              run = ''
+                nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace
+              '';
+            }];
+          };
+          buildARMSystem = {
+            name = "Build system (ARM)";
+            "runs-on" = "ubuntu-24.04-arm";
+            "if" = ''
+              github.ref == 'refs/heads/main' ||
+              contains(github.event.head_commit.message, '[build]')
+            '';
+            strategy.matrix.host = l.attrNames (l.filterAttrs
+              (_: host: host.config.nixpkgs.system == "aarch64-linux")
               self.nixosConfigurations);
             steps = setup ++ [{
               run = ''

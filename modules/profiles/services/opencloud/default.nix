@@ -20,7 +20,7 @@
     port = 9560;
   };
 
-   environment.etc."opencloud/config.json" = {
+  environment.etc."opencloud/config.json" = {
     text = builtins.toJSON {
       server = "https://opencloud.e10.camp";
       theme = "https://opencloud.e10.camp/themes/owncloud/theme.json";

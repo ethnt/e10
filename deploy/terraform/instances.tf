@@ -15,8 +15,8 @@ resource "aws_instance" "gateway" {
 }
 
 resource "aws_instance" "bastion" {
-  ami = data.aws_ami.nixos_arm64.id
-  instance_type = "t4g.small"
+  ami                    = data.aws_ami.nixos_arm64.id
+  instance_type          = "t4g.small"
   vpc_security_group_ids = [aws_security_group.common.id, aws_security_group.gateway.id]
   key_name               = aws_key_pair.deploy_key.key_name
   subnet_id              = aws_subnet.public_subnet.id

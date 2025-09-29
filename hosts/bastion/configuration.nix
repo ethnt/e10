@@ -1,4 +1,4 @@
-{ suites, profiles, ... }: {
+{ suites, ... }: {
   imports = with suites; core ++ aws ++ web;
 
   deployment.buildOnTarget = false;
