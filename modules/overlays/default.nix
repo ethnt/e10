@@ -13,7 +13,7 @@
         };
       };
     in {
-      inherit (nixpkgs-master) prowlarr radarr sabnzbd sonarr netbox;
+      inherit (nixpkgs-master) prowlarr radarr sabnzbd sonarr netbox plex;
       inherit (nixpkgs-master.python312Packages) pymdown-extensions onnx;
 
       # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923

@@ -30,7 +30,20 @@ resource "aws_route_table_association" "public_route_table_subnet_association" {
   route_table_id = aws_route_table.public_route_table.id
 }
 
-# resource "aws_eip" "gateway" {
-#   instance = aws_instance.gateway.id
-#   vpc      = true
-# }
+resource "aws_eip" "gateway" {
+  instance = aws_instance.gateway.id
+
+  depends_on = [aws_internet_gateway.igw]
+}
+
+resource "aws_eip" "bastion" {
+  instance = aws_instance.bastion.id
+
+  depends_on = [aws_internet_gateway.igw]
+}
+
+resource "aws_eip" "monitor" {
+  instance = aws_instance.monitor.id
+
+  depends_on = [aws_internet_gateway.igw]
+}

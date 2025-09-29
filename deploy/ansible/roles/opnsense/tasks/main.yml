@@ -2,8 +2,6 @@
 - name: Import tasks
   ansible.builtin.include_tasks: "{{ task_file }}"
   loop:
-    - aliases.yml
-    - vlans.yml
     - dnsmasq.yml
     - git.yml
     - qemu.yml
@@ -11,6 +9,5 @@
     - prometheus-node-exporter.yml
     - ddclient.yml
     - acme.yml
-    - rules.yml
   loop_control:
     loop_var: task_file

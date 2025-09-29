@@ -24,5 +24,10 @@ terraform {
       source  = "issyl0/improvmx"
       version = "0.7.1"
     }
+
+    opnsense = {
+      source  = "browningluke/opnsense"
+      version = "0.12.0"
+    }
   }
 }

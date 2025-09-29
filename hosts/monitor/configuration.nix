@@ -4,6 +4,7 @@
       profiles.communications.grafana-to-ntfy.default
       profiles.communications.ntfy
       profiles.monitoring.loki.default
+      profiles.monitoring.influxdb2.default
       profiles.monitoring.rsyslogd
       profiles.monitoring.thanos.default
       profiles.observability.grafana

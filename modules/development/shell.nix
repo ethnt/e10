@@ -9,7 +9,6 @@
         cachix
         deadnix
         inputs.attic.packages.${system}.attic
-        inputs.devenv.packages.${system}.default
         just
         nix-output-monitor
         sops
@@ -29,6 +28,9 @@
         ${setSopsValueToEnvironmentVariable "AWS_SECRET_ACCESS_KEY"
         "./secrets.json"}
         ${setSopsValueToEnvironmentVariable "OMNIBUS_PASSWORD" "./secrets.json"}
+        ${setSopsValueToEnvironmentVariable "OPNSENSE_API_KEY" "./secrets.json"}
+        ${setSopsValueToEnvironmentVariable "OPNSENSE_API_SECRET"
+        "./secrets.json"}
 
         export TAILSCALE_AUTH_KEY=$(${sops} -d --extract '["tailscale_auth_key"]' ./modules/profiles/networking/tailscale/secrets.json)
       '';

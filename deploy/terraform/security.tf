@@ -59,14 +59,6 @@ resource "aws_security_group" "gateway" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  ingress {
-    description = "Allow Headscale CLI access"
-    from_port   = 50443
-    to_port     = 50443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 }
 
 resource "aws_security_group" "monitor" {

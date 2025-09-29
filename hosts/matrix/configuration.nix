@@ -15,6 +15,7 @@
       profiles.services.change-detection.default
       profiles.services.e10-land
       profiles.services.glance.default
+      profiles.services.homebox
       profiles.services.miniflux.default
       profiles.services.netbox.default
       profiles.services.opengist.default

@@ -65,3 +65,8 @@ provider "proxmox" {
 provider "improvmx" {
   token = data.sops_file.secrets.data["IMPROVMX_API_TOKEN"]
 }
+
+provider "opnsense" {
+  uri            = "http://192.168.1.1"
+  allow_insecure = true
+}

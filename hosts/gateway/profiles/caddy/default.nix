@@ -70,14 +70,6 @@
         port = 8090;
         extraConfig = ''
           encode gzip zstd
-
-          # rate_limit {
-          #   zone ip_limiter {
-          #     key {http.request.remote.host}
-          #     window 2s
-          #     events 6
-          #   }
-          # }
         '';
       };
 
@@ -178,7 +170,7 @@
         inherit (hosts.matrix.config.services.paperless) port;
         extraConfig = ''
           request_body {
-            max_size 100MiB
+            max_size 2GiB
           }
         '';
       };
@@ -236,6 +228,12 @@
         port =
           hosts.matrix.config.services.stirling-pdf.environment.SERVER_PORT;
         protected = true;
+
+        extraConfig = ''
+          request_body {
+            max_size 2GiB
+          }
+        '';
       };
 
       "auth.e10.camp" = {
@@ -259,6 +257,11 @@
         inherit (hosts.matrix.config.services.actual.settings) port;
       };
 
+      "speedtest-tracker.e10.camp" = {
+        host = hosts.controller;
+        inherit (hosts.controller.config.services.speedtest-tracker) port;
+      };
+
       "e10.video" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.plex) port;
@@ -277,6 +280,31 @@
             max_size 100MiB
           }
         '';
+      };
+
+      "jellyfin.e10.video" = {
+        host = hosts.htpc;
+        port = 8096;
+        extraConfig = ''
+          encode gzip zstd
+
+          header {
+            Strict-Transport-Security max-age=31536000;
+            X-Content-Type-Options nosniff
+            X-Frame-Options DENY
+            Referrer-Policy no-referrer-when-downgrade
+            X-XSS-Protection 1
+          }
+
+          request_body {
+            max_size 100MiB
+          }
+        '';
+      };
+
+      "homebox.e10.camp" = {
+        host = hosts.matrix;
+        port = hosts.matrix.config.services.homebox.settings.HBOX_WEB_PORT;
       };
 
       "web.garage.e10.camp" = {

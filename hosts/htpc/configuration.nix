@@ -4,10 +4,11 @@
       profiles.filesystems.blockbuster
       profiles.hardware.nvidia
       profiles.media-management.bazarr
-      profiles.media-management.calibre-server
-      profiles.media-management.calibre-web
+      # profiles.media-management.calibre-server
+      # profiles.media-management.calibre-web
       profiles.media-management.fileflows.server
       profiles.media-management.huntarr
+      profiles.media-management.jellyfin
       profiles.media-management.jellyseerr
       profiles.media-management.plex
       profiles.media-management.prowlarr
