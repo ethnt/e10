@@ -5,7 +5,7 @@
       plugins = [
         "github.com/mholt/caddy-ratelimit@v0.1.1-0.20250318145942-a8e9f68d7bed"
       ];
-      hash = "sha256-fB4HuGbjK9df+rIv0eCMyDvLaISaEeINyjwz+H8lM3g=";
+      hash = "sha256-fGWEtofpGTaovOu+FL+Dx7k44T7ZsS4ThO6evaVCvIQ=";
     };
     globalConfig = ''
       admin :2019 {
@@ -29,6 +29,47 @@
     allowedTCPPorts = [ 80 443 2019 ];
     allowedUDPPorts = [ 80 443 ];
   };
+
+  # services.vector.settings = {
+  #   sources.caddy = {
+  #     type = "file";
+  #     include = [ "/var/log/caddy/*log" ];
+  #     read_from = "end";
+  #   };
+
+  #   transforms = {
+  #     parse_caddy = {
+  #       type = "remap";
+  #       inputs = [ "caddy" ];
+  #       source = ''
+  #         # Parse JSON log if Caddy is configured for JSON output
+  #         . = parse_json!(.message)
+
+  #         # Extract common fields
+  #         .timestamp = .ts
+  #         .level = .level
+  #         .logger = .logger
+  #         .message = .msg
+
+  #         proto = "http"
+  #         if .request.tls.proto == "h2" || .request.tls.proto == "h3" {
+  #           proto = "https"
+  #         }
+
+  #         .labels = {
+  #           "job": "caddy",
+  #           "host": get_hostname!(),
+  #           "level": downcase!(.level),
+  #           "logger": .logger,
+  #           "hostname": .request.host,
+  #           "proto": proto
+  #         }
+  #       '';
+  #     };
+  #   };
+
+  #   sinks.loki.inputs = pkgs.lib.mkAfter [ "parse_caddy" ];
+  # };
 
   services.promtail.configuration.scrape_configs = [{
     job_name = "caddy";

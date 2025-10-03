@@ -153,6 +153,10 @@
           name = "Caddy";
           options.path = ./provisioning/caddy.json;
         }
+        {
+          name = "Speedtest Tracker";
+          options.path = ./provisioning/speedtest-tracker.json;
+        }
       ];
 
       alerting = {

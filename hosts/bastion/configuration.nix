@@ -1,10 +1,10 @@
 { suites, profiles, ... }: {
   imports = with suites;
     core ++ aws ++ web
-    ++ [ profiles.security.lldap.default profiles.security.authelia.default ]
+    ++ (with profiles; [ security.authelia.default security.lldap.default ])
     ++ [ ./profiles/caddy ];
 
   deployment.tags = [ "@external" ];
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
 }

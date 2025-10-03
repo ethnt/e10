@@ -1,21 +1,23 @@
-resource "aws_instance" "gateway" {
-  ami                    = module.nixos_image.ami
-  instance_type          = "t3.small"
-  vpc_security_group_ids = [aws_security_group.common.id, aws_security_group.gateway.id]
+resource "aws_instance" "bastion" {
+  ami                    = data.aws_ami.nixos_arm64.id
+  instance_type          = "t4g.small"
+  vpc_security_group_ids = [aws_security_group.common.id, aws_security_group.bastion.id]
   key_name               = aws_key_pair.deploy_key.key_name
   subnet_id              = aws_subnet.public_subnet.id
 
-  root_block_device {
+  ebs_block_device {
+    device_name = "/dev/xvda"
     volume_size = 64
+    volume_type = "gp2"
   }
 
   tags = {
-    Name = "gateway"
+    Name = "bastion"
   }
 }
 
 resource "aws_instance" "monitor" {
-  ami                    = module.nixos_image.ami
+  ami                    = data.aws_ami.nixos_x86_64.id
   instance_type          = "t3.small"
   vpc_security_group_ids = [aws_security_group.common.id, aws_security_group.monitor.id]
   key_name               = aws_key_pair.deploy_key.key_name

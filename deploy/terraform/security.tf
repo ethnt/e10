@@ -41,7 +41,7 @@ resource "aws_security_group" "common" {
   }
 }
 
-resource "aws_security_group" "gateway" {
+resource "aws_security_group" "bastion" {
   vpc_id = aws_vpc.vpc.id
 
   ingress {
@@ -56,14 +56,6 @@ resource "aws_security_group" "gateway" {
     description = "Allow HTTPS"
     from_port   = 443
     to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "Allow Headscale CLI access"
-    from_port   = 50443
-    to_port     = 50443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

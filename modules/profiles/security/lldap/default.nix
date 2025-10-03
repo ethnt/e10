@@ -29,6 +29,7 @@
     };
     environment = {
       LLDAP_KEY_SEED = "%d/key-seed";
+      LLDAP_KEY_FILE = "";
       LLDAP_JWT_SECRET_FILE = "%d/jwt-secret";
       LLDAP_LDAP_USER_PASS_FILE = "%d/password";
     };

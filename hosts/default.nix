@@ -42,12 +42,12 @@ let
 
 in {
   flake.nixosConfigurations = {
-    gateway = mkHost "gateway" { system = "x86_64-linux"; };
     monitor = mkHost "monitor" { system = "x86_64-linux"; };
     omnibus = mkHost "omnibus" { system = "x86_64-linux"; };
     htpc = mkHost "htpc" { system = "x86_64-linux"; };
     matrix = mkHost "matrix" { system = "x86_64-linux"; };
     controller = mkHost "controller" { system = "x86_64-linux"; };
     builder = mkHost "builder" { system = "x86_64-linux"; };
+    bastion = mkHost "bastion" { system = "aarch64-linux"; };
   };
 }

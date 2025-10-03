@@ -70,14 +70,6 @@
         port = 8090;
         extraConfig = ''
           encode gzip zstd
-
-          # rate_limit {
-          #   zone ip_limiter {
-          #     key {http.request.remote.host}
-          #     window 2s
-          #     events 6
-          #   }
-          # }
         '';
       };
 
@@ -94,6 +86,11 @@
       "radarr.e10.camp" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.radarr) port;
+      };
+
+      "lidarr.e10.camp" = {
+        host = hosts.htpc;
+        inherit (hosts.htpc.config.services.lidarr.settings.server) port;
       };
 
       "sonarr.e10.camp" = {
@@ -123,7 +120,14 @@
 
       "requests.e10.video" = {
         host = hosts.htpc;
-        inherit (hosts.htpc.config.services.overseerr) port;
+        inherit (hosts.htpc.config.services.jellyseerr) port;
+        acme.environmentFile =
+          config.sops.secrets.e10_video_lego_route53_credentials.path;
+      };
+
+      "join.e10.video" = {
+        host = hosts.htpc;
+        inherit (hosts.htpc.config.services.wizarr) port;
         acme.environmentFile =
           config.sops.secrets.e10_video_lego_route53_credentials.path;
       };
@@ -150,16 +154,6 @@
         port = 8787;
       };
 
-      "calibre.e10.camp" = {
-        host = hosts.htpc;
-        inherit (hosts.htpc.config.services.calibre-web.listen) port;
-      };
-
-      "calibre-server.e10.camp" = {
-        host = hosts.htpc;
-        inherit (hosts.htpc.config.services.calibre-server) port;
-      };
-
       "fileflows.e10.camp" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.fileflows-server) port;
@@ -171,7 +165,7 @@
         inherit (hosts.matrix.config.services.paperless) port;
         extraConfig = ''
           request_body {
-            max_size 100MiB
+            max_size 2GiB
           }
         '';
       };
@@ -189,11 +183,6 @@
       "netbox.e10.camp" = {
         host = hosts.matrix;
         port = 8002;
-      };
-
-      "change-detection.e10.camp" = {
-        host = hosts.matrix;
-        inherit (hosts.matrix.config.services.changedetection-io) port;
       };
 
       "cache.e10.camp" = {
@@ -220,12 +209,25 @@
       };
 
       "ldap.e10.camp" = {
-        host = hosts.gateway;
+        host = hosts.bastion;
         port = hosts.controller.config.services.lldap.settings.http_port;
       };
 
+      "pdf.e10.camp" = {
+        host = hosts.matrix;
+        port =
+          hosts.matrix.config.services.stirling-pdf.environment.SERVER_PORT;
+        protected = true;
+
+        extraConfig = ''
+          request_body {
+            max_size 2GiB
+          }
+        '';
+      };
+
       "auth.e10.camp" = {
-        host = hosts.gateway;
+        host = hosts.bastion;
         port = 9091;
         # TODO: This (somewhat) fixes issues with PWAs grabbing manifest.json files
         # https://github.com/authelia/authelia/discussions/4629
@@ -238,6 +240,16 @@
         host = hosts.controller;
         port = 8443;
         skipTLSVerify = true;
+      };
+
+      "budget.e10.camp" = {
+        host = hosts.matrix;
+        inherit (hosts.matrix.config.services.actual.settings) port;
+      };
+
+      "speedtest-tracker.e10.camp" = {
+        host = hosts.controller;
+        inherit (hosts.controller.config.services.speedtest-tracker) port;
       };
 
       "e10.video" = {

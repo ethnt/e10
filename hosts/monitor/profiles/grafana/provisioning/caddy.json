@@ -19,7 +19,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 64,
+  "id": 25,
   "links": [],
   "panels": [
     {
@@ -51,8 +51,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -81,7 +80,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -115,8 +114,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -145,7 +143,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -183,8 +181,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -213,7 +210,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -247,8 +244,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -278,7 +274,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -312,8 +308,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -343,7 +338,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -379,8 +374,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -409,7 +403,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -443,8 +437,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -474,7 +467,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -508,8 +501,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -539,7 +531,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -573,8 +565,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -604,7 +595,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -638,8 +629,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -669,7 +659,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -704,8 +694,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -735,7 +724,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -774,8 +763,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -805,7 +793,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -888,8 +876,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -977,7 +964,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -1143,7 +1130,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -1209,7 +1196,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -1275,8 +1262,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1308,7 +1294,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -1400,8 +1386,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -1490,7 +1475,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -1556,8 +1541,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -1584,7 +1568,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -1651,8 +1635,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1683,7 +1666,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -1788,7 +1771,7 @@
           "unit": "s"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -1881,7 +1864,7 @@
           "unit": "bytes"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -1976,7 +1959,7 @@
           "unit": "s"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -2069,7 +2052,7 @@
           "unit": "bytes"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -2126,8 +2109,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2195,6 +2177,18 @@
                 "value": 83
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Client IP"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 164
+              }
+            ]
           }
         ]
       },
@@ -2221,7 +2215,7 @@
           }
         ]
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -2230,7 +2224,7 @@
           },
           "direction": "backward",
           "editorMode": "code",
-          "expr": "{filename=~\"$log_file\"} | json | line_format \"{{.status}}\"",
+          "expr": "{hostname=~\"$host\"} | json | line_format \"{{.uri}}\"",
           "queryType": "range",
           "refId": "A"
         }
@@ -2257,10 +2251,16 @@
               "detected_level": true,
               "duration_extracted": true,
               "filename": true,
+              "host": true,
+              "hostname": true,
               "job": true,
               "level": true,
+              "level_extracted": true,
               "logger": true,
+              "logger_extracted": true,
+              "message": true,
               "msg": true,
+              "proto": true,
               "request_client_ip": true,
               "request_proto": true,
               "request_remote_port": true,
@@ -2278,34 +2278,37 @@
             "includeByName": {},
             "indexByName": {
               "Time": 0,
-              "agent": 1,
-              "bytes_read": 2,
-              "detected_level": 3,
-              "duration": 8,
-              "duration_extracted": 9,
-              "filename": 10,
-              "job": 11,
-              "level": 12,
-              "logger": 13,
-              "msg": 14,
-              "request_client_ip": 15,
-              "request_host": 6,
-              "request_method": 4,
-              "request_proto": 16,
-              "request_remote_ip": 17,
-              "request_remote_port": 18,
-              "request_tls_cipher_suite": 19,
-              "request_tls_proto": 20,
-              "request_tls_resumed": 21,
-              "request_tls_server_name": 22,
-              "request_tls_version": 23,
-              "request_uri": 7,
-              "service_name": 24,
-              "size": 25,
-              "status": 26,
+              "bytes_read": 1,
+              "detected_level": 2,
+              "duration": 26,
+              "host": 25,
+              "hostname": 27,
+              "job": 7,
+              "level": 8,
+              "level_extracted": 28,
+              "logger": 9,
+              "logger_extracted": 29,
+              "message": 30,
+              "msg": 10,
+              "proto": 31,
+              "request_client_ip": 11,
+              "request_host": 4,
+              "request_method": 3,
+              "request_proto": 12,
+              "request_remote_ip": 13,
+              "request_remote_port": 14,
+              "request_tls_cipher_suite": 15,
+              "request_tls_proto": 16,
+              "request_tls_resumed": 17,
+              "request_tls_server_name": 18,
+              "request_tls_version": 19,
+              "request_uri": 6,
+              "service_name": 20,
+              "size": 21,
+              "status": 22,
               "status_extracted": 5,
-              "ts": 27,
-              "user_id": 28
+              "ts": 23,
+              "user_id": 24
             },
             "renameByName": {
               "detected_level": "",
@@ -2353,7 +2356,7 @@
         "sortOrder": "Descending",
         "wrapLogMessage": false
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.0.2+security-01",
       "targets": [
         {
           "datasource": {
@@ -2362,7 +2365,7 @@
           },
           "direction": "backward",
           "editorMode": "code",
-          "expr": "{filename=~\"$log_file\"} | json | line_format \"{{.status}} [{{.request_host}}] {{.request_uri}} ({{.duration}}ms) {{.request_remote_ip}}\"",
+          "expr": "{hostname=~\"$host\"} | json | line_format \"{{.status}} [{{.request_host}}] {{.request_uri}} ({{.duration}}ms) {{.request_remote_ip}}\"",
           "maxLines": 100,
           "queryType": "range",
           "refId": "A"
@@ -2374,7 +2377,7 @@
   ],
   "preload": false,
   "refresh": "1m",
-  "schemaVersion": 40,
+  "schemaVersion": 41,
   "tags": [],
   "templating": {
     "list": [
@@ -2394,8 +2397,8 @@
       },
       {
         "current": {
-          "text": "caddy_gateway",
-          "value": "caddy_gateway"
+          "text": "caddy_bastion",
+          "value": "caddy_bastion"
         },
         "datasource": {
           "type": "prometheus",
@@ -2416,8 +2419,8 @@
       },
       {
         "current": {
-          "text": "gateway:2019",
-          "value": "gateway:2019"
+          "text": "bastion:2019",
+          "value": "bastion:2019"
         },
         "datasource": {
           "type": "prometheus",
@@ -2505,127 +2508,8 @@
       {
         "allowCustomValue": false,
         "current": {
-          "text": "All",
-          "value": ["$__all"]
-        },
-        "datasource": {
-          "type": "loki",
-          "uid": "${DS_LOKI}"
-        },
-        "definition": "",
-        "description": "",
-        "includeAll": true,
-        "label": "Log file",
-        "multi": true,
-        "name": "log_file",
-        "options": [],
-        "query": {
-          "label": "filename",
-          "refId": "LokiVariableQueryEditor-VariableQuery",
-          "stream": "{filename=~\".+caddy.+\"}",
-          "type": 1
-        },
-        "refresh": 1,
-        "regex": "",
-        "type": "query"
-      },
-      {
-        "allowCustomValue": false,
-        "current": {
-          "text": [
-            "127.0.0.1",
-            "18.226.82.103",
-            "18.226.82.103:80",
-            "3.144.233.91",
-            "3.144.233.91:80",
-            "admin.garage.e10.camp",
-            "auth.e10.camp",
-            "bazarr.e10.camp",
-            "bazarr.e10.video",
-            "cache.builder.e10.camp",
-            "cache.e10.camp",
-            "change-detection.e10.camp",
-            "code.e10.camp",
-            "e10.land",
-            "e10.video",
-            "feeds.e10.camp",
-            "filebrowser.e10.land",
-            "fileflows.e10.camp",
-            "glance.e10.camp",
-            "grafana.e10.camp",
-            "hass.e10.camp",
-            "headscale.e10.camp",
-            "immich.e10.camp",
-            "ldap.e10.camp",
-            "netbox.e10.camp",
-            "paperless.e10.camp",
-            "prowlarr.e10.camp",
-            "prowlarr.e10.video",
-            "radarr.e10.camp",
-            "radarr.e10.video",
-            "requests.e10.video",
-            "sabnzbd.e10.camp",
-            "sabnzbd.e10.video",
-            "sonarr.e10.camp",
-            "sonarr.e10.video",
-            "status.e10.camp",
-            "status.e10.video",
-            "tautulli.e10.video",
-            "unifi.e10.camp",
-            "unifi.satan.network",
-            "web.garage.e10.camp",
-            "www.e10.camp",
-            "www.e10.land",
-            "www.e10.video",
-            "www.feeds.e10.camp"
-          ],
-          "value": [
-            "127.0.0.1",
-            "18.226.82.103",
-            "18.226.82.103:80",
-            "3.144.233.91",
-            "3.144.233.91:80",
-            "admin.garage.e10.camp",
-            "auth.e10.camp",
-            "bazarr.e10.camp",
-            "bazarr.e10.video",
-            "cache.builder.e10.camp",
-            "cache.e10.camp",
-            "change-detection.e10.camp",
-            "code.e10.camp",
-            "e10.land",
-            "e10.video",
-            "feeds.e10.camp",
-            "filebrowser.e10.land",
-            "fileflows.e10.camp",
-            "glance.e10.camp",
-            "grafana.e10.camp",
-            "hass.e10.camp",
-            "headscale.e10.camp",
-            "immich.e10.camp",
-            "ldap.e10.camp",
-            "netbox.e10.camp",
-            "paperless.e10.camp",
-            "prowlarr.e10.camp",
-            "prowlarr.e10.video",
-            "radarr.e10.camp",
-            "radarr.e10.video",
-            "requests.e10.video",
-            "sabnzbd.e10.camp",
-            "sabnzbd.e10.video",
-            "sonarr.e10.camp",
-            "sonarr.e10.video",
-            "status.e10.camp",
-            "status.e10.video",
-            "tautulli.e10.video",
-            "unifi.e10.camp",
-            "unifi.satan.network",
-            "web.garage.e10.camp",
-            "www.e10.camp",
-            "www.e10.land",
-            "www.e10.video",
-            "www.feeds.e10.camp"
-          ]
+          "text": [],
+          "value": []
         },
         "datasource": {
           "type": "prometheus",
@@ -2656,6 +2540,5 @@
   "timezone": "browser",
   "title": "Caddy",
   "uid": "fed94ifiv8h6oc",
-  "version": 5,
-  "weekStart": ""
+  "version": 1
 }

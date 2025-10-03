@@ -41,10 +41,10 @@
       enable = true;
       calendar = "*-*-* 03:00:00";
     };
-    configuration = {
-      encryption_passcommand = "${
-          lib.getExe' pkgs.coreutils "cat"
-        } ${config.sops.secrets.borg_backup_passphrase.path}";
+    configuration = let cat = lib.getExe' pkgs.coreutils "cat";
+    in {
+      encryption_passcommand =
+        "${cat} ${config.sops.secrets.borg_backup_passphrase.path}";
 
       compression = "auto,lzma";
 
@@ -64,21 +64,36 @@
         };
       };
 
-      before_backup = [
-        "${
-          lib.getExe' pkgs.borgmatic "borgmatic"
-        } rcreate --encryption repokey-blake2"
-      ];
-
-      on_error = let
+      commands = let
         apprise = lib.getExe pkgs.apprise;
-        cat = lib.getExe' pkgs.coreutils "cat";
-      in [''
-        ${apprise} \
-          --title "[E10] Backup failed for ${config.networking.hostName}" \
-          --body "Backup failed for ${config.networking.hostName} on {repository}" \
-          $(${cat} ${config.sops.secrets.apprise_url_ses.path})
-      ''];
+        borgmatic = lib.getExe' pkgs.borgmatic "borgmatic";
+      in [
+        {
+          before = "repository";
+          when = [ "create" ];
+          run = [ "${borgmatic} rcreate --encryption repokey-blake2" ];
+        }
+        {
+          after = "error";
+          when = [ "create" ];
+          run = [''
+            ${apprise} \
+              --title "[E10] Backup failed for ${config.networking.hostName}" \
+              --body "Backup failed for ${config.networking.hostName} on {repository}" \
+              $(${cat} ${config.sops.secrets.apprise_url_ses.path})
+          ''];
+        }
+        {
+          after = "error";
+          when = [ "prune" "compact" ];
+          run = [''
+            ${apprise} \
+              --title "[E10] Pruning/compaction of backups for ${config.networking.hostName}" \
+              --body "Pruning/compaction of backups failed for ${config.networking.hostName} on {repository}" \
+              $(${cat} ${config.sops.secrets.apprise_url_ses.path})
+          ''];
+        }
+      ];
     };
   };
 }

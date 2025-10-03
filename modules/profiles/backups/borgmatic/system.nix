@@ -13,15 +13,15 @@
       "/var/lib/systemd"
       "/var/logs"
     ];
-    repositories = [
+    repositories = let repositoryName = "${config.networking.hostName}-system";
+    in [
       {
         label = "rsync.net";
-        path =
-          "ssh://de2228@de2228.rsync.net/./${config.networking.hostName}-system";
+        path = "ssh://de2228@de2228.rsync.net/./${repositoryName}";
       }
       {
         label = "omnibus";
-        path = "/mnt/files/backup/${config.networking.hostName}-system";
+        path = "/mnt/files/backup/${repositoryName}";
       }
     ];
     keep_daily = 3;

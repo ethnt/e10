@@ -16,11 +16,16 @@
     profiles.system.earlyoom
     profiles.telemetry.prometheus-borgmatic-exporter
     profiles.telemetry.prometheus-node-exporter
-    profiles.telemetry.promtail
+    profiles.telemetry.vector.common
+    profiles.telemetry.vector.journald
     profiles.users.root
   ];
 
-  web = [ profiles.security.acme profiles.web-servers.caddy ];
+  web = [
+    profiles.security.acme
+    profiles.web-servers.caddy
+    profiles.telemetry.vector.caddy
+  ];
 
   minimal = [
     profiles.core.common
