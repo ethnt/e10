@@ -1,5 +1,5 @@
 { profiles, ... }: {
-  imports = [ profiles.databases.postgresql.default ];
+  imports = [ profiles.databases.postgresql ];
 
   services.postgresql = {
     ensureDatabases = [ "lldap" ];

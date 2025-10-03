@@ -1,7 +1,7 @@
-{ config, profiles, ... }:
+{ config, ... }:
 let storagePath = "/data/files/services/atticd/storage";
 in {
-  imports = [ profiles.databases.postgresql.atticd ];
+  imports = [ ./postgresql.nix ];
 
   sops.secrets = {
     atticd_credentials_file = {

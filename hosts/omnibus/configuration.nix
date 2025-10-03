@@ -2,7 +2,7 @@
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.communications.postfix.default
-      profiles.databases.postgresql.default
+      profiles.databases.postgresql
       profiles.services.attic-watch-store.default
       profiles.services.atticd.default
       profiles.services.garage.default
