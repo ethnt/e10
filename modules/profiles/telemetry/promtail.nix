@@ -19,15 +19,48 @@
       scrape_configs = [{
         job_name = "journal";
         journal = {
+          json = true;
           max_age = "12h";
-          labels = {
-            host = "host_${config.networking.hostName}";
-            job = "systemd-journal";
-          };
+          labels.job = "systemd-journal";
         };
+        pipeline_stages = [
+          {
+            json.expressions = {
+              transport = "_TRANSPORT";
+              unit = "_SYSTEMD_UNIT";
+              msg = "MESSAGE";
+            };
+          }
+          {
+            # Set the unit (defaulting to the transport like audit and kernel)
+            template = {
+              source = "unit";
+              template = "{{if .unit}}{{.unit}}{{else}}{{.transport}}{{end}}";
+            };
+          }
+          {
+            # Normalize session IDs (session-1234.scope -> session.scope) to limit number of label values
+            replace = {
+              source = "unit";
+              expression = "^(session-\\d+.scope)$";
+              replace = "session.scope";
+            };
+          }
+          { labels.unit = "unit"; }
+          {
+            # Write the proper message instead of JSON
+            output.source = "msg";
+          }
+          # Silence OOM
+          {
+            drop.expression = "adaptive sleep time: 100 ms";
+          }
+          # ignore random portscans on the internet
+          { drop.expression = "refused connection: IN="; }
+        ];
         relabel_configs = [{
-          source_labels = [ "__journal__systemd_unit" ];
-          target_label = "unit";
+          source_labels = [ "__journal__hostname" ];
+          target_label = "host";
         }];
       }];
     };

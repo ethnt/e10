@@ -48,12 +48,12 @@
       }];
     }
     {
-      job_name = "node_gateway";
+      job_name = "node_bastion";
       static_configs = [{
         targets = [
-          "${hosts.gateway.config.networking.hostName}:${
+          "${hosts.bastion.config.networking.hostName}:${
             toString
-            hosts.gateway.config.services.prometheus.exporters.node.port
+            hosts.bastion.config.services.prometheus.exporters.node.port
           }"
         ];
       }];
@@ -253,16 +253,16 @@
       }];
     }
     {
-      job_name = "authelia_gateway";
+      job_name = "authelia_bastion";
       metrics_path = "/metrics";
       static_configs =
-        [{ targets = [ "${hosts.gateway.config.networking.hostName}:9959" ]; }];
+        [{ targets = [ "${hosts.bastion.config.networking.hostName}:9959" ]; }];
     }
     {
-      job_name = "caddy_gateway";
+      job_name = "caddy_bastion";
       metrics_path = "/metrics";
       static_configs =
-        [{ targets = [ "${hosts.gateway.config.networking.hostName}:2019" ]; }];
+        [{ targets = [ "${hosts.bastion.config.networking.hostName}:2019" ]; }];
     }
     {
       job_name = "caddy_matrix";
@@ -361,12 +361,12 @@
       scrape_interval = "1m";
     }
     {
-      job_name = "borgmatic_gateway";
+      job_name = "borgmatic_bastion";
       static_configs = [{
         targets = [
-          "${hosts.gateway.config.networking.hostName}:${
+          "${hosts.bastion.config.networking.hostName}:${
             toString
-            hosts.gateway.config.services.prometheus.exporters.borgmatic.port
+            hosts.bastion.config.services.prometheus.exporters.borgmatic.port
           }"
         ];
       }];

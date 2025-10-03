@@ -39,7 +39,7 @@ resource "aws_route53_record" "root_e10_video" {
   name    = "e10.video"
   type    = "A"
   ttl     = 300
-  records = [aws_eip.gateway.public_ip]
+  records = [aws_eip.bastion.public_ip]
 }
 
 resource "aws_route53_record" "status_e10_video" {
@@ -55,7 +55,7 @@ resource "aws_route53_record" "wildcard_e10_video" {
   name    = "*.e10.video"
   type    = "A"
   ttl     = 300
-  records = [aws_eip.gateway.public_ip]
+  records = [aws_eip.bastion.public_ip]
 }
 
 resource "aws_route53_record" "root_e10_land" {
@@ -63,7 +63,7 @@ resource "aws_route53_record" "root_e10_land" {
   name    = "e10.land"
   type    = "A"
   ttl     = 300
-  records = [aws_eip.gateway.public_ip]
+  records = [aws_eip.bastion.public_ip]
 }
 
 resource "aws_route53_record" "wildcard_e10_land" {
@@ -71,7 +71,7 @@ resource "aws_route53_record" "wildcard_e10_land" {
   name    = "*.e10.land"
   type    = "A"
   ttl     = 300
-  records = [aws_eip.gateway.public_ip]
+  records = [aws_eip.bastion.public_ip]
 }
 
 resource "aws_route53_record" "root_e10_camp" {
@@ -79,15 +79,15 @@ resource "aws_route53_record" "root_e10_camp" {
   name    = "e10.camp"
   type    = "A"
   ttl     = 300
-  records = [aws_eip.gateway.public_ip]
+  records = [aws_eip.bastion.public_ip]
 }
 
-resource "aws_route53_record" "gateway_e10_camp" {
+resource "aws_route53_record" "bastion_e10_camp" {
   zone_id = aws_route53_zone.e10_camp.zone_id
-  name    = "gateway.e10.camp"
+  name    = "bastion.e10.camp"
   type    = "A"
   ttl     = 300
-  records = [aws_eip.gateway.public_ip]
+  records = [aws_eip.bastion.public_ip]
 }
 
 resource "aws_route53_record" "monitor_e10_camp" {
@@ -127,7 +127,7 @@ resource "aws_route53_record" "wildcard_e10_camp" {
   name    = "*.e10.camp"
   type    = "A"
   ttl     = 300
-  records = [aws_eip.gateway.public_ip]
+  records = [aws_eip.bastion.public_ip]
 }
 
 resource "aws_route53_record" "unifi_satan_network" {
@@ -135,7 +135,7 @@ resource "aws_route53_record" "unifi_satan_network" {
   name    = "unifi.satan.network"
   type    = "A"
   ttl     = 300
-  records = [aws_eip.gateway.public_ip]
+  records = [aws_eip.bastion.public_ip]
 }
 
 resource "aws_route53_record" "root_mx_turkeltaub_me" {

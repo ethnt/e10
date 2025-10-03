@@ -6,16 +6,13 @@
       profiles.filesystems.blockbuster
       profiles.filesystems.files.services
       profiles.hardware.intel
-      profiles.media-management.fileflows.node
       profiles.media-management.immich
       profiles.networking.printing
       profiles.power.tripp-lite-smart1500lcd
       profiles.services.actual
       profiles.services.attic-watch-store.default
-      profiles.services.change-detection.default
       profiles.services.e10-land
       profiles.services.glance.default
-      profiles.services.homebox
       profiles.services.miniflux.default
       profiles.services.netbox.default
       profiles.services.opengist.default
@@ -62,8 +59,6 @@
       };
     };
   };
-
-  services.fileflows-node.enableIntelQuickSync = true;
 
   services.borgmatic.configurations.system.source_directories =
     lib.mkAfter [ "/var/www" ];

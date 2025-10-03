@@ -70,7 +70,6 @@ jobs:
         host:
         - builder
         - controller
-        - gateway
         - htpc
         - matrix
         - monitor

@@ -90,11 +90,6 @@
                     icon = "di:grafana";
                   }
                   {
-                    title = "Change Detection";
-                    url = "https://change-detection.e10.camp";
-                    icon = "di:changedetection";
-                  }
-                  {
                     title = "Garage";
                     url = "https://admin.garage.e10.camp/health";
                     icon = "di:garage";

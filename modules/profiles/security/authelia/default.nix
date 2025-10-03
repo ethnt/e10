@@ -1,60 +1,65 @@
-{ config, lib, profiles, ... }: {
-  imports = [
-    profiles.databases.postgresql.authelia
-    profiles.databases.redis.authelia
-  ];
+{ config, lib, ... }: {
+  # imports = [
+  #   profiles.databases.postgresql.authelia
+  #   profiles.databases.redis.authelia
+  # ];
 
-  sops.secrets = {
+  imports = [ ./postgresql.nix ./redis.nix ];
+
+  sops.secrets = let
+    owner =
+      config.services.authelia.instances.${config.networking.hostName}.user;
+  in {
     authelia_jwt_secret = {
       sopsFile = ./secrets.yml;
       format = "yaml";
-      owner = "authelia-gateway";
+      inherit owner;
     };
 
     authelia_storage_encryption_key = {
       sopsFile = ./secrets.yml;
       format = "yaml";
-      owner = "authelia-gateway";
+      inherit owner;
     };
 
     authelia_session_secret = {
       sopsFile = ./secrets.yml;
       format = "yaml";
-      owner = "authelia-gateway";
+      inherit owner;
     };
 
     authelia_oidc_hmac_secret = {
       sopsFile = ./secrets.yml;
       format = "yaml";
-      owner = "authelia-gateway";
+      inherit owner;
     };
 
     authelia_issuer_private_key = {
       sopsFile = ./secrets.yml;
       format = "yaml";
-      owner = "authelia-gateway";
+      inherit owner;
     };
 
     aws_ses_smtp_username = {
       sopsFile = ./secrets.yml;
       format = "yaml";
-      owner = "authelia-gateway";
+      inherit owner;
     };
 
     aws_ses_smtp_password = {
       sopsFile = ./secrets.yml;
       format = "yaml";
-      owner = "authelia-gateway";
+      inherit owner;
     };
 
     authelia_ldap_password = {
       sopsFile = ./secrets.yml;
       format = "yaml";
-      owner = "authelia-gateway";
+      inherit owner;
     };
   };
 
-  services.authelia.instances.gateway = {
+  services.authelia.instances.${config.networking.hostName} = {
     enable = true;
     secrets = {
       jwtSecretFile = config.sops.secrets.authelia_jwt_secret.path;
@@ -66,7 +71,7 @@
         config.sops.secrets.authelia_issuer_private_key.path;
     };
     settings = {
-      log.level = "debug";
+      log.level = "info";
 
       server = {
         address = "tcp://127.0.0.1:9091";
@@ -150,16 +155,17 @@
 
       storage.postgres = {
         address = "unix:///run/postgresql";
-        database = "authelia-gateway";
-        username = "authelia-gateway";
+        database = "authelia-${config.networking.hostName}";
+        username = "authelia-${config.networking.hostName}";
         # Doesn't actually use this
-        password = "authelia-gateway";
+        password = "authelia-${config.networking.hostName}";
       };
 
       session = {
         redis = {
           host = "0.0.0.0";
-          port = toString config.services.redis.servers.authelia-gateway.port;
+          port = toString
+            config.services.redis.servers."authelia-${config.networking.hostName}".port;
         };
         cookies = [{
           domain = "e10.camp";
@@ -179,7 +185,8 @@
         #   sender = "auth@e10.camp";
         #   startup_check_address = "ethan@turkeltaub.me";
         # };
-        filesystem.filename = "/var/lib/authelia-gateway/notifications.log";
+        filesystem.filename =
+          "/var/lib/authelia-${config.networking.hostName}/notifications.log";
       };
 
       telemetry = {
@@ -199,8 +206,11 @@
   };
 
   systemd.services.authelia = let
-    deps =
-      [ "postgresql.service" "redis-authelia-gateway.service" "lldap.service" ];
+    deps = [
+      "postgresql.service"
+      "redis-authelia-${config.networking.hostName}.service"
+      "lldap.service"
+    ];
   in {
     requires = deps;
     after = deps;

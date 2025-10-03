@@ -88,6 +88,11 @@
         inherit (hosts.htpc.config.services.radarr) port;
       };
 
+      "lidarr.e10.camp" = {
+        host = hosts.htpc;
+        inherit (hosts.htpc.config.services.lidarr.settings.server) port;
+      };
+
       "sonarr.e10.camp" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.sonarr) port;
@@ -149,16 +154,6 @@
         port = 8787;
       };
 
-      "calibre.e10.camp" = {
-        host = hosts.htpc;
-        inherit (hosts.htpc.config.services.calibre-web.listen) port;
-      };
-
-      "calibre-server.e10.camp" = {
-        host = hosts.htpc;
-        inherit (hosts.htpc.config.services.calibre-server) port;
-      };
-
       "fileflows.e10.camp" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.fileflows-server) port;
@@ -190,11 +185,6 @@
         port = 8002;
       };
 
-      "change-detection.e10.camp" = {
-        host = hosts.matrix;
-        inherit (hosts.matrix.config.services.changedetection-io) port;
-      };
-
       "cache.e10.camp" = {
         host = hosts.omnibus;
         port = 8080;
@@ -219,7 +209,7 @@
       };
 
       "ldap.e10.camp" = {
-        host = hosts.gateway;
+        host = hosts.bastion;
         port = hosts.controller.config.services.lldap.settings.http_port;
       };
 
@@ -237,7 +227,7 @@
       };
 
       "auth.e10.camp" = {
-        host = hosts.gateway;
+        host = hosts.bastion;
         port = 9091;
         # TODO: This (somewhat) fixes issues with PWAs grabbing manifest.json files
         # https://github.com/authelia/authelia/discussions/4629
@@ -280,31 +270,6 @@
             max_size 100MiB
           }
         '';
-      };
-
-      "jellyfin.e10.video" = {
-        host = hosts.htpc;
-        port = 8096;
-        extraConfig = ''
-          encode gzip zstd
-
-          header {
-            Strict-Transport-Security max-age=31536000;
-            X-Content-Type-Options nosniff
-            X-Frame-Options DENY
-            Referrer-Policy no-referrer-when-downgrade
-            X-XSS-Protection 1
-          }
-
-          request_body {
-            max_size 100MiB
-          }
-        '';
-      };
-
-      "homebox.e10.camp" = {
-        host = hosts.matrix;
-        port = hosts.matrix.config.services.homebox.settings.HBOX_WEB_PORT;
       };
 
       "web.garage.e10.camp" = {

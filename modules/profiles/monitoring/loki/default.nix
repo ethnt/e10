@@ -18,14 +18,15 @@
         lifecycler = {
           address = "0.0.0.0";
           ring = {
-            kvstore = { store = "inmemory"; };
+            kvstore = { store = "memberlist"; };
             replication_factor = 1;
           };
           final_sleep = "0s";
         };
+        shutdown_marker_path = "/tmp/loki-ingester-shutdown";
         chunk_idle_period = "1h";
         max_chunk_age = "24h";
-        chunk_target_size = 1048576;
+        chunk_target_size = 999999;
         chunk_retain_period = "30s";
       };
       schema_config = {
@@ -64,18 +65,29 @@
             "s3://\${AWS_ACCESS_KEY_ID}:\${AWS_SECRET_ACCESS_KEY}@us-east-2/storage.loki.e10.camp";
         };
       };
+      memberlist = {
+        bind_addr = [ "0.0.0.0" ];
+        bind_port = 7946;
+      };
       limits_config = {
-        reject_old_samples = true;
-        reject_old_samples_max_age = "168h";
-        per_stream_rate_limit = "512M";
-        per_stream_rate_limit_burst = "1024M";
+        shard_streams = {
+          enabled = true;
+          desired_rate = 2097152; # 2MiB
+        };
         cardinality_limit = 200000;
-        ingestion_burst_size_mb = 1000;
-        ingestion_rate_mb = 10000;
+        ingestion_burst_size_mb = 2048;
+        ingestion_rate_mb = 1024;
+        ingestion_rate_strategy = "local";
         max_entries_limit_per_query = 1000000;
-        max_label_value_length = 20480;
         max_label_name_length = 10240;
         max_label_names_per_series = 300;
+        max_label_value_length = 40960;
+        per_stream_rate_limit = "1G";
+        per_stream_rate_limit_burst = "2G";
+        reject_old_samples = true;
+        reject_old_samples_max_age = "168h";
+        max_global_streams_per_user = 10000;
+        max_streams_per_user = 0;
       };
       table_manager = {
         retention_deletes_enabled = false;

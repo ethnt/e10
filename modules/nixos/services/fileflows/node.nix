@@ -41,7 +41,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    systemd.tmpfiles.rules = [ "d '${cfg.dataDir}' 0777 podman podman - -" ];
+    systemd.tmpfiles.rules = [
+      "d '${cfg.dataDir}' 0777 ${config.virtualisation.oci-containers.backend} ${config.virtualisation.oci-containers.backend} - -"
+    ];
 
     virtualisation.oci-containers.containers.fileflows-node = {
       image = "revenz/fileflows:latest";
