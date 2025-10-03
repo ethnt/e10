@@ -1,7 +1,7 @@
 { lib, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
-      profiles.databases.postgresql.default
+      profiles.databases.postgresql
       profiles.emulation.aarch64-linux
       profiles.filesystems.blockbuster
       profiles.filesystems.files.services
@@ -9,13 +9,11 @@
       profiles.media-management.immich
       profiles.networking.printing
       profiles.power.tripp-lite-smart1500lcd
-      profiles.services.actual
       profiles.services.attic-watch-store.default
       profiles.services.e10-land
       profiles.services.glance.default
       profiles.services.miniflux.default
       profiles.services.netbox.default
-      profiles.services.opengist.default
       profiles.services.paperless.default
       profiles.services.stirling-pdf
       profiles.telemetry.prometheus-nut-exporter

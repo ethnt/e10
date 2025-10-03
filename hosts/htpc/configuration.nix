@@ -10,7 +10,6 @@
       profiles.media-management.plex
       profiles.media-management.prowlarr
       profiles.media-management.radarr
-      profiles.media-management.readarr
       profiles.media-management.recyclarr.default
       profiles.media-management.sabnzbd.default
       profiles.media-management.sonarr

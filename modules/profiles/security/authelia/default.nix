@@ -98,6 +98,7 @@
         timeout = "30s";
       };
 
+      # TODO: Remove
       identity_providers.oidc.clients = [{
         client_id = "opengist";
         client_name = "Opengist";

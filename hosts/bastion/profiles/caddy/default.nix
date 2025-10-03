@@ -88,11 +88,6 @@
         inherit (hosts.htpc.config.services.radarr) port;
       };
 
-      "lidarr.e10.camp" = {
-        host = hosts.htpc;
-        inherit (hosts.htpc.config.services.lidarr.settings.server) port;
-      };
-
       "sonarr.e10.camp" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.sonarr) port;
@@ -149,11 +144,6 @@
         '';
       };
 
-      "readarr.e10.camp" = {
-        host = hosts.htpc;
-        port = 8787;
-      };
-
       "fileflows.e10.camp" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.fileflows-server) port;
@@ -203,11 +193,6 @@
         protected = true;
       };
 
-      "gist.e10.camp" = {
-        host = hosts.matrix;
-        port = hosts.matrix.config.services.opengist.settings."http.port";
-      };
-
       "ldap.e10.camp" = {
         host = hosts.bastion;
         port = hosts.controller.config.services.lldap.settings.http_port;
@@ -240,11 +225,6 @@
         host = hosts.controller;
         port = 8443;
         skipTLSVerify = true;
-      };
-
-      "budget.e10.camp" = {
-        host = hosts.matrix;
-        inherit (hosts.matrix.config.services.actual.settings) port;
       };
 
       "speedtest-tracker.e10.camp" = {

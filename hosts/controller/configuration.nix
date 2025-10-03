@@ -2,14 +2,12 @@
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.networking.blocky.default
-      profiles.networking.blocky.postgresql
-      profiles.networking.blocky.redis
       profiles.networking.unifi
       profiles.power.eaton-5p550r
       profiles.services.attic-watch-store.default
       profiles.telemetry.prometheus-nut-exporter
       profiles.telemetry.prometheus-smokeping-exporter
-      # profiles.telemetry.prometheus-unpoller-exporter.satan
+      profiles.telemetry.prometheus-unpoller-exporter.satan
       profiles.networking.speedtest-tracker
     ] ++ [ ./disk-config.nix ./hardware-configuration.nix ];
 
