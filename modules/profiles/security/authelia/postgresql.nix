@@ -1,12 +1,13 @@
-{ profiles, ... }: {
+{ profiles, lib, config, ... }: {
   imports = [ profiles.databases.postgresql ];
 
-  services.postgresql = {
-    # TODO: Map instance names
-    ensureDatabases = [ "authelia-bastion" ];
-    ensureUsers = [{
-      name = "authelia-bastion";
-      ensureDBOwnership = true;
-    }];
-  };
+  services.postgresql =
+    let instances = lib.attrNames config.services.authelia.instances;
+    in {
+      ensureDatabases = map (name: "authelia-${name}") instances;
+      ensureUsers = map (name: _: {
+        name = "authelia-${name}";
+        ensureDBOwnership = true;
+      }) instances;
+    };
 }

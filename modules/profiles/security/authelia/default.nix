@@ -66,9 +66,11 @@
       storageEncryptionKeyFile =
         config.sops.secrets.authelia_storage_encryption_key.path;
       sessionSecretFile = config.sops.secrets.authelia_session_secret.path;
-      oidcHmacSecretFile = config.sops.secrets.authelia_oidc_hmac_secret.path;
-      oidcIssuerPrivateKeyFile =
-        config.sops.secrets.authelia_issuer_private_key.path;
+
+      # NOTE: This needs to be commented out if there are no OIDC clients present, otherwise Authelia will fail to start
+      # oidcHmacSecretFile = config.sops.secrets.authelia_oidc_hmac_secret.path;
+      # oidcIssuerPrivateKeyFile =
+      #   config.sops.secrets.authelia_issuer_private_key.path;
     };
     settings = {
       log.level = "info";
@@ -94,25 +96,9 @@
         disable = false;
         display_name = "Two-Factor Authentication (2FA)";
         attestation_conveyance_preference = "indirect";
-        user_verification = "preferred";
         timeout = "30s";
+        selection_criteria.user_verification = "preferred";
       };
-
-      # TODO: Remove
-      identity_providers.oidc.clients = [{
-        client_id = "opengist";
-        client_name = "Opengist";
-        client_secret =
-          "$pbkdf2-sha512$310000$zLrxDpiootQD8uDfes59Sg$eA7kxuydW7RPbDFBl3Wr5VT1GbzB3etfVjjPMM16zvlOIxJBBHAU/DBJY5oOyan8VRY4mu678FLVPJsaCDBm5Q";
-        public = false;
-        authorization_policy = "two_factor";
-        redirect_uris =
-          [ "https://gist.e10.camp/oauth/openid-connect/callback" ];
-        scopes = [ "openid" "profile" "email" ];
-        response_types = [ "code" ];
-        grant_types = [ "authorization_code" ];
-        response_modes = [ "form_post" "query" "fragment" ];
-      }];
 
       access_control = {
         default_policy = "bypass";
