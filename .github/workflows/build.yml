@@ -34,6 +34,7 @@ jobs:
       matrix:
         host:
         - bastion
+        - monitor
   buildX86System:
     if: 'github.ref == ''refs/heads/main'' ||
 
@@ -72,7 +73,6 @@ jobs:
         - controller
         - htpc
         - matrix
-        - monitor
         - omnibus
 name: Build
 'on':
