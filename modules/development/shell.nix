@@ -6,6 +6,7 @@
       in map (shell: self.devShells.${system}.${shell}) shellNames;
 
       nativeBuildInputs = with pkgs; [
+        awscli2
         cachix
         deadnix
         inputs.attic.packages.${system}.attic
@@ -27,6 +28,9 @@
         "./secrets.json"}
         ${setSopsValueToEnvironmentVariable "AWS_SECRET_ACCESS_KEY"
         "./secrets.json"}
+
+        export AWS_REGION="us-east-2"
+
         ${setSopsValueToEnvironmentVariable "OMNIBUS_PASSWORD" "./secrets.json"}
         ${setSopsValueToEnvironmentVariable "OPNSENSE_API_KEY" "./secrets.json"}
         ${setSopsValueToEnvironmentVariable "OPNSENSE_API_SECRET"

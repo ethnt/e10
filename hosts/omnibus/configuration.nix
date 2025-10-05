@@ -5,7 +5,6 @@
       profiles.databases.postgresql
       profiles.services.attic-watch-store.default
       profiles.services.atticd.default
-      profiles.services.garage.default
       profiles.sharing.nfs-server
       profiles.sharing.samba
       profiles.telemetry.prometheus-smartctl-exporter

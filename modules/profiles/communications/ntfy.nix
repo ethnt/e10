@@ -1,4 +1,5 @@
 {
+  # TODO: Provision user
   services.ntfy-sh = {
     enable = true;
     settings = {
