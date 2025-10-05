@@ -42,7 +42,7 @@ let
 
 in {
   flake.nixosConfigurations = {
-    monitor = mkHost "monitor" { system = "x86_64-linux"; };
+    monitor = mkHost "monitor" { system = "aarch64-linux"; };
     omnibus = mkHost "omnibus" { system = "x86_64-linux"; };
     htpc = mkHost "htpc" { system = "x86_64-linux"; };
     matrix = mkHost "matrix" { system = "x86_64-linux"; };

@@ -34,6 +34,13 @@
       mode = "0700";
       owner = "grafana";
     };
+
+    influxdb2_grafana_token = {
+      sopsFile = ./secrets.yml;
+      format = "yaml";
+      mode = "0700";
+      owner = "grafana";
+    };
   };
 
   services.grafana = {
@@ -80,6 +87,23 @@
               user = "blocky";
               database = "blocky";
               sslmode = "disable";
+            };
+          }
+          {
+            name = "InfluxDB (Speedtest Tracker)";
+            type = "influxdb";
+            access = "proxy";
+            url = "http://${hosts.monitor.config.networking.hostName}:8086";
+            basicAuth = true;
+            basicAuthUser = "admin";
+            jsonData = {
+              dbName = "speedtest-tracker";
+              httpMode = "POST";
+              tlsSkipVerify = true;
+            };
+            secureJsonData = {
+              basicAuthPassword =
+                "$__file{${hosts.monitor.config.sops.secrets.influxdb2_grafana_token.path}}";
             };
           }
         ];

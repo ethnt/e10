@@ -7,13 +7,6 @@
       owner = "influxdb2";
     };
 
-    influxdb2_speedtest_tracker_password = {
-      sopsFile = ./secrets.yml;
-      format = "yaml";
-      mode = "0700";
-      owner = "influxdb2";
-    };
-
     influxdb2_token = {
       sopsFile = ./secrets.yml;
       format = "yaml";

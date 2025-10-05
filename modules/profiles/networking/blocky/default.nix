@@ -1,4 +1,6 @@
 { pkgs, lib, ... }: {
+  imports = [ ./postgresql.nix ./redis.nix ];
+
   environment.systemPackages = [ pkgs.blocky ];
 
   services.blocky = {
