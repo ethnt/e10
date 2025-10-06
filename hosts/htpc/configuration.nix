@@ -9,10 +9,10 @@
       profiles.media-management.jellyseerr
       profiles.media-management.plex
       profiles.media-management.prowlarr
-      profiles.media-management.radarr
+      profiles.media-management.radarr.default
       profiles.media-management.recyclarr.default
       profiles.media-management.sabnzbd.default
-      profiles.media-management.sonarr
+      profiles.media-management.sonarr.default
       profiles.media-management.tautulli
       profiles.media-management.wizarr
       profiles.services.attic-watch-store.default
