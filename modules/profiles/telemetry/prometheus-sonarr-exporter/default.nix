@@ -1,5 +1,5 @@
 { config, ... }: {
-  sops.secrets.sonarr_api_key = {
+  sops.secrets.prometheus_sonarr_exporter_sonarr_api_key = {
     sopsFile = ./secrets.yml;
     format = "yaml";
   };
@@ -8,7 +8,8 @@
     enable = true;
     url = "https://sonarr.e10.camp";
     openFirewall = true;
-    apiKeyFile = config.sops.secrets.sonarr_api_key.path;
+    apiKeyFile =
+      config.sops.secrets.prometheus_sonarr_exporter_sonarr_api_key.path;
     port = 9708;
   };
 }
