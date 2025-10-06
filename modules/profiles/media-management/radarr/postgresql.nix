@@ -1,6 +1,8 @@
 { lib, profiles, ... }: {
   imports = [ profiles.databases.postgresql ];
 
+  services.postgresqlBackup.databases = [ "radarr" ];
+
   services.postgresql = {
     ensureDatabases = [ "radarr" "radarr_logs" ];
     ensureUsers = [{

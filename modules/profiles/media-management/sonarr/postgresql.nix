@@ -1,6 +1,8 @@
 { lib, profiles, ... }: {
   imports = [ profiles.databases.postgresql ];
 
+  services.postgresqlBackup.databases = [ "sonarr" ];
+
   services.postgresql = {
     ensureDatabases = [ "sonarr" "sonarr_logs" ];
     ensureUsers = [{
