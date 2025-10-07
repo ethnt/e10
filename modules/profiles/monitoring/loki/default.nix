@@ -1,10 +1,25 @@
 { config, ... }: {
-  sops.secrets = {
-    loki_environment_file = {
-      format = "yaml";
-      sopsFile = ./secrets.yml;
+  sops = {
+    secrets = {
+      loki_aws_access_key_id = {
+        format = "yaml";
+        sopsFile = ./secrets.yml;
+      };
+
+      loki_aws_secret_access_key = {
+        format = "yaml";
+        sopsFile = ./secrets.yml;
+      };
+    };
+
+    templates.loki_environment_file = {
+      content = ''
+        AWS_ACCESS_KEY_ID=${config.sops.placeholder.loki_aws_access_key_id}
+        AWS_SECRET_ACCESS_KEY=${config.sops.placeholder.loki_aws_secret_access_key}
+      '';
       mode = "0777";
       owner = "loki";
+      restartUnits = [ "loki.service" ];
     };
   };
 
@@ -104,8 +119,12 @@
     };
   };
 
-  systemd.services.loki.serviceConfig.EnvironmentFile =
-    config.sops.secrets.loki_environment_file.path;
+  systemd.services.loki = {
+    serviceConfig.EnvironmentFile =
+      config.sops.templates.loki_environment_file.path;
+    wants = [ "sops-nix.service" ];
+    after = [ "sops-nix.service" ];
+  };
 
   networking.firewall = {
     allowedTCPPorts =
