@@ -70,4 +70,8 @@ push-result-to-cache:
     cachix push e10 result
     attic push e10 result
 
+generate-authelia-client-info:
+    authelia crypto rand --length 72 --charset rfc3986
+    authelia crypto hash generate pbkdf2 --variant sha512 --random --random.length 72 --random.charset rfc3986
+
 alias fmt := format

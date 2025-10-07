@@ -6,6 +6,7 @@
       in map (shell: self.devShells.${system}.${shell}) shellNames;
 
       nativeBuildInputs = with pkgs; [
+        authelia
         awscli2
         cachix
         deadnix
