@@ -25,7 +25,7 @@
     };
 
     templates.thanos_sidecar_object_storage_configuration = {
-      content = builtins.toJSON ({
+      content = builtins.toJSON {
         type = "S3";
         config = {
           bucket = config.sops.placeholder.thanos_storage_bucket;
@@ -35,7 +35,7 @@
           secret_key =
             config.sops.placeholder.thanos_storage_aws_secret_access_key;
         };
-      });
+      };
       mode = "0777";
       owner = "prometheus";
       restartUnits = [
