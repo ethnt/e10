@@ -85,6 +85,8 @@
         };
         sections = {
           misc = {
+            inherit (config.services.sabnzbd) port;
+
             pre_script = "None";
             queue_complete = "";
             queue_complete_pers = 0;
@@ -104,7 +106,6 @@
             language = "en";
             enable_https_verification = 1;
             host = "0.0.0.0";
-            port = 8080;
             https_port = "";
             username = "admin";
             password = config.sops.placeholder.sabnzbd_admin_password;
