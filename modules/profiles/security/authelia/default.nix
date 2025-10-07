@@ -104,9 +104,8 @@
         client_name = "Paperless";
         client_id =
           "viHFkj_wnehAVrf2U-2cE1~RDKGEO2iawDGTJuOSLKiEt_vKBiADlhSLyjI1LsA8T6DO0Vy8";
-        # unhashed: 8mPUlEj1xD823o_EBCsqdLL5oIZlMl~A-kEOGZRjvUcJpnutx.KxfsbiJ-8IbAcNk~mqnHHN
         client_secret =
-          "$pbkdf2-sha512$310000$LBgtKVsdI0vdohR4T2/B2Q$9Mx3RFZimRD5PBLSR/piIj778fAhqxHmS.PR2gdzqfleDRUL8l2mXaIGxFuW0IsbFIVHN2jcOB/wsDo4nh9/uQ";
+          "$pbkdf2-sha512$310000$qb7YshuNG.nvIev7OWvSyg$/nWmyxm0xxZG1mbCczkI9.Oi6lbrXd.BbsNXJU91p5nSYJGHTuN2OryQksEMK9ypCst.UYn6.q7HK/2YBstE.A";
         public = false;
         authorization_policy = "two_factor";
         require_pkce = true;
