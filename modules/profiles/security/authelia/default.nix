@@ -68,9 +68,9 @@
       sessionSecretFile = config.sops.secrets.authelia_session_secret.path;
 
       # NOTE: This needs to be commented out if there are no OIDC clients present, otherwise Authelia will fail to start
-      # oidcHmacSecretFile = config.sops.secrets.authelia_oidc_hmac_secret.path;
-      # oidcIssuerPrivateKeyFile =
-      #   config.sops.secrets.authelia_issuer_private_key.path;
+      oidcHmacSecretFile = config.sops.secrets.authelia_oidc_hmac_secret.path;
+      oidcIssuerPrivateKeyFile =
+        config.sops.secrets.authelia_issuer_private_key.path;
     };
     settings = {
       log.level = "info";
@@ -99,6 +99,28 @@
         timeout = "30s";
         selection_criteria.user_verification = "preferred";
       };
+
+      identity_providers.oidc.clients = [{
+        client_name = "Paperless";
+        client_id =
+          "viHFkj_wnehAVrf2U-2cE1~RDKGEO2iawDGTJuOSLKiEt_vKBiADlhSLyjI1LsA8T6DO0Vy8";
+        # unhashed: 8mPUlEj1xD823o_EBCsqdLL5oIZlMl~A-kEOGZRjvUcJpnutx.KxfsbiJ-8IbAcNk~mqnHHN
+        client_secret =
+          "$pbkdf2-sha512$310000$LBgtKVsdI0vdohR4T2/B2Q$9Mx3RFZimRD5PBLSR/piIj778fAhqxHmS.PR2gdzqfleDRUL8l2mXaIGxFuW0IsbFIVHN2jcOB/wsDo4nh9/uQ";
+        public = false;
+        authorization_policy = "two_factor";
+        require_pkce = true;
+        pkce_challenge_method = "S256";
+        redirect_uris = [
+          "https://paperless.e10.camp/accounts/oidc/authelia/login/callback/"
+        ];
+        scopes = [ "openid" "profile" "email" "groups" ];
+        response_types = [ "code" ];
+        grant_types = [ "authorization_code" ];
+        access_token_signed_response_alg = "none";
+        userinfo_signed_response_alg = "none";
+        token_endpoint_auth_method = "client_secret_basic";
+      }];
 
       access_control = {
         default_policy = "bypass";
