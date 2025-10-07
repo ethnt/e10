@@ -1,4 +1,6 @@
 { config, ... }: {
+  imports = [ ./postgresql.nix ./redis.nix ];
+
   sops.secrets = {
     paperless_admin_password = {
       sopsFile = ./secrets.yml;
