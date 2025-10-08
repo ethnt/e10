@@ -4,13 +4,18 @@
       sopsFile = ./secrets.json;
       owner = "netbox";
     };
-  };
 
-  services.postgresqlBackup.databases = [ "netbox" ];
+    netbox_oauth_secret_key = {
+      sopsFile = ./secrets.json;
+      owner = "netbox";
+    };
+  };
 
   services.netbox = {
     enable = true;
     package = pkgs.netbox;
+    secretKeyFile = config.sops.secrets.netbox_secret_key.path;
+    listenAddress = "0.0.0.0";
     settings = {
       CSRF_TRUSTED_ORIGINS = [
         "https://netbox.e10.camp"
@@ -19,9 +24,23 @@
         }"
         "http://${config.networking.hostName}:8002"
       ];
+      REMOTE_AUTH_ENABLED = true;
+      REMOTE_AUTH_BACKEND =
+        "social_core.backends.open_id_connect.OpenIdConnectAuth";
+      SOCIAL_AUTH_OIDC_OIDC_ENDPOINT = "https://auth.e10.camp";
+      SOCIAL_AUTH_OIDC_KEY =
+        "gY0aO8QGJT.~UbRntqa72YTm54DSUHr3HeBu4zMBlWwMwlJwLtbhXflUCAczeC-snr9I_5tZ";
     };
-    secretKeyFile = config.sops.secrets.netbox_secret_key.path;
-    listenAddress = "0.0.0.0";
+    extraConfig = ''
+      import os
+
+      with open("${config.sops.secrets.netbox_oauth_secret_key.path}", "r") as file:
+        SOCIAL_AUTH_OIDC_SECRET = file.readline()
+
+      SOCIAL_AUTH_BACKEND_ATTRS = {
+        'oidc': ("Login with Authelia", "login")
+      }
+    '';
   };
 
   services.caddy.virtualHosts."http://netbox.e10.camp:8002" = {
@@ -44,6 +63,8 @@
 
   # Needed so Caddy can read Netbox's static files
   users.groups.netbox.members = [ config.services.caddy.user ];
+
+  services.postgresqlBackup.databases = [ "netbox" ];
 
   networking.firewall.allowedTCPPorts = [ config.services.netbox.port 8002 ];
 }

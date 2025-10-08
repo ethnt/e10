@@ -143,6 +143,24 @@
           userinfo_signed_response_alg = "none";
           token_endpoint_auth_method = "client_secret_post";
         }
+        {
+          client_id =
+            "gY0aO8QGJT.~UbRntqa72YTm54DSUHr3HeBu4zMBlWwMwlJwLtbhXflUCAczeC-snr9I_5tZ";
+          client_name = "Netbox";
+          client_secret =
+            "$pbkdf2-sha512$310000$Hn6tjZ1j.w4M3MK7H5rrDQ$cP1amA8.XD5kvnbgS8VOa8bcHaucuYuiS/ohdpt5gyAIHA7rN9expBt2377rkwd7qAUHO0F8YMjVPx0ihHBLKQ";
+          public = false;
+          authorization_policy = "two_factor";
+          require_pkce = false;
+          pkce_challenge_method = "";
+          redirect_uris = [ "https://netbox.e10.camp/oauth/complete/oidc/" ];
+          scopes = [ "openid" "profile" "email" ];
+          response_types = [ "code" ];
+          grant_types = [ "authorization_code" ];
+          access_token_signed_response_alg = "none";
+          userinfo_signed_response_alg = "none";
+          token_endpoint_auth_method = "client_secret_basic";
+        }
       ];
 
       access_control = {
