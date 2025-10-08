@@ -1,10 +1,12 @@
+# This is largely stolen from here:
+# https://github.com/omares/nix-homelab/blob/12cb1c1b034be91a2b1e6e987930eccc7dfb0bb1/lib/generators.nix
+
 { lib, ... }:
 let
   inherit (lib) fixedWidthString mapAttrsToList concatStringsSep;
-  inherit (builtins) isPath isAttrs;
+  inherit (lib.generators) toINIWithGlobalSection mkKeyValueDefault;
+  inherit (builtins) isPath isAttrs isString;
 
-  # This is largely stolen from here:
-  # https://github.com/omares/nix-homelab/blob/12cb1c1b034be91a2b1e6e987930eccc7dfb0bb1/lib/generators.nix
   toXML = { spacing ? 2, rootName ? "Root", xmlns ? {
     xsi = "http://www.w3.org/2001/XMLSchema-instance";
     xsd = "http://www.w3.org/2001/XMLSchema";
@@ -87,4 +89,17 @@ let
       <${rootName} ${makeXmlns}>
       ${attrsToXML 1 "" attrs}
       </${rootName}>'';
-in { inherit toXML; }
+
+  toINI = { globalSection, sections }:
+    toINIWithGlobalSection {
+      mkKeyValue = k: v:
+        if isAttrs v then
+          ''
+            [[${k}]]
+          '' + toINIWithGlobalSection { } { globalSection = v; }
+        else
+          mkKeyValueDefault {
+            mkValueString = v: if isString v then "${v}" else toString v;
+          } "=" k v;
+    } { inherit globalSection sections; };
+in { inherit toXML toINI; }
