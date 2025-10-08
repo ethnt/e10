@@ -6,7 +6,7 @@
       profiles.filesystems.blockbuster
       profiles.filesystems.files.services
       profiles.hardware.intel
-      profiles.media-management.immich
+      profiles.media-management.immich.default
       profiles.networking.printing
       profiles.power.tripp-lite-smart1500lcd
       profiles.services.attic-watch-store.default
