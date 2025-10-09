@@ -1,8 +1,5 @@
-{ config, ... }: {
-  sops.secrets.bazarr_api_key = {
-    sopsFile = ./secrets.yml;
-    format = "yaml";
-  };
+{ config, profiles, ... }: {
+  imports = [ profiles.shared-secrets.bazarr.default ];
 
   services.prometheus.exporters.exportarr-bazarr = {
     enable = true;

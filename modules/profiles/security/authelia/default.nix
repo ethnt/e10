@@ -200,6 +200,10 @@
             domain = "pdf.e10.camp";
             policy = "two_factor";
           }
+          {
+            domain = "bazarr.e10.camp";
+            policy = "two_factor";
+          }
         ];
       };
 
