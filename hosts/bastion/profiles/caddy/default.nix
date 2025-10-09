@@ -101,6 +101,7 @@
       "bazarr.e10.camp" = {
         host = hosts.htpc;
         port = hosts.htpc.config.services.bazarr.listenPort;
+        protected = true;
       };
 
       "sabnzbd.e10.camp" = {

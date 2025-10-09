@@ -3,7 +3,7 @@
     core ++ proxmox-vm ++ [
       profiles.filesystems.blockbuster
       profiles.hardware.nvidia
-      profiles.media-management.bazarr
+      profiles.media-management.bazarr.default
       profiles.media-management.fileflows.server
       profiles.media-management.huntarr
       profiles.media-management.jellyseerr
