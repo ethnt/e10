@@ -12,6 +12,7 @@
       profiles.services.attic-watch-store.default
       profiles.services.e10-land
       profiles.services.glance.default
+      profiles.services.mazanoke
       profiles.services.miniflux.default
       profiles.services.netbox.default
       profiles.services.paperless.default

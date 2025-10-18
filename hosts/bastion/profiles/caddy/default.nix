@@ -80,7 +80,7 @@
 
       "prowlarr.e10.camp" = {
         host = hosts.htpc;
-        inherit (hosts.htpc.config.services.prowlarr) port;
+        inherit (hosts.htpc.config.services.prowlarr.settings.server) port;
       };
 
       "radarr.e10.camp" = {
@@ -102,6 +102,11 @@
         host = hosts.htpc;
         port = hosts.htpc.config.services.bazarr.listenPort;
         protected = true;
+      };
+
+      "profilarr.e10.camp" = {
+        host = hosts.htpc;
+        inherit (hosts.htpc.config.services.profilarr) port;
       };
 
       "sabnzbd.e10.camp" = {
@@ -204,7 +209,17 @@
         port =
           hosts.matrix.config.services.stirling-pdf.environment.SERVER_PORT;
         protected = true;
+        extraConfig = ''
+          request_body {
+            max_size 2GiB
+          }
+        '';
+      };
 
+      "mazanoke.e10.camp" = {
+        host = hosts.matrix;
+        inherit (hosts.matrix.config.services.mazanoke) port;
+        protected = true;
         extraConfig = ''
           request_body {
             max_size 2GiB

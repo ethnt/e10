@@ -2,7 +2,7 @@
   imports = with suites;
     core ++ aws ++ web
     ++ (with profiles; [ security.authelia.default security.lldap.default ])
-    ++ [ ./profiles/caddy ];
+    ++ [ ./profiles/authelia ./profiles/caddy ];
 
   deployment.tags = [ "@external" ];
 

@@ -1,7 +1,9 @@
 { config, ... }: {
-  sops.secrets.prowlarr_api_key = {
-    sopsFile = ./secrets.yml;
-    format = "yaml";
+  sops.secrets.prowlarr_api_key = { sopsFile = ./secrets.json; };
+
+  services.prowlarr = {
+    enable = true;
+    openFirewall = true;
   };
 
   services.prometheus.exporters.exportarr-prowlarr = {
