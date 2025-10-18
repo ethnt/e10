@@ -18,7 +18,7 @@
         BindAddress = "*";
         Branch = "master";
         EnableSsl = false;
-        InstanceName = "Radrr";
+        InstanceName = "Radarr";
         LaunchBrowser = false;
         LogLevel = "info";
         Port = config.services.radarr.port;
@@ -33,7 +33,6 @@
         SslPort = 9898;
         UrlBase = null;
       };
-
       path = "${config.services.radarr.dataDir}/config.xml";
       owner = config.services.radarr.user;
       inherit (config.services.radarr) group;
@@ -50,5 +49,13 @@
   systemd.services.radarr = {
     wants = [ "sops-nix.service" ];
     after = [ "sops-nix.service" ];
+  };
+
+  services.prometheus.exporters.exportarr-radarr = {
+    enable = true;
+    url = "https://radarr.e10.camp";
+    openFirewall = true;
+    apiKeyFile = config.sops.secrets.radarr_api_key.path;
+    port = 9709;
   };
 }

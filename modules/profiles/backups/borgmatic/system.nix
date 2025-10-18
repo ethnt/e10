@@ -10,6 +10,7 @@
       "/var/lib/docker"
       "/var/lib/libvirt"
       "/var/lib/postgresql"
+      "/var/lib/private"
       "/var/lib/systemd"
       "/var/logs"
     ];

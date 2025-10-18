@@ -49,9 +49,21 @@
                     icon = "di:prowlarr";
                   }
                   {
+                    title = "Huntarr";
+                    url = "https://huntarr.e10.camp";
+                    icon =
+                      "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/huntarr.png";
+                  }
+                  {
+                    title = "Wizarr";
+                    url = "https://join.e10.video";
+                    icon = "di:wizarr";
+                  }
+                  {
                     title = "Bazarr";
                     url = "https://bazarr.e10.camp";
                     icon = "di:bazarr";
+                    alt-status-codes = [ 401 ];
                   }
                   {
                     title = "Fileflows";
@@ -63,6 +75,11 @@
                     title = "Tautulli";
                     url = "https://tautulli.e10.video";
                     icon = "di:tautulli";
+                  }
+                  {
+                    title = "e10.land";
+                    url = "https://e10.land";
+                    icon = "https://e10.land/favicon.ico";
                   }
                   {
                     title = "Miniflux";
@@ -90,11 +107,6 @@
                     icon = "di:grafana";
                   }
                   {
-                    title = "Garage";
-                    url = "https://admin.garage.e10.camp/health";
-                    icon = "di:garage";
-                  }
-                  {
                     title = "Attic";
                     url = "https://cache.e10.camp";
                     icon = "di:nixos";
@@ -112,6 +124,30 @@
                         hosts.controller.config.services.blocky.settings.ports.http
                       }/api/blocking/status";
                     icon = "di:blocky";
+                  }
+                  {
+                    title = "Stirling PDF";
+                    url = "https://pdf.e10.camp";
+                    icon = "di:stirling-pdf";
+                    alt-status-codes = [ 401 ];
+                  }
+                  {
+                    title = "Mazanoke";
+                    url = "https://mazanoke.e10.camp";
+                    # icon = "di:mazanoke";
+                    icon =
+                      "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/mazanoke.png";
+                    alt-status-codes = [ 401 ];
+                  }
+                  {
+                    title = "Authelia";
+                    url = "https://auth.e10.camp";
+                    icon = "di:authelia";
+                  }
+                  {
+                    title = "LLDAP";
+                    url = "https://ldap.e10.camp";
+                    icon = "di:lldap";
                   }
                 ];
               }

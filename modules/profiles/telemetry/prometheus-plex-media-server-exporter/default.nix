@@ -1,14 +1,22 @@
 { config, ... }: {
-  sops.secrets.prometheus_plex_media_server_exporter_secrets = {
-    sopsFile = ./secrets.yml;
-    format = "yaml";
+  sops = {
+    secrets.plex_token = {
+      sopsFile = ./secrets.yml;
+      format = "yaml";
+    };
+
+    templates."prometheus-plex-media-server-exporter-secrets-file" = {
+      content = ''
+        PLEX_TOKEN=${config.sops.placeholder.plex_token}
+      '';
+    };
   };
 
   services.prometheus.exporters.plex-media-server = {
     enable = true;
     url = "https://e10.video";
     secretsFile =
-      config.sops.secrets.prometheus_plex_media_server_exporter_secrets.path;
+      config.sops.templates."prometheus-plex-media-server-exporter-secrets-file".path;
     openFirewall = true;
   };
 }

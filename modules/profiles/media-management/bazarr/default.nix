@@ -1,8 +1,11 @@
-{ config, lib, profiles, ... }: {
-  imports = [ profiles.shared-secrets.bazarr.default ];
-
+{ config, lib, ... }: {
   sops = {
     secrets = {
+      bazarr_api_key = {
+        sopsFile = ./secrets.yml;
+        format = "yaml";
+      };
+
       bazarr_flask_secret_key = {
         sopsFile = ./secrets.yml;
         format = "yaml";
@@ -379,5 +382,13 @@
   systemd.services.bazarr = {
     wants = [ "sops-nix.service" ];
     after = [ "sops-nix.service" ];
+  };
+
+  services.prometheus.exporters.exportarr-bazarr = {
+    enable = true;
+    url = "https://bazarr.e10.camp";
+    openFirewall = true;
+    apiKeyFile = config.sops.secrets.bazarr_api_key.path;
+    port = 9710;
   };
 }
