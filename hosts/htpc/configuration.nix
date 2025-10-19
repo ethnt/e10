@@ -4,26 +4,21 @@
       profiles.filesystems.blockbuster
       profiles.hardware.nvidia
       profiles.media-management.bazarr.default
-      profiles.media-management.fileflows.server
+      # profiles.media-management.fileflows.server
       profiles.media-management.huntarr
       profiles.media-management.jellyseerr
       profiles.media-management.plex
-      profiles.media-management.prowlarr
+      profiles.media-management.profilarr
+      profiles.media-management.prowlarr.default
       profiles.media-management.radarr.default
-      profiles.media-management.recyclarr.default
       profiles.media-management.sabnzbd.default
       profiles.media-management.sonarr.default
       profiles.media-management.tautulli
       profiles.media-management.wizarr
       profiles.services.attic-watch-store.default
       profiles.sharing.nfs-client
-      profiles.telemetry.prometheus-bazarr-exporter.default
       profiles.telemetry.prometheus-dcgm-exporter
       profiles.telemetry.prometheus-plex-media-server-exporter.default
-      profiles.telemetry.prometheus-prowlarr-exporter.default
-      profiles.telemetry.prometheus-radarr-exporter.default
-      profiles.telemetry.prometheus-sabnzbd-exporter.default
-      profiles.telemetry.prometheus-sonarr-exporter.default
       profiles.virtualisation.docker
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 

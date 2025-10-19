@@ -52,4 +52,12 @@
     wants = [ "sops-nix.service" ];
     after = [ "sops-nix.service" ];
   };
+
+  services.prometheus.exporters.exportarr-sonarr = {
+    enable = true;
+    url = "https://sonarr.e10.camp";
+    openFirewall = true;
+    apiKeyFile = config.sops.secrets.sonarr_api_key.path;
+    port = 9708;
+  };
 }

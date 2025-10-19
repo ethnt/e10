@@ -9,6 +9,8 @@
       host all all ::1/128 trust
       host all all 100.0.0.0/8 trust
     '';
+    # settings.log_statement = "all";
+    # settings.log_destination = lib.mkForce "syslog";
   };
 
   services.postgresqlBackup = {
