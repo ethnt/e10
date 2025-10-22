@@ -152,7 +152,7 @@
 
       "fileflows.e10.camp" = {
         host = hosts.htpc;
-        inherit (hosts.htpc.config.services.fileflows-server) port;
+        inherit (hosts.htpc.config.services.fileflows.server) port;
         protected = true;
       };
 

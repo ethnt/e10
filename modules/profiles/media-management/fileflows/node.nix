@@ -1,12 +1,9 @@
 { hosts, ... }: {
-  services.fileflows-node = {
+  services.fileflows.node = {
     enable = true;
     serverUrl = "http://${hosts.htpc.config.networking.hostName}:${
-        toString hosts.htpc.config.services.fileflows-server.port
+        toString hosts.htpc.config.services.fileflows.server.port
       }";
-    extraVolumes = [
-      "/mnt/blockbuster/tmp/fileflows:/temp"
-      "/mnt/blockbuster/media:/mnt/blockbuster/media"
-    ];
+    libraryDirs = [ "/mnt/blockbuster/media" ];
   };
 }
