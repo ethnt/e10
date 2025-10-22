@@ -1,11 +1,8 @@
-{
-  services.fileflows-server = {
+{ pkgs, ... }: {
+  services.fileflows.server = {
     enable = true;
-    enableNvidia = true;
+    extraPkgs = with pkgs; [ ffmpeg-full ];
+    libraryDirs = [ "/mnt/blockbuster/media" ];
     openFirewall = true;
-    extraVolumes = [
-      "/mnt/blockbuster/tmp/fileflows:/temp"
-      "/mnt/blockbuster/media:/mnt/blockbuster/media"
-    ];
   };
 }

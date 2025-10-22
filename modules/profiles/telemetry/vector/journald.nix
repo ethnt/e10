@@ -23,6 +23,8 @@
 
             unit = .UNIT || .USER_UNIT || ._SYSTEMD_UNIT || .SYSLOG_IDENTIFIER
 
+            facility = .SYSLOG_FACILITY
+
             if unit != null && match(string!(unit), r'^session-\d+\.scope$') {
               unit = "session.scope"
             }
@@ -36,7 +38,8 @@
               "priority": priority,
               "level": to_syslog_level(priority) ?? "info",
               "host": .host,
-              "application": "journald"
+              "application": "journald",
+              "facility": facility
             }
 
             .message = .message

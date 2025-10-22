@@ -3,6 +3,7 @@
     core ++ proxmox-vm ++ [
       profiles.communications.postfix.default
       profiles.databases.postgresql
+      profiles.hardware.nvme
       profiles.services.attic-watch-store.default
       profiles.services.atticd.default
       profiles.sharing.nfs-server
