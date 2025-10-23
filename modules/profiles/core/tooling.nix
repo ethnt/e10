@@ -11,6 +11,7 @@
     iperf3
     lm_sensors
     lnav
+    pciutils
     ripgrep
     tmux
     tree

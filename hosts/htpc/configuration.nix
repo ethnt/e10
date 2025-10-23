@@ -1,10 +1,10 @@
-{ suites, profiles, ... }: {
+{ suites, profiles, pkgs, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
       profiles.filesystems.blockbuster
       profiles.hardware.nvidia
       profiles.media-management.bazarr.default
-      # profiles.media-management.fileflows.server
+      profiles.media-management.fileflows.server
       profiles.media-management.huntarr
       profiles.media-management.jellyseerr
       profiles.media-management.plex
@@ -57,8 +57,13 @@
     };
   };
 
-  services.borgmatic.configurations.system.exclude_patterns =
-    [ "/var/lib/sabnzbd/downloads" "/var/lib/plex/transcodes" ];
+  environment.systemPackages = with pkgs; [ mediainfo ];
+
+  services.borgmatic.configurations.system.exclude_patterns = [
+    "/var/lib/sabnzbd/downloads"
+    "/var/lib/plex/transcodes"
+    "/var/lib/fileflows/Temp"
+  ];
 
   system.stateVersion = "24.05";
 }

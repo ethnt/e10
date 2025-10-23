@@ -277,7 +277,7 @@
           only_monitored = false;
           port = 443;
           ssl = true;
-          sync_only_monitored_movies = false;
+          sync_only_monitored_movies = true;
           use_ffprobe_cache = true;
         };
         series_scores = {
@@ -311,8 +311,8 @@
           port = 443;
           series_sync = 60;
           ssl = true;
-          sync_only_monitored_episodes = false;
-          sync_only_monitored_series = false;
+          sync_only_monitored_episodes = true;
+          sync_only_monitored_series = true;
           use_ffprobe_cache = true;
         };
         subdl = { api_key = ""; };

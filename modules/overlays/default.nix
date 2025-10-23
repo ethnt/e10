@@ -20,7 +20,7 @@
       # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923
       inherit (nixpkgs-master) thanos;
 
-      inherit (self'.packages) overseerr mongodb-ce-6_0; # caddy-with-plugins;
+      inherit (self'.packages) fileflows mongodb-ce-6_0; # caddy-with-plugins;
     };
   };
 }
