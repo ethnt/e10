@@ -9,7 +9,6 @@
       profiles.monitoring.thanos.default
       profiles.observability.gatus.default
       profiles.observability.grafana
-      # profiles.services.uptime-kuma
       profiles.telemetry.prometheus-redis-exporter
     ] ++ [ ./profiles/prometheus.nix ./profiles/grafana/default.nix ];
 

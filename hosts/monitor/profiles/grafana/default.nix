@@ -181,6 +181,10 @@
           name = "Speedtest Tracker";
           options.path = ./provisioning/speedtest-tracker.json;
         }
+        {
+          name = "Gatus Service Monitoring";
+          options.path = ./provisioning/gatus.json;
+        }
       ];
 
       alerting = {
