@@ -93,6 +93,16 @@
 
       access_control.rules = lib.mkAfter [
         {
+          domain = "*.e10.camp";
+          policy = "bypass";
+          methods = [ "HEAD" ];
+        }
+        {
+          domain = "*.e10.camp";
+          policy = "one_factor";
+          subject = [ "group:service" ];
+        }
+        {
           domain = "fileflows.e10.camp";
           policy = "bypass";
           resources = [ "^/manifest.json" "^/api([/?].*)?$" ];
@@ -107,17 +117,17 @@
           methods = [ "HEAD" ];
         }
         {
-          domain = "*.e10.camp";
-          policy = "bypass";
-          methods = [ "HEAD" ];
-        }
-        {
           domain = "glance.e10.camp";
           policy = "two_factor";
         }
         {
           domain = "pdf.e10.camp";
           policy = "two_factor";
+        }
+        {
+          domain = "bazarr.e10.camp";
+          policy = "bypass";
+          resources = [ "^/api([/?].*)?$" ];
         }
         {
           domain = "bazarr.e10.camp";
