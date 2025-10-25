@@ -201,7 +201,10 @@
 
       "ldap.e10.camp" = {
         host = hosts.bastion;
-        port = hosts.controller.config.services.lldap.settings.http_port;
+        # FIXME: This will throw an error complaining that `services.lldap.settings.ldap_base_dn` was accessed but has
+        #   no value defined (when it definitely is set)
+        # port = hosts.controller.config.services.lldap.settings.http_port;
+        port = 17170;
       };
 
       "pdf.e10.camp" = {
