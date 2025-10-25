@@ -414,5 +414,16 @@
       static_configs =
         [{ targets = [ "${hosts.omnibus.config.networking.hostName}:3903" ]; }];
     }
+    {
+      job_name = "gatus";
+      static_configs = [{
+        targets = [
+          "${hosts.monitor.config.networking.hostName}:${
+            toString hosts.monitor.config.services.gatus.settings.web.port
+          }"
+        ];
+      }];
+      scrape_interval = "30s";
+    }
   ];
 }

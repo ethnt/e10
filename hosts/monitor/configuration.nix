@@ -7,8 +7,8 @@
       profiles.monitoring.influxdb2.default
       profiles.monitoring.rsyslogd
       profiles.monitoring.thanos.default
+      profiles.observability.gatus.default
       profiles.observability.grafana
-      profiles.services.uptime-kuma
       profiles.telemetry.prometheus-redis-exporter
     ] ++ [ ./profiles/prometheus.nix ./profiles/grafana/default.nix ];
 
@@ -23,12 +23,7 @@
 
       "status.e10.camp" = {
         host = hosts.monitor;
-        port = config.services.uptime-kuma.settings.PORT;
-      };
-
-      "status.e10.video" = {
-        host = hosts.monitor;
-        port = config.services.uptime-kuma.settings.PORT;
+        inherit (config.services.gatus.settings.web) port;
       };
 
       "ntfy.e10.camp" = {

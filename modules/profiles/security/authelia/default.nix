@@ -20,7 +20,16 @@
 
       server = {
         address = "tcp://127.0.0.1:9091";
-        endpoints.authz.forward-auth.implementation = "ForwardAuth";
+        endpoints.authz.forward-auth = {
+          implementation = "ForwardAuth";
+          authn_strategies = [
+            {
+              name = "HeaderAuthorization";
+              schemes = [ "Basic" "Bearer" ];
+            }
+            { name = "CookieSession"; }
+          ];
+        };
       };
 
       authentication_backend.ldap = {
