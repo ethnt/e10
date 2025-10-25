@@ -1,4 +1,4 @@
-{ config, flake, lib, ... }: {
+{ flake, lib, ... }: {
   nixpkgs = {
     config = {
       allowUnfree = true;

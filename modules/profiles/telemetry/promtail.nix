@@ -1,4 +1,4 @@
-{ config, hosts, ... }: {
+{ hosts, ... }: {
   services.promtail = {
     enable = true;
     configuration = {

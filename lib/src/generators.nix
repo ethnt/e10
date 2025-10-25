@@ -5,7 +5,7 @@
 let
   inherit (lib) fixedWidthString mapAttrsToList concatStringsSep;
   inherit (lib.generators) toINIWithGlobalSection mkKeyValueDefault;
-  inherit (builtins) isPath isAttrs isString;
+  inherit (builtins) isAttrs isString;
 
   toXML = { spacing ? 2, rootName ? "Root", xmlns ? {
     xsi = "http://www.w3.org/2001/XMLSchema-instance";

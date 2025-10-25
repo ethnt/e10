@@ -1,16 +1,16 @@
-{ self, inputs, ... }: {
-  perSystem = { pkgs, lib, system, ... }: {
+{ self, ... }: {
+  perSystem = { pkgs, system, ... }: {
     devShells.default = pkgs.mkShell {
       inputsFrom = let
         shellNames = [ "ansible" "deploy" "flake-root" "terraform" "treefmt" ];
       in map (shell: self.devShells.${system}.${shell}) shellNames;
 
       nativeBuildInputs = with pkgs; [
+        attic-client
         authelia
         awscli2
         cachix
         deadnix
-        inputs.attic.packages.${system}.attic
         just
         nix-output-monitor
         sops
