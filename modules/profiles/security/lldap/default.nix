@@ -26,7 +26,11 @@
       ldap_base_dn = "dc=e10,dc=camp";
       ldap_user_email = "admin@e10.camp";
       database_url = "postgresql://lldap@localhost/lldap?host=/run/postgresql";
+      # force_ldap_user_pass_reset = true;
     };
+    # FIXME: I would like `force_ldap_user_pass_reset` to be true (since it forces LLDAP to use the admin password I've
+    # set below), but it will not start with that option set
+    silenceForceUserPassResetWarning = true;
     environment = {
       LLDAP_KEY_SEED = "%d/key-seed";
       LLDAP_KEY_FILE = "";

@@ -46,10 +46,7 @@
     openFirewall = true;
   };
 
-  systemd.services.radarr = {
-    wants = [ "sops-nix.service" ];
-    after = [ "sops-nix.service" ];
-  };
+  systemd.services.radarr.wants = [ "sops-nix.service" ];
 
   services.prometheus.exporters.exportarr-radarr = {
     enable = true;

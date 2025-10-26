@@ -9,8 +9,8 @@
     };
   in {
     authelia_ldap_password = secretConfig;
-    authelia_aws_ses_smtp_username = secretConfig;
-    authelia_aws_ses_smtp_password = secretConfig;
+    authelia_smtp2go_username = secretConfig;
+    authelia_smtp2go_password = secretConfig;
   };
 
   services.authelia.instances.${config.networking.hostName} = {
@@ -85,17 +85,11 @@
         }];
       };
 
-      notifier = {
-        # FIXME
-        # disable_startup_check = true;
-        # smtp = {
-        #   address = "smtp://email-smtp.us-east-2.amazonaws.com:465";
-        #   username = "AKIASLA22YHPQNBNENNK";
-        #   sender = "auth@e10.camp";
-        #   startup_check_address = "ethan@turkeltaub.me";
-        # };
-        filesystem.filename =
-          "/var/lib/authelia-${config.networking.hostName}/notifications.log";
+      notifier.smtp = {
+        address = "smtp://mail.smtp2go.com:2525";
+        username = "e10_smtp";
+        sender = "auth@e10.camp";
+        startup_check_address = "ethan@turkeltaub.me";
       };
 
       telemetry = {
@@ -109,8 +103,8 @@
     environmentVariables = {
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE =
         config.sops.secrets.authelia_ldap_password.path;
-      # AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE =
-      #   config.sops.secrets.aws_ses_smtp_password.path;
+      AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE =
+        config.sops.secrets.authelia_smtp2go_password.path;
     };
   };
 

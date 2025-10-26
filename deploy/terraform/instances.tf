@@ -1,5 +1,5 @@
 resource "aws_instance" "bastion" {
-  ami                    = data.aws_ami.nixos_arm64.id
+  ami                    = var.aws_ami_nixos_arm64
   instance_type          = "t4g.small"
   vpc_security_group_ids = [aws_security_group.common.id, aws_security_group.bastion.id]
   key_name               = aws_key_pair.deploy_key.key_name
@@ -17,7 +17,7 @@ resource "aws_instance" "bastion" {
 }
 
 resource "aws_instance" "monitor" {
-  ami                    = data.aws_ami.nixos_arm64.id
+  ami                    = var.aws_ami_nixos_arm64
   instance_type          = "t4g.small"
   vpc_security_group_ids = [aws_security_group.common.id, aws_security_group.monitor.id]
   key_name               = aws_key_pair.deploy_key.key_name
