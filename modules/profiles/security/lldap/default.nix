@@ -26,7 +26,7 @@
       ldap_base_dn = "dc=e10,dc=camp";
       ldap_user_email = "admin@e10.camp";
       database_url = "postgresql://lldap@localhost/lldap?host=/run/postgresql";
-      force_ldap_user_pass_reset = true;
+      # force_ldap_user_pass_reset = true;
     };
     environment = {
       LLDAP_KEY_SEED = "%d/key-seed";

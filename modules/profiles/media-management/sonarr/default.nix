@@ -48,10 +48,7 @@
     openFirewall = true;
   };
 
-  systemd.services.sonarr = {
-    wants = [ "sops-nix.service" ];
-    after = [ "sops-nix.service" ];
-  };
+  systemd.services.sonarr.wants = [ "sops-nix.service" ];
 
   services.prometheus.exporters.exportarr-sonarr = {
     enable = true;

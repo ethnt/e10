@@ -21,14 +21,14 @@
       owner = "grafana";
     };
 
-    aws_ses_smtp_username = {
+    smtp2go_username = {
       sopsFile = ./secrets.yml;
       format = "yaml";
       mode = "0700";
       owner = "grafana";
     };
 
-    aws_ses_smtp_password = {
+    smtp2go_password = {
       sopsFile = ./secrets.yml;
       format = "yaml";
       mode = "0700";
@@ -46,9 +46,9 @@
   services.grafana = {
     settings.smtp = {
       enabled = true;
-      host = "email-smtp.us-east-2.amazonaws.com:465";
-      user = "$__file{${config.sops.secrets.aws_ses_smtp_username.path}}";
-      password = "$__file{${config.sops.secrets.aws_ses_smtp_password.path}}";
+      host = "mail.smtp2go.com:2525";
+      user = "$__file{${config.sops.secrets.smtp2go_username.path}}";
+      password = "$__file{${config.sops.secrets.smtp2go_password.path}}";
       startTLS_policy = "MandatoryStartTLS";
       skip_verify = true;
       from_address = "monitor@e10.camp";
@@ -197,7 +197,7 @@
               receivers = [{
                 uid = "1";
                 type = "email";
-                settings = { addresses = "ethan.turkeltaub+e10@hey.com"; };
+                settings = { addresses = "ethan+e10@turkeltaub.dev"; };
               }];
             }
             {

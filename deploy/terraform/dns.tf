@@ -353,3 +353,52 @@ resource "aws_route53_record" "spf_e10_llc" {
   records = ["v=spf1 include:spf.messagingengine.com ?all"]
   ttl     = 300
 }
+
+resource "aws_route53_record" "em824837_e10_video" {
+  zone_id = aws_route53_zone.e10_video.zone_id
+  name    = "em824837.e10.video"
+  type    = "CNAME"
+  records = ["return.smtp2go.net"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "s824837_domainkey_e10_video" {
+  zone_id = aws_route53_zone.e10_video.zone_id
+  name    = "s824837._domainkey.e10.video"
+  type    = "CNAME"
+  records = ["dkim.smtp2go.net"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "link_email_e10_video" {
+  zone_id = aws_route53_zone.e10_video.zone_id
+  name    = "link.email.e10.video"
+  type    = "CNAME"
+  records = ["track.smtp2go.net"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "em824837_e10_camp" {
+  zone_id = aws_route53_zone.e10_camp.zone_id
+  name    = "em824837.e10.camp"
+  type    = "CNAME"
+  records = ["return.smtp2go.net"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "s824837_domainkey_e10_camp" {
+  zone_id = aws_route53_zone.e10_camp.zone_id
+  name    = "s824837._domainkey.e10.camp"
+  type    = "CNAME"
+  records = ["dkim.smtp2go.net"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "link_email_e10_camp" {
+  zone_id = aws_route53_zone.e10_camp.zone_id
+  name    = "link.email.e10.camp"
+  type    = "CNAME"
+  records = ["track.smtp2go.net"]
+  ttl     = 300
+}
+
