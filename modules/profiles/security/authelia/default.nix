@@ -8,10 +8,13 @@
         config.services.authelia.instances.${config.networking.hostName}.user;
     };
   in {
-    authelia_ldap_password = secretConfig;
     authelia_smtp2go_username = secretConfig;
     authelia_smtp2go_password = secretConfig;
   };
+
+  environment.systemPackages = [
+    config.services.authelia.instances.${config.networking.hostName}.package
+  ];
 
   services.authelia.instances.${config.networking.hostName} = {
     enable = true;
@@ -30,16 +33,6 @@
             { name = "CookieSession"; }
           ];
         };
-      };
-
-      authentication_backend.ldap = {
-        address = "ldap://localhost:${
-            toString config.services.lldap.settings.ldap_port
-          }";
-        base_dn = "dc=e10,dc=camp";
-        users_filter = "(&({username_attribute}={input})(objectClass=person))";
-        groups_filter = "(member={dn})";
-        user = "uid=authelia,ou=people,dc=e10,dc=camp";
       };
 
       default_2fa_method = "webauthn";
@@ -76,13 +69,6 @@
           port = toString
             config.services.redis.servers."authelia-${config.networking.hostName}".port;
         };
-        cookies = [{
-          domain = "e10.camp";
-          authelia_url = "https://auth.e10.camp";
-          inactivity = "1M";
-          expiration = "3M";
-          remember_me = "1y";
-        }];
       };
 
       notifier.smtp = {
@@ -101,18 +87,15 @@
     };
 
     environmentVariables = {
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE =
-        config.sops.secrets.authelia_ldap_password.path;
       AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE =
         config.sops.secrets.authelia_smtp2go_password.path;
     };
   };
 
-  systemd.services.authelia = let
+  systemd.services."authelia-${config.networking.hostName}" = let
     deps = [
       "postgresql.service"
       "redis-authelia-${config.networking.hostName}.service"
-      "lldap.service"
     ];
   in {
     requires = deps;
