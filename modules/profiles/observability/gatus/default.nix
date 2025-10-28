@@ -3,8 +3,6 @@
 
   sops = {
     secrets = {
-      gatus_username.sopsFile = ./secrets.json;
-      gatus_password.sopsFile = ./secrets.json;
       gatus_authelia_basic_auth.sopsFile = ./secrets.json;
       gatus_ntfy_token.sopsFile = ./secrets.json;
     };
@@ -13,8 +11,6 @@
       content = ''
         GATUS_LOG_LEVEL=warn
 
-        USERNAME=${config.sops.placeholder.gatus_username}
-        PASSWORD=${config.sops.placeholder.gatus_password}
         AUTHELIA_BASIC_AUTH=${config.sops.placeholder.gatus_authelia_basic_auth}
         NTFY_TOKEN=${config.sops.placeholder.gatus_ntfy_token}
       '';
@@ -29,10 +25,6 @@
     environmentFile = config.sops.templates.gatus_environment_file.path;
     settings = {
       metrics = true;
-      security.basic = {
-        username = "$USERNAME";
-        password-bcrypt-base64 = "$PASSWORD";
-      };
       storage = {
         type = "postgres";
         path = "postgresql:///gatus?host=/run/postgresql";
@@ -362,6 +354,11 @@
 
         ];
         monitor = [
+          (mkEndpoint {
+            name = "Authelia";
+            url = "https://auth.monitor.e10.camp";
+            group = "Monitor";
+          })
           (mkEndpoint {
             name = "Caddy";
             url = "http://monitor:2019/config";

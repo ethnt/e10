@@ -1,4 +1,6 @@
-{ config, lib, ... }: {
+{ config, lib, profiles, ... }: {
+  imports = [ profiles.security.authelia.default ];
+
   sops.secrets = let
     secretConfig = {
       sopsFile = ./secrets.yml;
@@ -7,27 +9,43 @@
         config.services.authelia.instances.${config.networking.hostName}.user;
     };
   in {
-    authelia_jwt_secret = secretConfig;
-    authelia_storage_encryption_key = secretConfig;
-    authelia_session_secret = secretConfig;
-    authelia_oidc_hmac_secret = secretConfig;
-    authelia_issuer_private_key = secretConfig;
+    bastion_authelia_ldap_password = secretConfig;
+    bastion_authelia_jwt_secret = secretConfig;
+    bastion_authelia_storage_encryption_key = secretConfig;
+    bastion_authelia_session_secret = secretConfig;
+    bastion_authelia_oidc_hmac_secret = secretConfig;
+    bastion_authelia_issuer_private_key = secretConfig;
   };
 
   services.authelia.instances.${config.networking.hostName} = {
     secrets = {
-      jwtSecretFile = config.sops.secrets.authelia_jwt_secret.path;
+      jwtSecretFile = config.sops.secrets.bastion_authelia_jwt_secret.path;
       storageEncryptionKeyFile =
-        config.sops.secrets.authelia_storage_encryption_key.path;
-      sessionSecretFile = config.sops.secrets.authelia_session_secret.path;
+        config.sops.secrets.bastion_authelia_storage_encryption_key.path;
+      sessionSecretFile =
+        config.sops.secrets.bastion_authelia_session_secret.path;
 
-      # NOTE: This needs to be commented out if there are no OIDC clients present, otherwise Authelia will fail to start
-      oidcHmacSecretFile = config.sops.secrets.authelia_oidc_hmac_secret.path;
+      # NOTE: These need to be commented out if there are no OIDC clients present, otherwise Authelia will fail to start
+      oidcHmacSecretFile =
+        config.sops.secrets.bastion_authelia_oidc_hmac_secret.path;
       oidcIssuerPrivateKeyFile =
-        config.sops.secrets.authelia_issuer_private_key.path;
+        config.sops.secrets.bastion_authelia_issuer_private_key.path;
     };
 
+    environmentVariables.AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE =
+      config.sops.secrets.bastion_authelia_ldap_password.path;
+
     settings = {
+      authentication_backend.ldap = {
+        address = "ldap://localhost:${
+            toString config.services.lldap.settings.ldap_port
+          }";
+        base_dn = "dc=e10,dc=camp";
+        users_filter = "(&({username_attribute}={input})(objectClass=person))";
+        groups_filter = "(member={dn})";
+        user = "uid=authelia,ou=people,dc=e10,dc=camp";
+      };
+
       identity_providers.oidc.clients = [
         {
           client_name = "Paperless";
@@ -91,6 +109,14 @@
         }
       ];
 
+      session.cookies = [{
+        domain = "e10.camp";
+        authelia_url = "https://auth.e10.camp";
+        inactivity = "1M";
+        expiration = "3M";
+        remember_me = "1y";
+      }];
+
       access_control.rules = lib.mkAfter [
         {
           domain = "*.e10.camp";
@@ -139,5 +165,10 @@
         }
       ];
     };
+  };
+
+  systemd.services."authelia-${config.networking.hostName}" = {
+    requires = [ "lldap.service" ];
+    after = [ "lldap.service" ];
   };
 }

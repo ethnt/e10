@@ -10,12 +10,24 @@
       profiles.observability.gatus.default
       profiles.observability.grafana
       profiles.telemetry.prometheus-redis-exporter
-    ] ++ [ ./profiles/prometheus.nix ./profiles/grafana/default.nix ];
+    ] ++ [
+      ./profiles/authelia
+      ./profiles/prometheus.nix
+      ./profiles/grafana/default.nix
+    ];
 
   deployment.tags = [ "@external" ];
 
   services.caddy = {
     proxies = {
+      "auth.monitor.e10.camp" = {
+        host = hosts.monitor;
+        port = 9091;
+        extraConfig = ''
+          header Access-Control-Allow-Origin "*"
+        '';
+      };
+
       "grafana.e10.camp" = {
         host = hosts.monitor;
         port = config.services.grafana.settings.server.http_port;
@@ -24,6 +36,7 @@
       "status.e10.camp" = {
         host = hosts.monitor;
         inherit (config.services.gatus.settings.web) port;
+        protected = true;
       };
 
       "ntfy.e10.camp" = {

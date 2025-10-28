@@ -402,3 +402,10 @@ resource "aws_route53_record" "link_email_e10_camp" {
   ttl     = 300
 }
 
+resource "aws_route53_record" "auth_monitor_e10_camp" {
+  zone_id = aws_route53_zone.e10_camp.zone_id
+  name    = "auth.monitor.e10.camp"
+  type    = "A"
+  records = [aws_eip.monitor.public_ip]
+  ttl     = 300
+}
