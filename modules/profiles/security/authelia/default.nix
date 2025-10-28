@@ -12,6 +12,10 @@
     authelia_smtp2go_password = secretConfig;
   };
 
+  environment.systemPackages = [
+    config.services.authelia.instances.${config.networking.hostName}.package
+  ];
+
   services.authelia.instances.${config.networking.hostName} = {
     enable = true;
     settings = {

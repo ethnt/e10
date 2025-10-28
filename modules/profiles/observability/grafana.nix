@@ -9,7 +9,6 @@
 
     settings = {
       server = {
-        domain = "grafana.e10.camp";
         http_port = 2342;
         http_addr = "0.0.0.0";
       };

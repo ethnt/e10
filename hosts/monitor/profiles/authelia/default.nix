@@ -29,6 +29,7 @@
             email = "admin@e10.camp";
             password =
               config.sops.placeholder.monitor_authelia_users_admin_password_hash;
+            groups = [ "admin" ];
           };
 
           ethan = {
@@ -37,6 +38,7 @@
             email = "ethan@turkeltaub.me";
             password =
               config.sops.placeholder.monitor_authelia_users_ethan_password_hash;
+            groups = [ "admin" ];
           };
 
           gatus = {
@@ -63,10 +65,10 @@
         config.sops.secrets.monitor_authelia_session_secret.path;
 
       # NOTE: These need to be commented out if there are no OIDC clients present, otherwise Authelia will fail to start
-      # oidcHmacSecretFile =
-      #   config.sops.secrets.monitor_authelia_oidc_hmac_secret.path;
-      # oidcIssuerPrivateKeyFile =
-      #   config.sops.secrets.monitor_authelia_issuer_private_key.path;
+      oidcHmacSecretFile =
+        config.sops.secrets.monitor_authelia_oidc_hmac_secret.path;
+      oidcIssuerPrivateKeyFile =
+        config.sops.secrets.monitor_authelia_issuer_private_key.path;
     };
 
     settings = {
@@ -94,6 +96,32 @@
         remember_me = "1y";
       }];
 
+      identity_providers.oidc = {
+        claims_policies = {
+          grafana.id_token = [ "email" "name" "groups" "preferred_username" ];
+        };
+
+        clients = [{
+          client_id =
+            "1vukV4u1uEh~p-HGYBHhB-xv.ZyyKW3tI2Cco5F1f_jaI9Qamn_oc4rLoy7nqx3h3IwnsB5.";
+          client_name = "Grafana";
+          claims_policy = "grafana";
+          client_secret =
+            "$pbkdf2-sha512$310000$IT.5orFA6bKiL/AWi.rP5Q$oDajcRBqmnCuZZxa6L1/o3BrfQDPYAS/YOl2e2dIGbyoXaRTgNptf66ah6NHpwgGNm/hyAvuYHej3.jybdsvUQ";
+          public = false;
+          authorization_policy = "two_factor";
+          require_pkce = true;
+          pkce_challenge_method = "S256";
+          redirect_uris = [ "https://grafana.e10.camp/login/generic_oauth" ];
+          scopes = [ "openid" "profile" "groups" "email" ];
+          response_types = [ "code" ];
+          grant_types = [ "authorization_code" ];
+          access_token_signed_response_alg = "none";
+          userinfo_signed_response_alg = "none";
+          token_endpoint_auth_method = "client_secret_basic";
+        }];
+      };
+
       access_control.rules = lib.mkAfter [
         {
           domain = "*.e10.camp";
@@ -104,6 +132,10 @@
           domain = "*.e10.camp";
           policy = "one_factor";
           subject = [ "group:service" ];
+        }
+        {
+          domain = "*.e10.camp";
+          policy = "two_factor";
         }
       ];
     };

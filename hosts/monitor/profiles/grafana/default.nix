@@ -1,58 +1,58 @@
 { config, hosts, ... }: {
-  sops.secrets = {
-    pushover_user_key = {
+  sops.secrets = let
+    sopsConfig = {
       sopsFile = ./secrets.yml;
       format = "yaml";
       mode = "0700";
       owner = "grafana";
     };
-
-    pushover_api_token = {
-      sopsFile = ./secrets.yml;
-      format = "yaml";
-      mode = "0700";
-      owner = "grafana";
-    };
-
-    grafana_to_ntfy_password = {
-      sopsFile = ./secrets.yml;
-      format = "yaml";
-      mode = "0700";
-      owner = "grafana";
-    };
-
-    smtp2go_username = {
-      sopsFile = ./secrets.yml;
-      format = "yaml";
-      mode = "0700";
-      owner = "grafana";
-    };
-
-    smtp2go_password = {
-      sopsFile = ./secrets.yml;
-      format = "yaml";
-      mode = "0700";
-      owner = "grafana";
-    };
-
-    influxdb2_grafana_token = {
-      sopsFile = ./secrets.yml;
-      format = "yaml";
-      mode = "0700";
-      owner = "grafana";
-    };
+  in {
+    grafana_to_ntfy_password = sopsConfig;
+    grafana_smtp2go_username = sopsConfig;
+    grafana_smtp2go_password = sopsConfig;
+    grafana_influxdb2_grafana_token = sopsConfig;
+    grafana_authelia_client_secret = sopsConfig;
   };
 
   services.grafana = {
-    settings.smtp = {
-      enabled = true;
-      host = "mail.smtp2go.com:2525";
-      user = "$__file{${config.sops.secrets.smtp2go_username.path}}";
-      password = "$__file{${config.sops.secrets.smtp2go_password.path}}";
-      startTLS_policy = "MandatoryStartTLS";
-      skip_verify = true;
-      from_address = "monitor@e10.camp";
-      from_name = "Grafana";
+    settings = {
+      server = {
+        domain = "grafana.e10.camp";
+        root_url = "https://grafana.e10.camp";
+      };
+
+      "auth.generic_oauth" = {
+        enabled = true;
+        name = "Authelia";
+        icon = "signin";
+        client_id =
+          "1vukV4u1uEh~p-HGYBHhB-xv.ZyyKW3tI2Cco5F1f_jaI9Qamn_oc4rLoy7nqx3h3IwnsB5.";
+        client_secret =
+          "$__file{${config.sops.secrets.grafana_authelia_client_secret.path}}";
+        scopes = "openid profile email groups";
+        empty_scopes = "false";
+        auth_url = "https://auth.monitor.e10.camp/api/oidc/authorization";
+        token_url = "https://auth.monitor.e10.camp/api/oidc/token";
+        api_url = "https://auth.monitor.e10.camp/api/oidc/userinfo";
+        login_attribute_path = "preferred_username";
+        groups_attribute_path = "groups";
+        name_attribute_path = "name";
+        use_pkce = "true";
+        role_attribute_path =
+          "contains(groups[*], 'admin') && 'Admin' || contains(groups[*], 'editor') && 'Editor' || 'Viewer'";
+      };
+
+      smtp = {
+        enabled = true;
+        host = "mail.smtp2go.com:2525";
+        user = "$__file{${config.sops.secrets.grafana_smtp2go_username.path}}";
+        password =
+          "$__file{${config.sops.secrets.grafana_smtp2go_password.path}}";
+        startTLS_policy = "MandatoryStartTLS";
+        skip_verify = true;
+        from_address = "monitor@e10.camp";
+        from_name = "Grafana";
+      };
     };
 
     provision = {
@@ -103,7 +103,7 @@
             };
             secureJsonData = {
               basicAuthPassword =
-                "$__file{${hosts.monitor.config.sops.secrets.influxdb2_grafana_token.path}}";
+                "$__file{${hosts.monitor.config.sops.secrets.grafana_influxdb2_grafana_token.path}}";
             };
           }
         ];
@@ -201,19 +201,6 @@
               }];
             }
             {
-              name = "Pushover";
-              receivers = [{
-                uid = "10";
-                type = "pushover";
-                settings = {
-                  apiToken =
-                    "$__file{${config.sops.secrets.pushover_api_token.path}}";
-                  userKey =
-                    "$__file{${config.sops.secrets.pushover_user_key.path}}";
-                };
-              }];
-            }
-            {
               name = "Ntfy";
               receivers = [{
                 uid = "20";
@@ -237,36 +224,15 @@
             orgId = 1;
             receiver = "Email";
             group_by = [ "grafana_folder" "alertname" ];
-            routes = [
-              {
-                receiver = "Ntfy";
-                object_matchers = [[ "severity" "=" "critical" ]];
-              }
-              {
-                receiver = "Pushover";
-                object_matchers = [[ "severity" "=" "critical" ]];
-              }
-            ];
+            routes = [{
+              receiver = "Ntfy";
+              object_matchers = [[ "severity" "=" "critical" ]];
+            }];
           }];
         };
 
         rules.settings = {
           apiVersion = 1;
-          deleteRules = [
-            { uid = "5166671F-AEF3-434D-99B4-18C7A32BD708"; }
-
-            { uid = "9FEB48CD-F6ED-4B7A-86DA-A912D67D142C"; }
-
-            { uid = "77EE3CEA-A817-4A48-86D6-62839DE1A713"; }
-
-            { uid = "32B02B4C-282B-447C-91E9-98B196B9390F"; }
-
-            { uid = "E52329A1-393E-47B0-B849-7DB025FA47A0"; }
-
-            { uid = "9814CF38-373F-4251-BE8A-2438D9C4A88C"; }
-
-            { uid = "75AA8FE9-04D2-4502-B59D-4F2F5BD1DFE0"; }
-          ];
           groups = [{
             orgId = 1;
             name = "Default";
