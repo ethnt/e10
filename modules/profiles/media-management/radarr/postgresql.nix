@@ -26,7 +26,7 @@
       serviceConfig = {
         ExecStart = lib.getExe (pkgs.writeShellApplication {
           name = "radarr-logs-cleanup";
-          runtimeInputs = [ config.services.postgresql.package ];
+          runtimeInputs = [ pkgs.sudo config.services.postgresql.package ];
           text = ''
             sudo -u postgres psql --dbname="radarr_logs" --command="DELETE FROM \"Logs\" WHERE \"Time\" < now() - interval '24 hours'"
           '';
