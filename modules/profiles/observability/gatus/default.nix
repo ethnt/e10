@@ -304,7 +304,7 @@
           (mkEndpoint {
             name = "Blocky (DNS)";
             url = "tcp://controller:53";
-            group = "Builder";
+            group = "Controller";
             interval = "30s";
             conditions = [ "[CONNECTED] == true" ];
           })

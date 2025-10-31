@@ -440,7 +440,7 @@
               required = 0;
               optional = 0;
               retention = 0;
-              expire_date = "2025-10-29";
+              expire_date = "2026-10-29";
               quota = "";
               usage_at_start = 0;
               priority = 0;
