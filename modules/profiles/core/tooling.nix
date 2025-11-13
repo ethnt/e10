@@ -5,6 +5,7 @@
     bind
     btop
     comma
+    dua
     dust
     glances
     inetutils

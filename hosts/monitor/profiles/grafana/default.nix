@@ -493,6 +493,77 @@
                 labels = { severity = "critical"; };
                 isPaused = false;
               }
+              {
+                uid = "C6AC6046-EBEF-49E8-A810-A124B01AC3D1";
+                title = "ZFS pool degraded";
+                condition = "C";
+                data = [
+                  {
+                    refId = "A";
+                    relativeTimeRange = {
+                      from = 600;
+                      to = 0;
+                    };
+                    datasourceUid = "P5DCFC7561CCDE821";
+                    model = {
+                      datasource = {
+                        type = "prometheus";
+                        uid = "P5DCFC7561CCDE821";
+                      };
+                      editorMode = "code";
+                      expr = "zfs_pool_health";
+                      instant = true;
+                      intervalMs = 1000;
+                      legendFormat = "__auto";
+                      maxDataPoints = 43200;
+                      range = false;
+                      refId = "A";
+                    };
+                  }
+                  {
+                    refId = "C";
+                    relativeTimeRange = {
+                      from = 0;
+                      to = 0;
+                    };
+                    datasourceUid = "__expr__";
+                    model = {
+                      conditions = [{
+                        evaluator = {
+                          params = [ 0 ];
+                          type = "gt";
+                        };
+                        operator = { type = "and"; };
+                        query = { params = [ "C" ]; };
+                        reducer = {
+                          params = [ ];
+                          type = "last";
+                        };
+                        type = "query";
+                      }];
+                      datasource = {
+                        type = "__expr__";
+                        uid = "__expr__";
+                      };
+                      expression = "A";
+                      intervalMs = 1000;
+                      maxDataPoints = 43200;
+                      refId = "C";
+                      type = "threshold";
+                    };
+                  }
+                ];
+                noDataState = "NoData";
+                execErrState = "Error";
+                for = "1m";
+                annotations = {
+                  pool = ''{{index $labels "pool"}}'';
+                  summary = "ZFS pool {{pool}} unhealthy";
+                };
+                labels = { };
+                isPaused = false;
+                notification_settings = { receiver = "Ntfy"; };
+              }
             ];
           }];
         };

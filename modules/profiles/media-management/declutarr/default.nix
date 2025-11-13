@@ -17,11 +17,12 @@
         remove_bad_files = true;
         remove_failed_imports = {
           message_patterns = [
+            "No files found are eligible for import*"
+            "No video files were found in the selected folder"
             "Not a Custom Format upgrade for existing*"
             "Not an upgrade for existing*"
-            "No files found are eligible for import*"
             "One or more episodes expected in this release were not imported or missing from the release"
-            "No video files were found in the selected folder"
+            "Unable to determine if file is a sample"
           ];
         };
         remove_metadata_missing = true;

@@ -270,46 +270,6 @@
           }
         '';
       };
-
-      "web.garage.e10.camp" = {
-        host = hosts.omnibus;
-        port = 3902;
-        acme = {
-          generate = true;
-          provider = "route53";
-          environmentFile =
-            config.sops.secrets.e10_camp_lego_route53_credentials.path;
-        };
-      };
-
-      "s3.garage.e10.camp" = {
-        host = hosts.omnibus;
-        port = 3900;
-        acme = {
-          generate = true;
-          provider = "route53";
-          environmentFile =
-            config.sops.secrets.e10_camp_lego_route53_credentials.path;
-        };
-        extraConfig = ''
-          encode gzip zstd
-
-          request_body {
-            max_size 1GiB
-          }
-        '';
-      };
-
-      "admin.garage.e10.camp" = {
-        host = hosts.omnibus;
-        port = 3903;
-        acme = {
-          generate = true;
-          provider = "route53";
-          environmentFile =
-            config.sops.secrets.e10_camp_lego_route53_credentials.path;
-        };
-      };
     };
   };
 }
