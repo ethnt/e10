@@ -3,10 +3,10 @@ let
   disks = {
     scsi = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
 
-    nvme0 = "/dev/disk/by-id/nvme-eui.002538b431a23071";
-    nvme1 = "/dev/disk/by-id/nvme-eui.002538b531a187dc";
-    nvme2 = "/dev/disk/by-id/nvme-eui.002538b431a2306e";
-    nvme3 = "/dev/disk/by-id/nvme-eui.002538b631a0e093";
+    nvme0 = "/dev/disk/by-id/nvme-eui.0025384a51403eec";
+    nvme1 = "/dev/disk/by-id/nvme-eui.0025384a51403ea5";
+    nvme2 = "/dev/disk/by-id/nvme-eui.0025384a51403e68";
+    nvme3 = "/dev/disk/by-id/nvme-eui.0025384a514037ac";
 
     hdd0 = "/dev/disk/by-id/ata-ST20000NM007D-3DJ103_ZVT5YRX1";
     hdd1 = "/dev/disk/by-id/ata-ST20000NM007D-3DJ103_ZVT5JMZQ";
@@ -15,6 +15,7 @@ let
     hdd4 = "/dev/disk/by-id/ata-ST20000NM007D-3DJ103_ZVT5NLRJ";
     hdd5 = "/dev/disk/by-id/ata-ST20000NM007D-3DJ103_ZVT5PF99";
     hdd6 = "/dev/disk/by-id/ata-ST20000NM007D-3DJ103_ZVT5MMBQ";
+    hdd7 = "/dev/disk/by-id/ata-WDC_WD181KFGX-68CKWN0_PNG2ZUJP";
   };
 in {
   disko.devices = {
@@ -101,6 +102,11 @@ in {
 
       hdd6 = addToZfsPool {
         device = disks.hdd6;
+        pool = "blockbuster";
+      };
+
+      hdd7 = addToZfsPool {
+        device = disks.hdd7;
         pool = "blockbuster";
       };
     };

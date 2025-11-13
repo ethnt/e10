@@ -1,4 +1,7 @@
-{ config, lib, ... }: {
+let
+  # Toggle for turning all endpoints off for maintenance
+  maintenance = false;
+in { config, lib, ... }: {
   imports = [ ./postgresql.nix ];
 
   sops = {
@@ -53,6 +56,7 @@
           , extraConfig ? { } }:
           ({
             inherit name url group interval conditions;
+            enabled = !maintenance;
             alerts = [{
               enabled = true;
               type = "ntfy";
