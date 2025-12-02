@@ -285,6 +285,12 @@ in { config, lib, ... }: {
             group = "Matrix";
             protected = true;
           })
+          (mkEndpoint {
+            name = "Change Detection";
+            url = "https://change-detection.e10.camp";
+            group = "Matrix";
+            protected = true;
+          })
         ];
         builder = [
           (mkEndpoint {

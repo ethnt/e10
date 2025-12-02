@@ -1,6 +1,6 @@
 { profiles, suites, ... }: {
   imports = with suites;
-    core ++ proxmox-vm ++ [
+    core ++ local ++ proxmox-vm ++ [
       profiles.networking.blocky.default
       profiles.networking.unifi
       profiles.power.eaton-5p550r

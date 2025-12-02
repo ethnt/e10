@@ -1,5 +1,5 @@
-{ config, profiles, ... }: {
-  imports = [ ./common.nix profiles.filesystems.files.backup ];
+{
+  imports = [ ../common.nix ];
 
   services.borgmatic.configurations.system = {
     source_directories = [ "/etc" "/var/lib" "/srv" "/root" ];
@@ -13,17 +13,6 @@
       "/var/lib/private"
       "/var/lib/systemd"
       "/var/logs"
-    ];
-    repositories = let repositoryName = "${config.networking.hostName}-system";
-    in [
-      {
-        label = "rsync.net";
-        path = "ssh://de2228@de2228.rsync.net/./${repositoryName}";
-      }
-      {
-        label = "omnibus";
-        path = "/mnt/files/backup/${repositoryName}";
-      }
     ];
     keep_daily = 3;
     keep_weekly = 2;

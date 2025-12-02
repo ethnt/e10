@@ -1,6 +1,6 @@
 { profiles }: {
   core = [
-    profiles.backups.borgmatic.system
+    profiles.backups.borgmatic.system.rsync-net
     profiles.core.caching
     profiles.core.common
     profiles.core.nix-config
@@ -39,7 +39,7 @@
     profiles.users.root
   ];
 
-  # homelab = [ profiles.networking.satan ];
+  local = [ profiles.backups.borgmatic.system.omnibus ];
 
   nuc = [
     profiles.filesystems.hybrid-boot

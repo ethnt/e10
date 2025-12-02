@@ -1,6 +1,6 @@
 { config, pkgs, suites, profiles, ... }: {
   imports = with suites;
-    core ++ proxmox-vm ++ [
+    core ++ local ++ proxmox-vm ++ [
       profiles.communications.postfix.default
       profiles.databases.postgresql
       profiles.hardware.nvme

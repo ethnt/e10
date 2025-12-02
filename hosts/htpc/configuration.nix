@@ -1,6 +1,6 @@
 { suites, profiles, pkgs, ... }: {
   imports = with suites;
-    core ++ proxmox-vm ++ [
+    core ++ local ++ proxmox-vm ++ [
       profiles.filesystems.blockbuster
       profiles.hardware.nvidia
       profiles.media-management.bazarr.default
