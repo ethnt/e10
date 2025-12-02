@@ -7,7 +7,7 @@ terraform {
 
     tailscale = {
       source  = "tailscale/tailscale"
-      version = "0.13.13"
+      version = "0.24.0"
     }
 
     sops = {

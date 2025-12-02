@@ -402,8 +402,16 @@ in { config, lib, ... }: {
             group = "Monitor";
           })
         ];
+        pikvm = [
+          (mkEndpoint {
+            name = "PiKVM";
+            url = "https://pikvm";
+            group = "PiKVM";
+            extraConfig.client.insecure = true;
+          })
+        ];
       in bastion ++ omnibus ++ htpc ++ matrix ++ builder ++ controller
-      ++ monitor;
+      ++ monitor ++ pikvm;
     };
   };
 }

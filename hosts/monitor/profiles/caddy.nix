@@ -20,6 +20,11 @@
         protected = true;
       };
 
+      "status.e10.video" = {
+        host = hosts.monitor;
+        port = config.services.uptime-kuma.settings.PORT;
+      };
+
       "ntfy.e10.camp" = {
         host = hosts.monitor;
         port = 2586;

@@ -9,6 +9,7 @@
       profiles.monitoring.thanos.default
       profiles.observability.gatus.default
       profiles.observability.grafana
+      profiles.observability.uptime-kuma
       profiles.telemetry.prometheus-redis-exporter
     ] ++ [
       ./profiles/authelia

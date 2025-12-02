@@ -251,6 +251,12 @@
         inherit (hosts.controller.config.services.speedtest-tracker) port;
       };
 
+      "change-detection.e10.camp" = {
+        host = hosts.matrix;
+        inherit (hosts.matrix.config.services.changedetection-io) port;
+        protected = true;
+      };
+
       "e10.video" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.plex) port;
