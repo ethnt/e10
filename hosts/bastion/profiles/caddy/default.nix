@@ -133,7 +133,7 @@
           config.sops.secrets.e10_video_lego_route53_credentials.path;
       };
 
-      "tautulli.e10.video" = {
+      "tautulli.e10.camp" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.tautulli) port;
         acme.environmentFile =
@@ -249,6 +249,17 @@
       "speedtest-tracker.e10.camp" = {
         host = hosts.controller;
         inherit (hosts.controller.config.services.speedtest-tracker) port;
+      };
+
+      "change-detection.e10.camp" = {
+        host = hosts.matrix;
+        inherit (hosts.matrix.config.services.changedetection-io) port;
+        protected = true;
+      };
+
+      "tracearr.e10.camp" = {
+        host = hosts.htpc;
+        inherit (hosts.htpc.config.services.tracearr) port;
       };
 
       "e10.video" = {

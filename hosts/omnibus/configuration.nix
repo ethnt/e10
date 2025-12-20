@@ -1,6 +1,6 @@
 { config, pkgs, suites, profiles, ... }: {
   imports = with suites;
-    core ++ proxmox-vm ++ [
+    core ++ local ++ proxmox-vm ++ [
       profiles.communications.postfix.default
       profiles.databases.postgresql
       profiles.hardware.nvme
@@ -120,7 +120,7 @@
 
   services.borgmatic.configurations.files = {
     source_directories = [ "/data/files" ];
-    exclude_patterns = [ "/data/files/backup" ];
+    exclude_patterns = [ "/data/files/backup" "/data/files/**/Creators" ];
     repositories = [{
       label = "rsync.net";
       path = "ssh://de2228@de2228.rsync.net/./omnibus-files";

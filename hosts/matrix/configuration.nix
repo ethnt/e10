@@ -1,6 +1,6 @@
 { lib, suites, profiles, ... }: {
   imports = with suites;
-    core ++ proxmox-vm ++ [
+    core ++ local ++ proxmox-vm ++ [
       profiles.databases.postgresql
       profiles.emulation.aarch64-linux
       profiles.filesystems.blockbuster
@@ -10,6 +10,7 @@
       profiles.networking.printing
       profiles.power.tripp-lite-smart1500lcd
       profiles.services.attic-watch-store.default
+      profiles.services.changedetection-io
       profiles.services.e10-land
       profiles.services.glance.default
       profiles.services.mazanoke

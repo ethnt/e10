@@ -1,6 +1,6 @@
 { suites, profiles, ... }: {
   imports = with suites;
-    core ++ proxmox-vm ++ [
+    core ++ local ++ proxmox-vm ++ [
       profiles.services.attic-watch-store.default
       profiles.emulation.aarch64-linux
       profiles.remote-builder.builder

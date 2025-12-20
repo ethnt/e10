@@ -165,7 +165,12 @@ in { config, lib, ... }: {
           })
           (mkEndpoint {
             name = "Tautulli";
-            url = "https://tautulli.e10.video";
+            url = "https://tautulli.e10.camp";
+            group = "HTPC";
+          })
+          (mkEndpoint {
+            name = "Tracearr";
+            url = "https://tracearr.e10.camp";
             group = "HTPC";
           })
           (mkEndpoint {
@@ -282,6 +287,12 @@ in { config, lib, ... }: {
           (mkEndpoint {
             name = "Glance";
             url = "https://glance.e10.camp";
+            group = "Matrix";
+            protected = true;
+          })
+          (mkEndpoint {
+            name = "Change Detection";
+            url = "https://change-detection.e10.camp";
             group = "Matrix";
             protected = true;
           })
@@ -402,8 +413,16 @@ in { config, lib, ... }: {
             group = "Monitor";
           })
         ];
+        pikvm = [
+          (mkEndpoint {
+            name = "PiKVM";
+            url = "https://pikvm";
+            group = "PiKVM";
+            extraConfig.client.insecure = true;
+          })
+        ];
       in bastion ++ omnibus ++ htpc ++ matrix ++ builder ++ controller
-      ++ monitor;
+      ++ monitor ++ pikvm;
     };
   };
 }

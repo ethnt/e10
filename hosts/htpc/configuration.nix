@@ -1,6 +1,6 @@
 { suites, profiles, pkgs, ... }: {
   imports = with suites;
-    core ++ proxmox-vm ++ [
+    core ++ local ++ proxmox-vm ++ [
       profiles.filesystems.blockbuster
       profiles.hardware.nvidia
       profiles.media-management.bazarr.default
@@ -16,6 +16,7 @@
       profiles.media-management.sonarr.default
       profiles.media-management.tautulli
       profiles.media-management.wizarr
+      profiles.media-management.tracearr.default
       profiles.services.attic-watch-store.default
       profiles.sharing.nfs-client
       profiles.telemetry.prometheus-dcgm-exporter
