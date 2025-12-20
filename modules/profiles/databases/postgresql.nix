@@ -1,7 +1,7 @@
 { pkgs, lib, ... }: {
   services.postgresql = {
     enable = true;
-    package = pkgs.postgresql_15;
+    package = pkgs.postgresql_15.withPackages (p: [ p.postgis p.timescaledb ]);
     enableTCPIP = true;
     authentication = ''
       local all all trust

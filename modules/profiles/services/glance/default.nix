@@ -73,7 +73,7 @@
                   }
                   {
                     title = "Tautulli";
-                    url = "https://tautulli.e10.video";
+                    url = "https://tautulli.e10.camp";
                     icon = "di:tautulli";
                   }
                   {

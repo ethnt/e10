@@ -165,7 +165,12 @@ in { config, lib, ... }: {
           })
           (mkEndpoint {
             name = "Tautulli";
-            url = "https://tautulli.e10.video";
+            url = "https://tautulli.e10.camp";
+            group = "HTPC";
+          })
+          (mkEndpoint {
+            name = "Tracearr";
+            url = "https://tracearr.e10.camp";
             group = "HTPC";
           })
           (mkEndpoint {

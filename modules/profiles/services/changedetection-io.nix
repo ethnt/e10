@@ -4,6 +4,6 @@
     listenAddress = "0.0.0.0";
     behindProxy = true;
     baseURL = "https://change-detection.e10.camp";
-    playwrightSupport = true;
+    webDriverSupport = true;
   };
 }

@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     lshw
-    glxinfo
+    # glxinfo
     pciutils
     cudatoolkit
     linuxPackages.nvidia_x11
