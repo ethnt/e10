@@ -23,6 +23,7 @@
             "Not an upgrade for existing*"
             "One or more episodes expected in this release were not imported or missing from the release"
             "Unable to determine if file is a sample"
+            "Episode file on disk contains more episodes than this file contains"
           ];
         };
         remove_metadata_missing = true;

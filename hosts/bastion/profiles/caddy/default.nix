@@ -262,6 +262,11 @@
         inherit (hosts.htpc.config.services.tracearr) port;
       };
 
+      "termix.e10.camp" = {
+        host = hosts.controller;
+        inherit (hosts.controller.config.services.termix) port;
+      };
+
       "e10.video" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.plex) port;
