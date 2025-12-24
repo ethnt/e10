@@ -9,6 +9,14 @@ in {
           uses = "actions/checkout@v4.2.1";
         }
         {
+          name = "Clean up storage";
+          run = ''
+            sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+            sudo docker image prune --all --force
+            sudo docker builder prune -a
+          '';
+        }
+        {
           name = "Install Nix";
           uses = "DeterminateSystems/nix-installer-action@v14";
           "with" = { extra-conf = "allow-import-from-derivation = true"; };
