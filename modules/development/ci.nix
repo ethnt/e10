@@ -8,6 +8,16 @@ in {
           name = "Checkout code";
           uses = "actions/checkout@v4.2.1";
         }
+        { run = "df -h"; }
+        {
+          name = "Clean up storage";
+          run = ''
+            sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+            sudo docker image prune --all --force
+            sudo docker builder prune -a
+          '';
+        }
+        { run = "df -h"; }
         {
           name = "Install Nix";
           uses = "DeterminateSystems/nix-installer-action@v14";
