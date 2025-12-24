@@ -8,7 +8,6 @@ in {
           name = "Checkout code";
           uses = "actions/checkout@v4.2.1";
         }
-        { run = "df -h"; }
         {
           name = "Clean up storage";
           run = ''
@@ -17,7 +16,6 @@ in {
             sudo docker builder prune -a
           '';
         }
-        { run = "df -h"; }
         {
           name = "Install Nix";
           uses = "DeterminateSystems/nix-installer-action@v14";
