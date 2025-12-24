@@ -46,8 +46,6 @@
     openFirewall = true;
   };
 
-  systemd.services.radarr.wants = [ "sops-nix.service" ];
-
   services.prometheus.exporters.exportarr-radarr = {
     enable = true;
     url = "https://radarr.e10.camp";

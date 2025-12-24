@@ -48,8 +48,6 @@
     openFirewall = true;
   };
 
-  systemd.services.sonarr.wants = [ "sops-nix.service" ];
-
   services.prometheus.exporters.exportarr-sonarr = {
     enable = true;
     url = "https://sonarr.e10.camp";
