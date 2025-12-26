@@ -17,6 +17,11 @@ in {
       default = "/var/lib/tracearr";
     };
 
+    environment = mkOption {
+      type = types.attrs;
+      default = { };
+    };
+
     environmentFile = mkOption {
       type = types.nullOr types.path;
       default = null;
@@ -30,23 +35,7 @@ in {
 
   config = mkIf cfg.enable {
     systemd.tmpfiles.settings."10-tracearr" = {
-      "${cfg.dataDir}/postgres" = {
-        "d" = {
-          user = config.virtualisation.oci-containers.backend;
-          group = config.virtualisation.oci-containers.backend;
-          mode = "0700";
-        };
-      };
-
-      "${cfg.dataDir}/redis" = {
-        "d" = {
-          user = config.virtualisation.oci-containers.backend;
-          group = config.virtualisation.oci-containers.backend;
-          mode = "0700";
-        };
-      };
-
-      "${cfg.dataDir}/tracearr" = {
+      ${cfg.dataDir} = {
         "d" = {
           user = config.virtualisation.oci-containers.backend;
           group = config.virtualisation.oci-containers.backend;
@@ -57,7 +46,11 @@ in {
 
     virtualisation.oci-containers.containers.tracearr = {
       image = "ghcr.io/connorgallopo/tracearr:latest";
-      environment.TZ = config.time.timeZone;
+      environment = {
+        NODE_ENV = "production";
+        TZ = config.time.timeZone;
+        PORT = toString 3000;
+      } // cfg.environment;
       environmentFiles =
         lib.optional (cfg.environmentFile != null) cfg.environmentFile;
       ports = [ "${toString cfg.port}:3000" ];
@@ -66,6 +59,7 @@ in {
         "${cfg.dataDir}/redis:/data/redis:rw"
         "${cfg.dataDir}/tracearr:/data/tracearr:rw"
       ];
+      extraOptions = [ "--network=host" ];
     };
 
     networking.firewall =
