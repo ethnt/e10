@@ -18,7 +18,7 @@ resource "aws_instance" "bastion" {
 
 resource "aws_instance" "monitor" {
   ami                    = var.aws_ami_nixos_arm64
-  instance_type          = "t4g.small"
+  instance_type          = "t4g.medium"
   vpc_security_group_ids = [aws_security_group.common.id, aws_security_group.monitor.id]
   key_name               = aws_key_pair.deploy_key.key_name
   subnet_id              = aws_subnet.public_subnet.id
