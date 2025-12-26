@@ -24,7 +24,7 @@ resource "aws_instance" "monitor" {
   subnet_id              = aws_subnet.public_subnet.id
 
   root_block_device {
-    volume_size           = 128
+    volume_size           = 256
     volume_type           = "gp2"
     delete_on_termination = false
   }

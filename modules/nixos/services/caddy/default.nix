@@ -10,6 +10,10 @@ in {
         options = {
           host = mkOption { type = types.attrs; };
           port = mkOption { type = types.oneOf [ types.port types.str ]; };
+          extraReverseProxyConfig = mkOption {
+            type = types.lines;
+            default = "";
+          };
           extraConfig = mkOption {
             type = types.lines;
             default = "";
@@ -73,6 +77,7 @@ in {
           ${optionalString value.protected autheliaForwardAuth}
 
           reverse_proxy ${resolvedHost}:${toString value.port} {
+            ${value.extraReverseProxyConfig}
             ${
               optionalString value.skipTLSVerify ''
                 transport http {
