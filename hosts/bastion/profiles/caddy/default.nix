@@ -285,6 +285,9 @@
             max_size 100MiB
           }
         '';
+        extraReverseProxyConfig = ''
+          header_up X-Real-IP {remote_host}
+        '';
       };
     };
   };
