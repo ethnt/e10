@@ -45,6 +45,9 @@ ansible playbook:
 ssh host:
     ssh -F $SSH_CONFIG_FILE root@{{ host }}
 
+mosh host:
+    mosh --ssh="ssh -F $SSH_CONFIG_FILE" root@{{ host }}
+
 scp *args:
     scp -F $SSH_CONFIG_FILE {{ args }}
 

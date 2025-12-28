@@ -7,6 +7,7 @@
       profiles.media-management.declutarr.default
       profiles.media-management.fileflows.server
       profiles.media-management.huntarr
+      profiles.media-management.jellyfin
       profiles.media-management.jellyseerr
       profiles.media-management.plex
       profiles.media-management.profilarr

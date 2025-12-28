@@ -35,6 +35,7 @@
     environment = {
       DATABASE_URL = "postgres://tracearr:tracearr@localhost:5432/tracearr";
       REDIS_URL = "redis://localhost:6381";
+      TRUST_PROXY = toString true;
     };
     environmentFile = config.sops.templates.tracearr_environment_file.path;
   };
