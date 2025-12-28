@@ -267,6 +267,18 @@
         inherit (hosts.controller.config.services.termix) port;
       };
 
+      "jellyfin.e10.video" = {
+        host = hosts.htpc;
+        port = 8096;
+        extraConfig = ''
+          encode gzip zstd
+
+          request_body {
+            max_size 100MiB
+          }
+        '';
+      };
+
       "e10.video" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.plex) port;
