@@ -1,6 +1,6 @@
 { self, withSystem, ... }:
 let
-  inherit (self) inputs;
+  inherit (self) inputs secrets;
   inherit (inputs) haumea;
   inherit (self.lib.utils) flattenTree;
   l = inputs.nixpkgs.lib // builtins;
@@ -34,7 +34,7 @@ let
         baseConfiguration = _: { networking.hostName = hostname; };
         modules = commonModules ++ [ baseConfiguration configuration ];
         specialArgs = {
-          inherit inputs profiles suites;
+          inherit inputs profiles suites secrets;
           flake = self;
           hosts = self.nixosConfigurations;
         };

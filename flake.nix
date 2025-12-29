@@ -55,6 +55,9 @@
     attic.inputs.nixpkgs.follows = "nixpkgs";
 
     flake-root.url = "github:srid/flake-root";
+
+    e10-secrets.url = "git+ssh://git@github.com/ethnt/e10-secrets";
+    # e10-secrets.url = "git+file:///Users/ethan/Workspace/e10-secrets";
   };
 
   outputs = inputs@{ self, flake-parts, ... }:
@@ -71,9 +74,10 @@
         ./modules/development/treefmt.nix
         ./modules/development/flake-root.nix
 
-        ./modules/deploy/shell.nix
-        ./modules/deploy/configuration.nix
         ./modules/deploy/ansible.nix
+        ./modules/deploy/configuration.nix
+        ./modules/deploy/secrets.nix
+        ./modules/deploy/shell.nix
         ./modules/deploy/terraform.nix
 
         ./hosts
