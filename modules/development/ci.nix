@@ -23,7 +23,7 @@ in {
         }
         {
           name = "Add SSH keys to ssh-agent";
-          users = "webfactory/ssh-agent@v0.9.0";
+          uses = "webfactory/ssh-agent@v0.9.0";
           "with" = { ssh-private-key = "\${{ secrets.SECRETS_DEPLOY_KEY }}"; };
         }
         {
