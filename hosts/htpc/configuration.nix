@@ -1,7 +1,8 @@
-{ suites, profiles, pkgs, ... }: {
+{ suites, profiles, pkgs, secrets, ... }: {
   imports = with suites;
     core ++ local ++ proxmox-vm ++ [
       profiles.filesystems.blockbuster
+      profiles.filesystems.files.personal
       profiles.hardware.nvidia
       profiles.media-management.bazarr.default
       profiles.media-management.declutarr.default
@@ -23,7 +24,8 @@
       profiles.telemetry.prometheus-dcgm-exporter
       profiles.telemetry.prometheus-plex-media-server-exporter.default
       profiles.virtualisation.docker
-    ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
+    ] ++ [ ./hardware-configuration.nix ./disk-config.nix ]
+    ++ [ secrets.hosts.htpc.configuration ];
 
   deployment = {
     tags = [ "@vm" "@build-on-target" ];

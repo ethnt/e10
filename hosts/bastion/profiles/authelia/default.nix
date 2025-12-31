@@ -138,7 +138,7 @@
         remember_me = "1y";
       }];
 
-      access_control.rules = lib.mkAfter [
+      access_control.rules = lib.mkBefore [
         {
           domain = "*.e10.camp";
           policy = "bypass";

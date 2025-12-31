@@ -22,6 +22,11 @@ in {
           "with" = { extra-conf = "allow-import-from-derivation = true"; };
         }
         {
+          name = "Add SSH keys to ssh-agent";
+          uses = "webfactory/ssh-agent@v0.9.0";
+          "with" = { ssh-private-key = "\${{ secrets.SECRETS_DEPLOY_KEY }}"; };
+        }
+        {
           name = "Setup Attic cache";
           uses = "ryanccn/attic-action@v0.3.1";
           "with" = {
