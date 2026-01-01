@@ -18,7 +18,6 @@
       profiles.services.miniflux.default
       profiles.services.netbox.default
       profiles.services.paperless.default
-      profiles.services.stirling-pdf
       profiles.telemetry.prometheus-nut-exporter
       profiles.virtualisation.docker
       profiles.web-servers.caddy
