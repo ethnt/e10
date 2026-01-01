@@ -10,6 +10,7 @@
       profiles.networking.printing
       profiles.power.tripp-lite-smart1500lcd
       profiles.services.attic-watch-store.default
+      profiles.services.bentopdf
       profiles.services.changedetection-io
       profiles.services.e10-land
       profiles.services.glance.default

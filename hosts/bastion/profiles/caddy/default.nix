@@ -209,14 +209,8 @@
 
       "pdf.e10.camp" = {
         host = hosts.matrix;
-        port =
-          hosts.matrix.config.services.stirling-pdf.environment.SERVER_PORT;
+        inherit (hosts.matrix.config.services.bentopdf) port;
         protected = true;
-        extraConfig = ''
-          request_body {
-            max_size 2GiB
-          }
-        '';
       };
 
       "mazanoke.e10.camp" = {
