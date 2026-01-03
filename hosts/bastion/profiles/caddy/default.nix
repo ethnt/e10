@@ -261,6 +261,11 @@
         inherit (hosts.controller.config.services.termix) port;
       };
 
+      "actual.e10.camp" = {
+        host = hosts.matrix;
+        inherit (hosts.matrix.config.services.actual.settings) port;
+      };
+
       "jellyfin.e10.video" = {
         host = hosts.htpc;
         port = 8096;

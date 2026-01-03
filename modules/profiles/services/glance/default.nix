@@ -33,8 +33,8 @@
                 cache = "1m";
                 title = "Services";
                 sites = let
-                  mkSite = { title, url, check-url ? null, icon
-                    , basicAuth ? false }: {
+                  mkSite =
+                    { title, url, check-url ? null, icon, basicAuth ? false }: {
                       inherit title url check-url icon;
                       basic-auth = lib.mkIf basicAuth {
                         username = "\${AUTHELIA_BASIC_AUTH_USERNAME}";

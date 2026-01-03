@@ -127,6 +127,24 @@
             redirect_uris = [ "https://termix.e10.camp/users/oidc/callback" ];
             token_endpoint_auth_method = "client_secret_post";
           }
+          {
+            client_id =
+              "pV6drSFL4uNhslIfnTxi~oDMhqTIVVWM~307jSrBE9CNPuuwqMRDwYnW0PG6tYYL5HqCpFJu";
+            client_name = "Actual Budget";
+            client_secret =
+              "$pbkdf2-sha512$310000$78au487f6p.HXge7fFeMcQ$FXpI9224tVfyMNkyLj3sqtP.gWUUN./gJemo3l0KcwjVseC0Wlqe50LsYtm6lBBzRXuBxAa/Jhw2q3EaIGMd3A";
+            public = false;
+            authorization_policy = "two_factor";
+            require_pkce = false;
+            pkce_challenge_method = "";
+            redirect_uris = [ "https://actual.e10.camp/openid/callback" ];
+            scopes = [ "openid" "profile" "groups" "email" ];
+            response_types = [ "code" ];
+            grant_types = [ "authorization_code" ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "client_secret_basic";
+          }
         ];
       };
 
