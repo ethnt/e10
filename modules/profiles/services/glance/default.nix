@@ -43,6 +43,11 @@
                     };
                 in [
                   (mkSite {
+                    title = "Actual Budget";
+                    url = "https://actual.e10.camp";
+                    icon = "di:actual-budget";
+                  })
+                  (mkSite {
                     title = "Authelia";
                     url = "https://auth.e10.camp";
                     icon = "di:authelia";
@@ -73,6 +78,7 @@
                     title = "Change Detection";
                     url = "https://change-detection.e10.camp";
                     icon = "di:changedetection";
+                    basicAuth = true;
                   })
                   (mkSite {
                     title = "e10.land";
@@ -223,10 +229,6 @@
                     label = "Phoenix";
                   }
                 ];
-              }
-              {
-                type = "calendar";
-                first-day-of-week = "sunday";
               }
               {
                 type = "weather";
