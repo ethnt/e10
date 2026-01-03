@@ -269,7 +269,7 @@ in { config, lib, ... }: {
             group = "Matrix";
           })
           (mkEndpoint {
-            name = "Stirling PDF";
+            name = "BentoPDF";
             url = "https://pdf.e10.camp";
             group = "Matrix";
             protected = true;

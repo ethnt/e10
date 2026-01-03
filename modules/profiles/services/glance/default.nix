@@ -126,9 +126,9 @@
                     icon = "di:blocky";
                   }
                   {
-                    title = "Stirling PDF";
+                    title = "BentoPDF";
                     url = "https://pdf.e10.camp";
-                    icon = "di:stirling-pdf";
+                    icon = "di:bentopdf";
                     alt-status-codes = [ 401 ];
                   }
                   {
