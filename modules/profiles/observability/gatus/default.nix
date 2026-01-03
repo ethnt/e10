@@ -366,7 +366,11 @@ in { config, lib, ... }: {
             url = "http://controller:9130";
             group = "Controller";
           })
-
+          (mkEndpoint {
+            name = "Termix";
+            url = "http://termix.e10.camp";
+            group = "Controller";
+          })
         ];
         monitor = [
           (mkEndpoint {
