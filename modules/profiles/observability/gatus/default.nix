@@ -296,6 +296,11 @@ in { config, lib, ... }: {
             group = "Matrix";
             protected = true;
           })
+          (mkEndpoint {
+            name = "Actual Budget";
+            url = "https://actual.e10.camp";
+            group = "Matrix";
+          })
         ];
         builder = [
           (mkEndpoint {
