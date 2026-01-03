@@ -41,6 +41,7 @@
           ads = [
             (pkgs.writeText "ads-allowlist.txt" ''
               cdn.cookielaw.org
+              html-load.com
               l.food52.com
               link.dwell.com
             '')

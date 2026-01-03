@@ -134,7 +134,6 @@
                   {
                     title = "Mazanoke";
                     url = "https://mazanoke.e10.camp";
-                    # icon = "di:mazanoke";
                     icon =
                       "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/mazanoke.png";
                     alt-status-codes = [ 401 ];
