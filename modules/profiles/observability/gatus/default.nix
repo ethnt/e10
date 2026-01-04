@@ -297,6 +297,11 @@ in { config, lib, ... }: {
             protected = true;
           })
           (mkEndpoint {
+            name = "Actual Budget";
+            url = "https://actual.e10.camp";
+            group = "Matrix";
+          })
+          (mkEndpoint {
             name = "Bichon";
             url = "https://bichon.e10.camp";
             group = "Matrix";
