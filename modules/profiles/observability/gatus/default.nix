@@ -296,6 +296,11 @@ in { config, lib, ... }: {
             group = "Matrix";
             protected = true;
           })
+          (mkEndpoint {
+            name = "Bichon";
+            url = "https://bichon.e10.camp";
+            group = "Matrix";
+          })
         ];
         builder = [
           (mkEndpoint {
