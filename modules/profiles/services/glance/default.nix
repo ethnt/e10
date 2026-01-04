@@ -65,6 +65,11 @@
                     basicAuth = true;
                   })
                   (mkSite {
+                    title = "Bichon";
+                    url = "https://bichon.e10.camp";
+                    icon = "sh:bichon";
+                  })
+                  (mkSite {
                     title = "Change Detection";
                     url = "https://change-detection.e10.camp";
                     icon = "di:changedetection";
