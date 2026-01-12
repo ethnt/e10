@@ -43,11 +43,6 @@
                     };
                 in [
                   (mkSite {
-                    title = "Actual Budget";
-                    url = "https://actual.e10.camp";
-                    icon = "di:actual-budget";
-                  })
-                  (mkSite {
                     title = "Authelia";
                     url = "https://auth.e10.camp";
                     icon = "di:authelia";

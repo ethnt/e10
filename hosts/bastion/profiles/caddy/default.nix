@@ -101,7 +101,6 @@
       "bazarr.e10.camp" = {
         host = hosts.htpc;
         port = hosts.htpc.config.services.bazarr.listenPort;
-        protected = true;
       };
 
       "profilarr.e10.camp" = {
@@ -259,11 +258,6 @@
       "termix.e10.camp" = {
         host = hosts.controller;
         inherit (hosts.controller.config.services.termix) port;
-      };
-
-      "actual.e10.camp" = {
-        host = hosts.matrix;
-        inherit (hosts.matrix.config.services.actual.settings) port;
       };
 
       "bichon.e10.camp" = {

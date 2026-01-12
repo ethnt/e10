@@ -9,7 +9,6 @@
       profiles.media-management.immich.default
       profiles.networking.printing
       profiles.power.tripp-lite-smart1500lcd
-      profiles.services.actual.default
       profiles.services.attic-watch-store.default
       profiles.services.bichon
       profiles.services.bentopdf
