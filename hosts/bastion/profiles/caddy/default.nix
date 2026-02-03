@@ -277,6 +277,16 @@
         '';
       };
 
+      "karakeep.e10.camp" = {
+        host = hosts.matrix;
+        port = hosts.matrix.config.services.karakeep.extraEnvironment.PORT;
+      };
+
+      "hass.e10.camp" = {
+        host = hosts.matrix;
+        port = 8123;
+      };
+
       "e10.video" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.plex) port;

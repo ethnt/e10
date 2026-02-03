@@ -15,6 +15,7 @@
       profiles.services.changedetection-io
       profiles.services.e10-land
       profiles.services.glance.default
+      profiles.services.home-assistant.default
       profiles.services.mazanoke
       profiles.services.miniflux.default
       profiles.services.netbox.default
@@ -22,6 +23,7 @@
       profiles.telemetry.prometheus-nut-exporter
       profiles.virtualisation.docker
       profiles.web-servers.caddy
+      profiles.services.karakeep.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

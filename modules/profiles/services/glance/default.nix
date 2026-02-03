@@ -56,7 +56,6 @@
                     title = "Bazarr";
                     url = "https://bazarr.e10.camp";
                     icon = "di:bazarr";
-                    basicAuth = true;
                   })
                   (mkSite {
                     title = "BentoPDF";
@@ -97,6 +96,11 @@
                     icon = "di:grafana";
                   })
                   (mkSite {
+                    title = "Home Assistant";
+                    url = "https://hass.e10.camp";
+                    icon = "di:home-assistant";
+                  })
+                  (mkSite {
                     title = "Huntarr";
                     url = "https://huntarr.e10.camp";
                     icon =
@@ -111,6 +115,11 @@
                     title = "Jellyseerr";
                     url = "https://requests.e10.video";
                     icon = "di:jellyseerr";
+                  })
+                  (mkSite {
+                    title = "Karakeep";
+                    url = "https://karakeep.e10.camp";
+                    icon = "di:karakeep";
                   })
                   (mkSite {
                     title = "LLDAP";

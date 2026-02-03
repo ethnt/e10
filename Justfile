@@ -64,7 +64,7 @@ terraform *args:
     terraform -chdir=./deploy/terraform/ {{ args }}
 
 edit-secret file:
-    EDITOR="code --wait" sops {{ file }}
+    EDITOR="zeditor --wait" sops {{ file }}
 
 push-result-to-cache:
     cachix push e10 result

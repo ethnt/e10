@@ -47,8 +47,11 @@
       };
 
       identity_providers.oidc = {
-        claims_policies.legacy.id_token =
-          [ "email" "email_verified" "preferred_username" "name" ];
+        claims_policies = {
+          karakeep.id_token = [ "email" ];
+          legacy.id_token =
+            [ "email" "email_verified" "preferred_username" "name" ];
+        };
 
         clients = [
           {
@@ -126,6 +129,26 @@
             scopes = [ "openid" "profile" "email" ];
             redirect_uris = [ "https://termix.e10.camp/users/oidc/callback" ];
             token_endpoint_auth_method = "client_secret_post";
+          }
+          {
+            client_id =
+              "4_PUhlKbm03-XaIAR-tBOzaCkf6dQfhgBY-xnrewL5jsOCp0UXPsbSvnaxgLXEp6kKsqjqND";
+            client_name = "Karakeep";
+            client_secret =
+              "$pbkdf2-sha512$310000$XuC9/i/.AWXy/G4A/aOazw$ZozktGPjpHfhmjEzdhNsjeLMw/XhbRK/ePqRPfzbTA04pEOlFTOon2s.yWYyuQv5wzCp0QUGHz2gkczfZsetyQ";
+            public = false;
+            authorization_policy = "two_factor";
+            require_pkce = false;
+            pkce_challenge_method = "";
+            redirect_uris =
+              "https://karakeep.e10.camp/api/auth/callback/custom";
+            scopes = [ "openid" "profile" "email" ];
+            response_types = [ "code" ];
+            grant_types = [ "authorization_code" ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "client_secret_basic";
+            claims_policy = "karakeep";
           }
         ];
       };
