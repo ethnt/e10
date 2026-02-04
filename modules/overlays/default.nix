@@ -21,7 +21,8 @@
       inherit (nixpkgs-master) thanos;
 
       inherit (self'.packages)
-        bentopdf fileflows mongodb-ce-6_0; # caddy-with-plugins;
+        bentopdf fileflows mongodb-ce-6_0
+        eufy-security-ws; # caddy-with-plugins;
     };
   };
 }

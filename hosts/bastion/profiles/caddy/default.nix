@@ -101,7 +101,6 @@
       "bazarr.e10.camp" = {
         host = hosts.htpc;
         port = hosts.htpc.config.services.bazarr.listenPort;
-        protected = true;
       };
 
       "profilarr.e10.camp" = {
@@ -261,11 +260,6 @@
         inherit (hosts.controller.config.services.termix) port;
       };
 
-      "actual.e10.camp" = {
-        host = hosts.matrix;
-        inherit (hosts.matrix.config.services.actual.settings) port;
-      };
-
       "bichon.e10.camp" = {
         host = hosts.matrix;
         inherit (hosts.matrix.config.services.bichon) port;
@@ -281,6 +275,16 @@
             max_size 100MiB
           }
         '';
+      };
+
+      "karakeep.e10.camp" = {
+        host = hosts.matrix;
+        port = hosts.matrix.config.services.karakeep.extraEnvironment.PORT;
+      };
+
+      "hass.e10.camp" = {
+        host = hosts.matrix;
+        port = 8123;
       };
 
       "e10.video" = {

@@ -47,8 +47,11 @@
       };
 
       identity_providers.oidc = {
-        claims_policies.legacy.id_token =
-          [ "email" "email_verified" "preferred_username" "name" ];
+        claims_policies = {
+          karakeep.id_token = [ "email" ];
+          legacy.id_token =
+            [ "email" "email_verified" "preferred_username" "name" ];
+        };
 
         clients = [
           {
@@ -129,21 +132,23 @@
           }
           {
             client_id =
-              "pV6drSFL4uNhslIfnTxi~oDMhqTIVVWM~307jSrBE9CNPuuwqMRDwYnW0PG6tYYL5HqCpFJu";
-            client_name = "Actual Budget";
+              "4_PUhlKbm03-XaIAR-tBOzaCkf6dQfhgBY-xnrewL5jsOCp0UXPsbSvnaxgLXEp6kKsqjqND";
+            client_name = "Karakeep";
             client_secret =
-              "$pbkdf2-sha512$310000$78au487f6p.HXge7fFeMcQ$FXpI9224tVfyMNkyLj3sqtP.gWUUN./gJemo3l0KcwjVseC0Wlqe50LsYtm6lBBzRXuBxAa/Jhw2q3EaIGMd3A";
+              "$pbkdf2-sha512$310000$XuC9/i/.AWXy/G4A/aOazw$ZozktGPjpHfhmjEzdhNsjeLMw/XhbRK/ePqRPfzbTA04pEOlFTOon2s.yWYyuQv5wzCp0QUGHz2gkczfZsetyQ";
             public = false;
             authorization_policy = "two_factor";
             require_pkce = false;
             pkce_challenge_method = "";
-            redirect_uris = [ "https://actual.e10.camp/openid/callback" ];
-            scopes = [ "openid" "profile" "groups" "email" ];
+            redirect_uris =
+              "https://karakeep.e10.camp/api/auth/callback/custom";
+            scopes = [ "openid" "profile" "email" ];
             response_types = [ "code" ];
             grant_types = [ "authorization_code" ];
             access_token_signed_response_alg = "none";
             userinfo_signed_response_alg = "none";
             token_endpoint_auth_method = "client_secret_basic";
+            claims_policy = "karakeep";
           }
         ];
       };
@@ -151,9 +156,7 @@
       session.cookies = [{
         domain = "e10.camp";
         authelia_url = "https://auth.e10.camp";
-        inactivity = "1M";
-        expiration = "3M";
-        remember_me = "1y";
+        expiration = "1y";
       }];
 
       access_control.rules = lib.mkBefore [
@@ -187,15 +190,6 @@
         }
         {
           domain = "pdf.e10.camp";
-          policy = "two_factor";
-        }
-        {
-          domain = "bazarr.e10.camp";
-          policy = "bypass";
-          resources = [ "^/api([/?].*)?$" ];
-        }
-        {
-          domain = "bazarr.e10.camp";
           policy = "two_factor";
         }
         {

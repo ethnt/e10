@@ -182,7 +182,6 @@ in { config, lib, ... }: {
             name = "Bazarr";
             url = "https://bazarr.e10.camp";
             group = "HTPC";
-            protected = true;
           })
           (mkEndpoint {
             name = "SABnzbd";
@@ -297,13 +296,18 @@ in { config, lib, ... }: {
             protected = true;
           })
           (mkEndpoint {
-            name = "Actual Budget";
-            url = "https://actual.e10.camp";
+            name = "Bichon";
+            url = "https://bichon.e10.camp";
             group = "Matrix";
           })
           (mkEndpoint {
-            name = "Bichon";
-            url = "https://bichon.e10.camp";
+            name = "Karakeep";
+            url = "https://karakeep.e10.camp";
+            group = "Matrix";
+          })
+          (mkEndpoint {
+            name = "Home Assistant";
+            url = "https://hass.e10.camp";
             group = "Matrix";
           })
         ];
