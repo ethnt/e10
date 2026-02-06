@@ -1,5 +1,14 @@
-{ lib, stdenv, pnpm_9, fetchPnpmDeps, pnpmConfigHook, makeWrapper, nodejs
-, fetchFromGitHub, }:
+{ lib
+, stdenv
+, pnpm_10
+, fetchPnpmDeps
+, pnpmConfigHook
+, makeWrapper
+, nodejs
+, fetchFromGitHub
+, turbo
+,
+}:
 stdenv.mkDerivation (finalAttrs: {
   pname = "tracearr";
   version = "1.4.12";
@@ -13,47 +22,70 @@ stdenv.mkDerivation (finalAttrs: {
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
-    pnpm = pnpm_9;
-    fetcherVersion = 1;
-    hash = "sha256-xI940Bjv5O543yTAQdfgM7UbOpXNhb1rvI90G+BvecE=";
+    pnpm = pnpm_10;
+    fetcherVersion = 3;
+    hash = "sha256-lkA9eYuOc1J+tUM1Bd57ROsT8es6AAMjHB5AyoN7oqg=";
   };
 
-  nativeBuildInputs = [ pnpmConfigHook pnpm_9 makeWrapper ];
+  strictDeps = true;
+
+  env.NODE_ENV = "production";
+
+  nativeBuildInputs = [
+    makeWrapper
+    nodejs
+    pnpmConfigHook
+    pnpm_10
+    turbo
+  ];
 
   buildInputs = [ nodejs ];
 
   buildPhase = ''
     runHook preBuild
-    NODE_ENV="production" pnpm run build --filter=@tracearr/shared --filter=@tracearr/server --filter=@tracearr/web
+    pnpm run build
     runHook postBuild
+  '';
+
+  doCheck = true;
+
+  checkPhase = ''
+    runHook preCheck
+    pnpm test
+    runHook postCheck
   '';
 
   preInstall = ''
     rm node_modules/.modules.yaml
+
+    CI=true pnpm prune --prod --ignore-scripts
+
     find -type f \( -name "*.d.ts" -o -name "*.map" \) -exec rm -rf {} +
   '';
 
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/{share/tracearr,bin}
-
-    cp -r {node_modules,apps,packages} $out/share/tracearr
-
+    mkdir -p $out/{lib/tracearr,bin}
+    cp -r {node_modules,apps,packages,data} $out/lib/tracearr
     makeWrapper ${lib.getExe nodejs} $out/bin/tracearr \
-      --add-flags $out/share/tracearr/apps/server/dist/index.js \
-      --set NODE_PATH "$out/share/tracearr/node_modules:$out/share/tracearr/apps/server/node_modules:$out/share/tracearr/apps/web/node_modules" \
+      --add-flags $out/lib/tracearr/apps/server/dist/index.js \
+      --set NODE_PATH "$out/lib/tracearr/node_modules:$out/lib/tracearr/apps/server/node_modules:$out/lib/tracearr/apps/web/node_modules" \
       --set-default NODE_ENV production
-
-    find $out/share -xtype l -delete
 
     runHook postInstall
   '';
 
+  postInstall = ''
+    find $out/lib -xtype l -delete
+  '';
+
   meta = {
-    description =
-      "Real-time monitoring for Plex, Jellyfin, and Emby servers. Track streams, analyze playback, and detect account sharing from a single dashboard.";
+    description = "Real-time monitoring for Plex, Jellyfin, and Emby servers. Track streams, analyze playback, and detect account sharing from a single dashboard.";
+    mainProgram = "tracearr";
     homepage = "https://tracearr.com";
-    license = lib.licenses.agpl3Only;
+    license = lib.licenses.agpl3Plus;
+    platforms = lib.platforms.linux ++ lib.platforms.darwin;
+    maintainers = with lib.maintainers; [ ethnt ];
   };
 })

@@ -10,12 +10,15 @@ let
       hash = "sha256-zZ1ObTLo15UNxCjck56LWMrf7FwRapYKCwfU+LeUmi0=";
     };
   };
-in stdenv.mkDerivation (_finalAttrs: {
+in
+stdenv.mkDerivation (_finalAttrs: {
   pname = "mongodb-ce-6_0";
   inherit version;
 
-  src = fetchurl ((srcs version).${stdenv.hostPlatform.system} or (throw
-    "unsupported system: ${stdenv.hostPlatform.system}"));
+  src = fetchurl (
+    (srcs version).${stdenv.hostPlatform.system} or (throw
+      "unsupported system: ${stdenv.hostPlatform.system}")
+  );
 
   nativeBuildInputs =
     lib.optionals stdenv.hostPlatform.isLinux [ autoPatchelfHook ];
