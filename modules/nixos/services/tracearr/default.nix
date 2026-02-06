@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -6,6 +6,11 @@ let cfg = config.services.tracearr;
 in {
   options.services.tracearr = {
     enable = mkEnableOption "Enable Tracearr";
+
+    package = mkOption {
+      type = types.package;
+      default = pkgs.tracearr;
+    };
 
     port = mkOption {
       type = types.port;
@@ -17,9 +22,63 @@ in {
       default = "/var/lib/tracearr";
     };
 
-    environment = mkOption {
-      type = types.attrs;
-      default = { };
+    user = mkOption {
+      type = types.str;
+      default = "tracearr";
+    };
+
+    group = mkOption {
+      type = types.str;
+      default = "tracearr";
+    };
+
+    database = {
+      createLocally = mkOption {
+        type = types.bool;
+        default = true;
+      };
+
+      enableTimescaleDB = mkOption {
+        type = types.bool;
+        default = true;
+      };
+
+      name = mkOption {
+        type = types.str;
+        default = "tracearr";
+      };
+
+      user = mkOption {
+        type = types.str;
+        default = "tracearr";
+      };
+
+      url = mkOption {
+        type = types.str;
+        default = "postgresql:///tracearr?host=/run/postgresql";
+      };
+    };
+
+    redis = {
+      createLocally = mkOption {
+        type = types.bool;
+        default = true;
+      };
+
+      name = mkOption {
+        type = types.str;
+        default = "tracearr";
+      };
+
+      host = mkOption {
+        type = types.str;
+        default = "localhost";
+      };
+
+      port = mkOption {
+        type = types.port;
+        default = 6379;
+      };
     };
 
     environmentFile = mkOption {
@@ -37,29 +96,73 @@ in {
     systemd.tmpfiles.settings."10-tracearr" = {
       ${cfg.dataDir} = {
         "d" = {
-          user = config.virtualisation.oci-containers.backend;
-          group = config.virtualisation.oci-containers.backend;
+          user = "tracearr";
+          group = "tracearr";
           mode = "0700";
         };
       };
     };
 
-    virtualisation.oci-containers.containers.tracearr = {
-      image = "ghcr.io/connorgallopo/tracearr:latest";
+    services.postgresql = mkIf cfg.database.createLocally {
+      enable = true;
+      ensureDatabases = [ cfg.database.name ];
+      ensureUsers = [{
+        name = cfg.database.user;
+        ensureDBOwnership = true;
+      }];
+    } // mkIf cfg.database.enableTimescaleDB {
+      extensions = ps: with ps; [ timescaledb ];
+      settings = { shared_preload_libraries = [ "timescaledb" ]; };
+    };
+
+    services.redis = mkIf cfg.redis.createLocally {
+      servers.${cfg.redis.name} = {
+        enable = true;
+        bind = "localhost";
+        inherit (cfg.redis) port;
+      };
+    };
+
+    systemd.services.tracearr = {
+      enable = true;
+      wants = [ "network-online.target" ]
+        ++ (lib.optional cfg.database.createLocally "postgresql.service")
+        ++ (lib.optional cfg.redis.createLocally
+          "redis-${cfg.redis.name}.service");
+      after = [ "network-online.target" ]
+        ++ (lib.optional cfg.database.createLocally "postgresql.service")
+        ++ (lib.optional cfg.redis.createLocally
+          "redis-${cfg.redis.name}.service");
+      wantedBy = [ "multi-user.target" ];
       environment = {
-        NODE_ENV = "production";
-        TZ = config.time.timeZone;
-        PORT = toString 3000;
-      } // cfg.environment;
-      environmentFiles =
-        lib.optional (cfg.environmentFile != null) cfg.environmentFile;
-      ports = [ "${toString cfg.port}:3000" ];
-      volumes = [
-        "${cfg.dataDir}/postgres:/data/postgres:rw"
-        "${cfg.dataDir}/redis:/data/redis:rw"
-        "${cfg.dataDir}/tracearr:/data/tracearr:rw"
-      ];
-      extraOptions = [ "--network=host" ];
+        DATABASE_URL = if cfg.database.url != null then
+          cfg.database.url
+        else
+          (mkIf cfg.database.createLocally
+            "postgres:///${cfg.database.name}?host=/run/postgresql&user=${cfg.database.user}");
+        REDIS_URL = "redis://${cfg.redis.host}:${toString cfg.redis.port}";
+        PORT = toString cfg.port;
+        APP_VERSION = cfg.package.version;
+      };
+      serviceConfig = {
+        WorkingDirectory = cfg.dataDir;
+        EnvironmentFile = [ cfg.environmentFile ];
+        ExecStart = ''
+          ${pkgs.lib.getExe' cfg.package "tracearr"}
+        '';
+        ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
+        User = cfg.user;
+        Group = cfg.group;
+        Restart = "on-failure";
+      };
+    };
+
+    users = {
+      users.${cfg.user} = {
+        isSystemUser = true;
+        inherit (cfg) group;
+      };
+      groups.${cfg.group} = { };
     };
 
     networking.firewall =
