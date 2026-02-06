@@ -217,6 +217,7 @@
             api_warnings = 1;
             no_penalties = 0;
             x_frame_options = 1;
+            outgoing_nntp_ip = "";
             allow_old_ssl_tls = 0;
             rss_odd_titles = "nzbindex.nl/, nzbindex.com/, nzbclub.com/";
             quick_check_ext_ignore = "nfo, sfv, srr";
@@ -286,6 +287,7 @@
             ncenter_prio_error = 0;
             ncenter_prio_queue_done = 0;
             ncenter_prio_other = 0;
+            ncenter_prio_quota = 1;
           };
           acenter = {
             acenter_enable = 0;
@@ -302,6 +304,7 @@
             acenter_prio_error = 0;
             acenter_prio_queue_done = 0;
             acenter_prio_other = 0;
+            acenter_prio_quota = 1;
           };
           ntfosd = {
             ntfosd_enable = 0;
@@ -318,6 +321,7 @@
             ntfosd_prio_error = 0;
             ntfosd_prio_queue_done = 0;
             ntfosd_prio_other = 0;
+            ntfosd_prio_quota = 1;
           };
           prowl = {
             prowl_enable = 0;
@@ -335,6 +339,7 @@
             prowl_prio_error = -3;
             prowl_prio_queue_done = 0;
             prowl_prio_other = 0;
+            prowl_prio_quota = 0;
           };
           pushover = {
             pushover_token = "";
@@ -356,6 +361,7 @@
             pushover_prio_error = 1;
             pushover_prio_queue_done = -1;
             pushover_prio_other = -1;
+            pushover_prio_quota = -1;
           };
           pushbullet = {
             pushbullet_enable = 0;
@@ -374,6 +380,7 @@
             pushbullet_prio_error = 0;
             pushbullet_prio_queue_done = 0;
             pushbullet_prio_other = 1;
+            pushbullet_prio_quota = 1;
           };
           nscript = {
             nscript_enable = 0;
@@ -392,6 +399,7 @@
             nscript_prio_error = 0;
             nscript_prio_queue_done = 1;
             nscript_prio_other = 1;
+            nscript_prio_quota = 1;
           };
           apprise = {
             apprise_enable = 0;
@@ -421,6 +429,8 @@
             apprise_target_queue_done_enable = 0;
             apprise_target_other = "";
             apprise_target_other_enable = 1;
+            apprise_target_quota = "";
+            apprise_target_quota_enable = 1;
           };
           servers = {
             "news-us.newsgroup.ninja" = {

@@ -1,0 +1,9 @@
+{
+  "format_on_save": "off",
+  "formatter": {
+    "external": {
+      "command": "treefmt",
+      "arguments": ["--stdin", "{buffer_path}"]
+    }
+  }
+}
