@@ -1,4 +1,10 @@
-{ lib, stdenvNoCC, fetchzip, dotnetCorePackages, sqlite, libz, writeShellScript
+{ lib
+, stdenvNoCC
+, fetchzip
+, dotnetCorePackages
+, sqlite
+, libz
+, writeShellScript
 }:
 let
   version = "25.10.2.5985";
@@ -42,7 +48,8 @@ let
     cd Node
     exec "${dotnet}/bin/dotnet" FileFlows.Node.dll "$@"
   '';
-in stdenvNoCC.mkDerivation rec {
+in
+stdenvNoCC.mkDerivation rec {
   pname = "fileflows";
   inherit version;
 
