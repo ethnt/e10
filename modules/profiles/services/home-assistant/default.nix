@@ -1,9 +1,5 @@
 { config, pkgs, profiles, ... }: {
-  imports = [
-    profiles.services.matter-server
-    profiles.services.go2rtc
-    profiles.services.eufy-security-ws.default
-  ] ++ [ ./postgresql.nix ];
+  imports = [ profiles.services.matter-server ] ++ [ ./postgresql.nix ];
 
   sops = {
     secrets = {
@@ -39,7 +35,6 @@
       "apple_tv"
       "brother"
       "ecobee"
-      "eufy"
       "google_translate"
       "homekit_controller"
       "hue"
@@ -62,8 +57,12 @@
         pyqrcode
       ];
 
-    customComponents =
-      [ (pkgs.callPackage ./components/eufy_security.nix { }) ];
+    customComponents = [
+      (pkgs.callPackage ./components/ha_nationalgrid.nix {
+        aionatgrid =
+          pkgs.python3Packages.callPackage ./packages/aionatgrid.nix { };
+      })
+    ];
 
     config = {
       default_config = { };

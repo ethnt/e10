@@ -11,11 +11,6 @@
           nixfmt = {
             enable = true;
             package = pkgs.nixfmt-classic;
-            excludes = [ "modules/packages/**/*.nix" ];
-          };
-          nixpkgs-fmt = {
-            enable = true;
-            includes = [ "modules/packages/**/*.nix" ];
           };
           statix.enable = true;
           prettier.enable = true;
