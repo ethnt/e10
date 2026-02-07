@@ -1,4 +1,4 @@
-{ config, profiles, ... }: {
+{ config, pkgs, profiles, ... }: {
   imports = [ profiles.services.matter-server ] ++ [ ./postgresql.nix ];
 
   sops = {
@@ -56,6 +56,13 @@
         hap-python
         pyqrcode
       ];
+
+    customComponents = [
+      (pkgs.callPackage ./components/ha_nationalgrid.nix {
+        aionatgrid =
+          pkgs.python3Packages.callPackage ./packages/aionatgrid.nix { };
+      })
+    ];
 
     config = {
       default_config = { };
