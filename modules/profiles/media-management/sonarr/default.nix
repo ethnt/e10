@@ -39,7 +39,6 @@
       owner = config.services.sonarr.user;
       inherit (config.services.sonarr) group;
       mode = "0660";
-      restartUnits = [ "sonarr.service" ];
     };
   };
 

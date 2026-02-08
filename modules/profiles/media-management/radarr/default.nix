@@ -37,7 +37,6 @@
       owner = config.services.radarr.user;
       inherit (config.services.radarr) group;
       mode = "0660";
-      restartUnits = [ "radarr.service" ];
     };
   };
 

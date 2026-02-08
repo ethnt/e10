@@ -20,7 +20,8 @@
       # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923
       inherit (nixpkgs-master) thanos;
 
-      inherit (self'.packages) bentopdf fileflows mongodb-ce-6_0 tracearr;
+      inherit (self'.packages)
+        bentopdf declutarr fileflows mongodb-ce-6_0 tracearr;
     };
   };
 }
