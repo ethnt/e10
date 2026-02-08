@@ -51,13 +51,13 @@
         }];
       };
     };
+    owner = config.services.declutarr.user;
+    inherit (config.services.declutarr) group;
     mode = "0700";
   };
 
   services.declutarr = {
     enable = true;
     configFile = config.sops.templates.declutarr_config.path;
-    extraVolumes =
-      [ "/mnt/blockbuster/media/movies" "/mnt/blockbuster/media/tv" ];
   };
 }

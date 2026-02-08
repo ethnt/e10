@@ -47,4 +47,6 @@ python3Packages.buildPythonApplication rec {
 
   # TODO: Actually run tests
   doCheck = false;
+
+  meta.mainProgram = "declutarr";
 }
