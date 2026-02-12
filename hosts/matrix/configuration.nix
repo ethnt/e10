@@ -5,17 +5,18 @@
       profiles.emulation.aarch64-linux
       profiles.filesystems.blockbuster
       profiles.filesystems.files.services
+      profiles.hardware.bluetooth
       profiles.hardware.intel
       profiles.media-management.immich.default
       profiles.networking.printing
       profiles.power.tripp-lite-smart1500lcd
       profiles.services.attic-watch-store.default
-      profiles.services.bichon
       profiles.services.bentopdf
+      profiles.services.bichon
       profiles.services.changedetection-io
       profiles.services.e10-land
       profiles.services.glance.default
-      profiles.services.home-assistant.default
+      profiles.services.karakeep.default
       profiles.services.mazanoke
       profiles.services.miniflux.default
       profiles.services.netbox.default
@@ -23,7 +24,6 @@
       profiles.telemetry.prometheus-nut-exporter
       profiles.virtualisation.docker
       profiles.web-servers.caddy
-      profiles.services.karakeep.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

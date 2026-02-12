@@ -1,4 +1,4 @@
-{ config, pkgs, profiles, ... }: {
+{ config, pkgs, lib, profiles, ... }: {
   imports = [ profiles.services.matter-server ] ++ [ ./postgresql.nix ];
 
   sops = {
@@ -24,6 +24,16 @@
     };
   };
 
+  systemd.tmpfiles.settings."10-hass" = {
+    ${config.services.home-assistant.configDir} = {
+      "d" = {
+        user = "hass";
+        group = "hass";
+        mode = "0777";
+      };
+    };
+  };
+
   services.home-assistant = {
     enable = true;
     openFirewall = true;
@@ -33,6 +43,7 @@
     extraComponents = [
       "analytics"
       "apple_tv"
+      "backup"
       "brother"
       "ecobee"
       "google_translate"
@@ -41,6 +52,7 @@
       "ipp"
       "isal"
       "met"
+      "mqtt"
       "opower"
       "radio_browser"
       "sonos"
@@ -58,6 +70,7 @@
       ];
 
     customComponents = [
+      pkgs.home-assistant-custom-components.frigate
       (pkgs.callPackage ./components/ha_nationalgrid.nix {
         aionatgrid =
           pkgs.python3Packages.callPackage ./packages/aionatgrid.nix { };
@@ -87,6 +100,12 @@
       };
     };
   };
+
+  systemd.services.home-assistant.preStart = lib.mkAfter ''
+    touch /var/lib/hass/automations.yaml
+    touch /var/lib/hass/scenes.yaml
+    touch /var/lib/hass/scripts.yaml
+  '';
 
   networking.firewall = {
     allowedUDPPorts = [ 5353 ];

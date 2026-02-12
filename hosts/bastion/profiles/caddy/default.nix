@@ -283,7 +283,7 @@
       };
 
       "hass.e10.camp" = {
-        host = hosts.matrix;
+        host = hosts.controller;
         port = 8123;
       };
 

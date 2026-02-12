@@ -86,6 +86,11 @@
                     basicAuth = true;
                   })
                   (mkSite {
+                    title = "Frigate";
+                    url = "http://htpc:5000";
+                    icon = "di:frigate";
+                  })
+                  (mkSite {
                     title = "Gatus";
                     url = "https://status.e10.camp";
                     icon = "di:gatus";

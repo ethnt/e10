@@ -278,6 +278,11 @@ resource "proxmox_virtual_environment_vm" "matrix" {
     usb3 = true
   }
 
+  usb {
+    host = "8087:0026"
+    usb3 = true
+  }
+
   vga {
     memory = 16
     type   = "std"
@@ -322,7 +327,7 @@ resource "proxmox_virtual_environment_vm" "router" {
   }
 
   memory {
-    dedicated = 32768
+    dedicated = 8192
   }
 
   disk {
@@ -414,7 +419,7 @@ resource "proxmox_virtual_environment_vm" "controller" {
   }
 
   memory {
-    dedicated = 8192
+    dedicated = 32768
   }
 
   disk {
@@ -445,8 +450,15 @@ resource "proxmox_virtual_environment_vm" "controller" {
     type   = "std"
   }
 
+  # Eaton 5P
   usb {
     host = "0463:ffff"
+    usb3 = true
+  }
+
+  # Nabu Casa
+  usb {
+    host = "10c4:ea60"
     usb3 = true
   }
 
