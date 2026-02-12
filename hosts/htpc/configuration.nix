@@ -18,6 +18,7 @@
       profiles.media-management.sonarr.default
       profiles.media-management.tautulli
       profiles.media-management.wizarr
+      profiles.home-automation.frigate.default
       profiles.media-management.tracearr.default
       profiles.services.attic-watch-store.default
       profiles.sharing.nfs-client

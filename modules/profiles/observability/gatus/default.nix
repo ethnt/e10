@@ -219,6 +219,11 @@ in { config, lib, ... }: {
             group = "HTPC";
             protected = true;
           })
+          (mkEndpoint {
+            name = "Frigate";
+            url = "http://htpc:5000";
+            group = "HTPC";
+          })
         ];
         matrix = [
           (mkEndpoint {
@@ -305,11 +310,6 @@ in { config, lib, ... }: {
             url = "https://karakeep.e10.camp";
             group = "Matrix";
           })
-          (mkEndpoint {
-            name = "Home Assistant";
-            url = "https://hass.e10.camp";
-            group = "Matrix";
-          })
         ];
         builder = [
           (mkEndpoint {
@@ -343,6 +343,11 @@ in { config, lib, ... }: {
             group = "Controller";
             interval = "30s";
             conditions = [ "[STATUS] == 200" "[BODY].enabled == true" ];
+          })
+          (mkEndpoint {
+            name = "Home Assistant";
+            url = "https://hass.e10.camp";
+            group = "Controller";
           })
           (mkEndpoint {
             name = "UniFi Controller";
