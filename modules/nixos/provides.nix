@@ -37,6 +37,46 @@ with lib;
                           "If the HTTP reverse proxy should be behind authentication";
                         default = false;
                       };
+
+                      skipTLSVerify = mkOption {
+                        type = types.bool;
+                        description = "Skip TLS for this proxy";
+                        default = false;
+                      };
+
+                      acme = mkOption {
+                        type = types.submodule {
+                          options = {
+                            generate = mkOption {
+                              type = types.bool;
+                              default = false;
+                            };
+                            provider = mkOption {
+                              type = types.str;
+                              default = null;
+                            };
+                            environmentFile = mkOption {
+                              type = types.path;
+                              default = null;
+                            };
+                          };
+                        };
+                        default = { };
+                      };
+
+                      extraConfig = mkOption {
+                        type = types.lines;
+                        description =
+                          "Extra configuration for the Caddy virtual host";
+                        default = "";
+                      };
+
+                      extraProxyConfig = mkOption {
+                        type = types.lines;
+                        description =
+                          "Extra configuration for the Caddy reverse proxy block";
+                        default = "";
+                      };
                     };
                   };
                 };

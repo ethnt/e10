@@ -570,4 +570,15 @@
       };
     };
   };
+
+  provides.services.grafana = {
+    name = "Grafana";
+    http = {
+      port = config.services.grafana.settings.server.http_port;
+      proxy = {
+        enable = true;
+        domain = "grafana.e10.camp";
+      };
+    };
+  };
 }

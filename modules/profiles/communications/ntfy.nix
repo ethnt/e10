@@ -15,4 +15,24 @@
       upstream-base-url = "https://ntfy.sh";
     };
   };
+
+  provides.services.ntfy-sh = {
+    name = "Ntfy";
+    http = {
+      port = 2586;
+      proxy = {
+        enable = true;
+        domain = "ntfy.e10.camp";
+        extraConfig = ''
+          @httpget {
+            protocol http
+            method GET
+            path_regexp ^/([-_a-z0-9]{0,64}$|docs/|static/)
+          }
+
+          redir @httpget https://{host}{uri}
+        '';
+      };
+    };
+  };
 }

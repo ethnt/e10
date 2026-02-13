@@ -206,11 +206,11 @@
         port = 17170;
       };
 
-      "pdf.e10.camp" = {
-        host = hosts.matrix;
-        inherit (hosts.matrix.config.services.bentopdf) port;
-        protected = true;
-      };
+      # "pdf.e10.camp" = {
+      #   host = hosts.matrix;
+      #   inherit (hosts.matrix.config.services.bentopdf) port;
+      #   protected = true;
+      # };
 
       "mazanoke.e10.camp" = {
         host = hosts.matrix;
