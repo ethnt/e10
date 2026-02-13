@@ -7,7 +7,7 @@
       format = "yaml";
     };
 
-    templates."radarr-config.xml" = {
+    templates."radarr/config.xml" = {
       content = flake.lib.generators.toXML {
         rootName = "Config";
         xmlns = { };

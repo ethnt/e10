@@ -7,7 +7,7 @@
       };
     };
 
-    templates.termix_environment_file = {
+    templates."termix/environment_file" = {
       content = ''
         OIDC_ENABLED=true
         OIDC_CLIENT_ID=BhZjM_kfrPU38DOigEa9HToE2XTdYsmSMOxUBmUOgxLkZr4xMB45u2E8QoJYlqe3hwJMReZy
@@ -23,7 +23,7 @@
 
   services.termix = {
     enable = true;
-    environmentFile = config.sops.templates.termix_environment_file.path;
+    environmentFile = config.sops.templates."termix/environment_file".path;
     openFirewall = true;
   };
 }

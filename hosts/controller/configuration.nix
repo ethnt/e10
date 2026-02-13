@@ -2,6 +2,7 @@
   imports = with suites;
     core ++ local ++ proxmox-vm ++ [
       profiles.communications.mosquitto.default
+      profiles.hardware.bluetooth
       profiles.home-automation.home-assistant.default
       profiles.networking.blocky.default
       profiles.networking.speedtest-tracker

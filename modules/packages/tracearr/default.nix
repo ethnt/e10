@@ -2,7 +2,7 @@
 , fetchFromGitHub, turbo, }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "tracearr";
-  version = "1.4.12";
+  version = "1.4.17";
 
   src = fetchFromGitHub {
     owner = "connorgallopo";

@@ -284,7 +284,13 @@
 
       "hass.e10.camp" = {
         host = hosts.controller;
-        port = 8123;
+        port =
+          hosts.controller.config.services.home-assistant.config.http.server_port;
+      };
+
+      "frigate.e10.camp" = {
+        host = hosts.htpc;
+        port = 8971;
       };
 
       "e10.video" = {

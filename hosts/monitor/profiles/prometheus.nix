@@ -420,5 +420,11 @@
       }];
       scrape_interval = "30s";
     }
+    {
+      job_name = "frigate";
+      metrics_path = "/api/metrics";
+      static_configs = [{ targets = [ "htpc:5000" ]; }];
+      scrape_interval = "15s";
+    }
   ];
 }

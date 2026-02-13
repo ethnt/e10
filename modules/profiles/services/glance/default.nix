@@ -5,7 +5,7 @@
       glance_authelia_basic_auth_password = { sopsFile = ./secrets.json; };
     };
 
-    templates.glance_environment_file = {
+    templates."glance/environment_file" = {
       content = ''
         AUTHELIA_BASIC_AUTH_USERNAME=${config.sops.placeholder.glance_authelia_basic_auth_username}
         AUTHELIA_BASIC_AUTH_PASSWORD=${config.sops.placeholder.glance_authelia_basic_auth_password}
@@ -16,7 +16,7 @@
 
   services.glance = {
     enable = true;
-    environmentFile = config.sops.templates.glance_environment_file.path;
+    environmentFile = config.sops.templates."glance/environment_file".path;
     settings = {
       server = {
         host = "0.0.0.0";
@@ -87,7 +87,7 @@
                   })
                   (mkSite {
                     title = "Frigate";
-                    url = "http://htpc:5000";
+                    url = "https://frigate.e10.camp";
                     icon = "di:frigate";
                   })
                   (mkSite {

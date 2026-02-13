@@ -42,7 +42,7 @@
       };
     };
 
-    templates."bazarr-config.yml" = {
+    templates."bazarr/config.yml" = {
       content = lib.generators.toYAML { } {
         addic7ed = {
           cookies = "";

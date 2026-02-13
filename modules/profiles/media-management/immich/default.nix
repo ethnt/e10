@@ -7,7 +7,7 @@
       };
     };
 
-    templates."immich-config.json" = {
+    templates."immich/config.json" = {
       content = builtins.toJSON {
         server = { externalDomain = "https://immich.e10.camp"; };
         oauth = {
@@ -42,7 +42,7 @@
     mediaLocation = "/mnt/files/services/immich";
     environment = {
       TZ = "America/New_York";
-      IMMICH_CONFIG_FILE = config.sops.templates."immich-config.json".path;
+      IMMICH_CONFIG_FILE = config.sops.templates."immich/config.json".path;
     };
   };
 

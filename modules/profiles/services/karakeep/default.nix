@@ -5,7 +5,7 @@
       karakeep_oauth_secret.sopsFile = ./secrets.json;
     };
 
-    templates.karakeep_environment_file = {
+    templates."karakeep/environment_file" = {
       content = ''
         NEXTAUTH_SECRET=${config.sops.placeholder.karakeep_nextauth_secret}
         OAUTH_CLIENT_SECRET=${config.sops.placeholder.karakeep_oauth_secret}
@@ -44,6 +44,6 @@
       OAUTH_PROVIDER_NAME = "Authelia";
       OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING = "true";
     };
-    environmentFile = config.sops.templates.karakeep_environment_file.path;
+    environmentFile = config.sops.templates."karakeep/environment_file".path;
   };
 }

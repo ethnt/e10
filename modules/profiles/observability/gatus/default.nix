@@ -10,7 +10,7 @@ in { config, lib, ... }: {
       gatus_ntfy_token.sopsFile = ./secrets.json;
     };
 
-    templates.gatus_environment_file = {
+    templates."gatus/environment_file" = {
       content = ''
         GATUS_LOG_LEVEL=warn
 
@@ -25,7 +25,7 @@ in { config, lib, ... }: {
   services.gatus = {
     enable = true;
     openFirewall = true;
-    environmentFile = config.sops.templates.gatus_environment_file.path;
+    environmentFile = config.sops.templates."gatus/environment_file".path;
     settings = {
       metrics = true;
       storage = {
@@ -221,7 +221,7 @@ in { config, lib, ... }: {
           })
           (mkEndpoint {
             name = "Frigate";
-            url = "http://htpc:5000";
+            url = "https://frigate.e10.camp";
             group = "HTPC";
           })
         ];

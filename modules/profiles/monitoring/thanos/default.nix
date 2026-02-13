@@ -24,7 +24,7 @@
       };
     };
 
-    templates.thanos_sidecar_object_storage_configuration = {
+    templates."thanos/sidecar_object_storage_configuration.json" = {
       content = builtins.toJSON {
         type = "S3";
         config = {
@@ -53,7 +53,7 @@
       http.port = 19190;
       grpc.port = 10900;
       objstore.config-file =
-        config.sops.templates.thanos_sidecar_object_storage_configuration.path;
+        config.sops.templates."thanos/sidecar_object_storage_configuration.json".path;
     };
 
     store = {
@@ -61,7 +61,7 @@
       http.port = 19191;
       grpc.port = 10901;
       objstore.config-file =
-        config.sops.templates.thanos_sidecar_object_storage_configuration.path;
+        config.sops.templates."thanos/sidecar_object_storage_configuration.json".path;
     };
 
     query = {
@@ -78,7 +78,7 @@
       enable = true;
       http.port = 19193;
       objstore.config-file =
-        config.sops.templates.thanos_sidecar_object_storage_configuration.path;
+        config.sops.templates."thanos/sidecar_object_storage_configuration.json".path;
     };
   };
 

@@ -20,7 +20,7 @@
       monitor_authelia_users_gatus_password_hash = secretConfig;
     };
 
-    templates.monitor_authelia_users_file = {
+    templates."authelia/users.yml" = {
       content = lib.generators.toYAML { } {
         users = {
           admin = {
@@ -73,7 +73,7 @@
 
     settings = {
       authentication_backend.file = {
-        inherit (config.sops.templates.monitor_authelia_users_file) path;
+        inherit (config.sops.templates."authelia/users.yml") path;
         watch = false;
         password = {
           algorithm = "argon2";
