@@ -77,7 +77,7 @@
       };
     };
 
-    templates."sabnzbd-config.ini" = {
+    templates."sabnzbd/config.ini" = {
       content = flake.lib.generators.toINI {
         globalSection = {
           __version__ = 19;
@@ -562,7 +562,7 @@
               required = 0;
               optional = 0;
               retention = 0;
-              expire_date = "2026-01-30";
+              expire_date = "2027-05-13";
               quota = "";
               usage_at_start = 0;
               priority = 0;
@@ -644,7 +644,7 @@
   services.sabnzbd = {
     enable = true;
     openFirewall = true;
-    configFile = config.sops.templates."sabnzbd-config.ini".path;
+    configFile = config.sops.templates."sabnzbd/config.ini".path;
   };
 
   systemd.services.sabnzbd.serviceConfig.ExecStart = lib.mkOverride 10 "${

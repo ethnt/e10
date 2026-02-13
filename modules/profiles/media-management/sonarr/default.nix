@@ -7,7 +7,7 @@
       format = "yaml";
     };
 
-    templates."sonarr-config.xml" = {
+    templates."sonarr/config.xml" = {
       content = flake.lib.generators.toXML {
         rootName = "Config";
         xmlns = { };

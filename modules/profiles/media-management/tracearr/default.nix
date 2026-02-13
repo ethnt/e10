@@ -17,7 +17,7 @@
       };
     };
 
-    templates.tracearr_environment_file = {
+    templates."tracearr/environment_file" = {
       content = ''
         MAXMIND_LICENSE_KEY=${config.sops.placeholder.maxmind_license_key}
         JWT_SECRET=${config.sops.placeholder.tracearr_jwt_secret}
@@ -31,6 +31,6 @@
   services.tracearr = {
     enable = true;
     openFirewall = true;
-    environmentFile = config.sops.templates.tracearr_environment_file.path;
+    environmentFile = config.sops.templates."tracearr/environment_file".path;
   };
 }

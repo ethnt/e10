@@ -12,7 +12,7 @@
       };
     };
 
-    templates.loki_environment_file = {
+    templates."loki/environment_file" = {
       content = ''
         AWS_ACCESS_KEY_ID=${config.sops.placeholder.loki_aws_access_key_id}
         AWS_SECRET_ACCESS_KEY=${config.sops.placeholder.loki_aws_secret_access_key}
@@ -121,7 +121,7 @@
 
   systemd.services.loki = {
     serviceConfig.EnvironmentFile =
-      config.sops.templates.loki_environment_file.path;
+      config.sops.templates."loki/environment_file".path;
     wants = [ "sops-nix.service" ];
     after = [ "sops-nix.service" ];
   };

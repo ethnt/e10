@@ -1,5 +1,3 @@
-# TODO: MQTT for events from camera
-
 { config, hosts, pkgs, ... }:
 let
   cameraAddress = "192.168.1.102";
@@ -75,15 +73,13 @@ in {
       frigate_tapo_sha256.sopsFile = ./secrets.json;
     };
 
-    templates = {
-      "frigate/environment_file" = {
-        content = ''
-          FRIGATE_MQTT_PASSWORD=${config.sops.placeholder.frigate_mqtt_password}
-          FRIGATE_KITCHEN_PASSWORD=${config.sops.placeholder.frigate_kitchen_password}
-          FRIGATE_TAPO_SHA256=${config.sops.placeholder.frigate_tapo_sha256}
-        '';
-        mode = "0777";
-      };
+    templates."frigate/environment_file" = {
+      content = ''
+        FRIGATE_MQTT_PASSWORD=${config.sops.placeholder.frigate_mqtt_password}
+        FRIGATE_KITCHEN_PASSWORD=${config.sops.placeholder.frigate_kitchen_password}
+        FRIGATE_TAPO_SHA256=${config.sops.placeholder.frigate_tapo_sha256}
+      '';
+      mode = "0777";
     };
   };
 

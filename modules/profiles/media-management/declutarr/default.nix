@@ -1,5 +1,5 @@
 { config, lib, ... }: {
-  sops.templates.declutarr_config = {
+  sops.templates."declutarr/config.yml" = {
     content = lib.generators.toYAML { } {
       general = {
         log_level = "INFO";
@@ -58,6 +58,6 @@
 
   services.declutarr = {
     enable = true;
-    configFile = config.sops.templates.declutarr_config.path;
+    configFile = config.sops.templates."declutarr/config.yml".path;
   };
 }

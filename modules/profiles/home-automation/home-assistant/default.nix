@@ -9,18 +9,16 @@
       hass_oauth_secret.sopsFile = ./secrets.json;
     };
 
-    templates = {
-      hass_secrets = {
-        content = ''
-          latitude: ${config.sops.placeholder.hass_latitude}
-          longitude: ${config.sops.placeholder.hass_longitude}
-          elevation: ${config.sops.placeholder.hass_elevation}
+    templates."hass/secrets.yaml" = {
+      content = ''
+        latitude: ${config.sops.placeholder.hass_latitude}
+        longitude: ${config.sops.placeholder.hass_longitude}
+        elevation: ${config.sops.placeholder.hass_elevation}
 
-          oauth_secret: ${config.sops.placeholder.hass_oauth_secret}
-        '';
-        path = "/var/lib/hass/secrets.yaml";
-        mode = "0777";
-      };
+        oauth_secret: ${config.sops.placeholder.hass_oauth_secret}
+      '';
+      path = "/var/lib/hass/secrets.yaml";
+      mode = "0777";
     };
   };
 
@@ -47,16 +45,20 @@
       "brother"
       "ecobee"
       "google_translate"
+      "homeassistant_hardware"
+      "homeassistant_sky_connect"
       "homekit_controller"
       "hue"
       "ipp"
       "isal"
+      "matter"
       "met"
       "mqtt"
       "opower"
       "radio_browser"
       "sonos"
       "tplink"
+      "zha"
     ];
 
     extraPackages = python3Packages:
@@ -69,8 +71,8 @@
         pyqrcode
       ];
 
-    customComponents = [
-      pkgs.home-assistant-custom-components.frigate
+    customComponents = with pkgs.home-assistant-custom-components; [
+      frigate
       (pkgs.callPackage ./components/ha_nationalgrid.nix {
         aionatgrid =
           pkgs.python3Packages.callPackage ./packages/aionatgrid.nix { };

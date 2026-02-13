@@ -5,7 +5,7 @@
       format = "yaml";
     };
 
-    templates."prometheus-plex-media-server-exporter-secrets-file" = {
+    templates."prometheus-plex-media-server-exporter/secrets" = {
       content = ''
         PLEX_TOKEN=${config.sops.placeholder.plex_token}
       '';
@@ -16,7 +16,7 @@
     enable = true;
     url = "https://e10.video";
     secretsFile =
-      config.sops.templates."prometheus-plex-media-server-exporter-secrets-file".path;
+      config.sops.templates."prometheus-plex-media-server-exporter/secrets".path;
     openFirewall = true;
   };
 }

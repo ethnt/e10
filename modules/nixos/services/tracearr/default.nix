@@ -111,8 +111,12 @@ in {
         ensureDBOwnership = true;
       }];
     } // mkIf cfg.database.enableTimescaleDB {
-      extensions = ps: with ps; [ timescaledb ];
+      extensions = ps: with ps; [ timescaledb timescaledb_toolkit ];
       settings = { shared_preload_libraries = [ "timescaledb" ]; };
+      initialScriptText = lib.mkAfter ''
+        CREATE EXTENSION IF NOT EXISTS timescaledb;
+        CREATE EXTENSION IF NOT EXISTS timescaledb_toolkit;
+      '';
     };
 
     services.redis = mkIf cfg.redis.createLocally {

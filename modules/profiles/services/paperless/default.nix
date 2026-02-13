@@ -16,7 +16,7 @@
       };
     };
 
-    templates.paperless_environment_file.content = ''
+    templates."paperless/environment_file".content = ''
       PAPERLESS_SOCIALACCOUNT_PROVIDERS='${config.sops.placeholder.paperless_socialaccount_providers}'
     '';
   };
@@ -31,7 +31,7 @@
     address = "0.0.0.0";
     passwordFile = config.sops.secrets.paperless_admin_password.path;
     dataDir = "/mnt/files/services/paperless";
-    environmentFile = config.sops.templates.paperless_environment_file.path;
+    environmentFile = config.sops.templates."paperless/environment_file".path;
     settings = {
       PAPERLESS_URL = "https://paperless.e10.camp";
       USE_X_FORWARD_HOST = true;
