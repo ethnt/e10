@@ -12,6 +12,7 @@ let
         "ffmpeg:kitchen#audio=aac"
         "tapo://admin:{FRIGATE_TAPO_SHA256}@${cameraAddress}"
       ];
+      api.origin = "*";
     };
     mqtt = {
       enabled = true;
@@ -47,7 +48,7 @@ let
       };
       record = {
         enabled = true;
-        retain = { days = 0; };
+        retain.days = 0;
         alerts = {
           retain = {
             days = 30;
@@ -62,8 +63,8 @@ let
         };
       };
     };
-    detect = { enabled = true; };
-    objects = { filters = { person = { min_score = 0.8; }; }; };
+    detect.enabled = true;
+    objects.filters.person.min_score = 0.8;
   };
 in {
   sops = {
@@ -123,5 +124,5 @@ in {
     ];
   };
 
-  networking.firewall.allowedTCPPorts = [ 5000 8971 8090 ];
+  networking.firewall.allowedTCPPorts = [ 1984 5000 8090 8971 ];
 }

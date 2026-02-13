@@ -71,13 +71,16 @@
         pyqrcode
       ];
 
-    customComponents = with pkgs.home-assistant-custom-components; [
-      frigate
-      (pkgs.callPackage ./components/ha_nationalgrid.nix {
-        aionatgrid =
-          pkgs.python3Packages.callPackage ./packages/aionatgrid.nix { };
-      })
-    ];
+    customComponents = with pkgs.home-assistant-custom-components;
+      [ frigate hass_web_proxy ] ++ [
+        (pkgs.callPackage ./components/ha_nationalgrid.nix {
+          aionatgrid =
+            pkgs.python3Packages.callPackage ./packages/aionatgrid.nix { };
+        })
+      ];
+
+    customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules;
+      [ advanced-camera-card ];
 
     config = {
       default_config = { };
