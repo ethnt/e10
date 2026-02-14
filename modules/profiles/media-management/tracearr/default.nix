@@ -1,3 +1,8 @@
+# NOTE: If Tracearr fails to start because of error similar to `error: could
+# not access file "$libdir/timescaledb-2.24.0"`, this can be fixed by running
+# `ALTER EXTENSION timescaledb UPDATE;` in the `tracearr` database
+#
+# See: https://github.com/NixOS/nixpkgs/issues/214367
 { config, ... }: {
   sops = {
     secrets = {

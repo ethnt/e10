@@ -110,7 +110,7 @@
 
       "sabnzbd.e10.camp" = {
         host = hosts.htpc;
-        inherit (hosts.htpc.config.services.sabnzbd) port;
+        inherit (hosts.htpc.config.services.sabnzbd.settings.misc) port;
         extraConfig = ''
           request_body {
             max_size 256MiB
