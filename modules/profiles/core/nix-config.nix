@@ -10,7 +10,10 @@
 
   nix = {
     optimise.automatic = true;
-    gc.automatic = lib.mkDefault true;
+    gc = {
+      automatic = lib.mkDefault true;
+      options = "--delete-older-than 14d";
+    };
 
     extraOptions = ''
       min-free = 536870912

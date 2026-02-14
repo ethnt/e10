@@ -20,9 +20,7 @@
     tags = [ "@vm" "@build-on-target" ];
   };
 
-  services.resolved.extraConfig = ''
-    DNSStubListener=no
-  '';
+  services.resolved.settings.Resolve = { DNSStubListener = "no"; };
 
   networking = {
     defaultGateway = {
