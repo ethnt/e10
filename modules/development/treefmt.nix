@@ -6,6 +6,7 @@
       settings = {
         projectRootFile = "flake.nix";
         programs = {
+          actionlint.enable = true;
           deadnix.enable = true;
           terraform.enable = true;
           nixfmt = {

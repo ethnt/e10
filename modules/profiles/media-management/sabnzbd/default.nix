@@ -1,4 +1,8 @@
-{ flake, config, ... }: {
+{ flake, config, ... }:
+let
+  downloadDir = "/data/local/tmp/sabnzbd/inter";
+  completeDir = "/data/local/tmp/sabnzbd/dst";
+in {
   sops = {
     secrets = {
       sabnzbd_admin_password = {
@@ -133,12 +137,13 @@
         host = "0.0.0.0";
         username = "admin";
         permissions = 777;
-        download_dir = "/data/local/tmp/sabnzbd/inter";
-        complete_dir = "/data/local/tmp/sabnzbd/dst";
+        download_dir = downloadDir;
+        complete_dir = completeDir;
         admin_dir = "/var/lib/sabnzbd/admin/";
         log_dir = "/var/lib/sabnzbd/logs/";
         host_whitelist = "htpc,";
         inet_exposure = "api+web (auth needed)";
+        cache_limit = "512M";
       };
       servers = {
         "news-us.newsgroup.ninja" = {
@@ -146,120 +151,79 @@
           displayname = "news-us.newsgroup.ninja";
           host = "news-us.newsgroup.ninja";
           port = 563;
-          timeout = 60;
           connections = 40;
           ssl = true;
           ssl_verify = "strict";
-          ssl_ciphers = "";
           enable = true;
           required = false;
-          optional = false;
-          retention = 0;
           expire_date = "2026-10-29";
-          quota = "";
-          usage_at_start = 0;
           priority = 0;
-          notes = "";
         };
         "news.supernews.com" = {
           name = "news.supernews.com";
           displayname = "news.supernews.com";
           host = "news.supernews.com";
           port = 119;
-          timeout = 60;
           connections = 15;
           ssl = false;
           ssl_verify = "strict";
-          ssl_ciphers = "";
           enable = false;
           required = false;
-          optional = false;
-          retention = 0;
           expire_date = "";
-          quota = "";
-          usage_at_start = 0;
           priority = 0;
-          notes = "";
         };
         "reader.xsnews.nl" = {
           name = "reader.xsnews.nl";
           displayname = "reader.xsnews.nl";
           host = "reader.xsnews.nl";
           port = 563;
-          timeout = 60;
           connections = 15;
           ssl = true;
           ssl_verify = "strict";
-          ssl_ciphers = "";
           enable = false;
           required = false;
-          optional = false;
-          retention = 0;
           expire_date = "";
-          quota = "";
-          usage_at_start = 0;
           priority = 0;
-          notes = "";
         };
         "news.newshosting.com" = {
           name = "news.newshosting.com";
           displayname = "news.newshosting.com";
           host = "news.newshosting.com";
           port = 563;
-          timeout = 60;
           connections = 100;
           ssl = true;
           ssl_verify = "strict";
-          ssl_ciphers = "";
           enable = true;
           required = false;
-          optional = false;
-          retention = 0;
           expire_date = "2026-08-29";
-          quota = "";
-          usage_at_start = 0;
           priority = 0;
-          notes = "";
         };
         "news.newsgroupdirect.com" = {
           name = "news.newsgroupdirect.com";
           displayname = "NewsgroupDirect";
           host = "news.newsgroupdirect.com";
           port = 563;
-          timeout = 60;
           connections = 8;
           ssl = true;
           ssl_verify = "strict";
-          ssl_ciphers = "";
           enable = true;
           required = false;
-          optional = false;
-          retention = 0;
           expire_date = "";
           quota = "4000G";
-          usage_at_start = 0;
           priority = 1;
-          notes = "";
         };
         "news.eweka.nl" = {
           name = "news.eweka.nl";
           displayname = "news.eweka.nl";
           host = "news.eweka.nl";
           port = 563;
-          timeout = 60;
           connections = 50;
           ssl = true;
           ssl_verify = "strict";
-          ssl_ciphers = "";
           enable = true;
           required = false;
-          optional = false;
-          retention = 0;
           expire_date = "2027-05-13";
-          quota = "";
-          usage_at_start = 0;
           priority = 0;
-          notes = "";
         };
       };
       categories = {
@@ -304,8 +268,8 @@
   };
 
   systemd.tmpfiles.rules = [
-    "d '/data/local/tmp/sabnzbd/inter' 0777 ${config.services.sabnzbd.user} ${config.services.sabnzbd.group} - -"
-    "d '/data/local/tmp/sabnzbd/dst' 0777 ${config.services.sabnzbd.user} ${config.services.sabnzbd.group} - -"
+    "d '${downloadDir}' 0777 ${config.services.sabnzbd.user} ${config.services.sabnzbd.group} - -"
+    "d '${completeDir}' 0777 ${config.services.sabnzbd.user} ${config.services.sabnzbd.group} - -"
   ];
 
   services.prometheus.exporters.exportarr-sabnzbd = {

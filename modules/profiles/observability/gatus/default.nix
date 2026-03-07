@@ -159,11 +159,6 @@ in { config, lib, ... }: {
             group = "HTPC";
           })
           (mkEndpoint {
-            name = "Huntarr";
-            url = "https://huntarr.e10.camp";
-            group = "HTPC";
-          })
-          (mkEndpoint {
             name = "Tautulli";
             url = "https://tautulli.e10.camp";
             group = "HTPC";

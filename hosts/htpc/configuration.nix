@@ -4,10 +4,10 @@
       profiles.filesystems.blockbuster
       profiles.filesystems.files.personal
       profiles.hardware.nvidia
+      profiles.home-automation.frigate.default
       profiles.media-management.bazarr.default
       profiles.media-management.declutarr.default
       profiles.media-management.fileflows.server
-      profiles.media-management.huntarr
       profiles.media-management.jellyfin
       profiles.media-management.jellyseerr
       profiles.media-management.plex
@@ -17,9 +17,8 @@
       profiles.media-management.sabnzbd.default
       profiles.media-management.sonarr.default
       profiles.media-management.tautulli
-      profiles.media-management.wizarr
-      profiles.home-automation.frigate.default
       profiles.media-management.tracearr.default
+      profiles.media-management.wizarr
       profiles.services.attic-watch-store.default
       profiles.sharing.nfs-client
       profiles.telemetry.prometheus-dcgm-exporter
