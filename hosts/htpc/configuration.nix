@@ -1,6 +1,6 @@
 { suites, profiles, pkgs, secrets, ... }: {
   imports = with suites;
-    core ++ local ++ proxmox-vm ++ [
+    core ++ proxmox-vm ++ [
       profiles.filesystems.blockbuster
       profiles.filesystems.files.personal
       profiles.hardware.nvidia

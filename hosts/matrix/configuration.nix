@@ -1,6 +1,6 @@
 { lib, suites, profiles, ... }: {
   imports = with suites;
-    core ++ local ++ proxmox-vm ++ [
+    core ++ proxmox-vm ++ [
       profiles.databases.postgresql
       profiles.emulation.aarch64-linux
       profiles.filesystems.blockbuster

@@ -1,4 +1,4 @@
-{ profiles, hosts, ... }: {
+{ profiles, hosts, lib, ... }: {
   imports = [ profiles.monitoring.prometheus ];
 
   services.prometheus.scrapeConfigs = [
@@ -337,79 +337,6 @@
       }];
     }
     {
-      job_name = "borgmatic_builder";
-      static_configs = [{
-        targets = [
-          "${hosts.builder.config.networking.hostName}:${
-            toString
-            hosts.builder.config.services.prometheus.exporters.borgmatic.port
-          }"
-        ];
-      }];
-      scrape_interval = "1m";
-    }
-    {
-      job_name = "borgmatic_matrix";
-      static_configs = [{
-        targets = [
-          "${hosts.matrix.config.networking.hostName}:${
-            toString
-            hosts.matrix.config.services.prometheus.exporters.borgmatic.port
-          }"
-        ];
-      }];
-      scrape_interval = "1m";
-    }
-    {
-      job_name = "borgmatic_bastion";
-      static_configs = [{
-        targets = [
-          "${hosts.bastion.config.networking.hostName}:${
-            toString
-            hosts.bastion.config.services.prometheus.exporters.borgmatic.port
-          }"
-        ];
-      }];
-      scrape_interval = "1m";
-    }
-    {
-      job_name = "borgmatic_htpc";
-      static_configs = [{
-        targets = [
-          "${hosts.htpc.config.networking.hostName}:${
-            toString
-            hosts.htpc.config.services.prometheus.exporters.borgmatic.port
-          }"
-        ];
-      }];
-      scrape_interval = "1m";
-    }
-    {
-      job_name = "borgmatic_omnibus";
-      scrape_timeout = "30s";
-      static_configs = [{
-        targets = [
-          "${hosts.omnibus.config.networking.hostName}:${
-            toString
-            hosts.omnibus.config.services.prometheus.exporters.borgmatic.port
-          }"
-        ];
-      }];
-      scrape_interval = "1m";
-    }
-    {
-      job_name = "borgmatic_controller";
-      static_configs = [{
-        targets = [
-          "${hosts.controller.config.networking.hostName}:${
-            toString
-            hosts.controller.config.services.prometheus.exporters.borgmatic.port
-          }"
-        ];
-      }];
-      scrape_interval = "1m";
-    }
-    {
       job_name = "gatus";
       static_configs = [{
         targets = [
@@ -426,5 +353,20 @@
       static_configs = [{ targets = [ "htpc:5000" ]; }];
       scrape_interval = "15s";
     }
-  ];
+  ] ++ lib.flatten (lib.mapAttrsToList (_: host:
+    lib.mapAttrsToList (name: backup:
+      lib.optional backup.exporter.enable {
+        job_name = "restic_${host.config.networking.hostName}_${
+            builtins.replaceStrings [ "-" ] [ "_" ] name
+          }";
+        metrics_path = "/";
+        scrape_interval = "30s";
+        static_configs = [{
+          targets = [
+            "${host.config.networking.hostName}:${
+              toString backup.exporter.port
+            }"
+          ];
+        }];
+      }) host.config.services.restic.backups) hosts);
 }

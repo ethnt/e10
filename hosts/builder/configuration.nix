@@ -1,6 +1,6 @@
 { suites, profiles, ... }: {
   imports = with suites;
-    core ++ local ++ proxmox-vm ++ [
+    core ++ proxmox-vm ++ [
       profiles.emulation.aarch64-linux
       profiles.remote-builder.builder
       profiles.remote-builder.substituter

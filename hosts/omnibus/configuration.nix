@@ -1,6 +1,7 @@
 { config, pkgs, suites, profiles, ... }: {
   imports = with suites;
     core ++ proxmox-vm ++ [
+      profiles.backups.restic-rest.default
       profiles.communications.postfix.default
       profiles.databases.postgresql
       profiles.hardware.nvme
@@ -90,16 +91,6 @@
       "valid users" = config.users.users.ethan.name;
     };
 
-    backup = {
-      path = "/data/files/backup";
-      browseable = "no";
-      "read only" = "no";
-      "guest ok" = "no";
-      "create mask" = "0644";
-      "directory mask" = "0755";
-      "force user" = config.users.users.ethan.name;
-    };
-
     nicole = {
       path = "/data/files/nicole";
       browseable = "yes";
@@ -114,20 +105,25 @@
 
   environment.systemPackages = with pkgs; [ yt-dlp ];
 
-  # programs.fish.shellAliases.iotop = ''
-  #   bash -c "sudo sysctl kernel.task_delayacct=1 && sudo ${pkgs.iotop}/bin/iotop ; sudo sysctl kernel.task_delayacct=0"
-  # '';
-
-  services.borgmatic.configurations.files = {
-    source_directories = [ "/data/files" ];
-    exclude_patterns = [ "/data/files/backup" "/data/files/**/Creators" ];
-    repositories = [{
-      label = "rsync.net";
-      path = "ssh://de2228@de2228.rsync.net/./omnibus-files";
-    }];
-    keep_daily = 1;
-    keep_weekly = 2;
-    keep_monthly = 2;
+  services.restic.backups.files-rsync-net = {
+    initialize = true;
+    repository =
+      "sftp://de2228@de2228.rsync.net/${config.networking.hostName}/files";
+    extraOptions =
+      [ "sftp.args='-i ${config.sops.secrets.rsync_net_ssh_key.path}'" ];
+    passwordFile = config.sops.secrets.restic_backup_password.path;
+    paths = [ "/data/files" ];
+    exclude = [
+      "/data/files/services/restic"
+      "/data/files/backup"
+      "/data/files/personal/**/Creators"
+    ];
+    timerConfig = {
+      OnCalendar = "01:30";
+      Persistent = true;
+      RandomizedDelaySec = "1h";
+    };
+    pruneOpts = [ "--keep-daily 1" "--keep-weekly 1" "--keep-monthly 1" ];
   };
 
   system.stateVersion = "24.05";
