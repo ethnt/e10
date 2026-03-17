@@ -63,8 +63,10 @@
     };
   };
 
-  services.borgmatic.configurations.system.source_directories =
-    lib.mkAfter [ "/var/www" ];
+  services.restic.backups = {
+    system-omnibus.paths = lib.mkAfter [ "/var/www" ];
+    system-rsync-net.exclude = lib.mkAfter [ "/var/www" ];
+  };
 
   system.stateVersion = "24.05";
 }

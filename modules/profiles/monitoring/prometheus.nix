@@ -14,6 +14,8 @@
     globalConfig.external_labels.prometheus = "${config.networking.hostName}";
   };
 
-  services.borgmatic.configurations.system.exclude_patterns =
-    [ "/var/lib/prometheus2/data/wal" ];
+  services.restic.backups = {
+    system-omnibus.exclude = [ "/var/lib/prometheus2/data/wal" ];
+    system-rsync-net.exclude = [ "/var/lib/prometheus2/data/wal" ];
+  };
 }

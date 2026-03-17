@@ -64,11 +64,19 @@
 
   environment.systemPackages = with pkgs; [ mediainfo ];
 
-  services.borgmatic.configurations.system.exclude_patterns = [
-    "/var/lib/sabnzbd/downloads"
-    "/var/lib/plex/transcodes"
-    "/var/lib/fileflows/Temp"
-  ];
+  services.restic.backups = {
+    system-omnibus.exclude = [
+      "/var/lib/sabnzbd/downloads"
+      "/var/lib/plex/transcodes"
+      "/var/lib/fileflows/Temp"
+    ];
+
+    system-rsync-net.exclude = [
+      "/var/lib/sabnzbd/downloads"
+      "/var/lib/plex/transcodes"
+      "/var/lib/fileflows/Temp"
+    ];
+  };
 
   system.stateVersion = "24.05";
 }
