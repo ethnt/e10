@@ -87,21 +87,11 @@ in { config, lib, ... }: {
             url = "http://bastion:9100";
             group = "Bastion";
           })
-          (mkEndpoint {
-            name = "Prometheus Borgmatic Exporter";
-            url = "http://bastion:9996";
-            group = "Bastion";
-          })
         ];
         omnibus = [
           (mkEndpoint {
             name = "Prometheus Node Exporter";
             url = "http://omnibus:9100";
-            group = "Omnibus";
-          })
-          (mkEndpoint {
-            name = "Prometheus Borgmatic Exporter";
-            url = "http://omnibus:9996";
             group = "Omnibus";
           })
           (mkEndpoint {
@@ -204,11 +194,6 @@ in { config, lib, ... }: {
             group = "HTPC";
           })
           (mkEndpoint {
-            name = "Prometheus Borgmatic Exporter";
-            url = "http://htpc:9996";
-            group = "HTPC";
-          })
-          (mkEndpoint {
             name = "FileFlows";
             url = "https://fileflows.e10.camp";
             group = "HTPC";
@@ -229,11 +214,6 @@ in { config, lib, ... }: {
           (mkEndpoint {
             name = "Prometheus Node Exporter";
             url = "http://matrix:9100";
-            group = "Matrix";
-          })
-          (mkEndpoint {
-            name = "Prometheus Borgmatic Exporter";
-            url = "http://matrix:9996";
             group = "Matrix";
           })
           (mkEndpoint {
@@ -318,11 +298,6 @@ in { config, lib, ... }: {
             url = "http://builder:9100";
             group = "Builder";
           })
-          (mkEndpoint {
-            name = "Prometheus Borgmatic Exporter";
-            url = "http://builder:9996";
-            group = "Builder";
-          })
         ];
         controller = [
           (mkEndpoint {
@@ -358,11 +333,6 @@ in { config, lib, ... }: {
           (mkEndpoint {
             name = "Prometheus Node Exporter";
             url = "http://controller:9100";
-            group = "Controller";
-          })
-          (mkEndpoint {
-            name = "Prometheus Borgmatic Exporter";
-            url = "http://controller:9996";
             group = "Controller";
           })
           (mkEndpoint {
@@ -423,11 +393,6 @@ in { config, lib, ... }: {
           (mkEndpoint {
             name = "Prometheus Node Exporter";
             url = "http://monitor:9100";
-            group = "Monitor";
-          })
-          (mkEndpoint {
-            name = "Prometheus Borgmatic Exporter";
-            url = "http://monitor:9996";
             group = "Monitor";
           })
         ];
