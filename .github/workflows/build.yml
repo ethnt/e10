@@ -10,30 +10,30 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4.2.1
-    - name: Clean up storage
-      run: 'sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@v20
+      with:
+        extra-conf: 'accept-flake-config = true
 
-        sudo docker image prune --all --force
+          max-jobs = auto
 
-        sudo docker builder prune -a
+          '
+        source-url: https://install.lix.systems/lix/lix-installer-aarch64-linux
+    - run: '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
         '
-    - name: Install Nix
-      uses: DeterminateSystems/nix-installer-action@v14
-      with:
-        extra-conf: allow-import-from-derivation = true
     - name: Add SSH keys to ssh-agent
       uses: webfactory/ssh-agent@v0.9.0
       with:
         ssh-private-key: ${{ secrets.SECRETS_DEPLOY_KEY }}
     - name: Setup Attic cache
-      uses: ryanccn/attic-action@v0.3.1
+      uses: ryanccn/attic-action@v0
       with:
         cache: e10
         endpoint: https://cache.e10.camp
         token: ${{ secrets.ATTIC_TOKEN }}
     - name: Use Cachix store
-      uses: cachix/cachix-action@v15
+      uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         installCommand: nix profile add github:NixOS/nixpkgs/nixpkgs-unstable#cachix
@@ -58,6 +58,34 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4.2.1
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@v20
+      with:
+        extra-conf: 'accept-flake-config = true
+
+          max-jobs = auto
+
+          '
+        source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
+    - run: '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+
+        '
+    - name: Add SSH keys to ssh-agent
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.SECRETS_DEPLOY_KEY }}
+    - name: Setup Attic cache
+      uses: ryanccn/attic-action@v0
+      with:
+        cache: e10
+        endpoint: https://cache.e10.camp
+        token: ${{ secrets.ATTIC_TOKEN }}
+    - name: Use Cachix store
+      uses: cachix/cachix-action@master
+      with:
+        authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        installCommand: nix profile add github:NixOS/nixpkgs/nixpkgs-unstable#cachix
+        name: e10
     - name: Clean up storage
       run: 'sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
 
@@ -66,26 +94,6 @@ jobs:
         sudo docker builder prune -a
 
         '
-    - name: Install Nix
-      uses: DeterminateSystems/nix-installer-action@v14
-      with:
-        extra-conf: allow-import-from-derivation = true
-    - name: Add SSH keys to ssh-agent
-      uses: webfactory/ssh-agent@v0.9.0
-      with:
-        ssh-private-key: ${{ secrets.SECRETS_DEPLOY_KEY }}
-    - name: Setup Attic cache
-      uses: ryanccn/attic-action@v0.3.1
-      with:
-        cache: e10
-        endpoint: https://cache.e10.camp
-        token: ${{ secrets.ATTIC_TOKEN }}
-    - name: Use Cachix store
-      uses: cachix/cachix-action@v15
-      with:
-        authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        installCommand: nix profile add github:NixOS/nixpkgs/nixpkgs-unstable#cachix
-        name: e10
     - run: 'nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
         --accept-flake-config --show-trace
 

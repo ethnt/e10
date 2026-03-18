@@ -3,23 +3,27 @@ let l = inputs.nixpkgs.lib // builtins;
 in {
   perSystem = { pkgs, system, ... }:
     let
-      setup = [
+      setup = nix_system: [
         {
           name = "Checkout code";
           uses = "actions/checkout@v4.2.1";
         }
         {
-          name = "Clean up storage";
-          run = ''
-            sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
-            sudo docker image prune --all --force
-            sudo docker builder prune -a
-          '';
+          name = "Install Nix";
+          uses = "DeterminateSystems/nix-installer-action@v20";
+          "with" = {
+            source-url =
+              "https://install.lix.systems/lix/lix-installer-${nix_system}";
+            extra-conf = ''
+              accept-flake-config = true
+              max-jobs = auto
+            '';
+          };
         }
         {
-          name = "Install Nix";
-          uses = "DeterminateSystems/nix-installer-action@v14";
-          "with" = { extra-conf = "allow-import-from-derivation = true"; };
+          run = ''
+            . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+          '';
         }
         {
           name = "Add SSH keys to ssh-agent";
@@ -28,7 +32,7 @@ in {
         }
         {
           name = "Setup Attic cache";
-          uses = "ryanccn/attic-action@v0.3.1";
+          uses = "ryanccn/attic-action@v0";
           "with" = {
             endpoint = "https://cache.e10.camp";
             cache = "e10";
@@ -37,7 +41,7 @@ in {
         }
         {
           name = "Use Cachix store";
-          uses = "cachix/cachix-action@v15";
+          uses = "cachix/cachix-action@master";
           "with" = {
             authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
             name = "e10";
@@ -54,7 +58,7 @@ in {
           check = {
             name = "Check flake";
             "runs-on" = "ubuntu-latest";
-            steps = setup ++ [{
+            steps = (setup "x86_64-linux") ++ [{
               run = ''
                 nix flake check --impure --accept-flake-config --show-trace
               '';
@@ -77,11 +81,21 @@ in {
             strategy.matrix.host = l.attrNames (l.filterAttrs
               (_: host: host.config.nixpkgs.system == "x86_64-linux")
               self.nixosConfigurations);
-            steps = setup ++ [{
-              run = ''
-                nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace
-              '';
-            }];
+            steps = (setup "x86_64-linux") ++ [
+              {
+                name = "Clean up storage";
+                run = ''
+                  sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+                  sudo docker image prune --all --force
+                  sudo docker builder prune -a
+                '';
+              }
+              {
+                run = ''
+                  nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace
+                '';
+              }
+            ];
           };
           buildARMSystem = {
             name = "Build system (ARM)";
@@ -93,7 +107,7 @@ in {
             strategy.matrix.host = l.attrNames (l.filterAttrs
               (_: host: host.config.nixpkgs.system == "aarch64-linux")
               self.nixosConfigurations);
-            steps = setup ++ [{
+            steps = (setup "aarch64-linux") ++ [{
               run = ''
                 nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace
               '';
