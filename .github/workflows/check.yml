@@ -6,17 +6,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4.2.1
     - name: Install Nix
-      uses: DeterminateSystems/nix-installer-action@v20
+      uses: NixOS/nix-installer-action@main
       with:
         extra-conf: 'accept-flake-config = true
 
           max-jobs = auto
 
           '
-        source-url: https://install.lix.systems/lix/lix-installer-x86_64-linux
-    - run: '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-
-        '
     - name: Add SSH keys to ssh-agent
       uses: webfactory/ssh-agent@v0.9.0
       with:
@@ -31,7 +27,6 @@ jobs:
       uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        installCommand: nix profile add github:NixOS/nixpkgs/nixpkgs-unstable#cachix
         name: e10
     - run: 'nix flake check --impure --accept-flake-config --show-trace
 

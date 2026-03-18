@@ -3,27 +3,20 @@ let l = inputs.nixpkgs.lib // builtins;
 in {
   perSystem = { pkgs, system, ... }:
     let
-      setup = nix_system: [
+      setup = [
         {
           name = "Checkout code";
           uses = "actions/checkout@v4.2.1";
         }
         {
           name = "Install Nix";
-          uses = "DeterminateSystems/nix-installer-action@v20";
+          uses = "NixOS/nix-installer-action@main";
           "with" = {
-            source-url =
-              "https://install.lix.systems/lix/lix-installer-${nix_system}";
             extra-conf = ''
               accept-flake-config = true
               max-jobs = auto
             '';
           };
-        }
-        {
-          run = ''
-            . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-          '';
         }
         {
           name = "Add SSH keys to ssh-agent";
@@ -45,8 +38,6 @@ in {
           "with" = {
             authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
             name = "e10";
-            installCommand =
-              "nix profile add github:NixOS/nixpkgs/nixpkgs-unstable#cachix";
           };
         }
       ];
@@ -58,7 +49,7 @@ in {
           check = {
             name = "Check flake";
             "runs-on" = "ubuntu-latest";
-            steps = (setup "x86_64-linux") ++ [{
+            steps = setup ++ [{
               run = ''
                 nix flake check --impure --accept-flake-config --show-trace
               '';
@@ -81,7 +72,7 @@ in {
             strategy.matrix.host = l.attrNames (l.filterAttrs
               (_: host: host.config.nixpkgs.system == "x86_64-linux")
               self.nixosConfigurations);
-            steps = (setup "x86_64-linux") ++ [
+            steps = setup ++ [
               {
                 name = "Clean up storage";
                 run = ''
@@ -107,7 +98,7 @@ in {
             strategy.matrix.host = l.attrNames (l.filterAttrs
               (_: host: host.config.nixpkgs.system == "aarch64-linux")
               self.nixosConfigurations);
-            steps = (setup "aarch64-linux") ++ [{
+            steps = setup ++ [{
               run = ''
                 nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace
               '';
