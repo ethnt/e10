@@ -9,10 +9,10 @@ in {
           uses = "actions/checkout@v4.2.1";
         }
         {
-          name = "Install Nix";
-          uses = "NixOS/nix-installer-action@main";
+          name = "Install Lix";
+          uses = "samueldr/lix-gha-installer-action";
           "with" = {
-            extra-conf = ''
+            extra_nix_config = ''
               accept-flake-config = true
               max-jobs = auto
             '';
