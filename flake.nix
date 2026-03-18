@@ -96,7 +96,10 @@
               [ "dotnet-sdk-6.0.428" "aspnetcore-runtime-6.0.36" ];
           };
 
-          overlays = [ self.overlays.default ];
+          overlays = [
+            self.overlays.default
+            (_final: prev: { inherit (prev.lixPackageSets.stable) colmena; })
+          ];
         };
       };
     };

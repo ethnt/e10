@@ -9,10 +9,10 @@ in {
           uses = "actions/checkout@v4.2.1";
         }
         {
-          name = "Install Nix";
-          uses = "NixOS/nix-installer-action@main";
+          name = "Install Lix";
+          uses = "samueldr/lix-gha-installer-action@latest";
           "with" = {
-            extra-conf = ''
+            extra_nix_config = ''
               accept-flake-config = true
               max-jobs = auto
             '';
@@ -39,7 +39,7 @@ in {
             authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
             name = "e10";
             installCommand =
-              "nix profile add github:NixOS/nixpkgs/nixpkgs-unstable#cachix";
+              "nix profile install github:NixOS/nixpkgs/nixpkgs-unstable#cachix";
           };
         }
       ];
