@@ -10,7 +10,7 @@ in {
         }
         {
           name = "Install Lix";
-          uses = "samueldr/lix-gha-installer-action";
+          uses = "samueldr/lix-gha-installer-action@latest";
           "with" = {
             extra_nix_config = ''
               accept-flake-config = true

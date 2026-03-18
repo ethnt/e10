@@ -6,7 +6,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4.2.1
     - name: Install Lix
-      uses: samueldr/lix-gha-installer-action
+      uses: samueldr/lix-gha-installer-action@latest
       with:
         extra_nix_config: 'accept-flake-config = true
 
