@@ -1,14 +1,18 @@
-{ flake, lib, ... }: {
+{ flake, pkgs, lib, ... }: {
   nixpkgs = {
     config = {
       allowUnfree = true;
       permittedInsecurePackages =
         [ "dotnet-sdk-6.0.428" "aspnetcore-runtime-6.0.36" ];
     };
-    overlays = [ flake.overlays.default ];
+    overlays = [
+      flake.overlays.default
+      (_final: prev: { inherit (prev.lixPackageSets.stable) colmena; })
+    ];
   };
 
   nix = {
+    package = pkgs.lixPackageSets.stable.lix;
     optimise.automatic = true;
     gc = {
       automatic = lib.mkDefault true;
