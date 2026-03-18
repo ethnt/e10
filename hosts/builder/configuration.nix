@@ -1,10 +1,10 @@
 { suites, profiles, ... }: {
   imports = with suites;
-    core ++ local ++ proxmox-vm ++ [
-      profiles.services.attic-watch-store.default
+    core ++ proxmox-vm ++ [
       profiles.emulation.aarch64-linux
       profiles.remote-builder.builder
       profiles.remote-builder.substituter
+      profiles.services.attic-watch-store.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =

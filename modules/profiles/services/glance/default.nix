@@ -106,12 +106,6 @@
                     icon = "di:home-assistant";
                   })
                   (mkSite {
-                    title = "Huntarr";
-                    url = "https://huntarr.e10.camp";
-                    icon =
-                      "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/huntarr.png";
-                  })
-                  (mkSite {
                     title = "Immich";
                     url = "https://immich.e10.camp";
                     icon = "di:immich";

@@ -462,6 +462,12 @@ resource "proxmox_virtual_environment_vm" "controller" {
     usb3 = true
   }
 
+  # TP-Link bluetooth adapter
+  usb {
+    host = "2357:0604"
+    usb3 = true
+  }
+
   startup {
     down_delay = -1
     order      = 2

@@ -93,11 +93,6 @@
         inherit (hosts.htpc.config.services.sonarr) port;
       };
 
-      "huntarr.e10.camp" = {
-        host = hosts.htpc;
-        inherit (hosts.htpc.config.services.huntarr) port;
-      };
-
       "bazarr.e10.camp" = {
         host = hosts.htpc;
         port = hosts.htpc.config.services.bazarr.listenPort;
@@ -312,7 +307,12 @@
           }
         '';
         extraReverseProxyConfig = ''
-          header_up X-Real-IP {remote_host}
+          header_up X-Real-IP {http.request.remote.host}
+
+          transport http {
+            read_buffer 0
+            write_buffer 0
+          }
         '';
       };
     };

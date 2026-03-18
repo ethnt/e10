@@ -1,6 +1,6 @@
 { profiles, suites, ... }: {
   imports = with suites;
-    core ++ local ++ proxmox-vm ++ [
+    core ++ proxmox-vm ++ [
       profiles.communications.mosquitto.default
       profiles.hardware.bluetooth
       profiles.home-automation.home-assistant.default

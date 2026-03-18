@@ -133,6 +133,8 @@
       [ config.services.loki.configuration.server.http_listen_port ];
   };
 
-  services.borgmatic.configurations.system.exclude_patterns =
-    [ "/var/lib/prometheus2/data/wal" ];
+  services.restic.backups = {
+    system-omnibus.exclude = [ "/var/lib/loki/wal" ];
+    system-rsync-net.exclude = [ "/var/lib/loki/wal" ];
+  };
 }

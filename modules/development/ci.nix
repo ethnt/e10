@@ -9,17 +9,14 @@ in {
           uses = "actions/checkout@v4.2.1";
         }
         {
-          name = "Clean up storage";
-          run = ''
-            sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
-            sudo docker image prune --all --force
-            sudo docker builder prune -a
-          '';
-        }
-        {
           name = "Install Nix";
-          uses = "DeterminateSystems/nix-installer-action@v14";
-          "with" = { extra-conf = "allow-import-from-derivation = true"; };
+          uses = "NixOS/nix-installer-action@main";
+          "with" = {
+            extra-conf = ''
+              accept-flake-config = true
+              max-jobs = auto
+            '';
+          };
         }
         {
           name = "Add SSH keys to ssh-agent";
@@ -28,7 +25,7 @@ in {
         }
         {
           name = "Setup Attic cache";
-          uses = "ryanccn/attic-action@v0.3.1";
+          uses = "ryanccn/attic-action@v0";
           "with" = {
             endpoint = "https://cache.e10.camp";
             cache = "e10";
@@ -37,7 +34,7 @@ in {
         }
         {
           name = "Use Cachix store";
-          uses = "cachix/cachix-action@v15";
+          uses = "cachix/cachix-action@master";
           "with" = {
             authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
             name = "e10";
@@ -77,11 +74,21 @@ in {
             strategy.matrix.host = l.attrNames (l.filterAttrs
               (_: host: host.config.nixpkgs.system == "x86_64-linux")
               self.nixosConfigurations);
-            steps = setup ++ [{
-              run = ''
-                nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace
-              '';
-            }];
+            steps = setup ++ [
+              {
+                name = "Clean up storage";
+                run = ''
+                  sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+                  sudo docker image prune --all --force
+                  sudo docker builder prune -a
+                '';
+              }
+              {
+                run = ''
+                  nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace
+                '';
+              }
+            ];
           };
           buildARMSystem = {
             name = "Build system (ARM)";

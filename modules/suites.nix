@@ -1,6 +1,6 @@
 { profiles }: {
   core = [
-    profiles.backups.borgmatic.system.rsync-net
+    profiles.backups.restic.system
     profiles.core.caching
     profiles.core.common
     profiles.core.nix-config
@@ -14,7 +14,6 @@
     profiles.security.fail2ban
     profiles.shell.fish
     profiles.system.earlyoom
-    profiles.telemetry.prometheus-borgmatic-exporter
     profiles.telemetry.prometheus-node-exporter
     profiles.telemetry.vector.common
     profiles.telemetry.vector.journald
@@ -38,8 +37,6 @@
     profiles.shell.fish
     profiles.users.root
   ];
-
-  local = [ profiles.backups.borgmatic.system.omnibus ];
 
   nuc = [
     profiles.filesystems.hybrid-boot

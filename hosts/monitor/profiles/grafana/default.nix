@@ -166,14 +166,6 @@
           options.path = ./provisioning/nvidia.json;
         }
         {
-          name = "Borgmatic Logs";
-          options.path = ./provisioning/borgmatic/logs.json;
-        }
-        {
-          name = "Borgmatic Backups";
-          options.path = ./provisioning/borgmatic/backups.json;
-        }
-        {
           name = "Caddy";
           options.path = ./provisioning/caddy.json;
         }
