@@ -39,7 +39,7 @@ in {
             authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
             name = "e10";
             installCommand =
-              "nix profile add github:NixOS/nixpkgs/nixpkgs-unstable#cachix";
+              "nix profile install github:NixOS/nixpkgs/nixpkgs-unstable#cachix";
           };
         }
       ];
