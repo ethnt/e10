@@ -1,4 +1,4 @@
-{ config, hosts, ... }: {
+{ flake, config, hosts, lib, ... }: {
   sops.secrets = {
     e10_camp_lego_route53_credentials = {
       sopsFile = ./secrets.yml;
@@ -17,7 +17,13 @@
   };
 
   services.caddy = {
-    virtualHosts = {
+    virtualHosts = let
+      providedVirtualHosts =
+        flake.lib.provides.caddyVirtualHostsForServices config
+        (flake.lib.provides.allHTTPServices (flake.lib.provides.allServices
+          (lib.filterAttrs (name: _value: name != "monitor")
+            flake.nixosConfigurations)));
+    in {
       "e10.camp" = {
         logFormat = ''
           output file ${config.services.caddy.logDir}/access-e10.camp.log {
@@ -62,7 +68,7 @@
           }
         '';
       };
-    };
+    } // providedVirtualHosts;
 
     proxies = {
       "e10.land" = {
@@ -83,15 +89,15 @@
         inherit (hosts.htpc.config.services.prowlarr.settings.server) port;
       };
 
-      "radarr.e10.camp" = {
-        host = hosts.htpc;
-        inherit (hosts.htpc.config.services.radarr) port;
-      };
+      # "radarr.e10.camp" = {
+      #   host = hosts.htpc;
+      #   inherit (hosts.htpc.config.services.radarr) port;
+      # };
 
-      "sonarr.e10.camp" = {
-        host = hosts.htpc;
-        inherit (hosts.htpc.config.services.sonarr) port;
-      };
+      # "sonarr.e10.camp" = {
+      #   host = hosts.htpc;
+      #   inherit (hosts.htpc.config.services.sonarr) port;
+      # };
 
       "bazarr.e10.camp" = {
         host = hosts.htpc;
@@ -103,15 +109,15 @@
         inherit (hosts.htpc.config.services.profilarr) port;
       };
 
-      "sabnzbd.e10.camp" = {
-        host = hosts.htpc;
-        inherit (hosts.htpc.config.services.sabnzbd.settings.misc) port;
-        extraConfig = ''
-          request_body {
-            max_size 256MiB
-          }
-        '';
-      };
+      # "sabnzbd.e10.camp" = {
+      #   host = hosts.htpc;
+      #   inherit (hosts.htpc.config.services.sabnzbd.settings.misc) port;
+      #   extraConfig = ''
+      #     request_body {
+      #       max_size 256MiB
+      #     }
+      #   '';
+      # };
 
       "requests.e10.video" = {
         host = hosts.htpc;

@@ -279,4 +279,18 @@ in {
     apiKeyFile = config.sops.secrets.sabnzbd_api_key.path;
     port = 9712;
   };
+
+  provides.sabnzbd = {
+    name = "SABnzbd";
+    http = {
+      enable = true;
+      inherit (config.services.sabnzbd.settings.misc) port;
+      domain = "sabnzbd.e10.camp";
+      extraVirtualHostConfig = ''
+        request_body {
+          max_size 256MiB
+        }
+      '';
+    };
+  };
 }

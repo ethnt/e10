@@ -54,4 +54,13 @@
     apiKeyFile = config.sops.secrets.sonarr_api_key.path;
     port = 9708;
   };
+
+  provides.sonarr = {
+    name = "Sonarr";
+    http = {
+      enable = true;
+      inherit (config.services.sonarr) port;
+      domain = "sonarr.e10.camp";
+    };
+  };
 }

@@ -52,4 +52,13 @@
     apiKeyFile = config.sops.secrets.radarr_api_key.path;
     port = 9709;
   };
+
+  provides.radarr = {
+    name = "Radarr";
+    http = {
+      enable = true;
+      inherit (config.services.radarr) port;
+      domain = "radarr.e10.camp";
+    };
+  };
 }
