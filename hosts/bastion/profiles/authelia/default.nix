@@ -212,14 +212,16 @@
   provides.authelia-bastion = {
     name = "Authelia";
     http = {
-      enable = true;
       port = 9091;
-      domain = "auth.e10.camp";
-      # TODO: This (somewhat) fixes issues with PWAs grabbing manifest.json files
-      # https://github.com/authelia/authelia/discussions/4629
-      extraVirtualHostConfig = ''
-        header Access-Control-Allow-Origin "*"
-      '';
+      proxy = {
+        enable = true;
+        domain = "auth.e10.camp";
+        # TODO: This (somewhat) fixes issues with PWAs grabbing manifest.json files
+        # https://github.com/authelia/authelia/discussions/4629
+        extraVirtualHostConfig = ''
+          header Access-Control-Allow-Origin "*"
+        '';
+      };
     };
   };
 }

@@ -1,4 +1,4 @@
-{ flake, config, lib, ... }: {
+{ flake, config, lib, hosts, ... }: {
   sops.secrets = {
     e10_camp_lego_route53_credentials = {
       sopsFile = ./secrets.yml;
@@ -19,7 +19,7 @@
   services.caddy = {
     virtualHosts = let
       providedVirtualHosts =
-        flake.lib.provides.caddyVirtualHostsForServices config
+        flake.lib.provides.caddyVirtualHostsForServices hosts.bastion
         (flake.lib.provides.allHTTPServices (flake.lib.provides.allServices
           (lib.filterAttrs (name: _value: name != "monitor")
             flake.nixosConfigurations)));

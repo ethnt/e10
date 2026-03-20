@@ -283,14 +283,16 @@ in {
   provides.sabnzbd = {
     name = "SABnzbd";
     http = {
-      enable = true;
       inherit (config.services.sabnzbd.settings.misc) port;
-      domain = "sabnzbd.e10.camp";
-      extraVirtualHostConfig = ''
-        request_body {
-          max_size 256MiB
-        }
-      '';
+      proxy = {
+        enable = true;
+        domain = "sabnzbd.e10.camp";
+        extraVirtualHostConfig = ''
+          request_body {
+            max_size 256MiB
+          }
+        '';
+      };
     };
   };
 }

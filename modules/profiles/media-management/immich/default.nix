@@ -56,14 +56,16 @@
   provides.immich = {
     name = "Immich";
     http = {
-      enable = true;
       inherit (config.services.immich) port;
-      domain = "immich.e10.camp";
-      extraVirtualHostConfig = ''
-        request_body {
-          max_size 50GiB
-        }
-      '';
+      proxy = {
+        enable = true;
+        domain = "immich.e10.camp";
+        extraVirtualHostConfig = ''
+          request_body {
+            max_size 50GiB
+          }
+        '';
+      };
     };
   };
 }

@@ -11,21 +11,21 @@ let
       (lib.foldl' (a: b: a // b) { })
     ];
 
-  # Get all services that have HTTP enabled
+  # Get all services that have HTTP proxy enabled
   allHTTPServices = services:
-    filterAttrs (_name: value: value.http.enable) services;
+    filterAttrs (_name: value: value.http.proxy.enable) services;
 
   # Transform a set of services into Caddy virtual hosts
   caddyVirtualHostsForServices = caddyHost: services:
     mapAttrs' (name: attrs:
       let inherit (attrs) http;
-      in nameValuePair http.domain (mkVirtualHost caddyHost name http))
-    services;
+      in nameValuePair http.proxy.domain (mkVirtualHost caddyHost name http))
+    (filterAttrs (_name: attrs: attrs.http.proxy.enable) services);
 
   # Makes a single virtual host for HTTP service provides
   mkVirtualHost = caddyHost: name: http:
     let
-      resolvedHost = if caddyHost.networking.hostName == http.host then
+      resolvedHost = if caddyHost.config.networking.hostName == http.host then
         "localhost"
       else
         http.host;
@@ -37,7 +37,7 @@ let
       '';
     in {
       logFormat = ''
-        output file ${caddyHost.services.caddy.logDir}/access-${name}.log {
+        output file ${caddyHost.config.services.caddy.logDir}/access-${name}.log {
           roll_size 1GiB
           roll_keep 0
           mode 777
@@ -45,12 +45,12 @@ let
       '';
 
       extraConfig = ''
-        ${optionalString http.protected autheliaForwardAuth}
+        ${optionalString http.proxy.protected autheliaForwardAuth}
 
         reverse_proxy ${resolvedHost}:${toString http.port} {
-          ${http.extraReverseProxyConfig}
+          ${http.proxy.extraReverseProxyConfig}
           ${
-            optionalString http.skipTLSVerify ''
+            optionalString http.proxy.skipTLSVerify ''
               transport http {
                 tls_insecure_skip_verify
               }
@@ -58,7 +58,7 @@ let
           }
         }
 
-        ${http.extraVirtualHostConfig}
+        ${http.proxy.extraVirtualHostConfig}
       '';
     };
 in { inherit allServices allHTTPServices caddyVirtualHostsForServices; }

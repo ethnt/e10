@@ -30,9 +30,11 @@
   provides.termix = {
     name = "Termix";
     http = {
-      enable = true;
       inherit (config.services.termix) port;
-      domain = "termix.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "termix.e10.camp";
+      };
     };
   };
 }

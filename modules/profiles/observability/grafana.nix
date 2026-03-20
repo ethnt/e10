@@ -23,9 +23,11 @@
   provides.grafana = {
     name = "Grafana";
     http = {
-      enable = true;
       port = config.services.grafana.settings.server.http_port;
-      domain = "grafana.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "grafana.e10.camp";
+      };
     };
   };
 }

@@ -9,10 +9,12 @@
   provides.fileflows = {
     name = "FileFlows";
     http = {
-      enable = true;
       inherit (config.services.fileflows.server) port;
-      domain = "fileflows.e10.camp";
-      protected = true;
+      proxy = {
+        enable = true;
+        domain = "fileflows.e10.camp";
+        protected = true;
+      };
     };
   };
 }

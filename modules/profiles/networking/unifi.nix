@@ -18,10 +18,12 @@
   provides.unifi = {
     name = "UniFi Controller";
     http = {
-      enable = true;
       port = 8443;
-      domain = "unifi.satan.network";
-      skipTLSVerify = true;
+      proxy = {
+        enable = true;
+        domain = "unifi.satan.network";
+        skipTLSVerify = true;
+      };
     };
   };
 }

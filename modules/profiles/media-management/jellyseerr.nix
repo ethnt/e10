@@ -7,9 +7,11 @@
   provides.jellyseerr = {
     name = "Jellyseer";
     http = {
-      enable = true;
       inherit (config.services.jellyseerr) port;
-      domain = "requests.e10.video";
+      proxy = {
+        enable = true;
+        domain = "requests.e10.video";
+      };
     };
   };
 }

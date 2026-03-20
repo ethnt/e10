@@ -7,15 +7,17 @@
   provides.mazanoke = {
     name = "Mazanoke";
     http = {
-      enable = true;
       inherit (config.services.mazanoke) port;
-      domain = "mazanoke.e10.camp";
-      protected = true;
-      extraVirtualHostConfig = ''
-        request_body {
-          max_size 2GiB
-        }
-      '';
+      proxy = {
+        enable = true;
+        domain = "mazanoke.e10.camp";
+        protected = true;
+        extraVirtualHostConfig = ''
+          request_body {
+            max_size 2GiB
+          }
+        '';
+      };
     };
   };
 }

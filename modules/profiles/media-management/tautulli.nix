@@ -6,9 +6,11 @@
   provides.tautulli = {
     name = "Tautulli";
     http = {
-      enable = true;
       inherit (config.services.tautulli) port;
-      domain = "tautulli.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "tautulli.e10.camp";
+      };
     };
   };
 }

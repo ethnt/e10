@@ -10,9 +10,11 @@
   provides.bichon = {
     name = "Bichon";
     http = {
-      enable = true;
       inherit (config.services.bichon) port;
-      domain = "bichon.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "bichon.e10.camp";
+      };
     };
   };
 }

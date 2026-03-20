@@ -250,10 +250,12 @@
   provides.glance = {
     name = "Glance";
     http = {
-      enable = true;
       inherit (config.services.glance.settings.server) port;
-      domain = "glance.e10.camp";
-      protected = true;
+      proxy = {
+        enable = true;
+        domain = "glance.e10.camp";
+        protected = true;
+      };
     };
   };
 }

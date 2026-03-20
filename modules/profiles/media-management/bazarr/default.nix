@@ -395,9 +395,11 @@
   provides.bazarr = {
     name = "Bazarr";
     http = {
-      enable = true;
       port = config.services.bazarr.listenPort;
-      domain = "bazarr.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "bazarr.e10.camp";
+      };
     };
   };
 }

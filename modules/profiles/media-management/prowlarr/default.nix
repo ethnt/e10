@@ -18,9 +18,11 @@
   provides.prowlarr = {
     name = "Prowlarr";
     http = {
-      enable = true;
       inherit (config.services.prowlarr.settings.server) port;
-      domain = "prowlarr.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "prowlarr.e10.camp";
+      };
     };
   };
 }

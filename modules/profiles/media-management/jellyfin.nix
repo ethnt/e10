@@ -7,16 +7,18 @@
   provides.jellyfin = {
     name = "Jellyfin";
     http = {
-      enable = true;
       port = 8096;
-      domain = "jellyfin.e10.video";
-      extraVirtualHostConfig = ''
-        encode gzip zstd
+      proxy = {
+        enable = true;
+        domain = "jellyfin.e10.video";
+        extraVirtualHostConfig = ''
+          encode gzip zstd
 
-        request_body {
-          max_size 100MiB
-        }
-      '';
+          request_body {
+            max_size 100MiB
+          }
+        '';
+      };
     };
   };
 }

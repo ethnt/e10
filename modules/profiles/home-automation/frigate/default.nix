@@ -129,9 +129,11 @@ in {
   provides.frigate = {
     name = "Frigate";
     http = {
-      enable = true;
       port = 8971;
-      domain = "frigate.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "frigate.e10.camp";
+      };
     };
   };
 }

@@ -19,18 +19,20 @@ _: {
   provides.ntfy = {
     name = "Ntfy";
     http = {
-      enable = true;
       port = 2586;
-      domain = "ntfy.e10.camp";
-      extraVirtualHostConfig = ''
-        @httpget {
-          protocol http
-          method GET
-          path_regexp ^/([-_a-z0-9]{0,64}$|docs/|static/)
-        }
+      proxy = {
+        enable = true;
+        domain = "ntfy.e10.camp";
+        extraVirtualHostConfig = ''
+          @httpget {
+            protocol http
+            method GET
+            path_regexp ^/([-_a-z0-9]{0,64}$|docs/|static/)
+          }
 
-        redir @httpget https://{host}{uri}
-      '';
+          redir @httpget https://{host}{uri}
+        '';
+      };
     };
   };
 }

@@ -16,14 +16,16 @@
   provides.nix-serve = {
     name = "nix-serve";
     http = {
-      enable = true;
       inherit (config.services.nix-serve) port;
-      domain = "cache.builder.e10.camp";
-      extraVirtualHostConfig = ''
-        request_body {
-          max_size 2GiB
-        }
-      '';
+      proxy = {
+        enable = true;
+        domain = "cache.builder.e10.camp";
+        extraVirtualHostConfig = ''
+          request_body {
+            max_size 2GiB
+          }
+        '';
+      };
     };
   };
 }

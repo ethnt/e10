@@ -71,9 +71,11 @@
   provides.netbox = {
     name = "Netbox";
     http = {
-      enable = true;
       port = 8002;
-      domain = "netbox.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "netbox.e10.camp";
+      };
     };
   };
 }

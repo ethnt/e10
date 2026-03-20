@@ -10,10 +10,12 @@
   provides.change-detection = {
     name = "Change Detection";
     http = {
-      enable = true;
       inherit (config.services.changedetection-io) port;
-      domain = "change-detection.e10.camp";
-      protected = true;
+      proxy = {
+        enable = true;
+        domain = "change-detection.e10.camp";
+        protected = true;
+      };
     };
   };
 }

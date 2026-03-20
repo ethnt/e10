@@ -42,9 +42,11 @@
   provides.tracearr = {
     name = "Tracearr";
     http = {
-      enable = true;
       inherit (config.services.tracearr) port;
-      domain = "tracearr.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "tracearr.e10.camp";
+      };
     };
   };
 }

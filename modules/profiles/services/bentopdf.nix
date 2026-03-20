@@ -8,10 +8,12 @@
   provides.bentopdf = {
     name = "BentoPDF";
     http = {
-      enable = true;
       inherit (config.services.bentopdf) port;
-      domain = "pdf.e10.camp";
-      protected = true;
+      proxy = {
+        enable = true;
+        domain = "pdf.e10.camp";
+        protected = true;
+      };
     };
   };
 }

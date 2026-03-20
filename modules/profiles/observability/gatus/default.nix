@@ -412,10 +412,12 @@ in { config, lib, ... }: {
   provides.gatus = {
     name = "Gatus";
     http = {
-      enable = true;
       inherit (config.services.gatus.settings.web) port;
-      domain = "status.e10.camp";
-      protected = true;
+      proxy = {
+        enable = true;
+        domain = "status.e10.camp";
+        protected = true;
+      };
     };
   };
 }

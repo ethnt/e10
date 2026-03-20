@@ -56,9 +56,11 @@
   provides.radarr = {
     name = "Radarr";
     http = {
-      enable = true;
       inherit (config.services.radarr) port;
-      domain = "radarr.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "radarr.e10.camp";
+      };
     };
   };
 }

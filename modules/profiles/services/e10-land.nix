@@ -14,12 +14,14 @@ in {
   provides.e10-land = {
     name = "e10.land";
     http = {
-      enable = true;
       inherit port;
-      domain = "e10.land";
-      extraVirtualHostConfig = ''
-        encode gzip zstd
-      '';
+      proxy = {
+        enable = true;
+        domain = "e10.land";
+        extraVirtualHostConfig = ''
+          encode gzip zstd
+        '';
+      };
     };
   };
 }

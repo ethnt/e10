@@ -65,16 +65,18 @@ in {
   provides.attic = {
     name = "Attic";
     http = {
-      enable = true;
       inherit port;
-      domain = "cache.e10.camp";
-      extraVirtualHostConfig = ''
-        encode gzip zstd
+      proxy = {
+        enable = true;
+        domain = "cache.e10.camp";
+        extraVirtualHostConfig = ''
+          encode gzip zstd
 
-        request_body {
-          max_size 10GiB
-        }
-      '';
+          request_body {
+            max_size 10GiB
+          }
+        '';
+      };
     };
   };
 }

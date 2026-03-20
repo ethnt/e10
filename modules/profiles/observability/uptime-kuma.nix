@@ -10,9 +10,11 @@
   provides.uptime-kuma = {
     name = "Uptime Kuma";
     http = {
-      enable = true;
       port = config.services.uptime-kuma.settings.PORT;
-      domain = "status.e10.video";
+      proxy = {
+        enable = true;
+        domain = "status.e10.video";
+      };
     };
   };
 }

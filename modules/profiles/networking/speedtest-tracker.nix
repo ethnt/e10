@@ -9,9 +9,11 @@
   provides.speedtest-tracker = {
     name = "Speedtest Tracker";
     http = {
-      enable = true;
       inherit (config.services.speedtest-tracker) port;
-      domain = "speedtest-tracker.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "speedtest-tracker.e10.camp";
+      };
     };
   };
 }

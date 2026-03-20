@@ -50,9 +50,11 @@
   provides.karakeep = {
     name = "Karakeep";
     http = {
-      enable = true;
       port = config.services.karakeep.extraEnvironment.PORT;
-      domain = "karakeep.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "karakeep.e10.camp";
+      };
     };
   };
 }

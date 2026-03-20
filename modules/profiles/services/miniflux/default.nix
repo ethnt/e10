@@ -19,9 +19,11 @@
   provides.miniflux = {
     name = "Miniflux";
     http = {
-      enable = true;
       port = config.services.miniflux.config.PORT;
-      domain = "feeds.e10.camp";
+      proxy = {
+        enable = true;
+        domain = "feeds.e10.camp";
+      };
     };
   };
 }

@@ -43,14 +43,16 @@
   provides.paperless = {
     name = "Paperless";
     http = {
-      enable = true;
       inherit (config.services.paperless) port;
-      domain = "paperless.e10.camp";
-      extraVirtualHostConfig = ''
-        request_body {
-          max_size 2GiB
-        }
-      '';
+      proxy = {
+        enable = true;
+        domain = "paperless.e10.camp";
+        extraVirtualHostConfig = ''
+          request_body {
+            max_size 2GiB
+          }
+        '';
+      };
     };
   };
 }
