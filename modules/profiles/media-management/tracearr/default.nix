@@ -38,4 +38,13 @@
     openFirewall = true;
     environmentFile = config.sops.templates."tracearr/environment_file".path;
   };
+
+  provides.tracearr = {
+    name = "Tracearr";
+    http = {
+      enable = true;
+      inherit (config.services.tracearr) port;
+      domain = "tracearr.e10.camp";
+    };
+  };
 }

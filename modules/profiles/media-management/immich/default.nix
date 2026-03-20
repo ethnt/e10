@@ -52,4 +52,18 @@
   systemd.tmpfiles.rules = [
     "d '${config.services.immich.mediaLocation}' 0777 ${config.services.immich.user} ${config.services.immich.group} - -"
   ];
+
+  provides.immich = {
+    name = "Immich";
+    http = {
+      enable = true;
+      inherit (config.services.immich) port;
+      domain = "immich.e10.camp";
+      extraVirtualHostConfig = ''
+        request_body {
+          max_size 50GiB
+        }
+      '';
+    };
+  };
 }

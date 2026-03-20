@@ -67,4 +67,13 @@
   services.postgresqlBackup.databases = [ "netbox" ];
 
   networking.firewall.allowedTCPPorts = [ config.services.netbox.port 8002 ];
+
+  provides.netbox = {
+    name = "Netbox";
+    http = {
+      enable = true;
+      port = 8002;
+      domain = "netbox.e10.camp";
+    };
+  };
 }

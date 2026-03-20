@@ -29,6 +29,12 @@ let
         "localhost"
       else
         http.host;
+      autheliaForwardAuth = ''
+        forward_auth localhost:9091 {
+          uri /api/authz/forward-auth
+          copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
+        }
+      '';
     in {
       logFormat = ''
         output file ${caddyHost.services.caddy.logDir}/access-${name}.log {
@@ -39,6 +45,8 @@ let
       '';
 
       extraConfig = ''
+        ${optionalString http.protected autheliaForwardAuth}
+
         reverse_proxy ${resolvedHost}:${toString http.port} {
           ${http.extraReverseProxyConfig}
           ${

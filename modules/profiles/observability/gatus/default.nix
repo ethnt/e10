@@ -408,4 +408,14 @@ in { config, lib, ... }: {
       ++ monitor ++ pikvm;
     };
   };
+
+  provides.gatus = {
+    name = "Gatus";
+    http = {
+      enable = true;
+      inherit (config.services.gatus.settings.web) port;
+      domain = "status.e10.camp";
+      protected = true;
+    };
+  };
 }

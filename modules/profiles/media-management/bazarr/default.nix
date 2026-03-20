@@ -391,4 +391,13 @@
     apiKeyFile = config.sops.secrets.bazarr_api_key.path;
     port = 9710;
   };
+
+  provides.bazarr = {
+    name = "Bazarr";
+    http = {
+      enable = true;
+      port = config.services.bazarr.listenPort;
+      domain = "bazarr.e10.camp";
+    };
+  };
 }

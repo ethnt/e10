@@ -125,4 +125,13 @@ in {
   };
 
   networking.firewall.allowedTCPPorts = [ 1984 5000 8090 8971 ];
+
+  provides.frigate = {
+    name = "Frigate";
+    http = {
+      enable = true;
+      port = 8971;
+      domain = "frigate.e10.camp";
+    };
+  };
 }

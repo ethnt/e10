@@ -46,4 +46,13 @@
     };
     environmentFile = config.sops.templates."karakeep/environment_file".path;
   };
+
+  provides.karakeep = {
+    name = "Karakeep";
+    http = {
+      enable = true;
+      port = config.services.karakeep.extraEnvironment.PORT;
+      domain = "karakeep.e10.camp";
+    };
+  };
 }

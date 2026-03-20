@@ -51,4 +51,13 @@
   };
 
   users.groups.ldap = { gid = 979; };
+
+  provides.lldap = {
+    name = "LLDAP";
+    http = {
+      enable = true;
+      port = config.services.lldap.settings.http_port;
+      domain = "ldap.e10.camp";
+    };
+  };
 }

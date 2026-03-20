@@ -1,5 +1,7 @@
 { config, ... }:
-let storagePath = "/data/files/services/atticd/storage";
+let
+  storagePath = "/data/files/services/atticd/storage";
+  port = 8080;
 in {
   imports = [ ./postgresql.nix ];
 
@@ -21,7 +23,7 @@ in {
 
     settings = {
       allowed-hosts = [ ];
-      listen = "[::]:8080";
+      listen = "[::]:${toString port}";
       require-proof-of-possession = true;
 
       database.url = "postgresql:///atticd?host=/run/postgresql";
@@ -57,6 +59,22 @@ in {
         # The preferred maximum size of a chunk, in bytes
         max-size = 256 * 1024; # 256 KiB
       };
+    };
+  };
+
+  provides.attic = {
+    name = "Attic";
+    http = {
+      enable = true;
+      inherit port;
+      domain = "cache.e10.camp";
+      extraVirtualHostConfig = ''
+        encode gzip zstd
+
+        request_body {
+          max_size 10GiB
+        }
+      '';
     };
   };
 }

@@ -26,4 +26,13 @@
     environmentFile = config.sops.templates."termix/environment_file".path;
     openFirewall = true;
   };
+
+  provides.termix = {
+    name = "Termix";
+    http = {
+      enable = true;
+      inherit (config.services.termix) port;
+      domain = "termix.e10.camp";
+    };
+  };
 }

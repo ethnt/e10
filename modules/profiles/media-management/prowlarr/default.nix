@@ -14,4 +14,13 @@
     environment = { PROWLARR__BACKFILL = "true"; };
     port = 9711;
   };
+
+  provides.prowlarr = {
+    name = "Prowlarr";
+    http = {
+      enable = true;
+      inherit (config.services.prowlarr.settings.server) port;
+      domain = "prowlarr.e10.camp";
+    };
+  };
 }

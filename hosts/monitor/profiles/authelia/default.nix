@@ -140,4 +140,16 @@
       ];
     };
   };
+
+  provides.authelia-monitor = {
+    name = "Authelia (Monitor)";
+    http = {
+      enable = true;
+      port = 9091;
+      domain = "auth.monitor.e10.camp";
+      extraVirtualHostConfig = ''
+        header Access-Control-Allow-Origin "*"
+      '';
+    };
+  };
 }

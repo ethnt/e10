@@ -123,4 +123,13 @@
       to = 21068;
     }];
   };
+
+  provides.home-assistant = {
+    name = "Home Assistant";
+    http = {
+      enable = true;
+      port = config.services.home-assistant.config.http.server_port;
+      domain = "hass.e10.camp";
+    };
+  };
 }

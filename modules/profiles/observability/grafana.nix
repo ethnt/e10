@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   services.grafana = {
     enable = true;
 
@@ -17,6 +17,15 @@
         enable_alpha = "true";
         disable_sanitize_html = "true";
       };
+    };
+  };
+
+  provides.grafana = {
+    name = "Grafana";
+    http = {
+      enable = true;
+      port = config.services.grafana.settings.server.http_port;
+      domain = "grafana.e10.camp";
     };
   };
 }
