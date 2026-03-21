@@ -294,5 +294,6 @@ in {
         '';
       };
     };
+    monitor.enable = true;
   };
 }

@@ -13,5 +13,6 @@
         domain = "profilarr.e10.camp";
       };
     };
+    monitor.enable = true;
   };
 }

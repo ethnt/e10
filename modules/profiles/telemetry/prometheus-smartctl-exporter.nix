@@ -9,4 +9,10 @@
   services.udev.extraRules = ''
     SUBSYSTEM=="nvme", KERNEL=="nvme[0-9]*", GROUP="disk"
   '';
+
+  provides.prometheus-smartctl-exporter = {
+    name = "Prometheus SMART Exporter";
+    http = { port = 9633; };
+    monitor.enable = true;
+  };
 }

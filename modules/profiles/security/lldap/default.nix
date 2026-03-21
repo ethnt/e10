@@ -61,5 +61,6 @@
         domain = "ldap.e10.camp";
       };
     };
+    monitor.enable = true;
   };
 }

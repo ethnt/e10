@@ -103,4 +103,6 @@
   };
 
   networking.firewall.allowedTCPPorts = [ 9959 ];
+
+  provides."authelia-${config.networking.hostName}".monitor.enable = true;
 }

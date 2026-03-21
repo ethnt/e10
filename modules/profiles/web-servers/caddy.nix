@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   services.caddy = {
     enable = true;
     package = pkgs.caddy.withPlugins {
@@ -57,5 +57,13 @@
       }
     ];
   }];
-}
 
+  provides."caddy-${config.networking.hostName}" = {
+    name = "Caddy";
+    http = { port = 80; };
+    monitor = {
+      enable = true;
+      url = "http://${config.networking.hostName}:2019/config";
+    };
+  };
+}

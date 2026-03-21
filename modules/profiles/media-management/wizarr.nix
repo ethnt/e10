@@ -13,5 +13,6 @@
         domain = "join.e10.video";
       };
     };
+    monitor.enable = true;
   };
 }

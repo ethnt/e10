@@ -48,5 +48,6 @@
         domain = "tracearr.e10.camp";
       };
     };
+    monitor.enable = true;
   };
 }

@@ -4,7 +4,7 @@ with lib;
 
 let
   # Get all services (entries in `provides`) from the given hosts
-  allServices = hosts:
+  allServicesForHosts = hosts:
     lib.pipe hosts [
       attrValues
       (map (host: host.config.provides or { }))
@@ -15,12 +15,33 @@ let
   allHTTPServices = services:
     filterAttrs (_name: value: value.http.proxy.enable) services;
 
+  # Get all monitored services
+  allMonitoredServices = services:
+    filterAttrs (_name: value: value.http.monitor.enable) services;
+
   # Transform a set of services into Caddy virtual hosts
   caddyVirtualHostsForServices = caddyHost: services:
     mapAttrs' (name: attrs:
       let inherit (attrs) http;
       in nameValuePair http.proxy.domain (mkVirtualHost caddyHost name http))
     (filterAttrs (_name: attrs: attrs.http.proxy.enable) services);
+
+  gatusEndpointsForServices = services:
+    mapAttrsToList (_name: mkEndpoint)
+    (filterAttrs (_name: attrs: attrs.monitor.proxy.enable) services);
+
+  mkEndpoint = service:
+    {
+      enabled = true;
+      alerts = [{
+        enabled = true;
+        type = "ntfy";
+        description = "healthcheck failed";
+        send-on-resolved = true;
+      }];
+    } // extraConfig // optionalAttrs service.http.proxy.protected {
+      headers.Authorization = "Basic $AUTHELIA_BASIC_AUTH";
+    };
 
   # Makes a single virtual host for HTTP service provides
   mkVirtualHost = caddyHost: name: http:
@@ -61,4 +82,7 @@ let
         ${http.proxy.extraVirtualHostConfig}
       '';
     };
-in { inherit allServices allHTTPServices caddyVirtualHostsForServices; }
+in {
+  inherit allServicesForHosts allHTTPServices allMonitoredServices
+    caddyVirtualHostsForServices gatusEndpointsForServices;
+}

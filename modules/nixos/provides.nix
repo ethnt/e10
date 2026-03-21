@@ -1,10 +1,11 @@
-{ config, lib, ... }:
+{ flake, config, lib, ... }:
 
 with lib;
 
-{
+let nixosConfig = config;
+in {
   options.provides = mkOption {
-    type = types.attrsOf (types.submodule {
+    type = types.attrsOf (types.submodule ({ config, ... }: {
       options = {
         name = mkOption {
           type = types.str;
@@ -17,7 +18,7 @@ with lib;
               host = mkOption {
                 type = types.str;
                 description = "The host of this HTTP service";
-                default = config.networking.hostName;
+                default = nixosConfig.networking.hostName;
               };
 
               port = mkOption {
@@ -92,8 +93,62 @@ with lib;
             };
           };
         };
+
+        monitor = mkOption {
+          type = types.submodule {
+            options = {
+              enable = mkEnableOption
+                "Enabling monitoring of this service using Gatus";
+
+              name = mkOption {
+                type = types.str;
+                description = "Name of the service being monitored";
+                default = config.name;
+              };
+
+              url = mkOption {
+                type = types.str;
+                description = "URL of the service to monitor";
+                default = if config.http.proxy.enable then
+                  (if config.http.proxy.skipTLSVerify then
+                    "http://${config.http.proxy.domain}"
+                  else
+                    "https://${config.http.proxy.domain}")
+                else
+                  "http://${config.http.host}:${toString config.http.port}";
+              };
+
+              group = mkOption {
+                type = types.str;
+                description = "Group to put the monitor in";
+                default = flake.lib.strings.capitalizeString
+                  nixosConfig.networking.hostName;
+              };
+
+              conditions = mkOption {
+                type = types.listOf types.str;
+                description =
+                  "List of Gatus conditions to evaluate if the service is healthy";
+                default = [ "[STATUS] == 200" ];
+              };
+
+              interval = mkOption {
+                type = types.str;
+                description = "Interval to check if the service is healthy";
+                default = "60s";
+              };
+
+              extraConfig = mkOption {
+                type = types.attrs;
+                description = "Extra config for the Gatus endpoint";
+                default = { };
+              };
+            };
+          };
+          default = { };
+        };
       };
-    });
+    }));
     default = { };
   };
 }

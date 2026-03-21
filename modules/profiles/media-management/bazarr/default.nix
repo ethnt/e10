@@ -401,5 +401,6 @@
         domain = "bazarr.e10.camp";
       };
     };
+    monitor.enable = true;
   };
 }

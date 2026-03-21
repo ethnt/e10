@@ -22,4 +22,14 @@
     allowedUDPPorts = ports;
     allowedTCPPorts = ports;
   };
+
+  provides.nfs = {
+    name = "NFS";
+    http.port = 111;
+    monitor = {
+      enable = true;
+      url = "tcp://omnibus:111";
+      conditions = [ "[CONNECTED] == true" ];
+    };
+  };
 }

@@ -12,5 +12,6 @@
         domain = "tautulli.e10.camp";
       };
     };
+    monitor.enable = true;
   };
 }

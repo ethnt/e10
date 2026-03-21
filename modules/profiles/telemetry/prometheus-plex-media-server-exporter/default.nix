@@ -19,4 +19,10 @@
       config.sops.templates."prometheus-plex-media-server-exporter/secrets".path;
     openFirewall = true;
   };
+
+  provides.prometheus-plex-exporter = {
+    name = "Prometheus Plex Exporter";
+    http.port = config.services.prometheus.exporters.plex-media-server.port;
+    monitor.enable = true;
+  };
 }

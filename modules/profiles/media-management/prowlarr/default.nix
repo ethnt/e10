@@ -24,5 +24,6 @@
         domain = "prowlarr.e10.camp";
       };
     };
+    monitor.enable = true;
   };
 }

@@ -48,4 +48,14 @@
   };
 
   environment.systemPackages = with pkgs; [ cifs-utils ];
+
+  provides.samba = {
+    name = "Samba";
+    http.port = 445;
+    monitor = {
+      enable = true;
+      url = "tcp://omnibus:445";
+      conditions = [ "[CONNECTED] == true" ];
+    };
+  };
 }

@@ -40,5 +40,6 @@
         '';
       };
     };
+    monitor.enable = true;
   };
 }
