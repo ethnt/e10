@@ -4,7 +4,7 @@
       nativeBuildInputs = with pkgs; [
         ansible
         ansible-lint
-        python311Packages.httpx
+        python313Packages.httpx
       ];
 
       shellHook = ''

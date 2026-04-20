@@ -353,6 +353,12 @@
       static_configs = [{ targets = [ "htpc:5000" ]; }];
       scrape_interval = "15s";
     }
+    {
+      job_name = "speedtest-tracker";
+      metrics_path = "/prometheus";
+      static_configs = [{ targets = [ "speedtest-tracker.e10.camp" ]; }];
+      scrape_interval = "45m";
+    }
   ] ++ lib.flatten (lib.mapAttrsToList (_: host:
     lib.mapAttrsToList (name: backup:
       lib.optional backup.exporter.enable {

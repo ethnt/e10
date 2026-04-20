@@ -25,6 +25,8 @@
           "basil.satan.network" = "10.10.2.0";
           "cardamom.satan.network" = "10.10.3.0";
           "elderflower.satan.network" = "10.2.1.0";
+          "matrix.local" =
+            "10.10.3.101"; # TODO: Required for Bonjour printer sharing
         };
       };
       blocking = {

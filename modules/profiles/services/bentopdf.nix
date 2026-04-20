@@ -1,7 +1,16 @@
-{ pkgs, ... }: {
+{
   services.bentopdf = {
     enable = true;
-    package = pkgs.bentopdf.overrideAttrs { SIMPLE_MODE = true; };
-    openFirewall = true;
+    domain = "pdf.e10.camp";
+
+    nginx = {
+      enable = true;
+      virtualHost = {
+        listen = [{
+          addr = "0.0.0.0";
+          port = 4152;
+        }];
+      };
+    };
   };
 }

@@ -7,7 +7,7 @@
     comma
     dua
     dust
-    glances
+    # glances
     inetutils
     iperf3
     lm_sensors

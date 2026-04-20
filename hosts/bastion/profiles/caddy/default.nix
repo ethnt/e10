@@ -203,7 +203,8 @@
 
       "pdf.e10.camp" = {
         host = hosts.matrix;
-        inherit (hosts.matrix.config.services.bentopdf) port;
+        # inherit (hosts.matrix.config.services.bentopdf) port;
+        port = 4152;
         protected = true;
       };
 
@@ -236,7 +237,8 @@
 
       "speedtest-tracker.e10.camp" = {
         host = hosts.controller;
-        inherit (hosts.controller.config.services.speedtest-tracker) port;
+        port = 8881;
+        # inherit (hosts.controller.config.services.speedtest-tracker) port;
       };
 
       "change-detection.e10.camp" = {
