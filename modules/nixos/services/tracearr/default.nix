@@ -112,7 +112,10 @@ in {
       }];
     } // mkIf cfg.database.enableTimescaleDB {
       extensions = ps: with ps; [ timescaledb timescaledb_toolkit ];
-      settings = { shared_preload_libraries = [ "timescaledb" ]; };
+      settings = {
+        shared_preload_libraries = [ "timescaledb" ];
+        max_locks_per_transaction = 256;
+      };
       initialScriptText = lib.mkAfter ''
         CREATE EXTENSION IF NOT EXISTS timescaledb;
         CREATE EXTENSION IF NOT EXISTS timescaledb_toolkit;
