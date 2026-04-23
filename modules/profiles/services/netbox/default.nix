@@ -9,12 +9,18 @@
       sopsFile = ./secrets.json;
       owner = "netbox";
     };
+
+    netbox_api_token_peppers = {
+      sopsFile = ./secrets.json;
+      owner = "netbox";
+    };
   };
 
   services.netbox = {
     enable = true;
     package = pkgs.netbox;
     secretKeyFile = config.sops.secrets.netbox_secret_key.path;
+    apiTokenPeppersFile = config.sops.secrets.netbox_api_token_peppers.path;
     listenAddress = "0.0.0.0";
     settings = {
       CSRF_TRUSTED_ORIGINS = [

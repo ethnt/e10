@@ -5,7 +5,7 @@
       profiles.hardware.bluetooth
       profiles.home-automation.home-assistant.default
       profiles.networking.blocky.default
-      profiles.networking.speedtest-tracker
+      profiles.networking.speedtest-tracker.default
       profiles.networking.unifi
       profiles.power.eaton-5p550r
       profiles.services.attic-watch-store.default

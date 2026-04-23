@@ -27,9 +27,15 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
+    allowInterfaces = [ "ens18" "vlan10" ];
+    denyInterfaces = [ "docker0" "veth*" ];
     publish = {
       enable = true;
       userServices = true;
+      addresses = true;
+      domain = true;
+      hinfo = true;
+      workstation = true;
     };
   };
 }

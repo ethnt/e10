@@ -23,34 +23,4 @@
     allowedTCPPorts = [ 514 ];
     allowedUDPPorts = [ 514 ];
   };
-
-  services.promtail.configuration.scrape_configs = [{
-    job_name = "rsyslogd";
-    syslog = {
-      listen_address = "0.0.0.0:1514";
-      labels = { job = "rsyslogd"; };
-    };
-    relabel_configs = [
-      {
-        source_labels = [ "__syslog_message_hostname" ];
-        target_label = "host";
-      }
-      {
-        source_labels = [ "__syslog_message_severity" ];
-        target_label = "level";
-      }
-      {
-        source_labels = [ "__syslog_message_app_name" ];
-        target_label = "application";
-      }
-      {
-        source_labels = [ "__syslog_message_facility" ];
-        target_label = "facility";
-      }
-      {
-        source_labels = [ "__syslog_connection_hostname" ];
-        target_label = "connection_hostname";
-      }
-    ];
-  }];
 }

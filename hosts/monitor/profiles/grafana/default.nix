@@ -7,10 +7,10 @@
       owner = "grafana";
     };
   in {
+    grafana_secret_key = sopsConfig;
     grafana_to_ntfy_password = sopsConfig;
     grafana_smtp2go_username = sopsConfig;
     grafana_smtp2go_password = sopsConfig;
-    grafana_influxdb2_grafana_token = sopsConfig;
     grafana_authelia_client_secret = sopsConfig;
   };
 
@@ -20,6 +20,9 @@
         domain = "grafana.e10.camp";
         root_url = "https://grafana.e10.camp";
       };
+
+      security.secret_key =
+        "$__file{${config.sops.secrets.grafana_secret_key.path}}";
 
       "auth.generic_oauth" = {
         enabled = true;
@@ -89,23 +92,6 @@
               sslmode = "disable";
             };
           }
-          {
-            name = "InfluxDB (Speedtest Tracker)";
-            type = "influxdb";
-            access = "proxy";
-            url = "http://${hosts.monitor.config.networking.hostName}:8086";
-            basicAuth = true;
-            basicAuthUser = "admin";
-            jsonData = {
-              dbName = "speedtest-tracker";
-              httpMode = "POST";
-              tlsSkipVerify = true;
-            };
-            secureJsonData = {
-              basicAuthPassword =
-                "$__file{${hosts.monitor.config.sops.secrets.grafana_influxdb2_grafana_token.path}}";
-            };
-          }
         ];
       };
       dashboards.settings.providers = [
@@ -168,10 +154,6 @@
         {
           name = "Caddy";
           options.path = ./provisioning/caddy.json;
-        }
-        {
-          name = "Speedtest Tracker";
-          options.path = ./provisioning/speedtest-tracker.json;
         }
         {
           name = "Gatus Service Monitoring";
