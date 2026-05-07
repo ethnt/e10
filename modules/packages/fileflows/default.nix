@@ -1,7 +1,7 @@
 { lib, stdenvNoCC, fetchzip, dotnetCorePackages, sqlite, libz, writeShellScript
 }:
 let
-  version = "25.10.2.5985";
+  version = "26.4.9.6710";
 
   dotnet = dotnetCorePackages.aspnetcore_8_0;
   buildInputs = [ sqlite libz ];
@@ -49,7 +49,7 @@ in stdenvNoCC.mkDerivation rec {
   src = fetchzip {
     url = "https://fileflows.com/downloads/Zip/${version}";
     extension = "zip";
-    hash = "sha256-aA3s8DxwkzVaFuITuWyey04l4hbCBMCErqttbdIpgLI=";
+    hash = "sha256-rKNfhMb4saR9ae7V1/JW2xQHcWcjySXi1fqJpunVFTs=";
     stripRoot = false;
   };
 
