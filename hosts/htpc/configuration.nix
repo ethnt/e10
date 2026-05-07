@@ -9,12 +9,12 @@
       profiles.media-management.declutarr.default
       profiles.media-management.fileflows.server
       profiles.media-management.jellyfin
-      profiles.media-management.jellyseerr
       profiles.media-management.plex
       profiles.media-management.profilarr
       profiles.media-management.prowlarr.default
       profiles.media-management.radarr.default
       profiles.media-management.sabnzbd.default
+      profiles.media-management.seerr
       profiles.media-management.sonarr.default
       profiles.media-management.tautulli
       profiles.media-management.tracearr.default

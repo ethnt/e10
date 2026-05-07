@@ -48,7 +48,6 @@ let
       };
       record = {
         enabled = true;
-        retain.days = 0;
         alerts = {
           retain = {
             days = 30;
