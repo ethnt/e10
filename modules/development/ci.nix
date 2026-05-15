@@ -55,6 +55,66 @@ in {
         (l.filterAttrs (_: host: host.config.nixpkgs.system == "aarch64-linux")
           self.nixosConfigurations);
 
+      detectChanges = pkgs.writeShellApplication {
+        name = "detect-changes";
+        runtimeInputs = [ pkgs.jq ];
+        text = ''
+          git fetch --depth=2 origin HEAD 2>/dev/null || true
+
+          get_all_drvs() {
+            nix eval --json "$1#nixosConfigurations" \
+              --apply 'builtins.mapAttrs (_: v: v.config.system.build.toplevel.drvPath)' \
+              --accept-flake-config 2>/dev/null || echo '{}'
+          }
+
+          if git rev-parse HEAD~1 >/dev/null 2>&1; then
+            prev_dir=$(mktemp -d)
+            git worktree add "$prev_dir" HEAD~1
+
+            curr_drvs=$(get_all_drvs ".")
+            prev_drvs=$(get_all_drvs "$prev_dir")
+
+            git worktree remove --force "$prev_dir"
+
+            changed_x86=()
+            for host in ${l.concatStringsSep " " x86Hosts}; do
+              curr=$(echo "$curr_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_CURR"')
+              prev=$(echo "$prev_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_PREV"')
+              if [[ "$curr" != "$prev" ]]; then
+                changed_x86+=("$host")
+              fi
+            done
+
+            changed_arm=()
+            for host in ${l.concatStringsSep " " armHosts}; do
+              curr=$(echo "$curr_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_CURR"')
+              prev=$(echo "$prev_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_PREV"')
+              if [[ "$curr" != "$prev" ]]; then
+                changed_arm+=("$host")
+              fi
+            done
+
+            if [[ ''${#changed_x86[@]} -gt 0 ]]; then
+              x86_json=$(printf '%s\n' "''${changed_x86[@]}" | jq -R . | jq -sc .)
+            else
+              x86_json="[]"
+            fi
+
+            if [[ ''${#changed_arm[@]} -gt 0 ]]; then
+              arm_json=$(printf '%s\n' "''${changed_arm[@]}" | jq -R . | jq -sc .)
+            else
+              arm_json="[]"
+            fi
+          else
+            x86_json='${builtins.toJSON x86Hosts}'
+            arm_json='${builtins.toJSON armHosts}'
+          fi
+
+          echo "x86_hosts=$x86_json"
+          echo "arm_hosts=$arm_json"
+        '';
+      };
+
       checkWorkflow = {
         name = "Check";
         on.push = { };
@@ -83,60 +143,10 @@ in {
               arm_hosts = "\${{ steps.detect.outputs.arm_hosts }}";
             };
             steps = setup ++ [{
-              name = "Detect changed hosts";
               id = "detect";
+              name = "Detect changed hosts";
               run = ''
-                set -euo pipefail
-
-                git fetch --depth=2 origin HEAD 2>/dev/null || true
-
-                get_all_drvs() {
-                  nix eval --json "$1#nixosConfigurations" \
-                    --apply 'builtins.mapAttrs (_: v: v.config.system.build.toplevel.drvPath)' \
-                    --accept-flake-config 2>/dev/null || echo '{}'
-                }
-
-                if git rev-parse HEAD~1 >/dev/null 2>&1; then
-                  PREV=$(mktemp -d)
-                  git worktree add "$PREV" HEAD~1
-
-                  curr_drvs=$(get_all_drvs ".")
-                  prev_drvs=$(get_all_drvs "$PREV")
-
-                  git worktree remove --force "$PREV"
-
-                  changed_x86=()
-                  for host in ${l.concatStringsSep " " x86Hosts}; do
-                    curr=$(echo "$curr_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_CURR"')
-                    prev=$(echo "$prev_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_PREV"')
-                    [ "$curr" != "$prev" ] && changed_x86+=("$host")
-                  done
-
-                  changed_arm=()
-                  for host in ${l.concatStringsSep " " armHosts}; do
-                    curr=$(echo "$curr_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_CURR"')
-                    prev=$(echo "$prev_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_PREV"')
-                    [ "$curr" != "$prev" ] && changed_arm+=("$host")
-                  done
-
-                  if [ ''${#changed_x86[@]} -gt 0 ]; then
-                    x86_json=$(printf '%s\n' "''${changed_x86[@]}" | jq -R . | jq -sc .)
-                  else
-                    x86_json="[]"
-                  fi
-
-                  if [ ''${#changed_arm[@]} -gt 0 ]; then
-                    arm_json=$(printf '%s\n' "''${changed_arm[@]}" | jq -R . | jq -sc .)
-                  else
-                    arm_json="[]"
-                  fi
-                else
-                  x86_json='${builtins.toJSON x86Hosts}'
-                  arm_json='${builtins.toJSON armHosts}'
-                fi
-
-                echo "x86_hosts=$x86_json" >> "$GITHUB_OUTPUT"
-                echo "arm_hosts=$arm_json" >> "$GITHUB_OUTPUT"
+                nix run .#detect-changes --accept-flake-config >> "$GITHUB_OUTPUT"
               '';
             }];
           };
@@ -199,6 +209,10 @@ in {
           ${check.shellHook}
           ${build.shellHook}
         '';
+        detect-changes = {
+          type = "app";
+          program = "${detectChanges}/bin/detect-changes";
+        };
       };
     };
 }

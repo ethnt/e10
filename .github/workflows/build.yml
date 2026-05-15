@@ -122,28 +122,9 @@ jobs:
         name: e10
     - id: detect
       name: Detect changed hosts
-      run: "set -euo pipefail\n\ngit fetch --depth=2 origin HEAD 2>/dev/null || true\n\
-        \nget_all_drvs() {\n  nix eval --json \"$1#nixosConfigurations\" \\\n    --apply\
-        \ 'builtins.mapAttrs (_: v: v.config.system.build.toplevel.drvPath)' \\\n\
-        \    --accept-flake-config 2>/dev/null || echo '{}'\n}\n\nif git rev-parse\
-        \ HEAD~1 >/dev/null 2>&1; then\n  PREV=$(mktemp -d)\n  git worktree add \"\
-        $PREV\" HEAD~1\n\n  curr_drvs=$(get_all_drvs \".\")\n  prev_drvs=$(get_all_drvs\
-        \ \"$PREV\")\n\n  git worktree remove --force \"$PREV\"\n\n  changed_x86=()\n\
-        \  for host in builder controller htpc matrix omnibus; do\n    curr=$(echo\
-        \ \"$curr_drvs\" | jq -r --arg h \"$host\" '.[$h] // \"UNKNOWN_CURR\"')\n\
-        \    prev=$(echo \"$prev_drvs\" | jq -r --arg h \"$host\" '.[$h] // \"UNKNOWN_PREV\"\
-        ')\n    [ \"$curr\" != \"$prev\" ] && changed_x86+=(\"$host\")\n  done\n\n\
-        \  changed_arm=()\n  for host in bastion monitor; do\n    curr=$(echo \"$curr_drvs\"\
-        \ | jq -r --arg h \"$host\" '.[$h] // \"UNKNOWN_CURR\"')\n    prev=$(echo\
-        \ \"$prev_drvs\" | jq -r --arg h \"$host\" '.[$h] // \"UNKNOWN_PREV\"')\n\
-        \    [ \"$curr\" != \"$prev\" ] && changed_arm+=(\"$host\")\n  done\n\n  if\
-        \ [ ${#changed_x86[@]} -gt 0 ]; then\n    x86_json=$(printf '%s\\n' \"${changed_x86[@]}\"\
-        \ | jq -R . | jq -sc .)\n  else\n    x86_json=\"[]\"\n  fi\n\n  if [ ${#changed_arm[@]}\
-        \ -gt 0 ]; then\n    arm_json=$(printf '%s\\n' \"${changed_arm[@]}\" | jq\
-        \ -R . | jq -sc .)\n  else\n    arm_json=\"[]\"\n  fi\nelse\n  x86_json='[\"\
-        builder\",\"controller\",\"htpc\",\"matrix\",\"omnibus\"]'\n  arm_json='[\"\
-        bastion\",\"monitor\"]'\nfi\n\necho \"x86_hosts=$x86_json\" >> \"$GITHUB_OUTPUT\"\
-        \necho \"arm_hosts=$arm_json\" >> \"$GITHUB_OUTPUT\"\n"
+      run: 'nix run .#detect-changes --accept-flake-config >> "$GITHUB_OUTPUT"
+
+        '
 name: Build
 'on':
   push: {}
