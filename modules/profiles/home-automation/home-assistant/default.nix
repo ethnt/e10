@@ -71,6 +71,8 @@
         base36
         fnv-hash-fast
         hap-python
+        homekit-audio-proxy
+        ibeacon-ble
         pyqrcode
       ];
 
