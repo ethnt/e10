@@ -48,6 +48,13 @@ in {
         }
       ];
 
+      x86Hosts = l.attrNames
+        (l.filterAttrs (_: host: host.config.nixpkgs.system == "x86_64-linux")
+          self.nixosConfigurations);
+      armHosts = l.attrNames
+        (l.filterAttrs (_: host: host.config.nixpkgs.system == "aarch64-linux")
+          self.nixosConfigurations);
+
       checkWorkflow = {
         name = "Check";
         on.push = { };
@@ -68,16 +75,79 @@ in {
         name = "Build";
         on.push = { };
         jobs = {
+          detectChanges = {
+            name = "Detect changed hosts";
+            "runs-on" = "ubuntu-latest";
+            outputs = {
+              x86_hosts = "\${{ steps.detect.outputs.x86_hosts }}";
+              arm_hosts = "\${{ steps.detect.outputs.arm_hosts }}";
+            };
+            steps = setup ++ [{
+              name = "Detect changed hosts";
+              id = "detect";
+              run = ''
+                set -euo pipefail
+
+                git fetch --depth=2 origin HEAD 2>/dev/null || true
+
+                get_all_drvs() {
+                  nix eval --json "$1#nixosConfigurations" \
+                    --apply 'builtins.mapAttrs (_: v: v.config.system.build.toplevel.drvPath)' \
+                    --accept-flake-config 2>/dev/null || echo '{}'
+                }
+
+                if git rev-parse HEAD~1 >/dev/null 2>&1; then
+                  PREV=$(mktemp -d)
+                  git worktree add "$PREV" HEAD~1
+
+                  curr_drvs=$(get_all_drvs ".")
+                  prev_drvs=$(get_all_drvs "$PREV")
+
+                  git worktree remove --force "$PREV"
+
+                  changed_x86=()
+                  for host in ${l.concatStringsSep " " x86Hosts}; do
+                    curr=$(echo "$curr_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_CURR"')
+                    prev=$(echo "$prev_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_PREV"')
+                    [ "$curr" != "$prev" ] && changed_x86+=("$host")
+                  done
+
+                  changed_arm=()
+                  for host in ${l.concatStringsSep " " armHosts}; do
+                    curr=$(echo "$curr_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_CURR"')
+                    prev=$(echo "$prev_drvs" | jq -r --arg h "$host" '.[$h] // "UNKNOWN_PREV"')
+                    [ "$curr" != "$prev" ] && changed_arm+=("$host")
+                  done
+
+                  if [ ''${#changed_x86[@]} -gt 0 ]; then
+                    x86_json=$(printf '%s\n' "''${changed_x86[@]}" | jq -R . | jq -sc .)
+                  else
+                    x86_json="[]"
+                  fi
+
+                  if [ ''${#changed_arm[@]} -gt 0 ]; then
+                    arm_json=$(printf '%s\n' "''${changed_arm[@]}" | jq -R . | jq -sc .)
+                  else
+                    arm_json="[]"
+                  fi
+                else
+                  x86_json='${builtins.toJSON x86Hosts}'
+                  arm_json='${builtins.toJSON armHosts}'
+                fi
+
+                echo "x86_hosts=$x86_json" >> "$GITHUB_OUTPUT"
+                echo "arm_hosts=$arm_json" >> "$GITHUB_OUTPUT"
+              '';
+            }];
+          };
+
           buildX86System = {
             name = "Build system (x86)";
             "runs-on" = "ubuntu-latest";
-            "if" = ''
-              github.ref == 'refs/heads/main' ||
-              contains(github.event.head_commit.message, '[build]')
-            '';
-            strategy.matrix.host = l.attrNames (l.filterAttrs
-              (_: host: host.config.nixpkgs.system == "x86_64-linux")
-              self.nixosConfigurations);
+            needs = [ "detectChanges" ];
+            "if" = "needs.detectChanges.outputs.x86_hosts != '[]'";
+            strategy.matrix.host =
+              "\${{ fromJson(needs.detectChanges.outputs.x86_hosts) }}";
             steps = setup ++ [
               {
                 name = "Clean up storage";
@@ -94,16 +164,14 @@ in {
               }
             ];
           };
+
           buildARMSystem = {
             name = "Build system (ARM)";
             "runs-on" = "ubuntu-24.04-arm";
-            "if" = ''
-              github.ref == 'refs/heads/main' ||
-              contains(github.event.head_commit.message, '[build]')
-            '';
-            strategy.matrix.host = l.attrNames (l.filterAttrs
-              (_: host: host.config.nixpkgs.system == "aarch64-linux")
-              self.nixosConfigurations);
+            needs = [ "detectChanges" ];
+            "if" = "needs.detectChanges.outputs.arm_hosts != '[]'";
+            strategy.matrix.host =
+              "\${{ fromJson(needs.detectChanges.outputs.arm_hosts) }}";
             steps = setup ++ [{
               run = ''
                 nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace

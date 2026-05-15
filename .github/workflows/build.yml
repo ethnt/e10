@@ -1,11 +1,9 @@
 jobs:
   buildARMSystem:
-    if: 'github.ref == ''refs/heads/main'' ||
-
-      contains(github.event.head_commit.message, ''[build]'')
-
-      '
+    if: needs.detectChanges.outputs.arm_hosts != '[]'
     name: Build system (ARM)
+    needs:
+    - detectChanges
     runs-on: ubuntu-24.04-arm
     steps:
     - name: Checkout code
@@ -40,16 +38,12 @@ jobs:
         '
     strategy:
       matrix:
-        host:
-        - bastion
-        - monitor
+        host: ${{ fromJson(needs.detectChanges.outputs.arm_hosts) }}
   buildX86System:
-    if: 'github.ref == ''refs/heads/main'' ||
-
-      contains(github.event.head_commit.message, ''[build]'')
-
-      '
+    if: needs.detectChanges.outputs.x86_hosts != '[]'
     name: Build system (x86)
+    needs:
+    - detectChanges
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -92,12 +86,64 @@ jobs:
         '
     strategy:
       matrix:
-        host:
-        - builder
-        - controller
-        - htpc
-        - matrix
-        - omnibus
+        host: ${{ fromJson(needs.detectChanges.outputs.x86_hosts) }}
+  detectChanges:
+    name: Detect changed hosts
+    outputs:
+      arm_hosts: ${{ steps.detect.outputs.arm_hosts }}
+      x86_hosts: ${{ steps.detect.outputs.x86_hosts }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+    - name: Install Lix
+      uses: samueldr/lix-gha-installer-action@7b7f14d320d6aacfb65bd1ef761566b3b69e474c
+      with:
+        extra_nix_config: 'accept-flake-config = true
+
+          max-jobs = auto
+
+          '
+    - name: Add SSH keys to ssh-agent
+      uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555
+      with:
+        ssh-private-key: ${{ secrets.SECRETS_DEPLOY_KEY }}
+    - name: Setup Attic cache
+      uses: ryanccn/attic-action@1887fd507f03327c96c64cca30118c96eb17fdad
+      with:
+        cache: e10
+        endpoint: https://cache.e10.camp
+        token: ${{ secrets.ATTIC_TOKEN }}
+    - name: Use Cachix store
+      uses: cachix/cachix-action@1eb2ef646ac0255473d23a5907ad7b04ce94065c
+      with:
+        authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        installCommand: nix profile install github:NixOS/nixpkgs/nixpkgs-unstable#cachix
+        name: e10
+    - id: detect
+      name: Detect changed hosts
+      run: "set -euo pipefail\n\ngit fetch --depth=2 origin HEAD 2>/dev/null || true\n\
+        \nget_all_drvs() {\n  nix eval --json \"$1#nixosConfigurations\" \\\n    --apply\
+        \ 'builtins.mapAttrs (_: v: v.config.system.build.toplevel.drvPath)' \\\n\
+        \    --accept-flake-config 2>/dev/null || echo '{}'\n}\n\nif git rev-parse\
+        \ HEAD~1 >/dev/null 2>&1; then\n  PREV=$(mktemp -d)\n  git worktree add \"\
+        $PREV\" HEAD~1\n\n  curr_drvs=$(get_all_drvs \".\")\n  prev_drvs=$(get_all_drvs\
+        \ \"$PREV\")\n\n  git worktree remove --force \"$PREV\"\n\n  changed_x86=()\n\
+        \  for host in builder controller htpc matrix omnibus; do\n    curr=$(echo\
+        \ \"$curr_drvs\" | jq -r --arg h \"$host\" '.[$h] // \"UNKNOWN_CURR\"')\n\
+        \    prev=$(echo \"$prev_drvs\" | jq -r --arg h \"$host\" '.[$h] // \"UNKNOWN_PREV\"\
+        ')\n    [ \"$curr\" != \"$prev\" ] && changed_x86+=(\"$host\")\n  done\n\n\
+        \  changed_arm=()\n  for host in bastion monitor; do\n    curr=$(echo \"$curr_drvs\"\
+        \ | jq -r --arg h \"$host\" '.[$h] // \"UNKNOWN_CURR\"')\n    prev=$(echo\
+        \ \"$prev_drvs\" | jq -r --arg h \"$host\" '.[$h] // \"UNKNOWN_PREV\"')\n\
+        \    [ \"$curr\" != \"$prev\" ] && changed_arm+=(\"$host\")\n  done\n\n  if\
+        \ [ ${#changed_x86[@]} -gt 0 ]; then\n    x86_json=$(printf '%s\\n' \"${changed_x86[@]}\"\
+        \ | jq -R . | jq -sc .)\n  else\n    x86_json=\"[]\"\n  fi\n\n  if [ ${#changed_arm[@]}\
+        \ -gt 0 ]; then\n    arm_json=$(printf '%s\\n' \"${changed_arm[@]}\" | jq\
+        \ -R . | jq -sc .)\n  else\n    arm_json=\"[]\"\n  fi\nelse\n  x86_json='[\"\
+        builder\",\"controller\",\"htpc\",\"matrix\",\"omnibus\"]'\n  arm_json='[\"\
+        bastion\",\"monitor\"]'\nfi\n\necho \"x86_hosts=$x86_json\" >> \"$GITHUB_OUTPUT\"\
+        \necho \"arm_hosts=$arm_json\" >> \"$GITHUB_OUTPUT\"\n"
 name: Build
 'on':
   push: {}
