@@ -36,8 +36,8 @@ update-secret-files:
 nixos-anywhere hostname host:
     nixos-anywhere --flake .#{{ hostname }} --build-on-remote root@{{ host }}
 
-generate-ci:
-    nix run .#generate-ci
+render-workflows:
+    nix run .#render-workflows
 
 ansible playbook:
     ansible-playbook -i deploy/ansible/inventory.yml deploy/ansible/{{ playbook }}.yml

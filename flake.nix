@@ -48,8 +48,8 @@
     treefmt.url = "github:numtide/treefmt-nix";
     treefmt.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixago.url = "github:nix-community/nixago";
-    nixago.inputs.nixpkgs.follows = "nixpkgs";
+    actions-nix.url = "github:nialov/actions.nix";
+    actions-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     attic.url = "github:zhaofengli/attic";
     attic.inputs.nixpkgs.follows = "nixpkgs";
