@@ -123,8 +123,8 @@ in {
         name = "Build package";
         runs-on = "\${{ matrix.os }}";
         strategy.matrix = {
-          architecture = [ "x86_64-linux" "aarch64-linux" ];
           package = l.attrNames self.packages.x86_64-linux;
+          architecture = [ "x86_64-linux" "aarch64-linux" ];
           include = [
             {
               architecture = "x86_64-linux";
