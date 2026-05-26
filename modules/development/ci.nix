@@ -123,6 +123,8 @@ in {
         name = "Build package";
         runs-on = "\${{ matrix.os }}";
         strategy.matrix = {
+          architecture = [ "x86_64-linux" "aarch64-linux" ];
+          package = l.attrNames self.packages.x86_64-linux;
           include = [
             {
               architecture = "x86_64-linux";
@@ -133,7 +135,6 @@ in {
               os = "ubuntu-24.04-arm";
             }
           ];
-          package = l.attrNames self.packages.x86_64-linux;
         };
         steps = setup ++ [{
           name =

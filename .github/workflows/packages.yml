@@ -37,6 +37,9 @@ jobs:
         --print-build-logs --show-trace --verbose
     strategy:
       matrix:
+        architecture:
+        - x86_64-linux
+        - aarch64-linux
         include:
         - architecture: x86_64-linux
           os: ubuntu-24.04
