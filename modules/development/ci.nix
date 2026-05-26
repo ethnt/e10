@@ -67,8 +67,8 @@ in {
       };
     };
 
-    ".github/workflows/build.yml" = {
-      name = "Check";
+    ".github/workflows/hosts.yml" = {
+      name = "Build hosts";
       jobs = {
         buildX86System = {
           name = "Build system (x86)";
@@ -112,6 +112,36 @@ in {
             '';
           }];
         };
+      };
+    };
+
+    ".github/workflows/packages.yml" = {
+      name = "Build packages";
+      # on.push.paths = [ "flake.lock" "modules/packages/**/*.nix" ];
+      on.push = { };
+      jobs.buildPackage = {
+        name = "Build package";
+        runs-on = "\${{ matrix.os }}";
+        strategy.matrix = {
+          include = [
+            {
+              architecture = "x86_64-linux";
+              os = "ubuntu-24.04";
+            }
+            {
+              architecture = "aarch64-linux";
+              os = "ubuntu-24.04-arm";
+            }
+          ];
+          package = l.attrNames self.packages.x86_64-linux;
+        };
+        steps = setup ++ [{
+          name =
+            "Build \${{ matrix.package }} (\${{ matrix.architecture }}) package";
+          run = ''
+            nix build .#packages.''${{ matrix.architecture }}.''${{ matrix.package }} --keep-going --print-build-logs --show-trace --verbose
+          '';
+        }];
       };
     };
   };
