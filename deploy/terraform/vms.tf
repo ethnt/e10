@@ -468,6 +468,11 @@ resource "proxmox_virtual_environment_vm" "controller" {
     usb3 = true
   }
 
+  usb {
+    host = "0bda:2838"
+    usb3 = true
+  }
+
   startup {
     down_delay = -1
     order      = 2
