@@ -71,7 +71,7 @@ in {
       name = "Build hosts";
       jobs = {
         buildX86System = {
-          name = "Build system (x86)";
+          name = "Build host system (x86)";
           "runs-on" = "ubuntu-latest";
           "if" = ''
             github.ref == 'refs/heads/main' ||
@@ -90,6 +90,7 @@ in {
               '';
             }
             {
+              name = "Build \${{ matrix.host }} host system";
               run = ''
                 nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace
               '';
@@ -97,7 +98,7 @@ in {
           ];
         };
         buildARMSystem = {
-          name = "Build system (ARM)";
+          name = "Build host system (ARM)";
           "runs-on" = "ubuntu-24.04-arm";
           "if" = ''
             github.ref == 'refs/heads/main' ||
@@ -107,6 +108,7 @@ in {
             (_: host: host.config.nixpkgs.system == "aarch64-linux")
             self.nixosConfigurations);
           steps = setup ++ [{
+            name = "Build \${{ matrix.host }} host system";
             run = ''
               nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace
             '';
@@ -117,8 +119,7 @@ in {
 
     ".github/workflows/packages.yml" = {
       name = "Build packages";
-      # on.push.paths = [ "flake.lock" "modules/packages/**/*.nix" ];
-      on.push = { };
+      on.push.paths = [ "flake.lock" "modules/packages/**/*.nix" ];
       jobs.buildPackage = {
         name = "Build package";
         runs-on = "\${{ matrix.os }}";
