@@ -1,8 +1,20 @@
 terraform {
+  required_version = ">= 1.0"
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
       version = "5.35.0"
+    }
+
+    local = {
+      source  = "hashicorp/local"
+      version = "2.9.0"
+    }
+
+    tls = {
+      source  = "hashicorp/tls"
+      version = "4.3.0"
     }
 
     tailscale = {
@@ -28,6 +40,11 @@ terraform {
     opnsense = {
       source  = "browningluke/opnsense"
       version = "0.12.0"
+    }
+
+    porkbun = {
+      source  = "kyswtn/porkbun"
+      version = "0.1.3"
     }
   }
 }

@@ -1,37 +1,16 @@
-resource "aws_route53_zone" "e10_camp" {
-  name = "e10.camp"
-}
+# e10.video
 
 resource "aws_route53_zone" "e10_video" {
   name = "e10.video"
 }
 
-resource "aws_route53_zone" "e10_computer" {
-  name = "e10.computer"
-}
+resource "porkbun_nameservers" "e10_video" {
+  domain      = "e10.video"
+  nameservers = sort(aws_route53_zone.e10_video.name_servers)
 
-resource "aws_route53_zone" "e10_llc" {
-  name = "e10.llc"
-}
-
-resource "aws_route53_zone" "e10_land" {
-  name = "e10.land"
-}
-
-resource "aws_route53_zone" "satan_network" {
-  name = "satan.network"
-}
-
-resource "aws_route53_zone" "turkeltaub_me" {
-  name = "turkeltaub.me"
-}
-
-resource "aws_route53_zone" "turkeltaub_dev" {
-  name = "turkeltaub.dev"
-}
-
-resource "aws_route53_zone" "ethnt_me" {
-  name = "ethnt.me"
+  lifecycle {
+    ignore_changes = [nameservers]
+  }
 }
 
 resource "aws_route53_record" "root_e10_video" {
@@ -58,6 +37,21 @@ resource "aws_route53_record" "wildcard_e10_video" {
   records = [aws_eip.bastion.public_ip]
 }
 
+# e10.land
+
+resource "aws_route53_zone" "e10_land" {
+  name = "e10.land"
+}
+
+resource "porkbun_nameservers" "e10_land" {
+  domain      = "e10.land"
+  nameservers = sort(aws_route53_zone.e10_land.name_servers)
+
+  lifecycle {
+    ignore_changes = [nameservers]
+  }
+}
+
 resource "aws_route53_record" "root_e10_land" {
   zone_id = aws_route53_zone.e10_land.zone_id
   name    = "e10.land"
@@ -72,6 +66,21 @@ resource "aws_route53_record" "wildcard_e10_land" {
   type    = "A"
   ttl     = 300
   records = [aws_eip.bastion.public_ip]
+}
+
+# e10.camp
+
+resource "aws_route53_zone" "e10_camp" {
+  name = "e10.camp"
+}
+
+resource "porkbun_nameservers" "e10_camp" {
+  domain      = "e10.camp"
+  nameservers = sort(aws_route53_zone.e10_camp.name_servers)
+
+  lifecycle {
+    ignore_changes = [nameservers]
+  }
 }
 
 resource "aws_route53_record" "root_e10_camp" {
@@ -130,12 +139,42 @@ resource "aws_route53_record" "wildcard_e10_camp" {
   records = [aws_eip.bastion.public_ip]
 }
 
+# satan.network
+
+resource "aws_route53_zone" "satan_network" {
+  name = "satan.network"
+}
+
+resource "porkbun_nameservers" "satan_network" {
+  domain      = "satan.network"
+  nameservers = sort(aws_route53_zone.satan_network.name_servers)
+
+  lifecycle {
+    ignore_changes = [nameservers]
+  }
+}
+
 resource "aws_route53_record" "unifi_satan_network" {
   zone_id = aws_route53_zone.satan_network.zone_id
   name    = "unifi.satan.network"
   type    = "A"
   ttl     = 300
   records = [aws_eip.bastion.public_ip]
+}
+
+# turkeltaub.me
+
+resource "aws_route53_zone" "turkeltaub_me" {
+  name = "turkeltaub.me"
+}
+
+resource "porkbun_nameservers" "turkeltaub_me" {
+  domain      = "turkeltaub.me"
+  nameservers = sort(aws_route53_zone.turkeltaub_me.name_servers)
+
+  lifecycle {
+    ignore_changes = [nameservers]
+  }
 }
 
 resource "aws_route53_record" "root_mx_turkeltaub_me" {
@@ -210,6 +249,21 @@ resource "aws_route53_record" "www_turkeltaub_me" {
   }
 }
 
+# turkeltaub.dev
+
+resource "aws_route53_zone" "turkeltaub_dev" {
+  name = "turkeltaub.dev"
+}
+
+resource "porkbun_nameservers" "turkeltaub_dev" {
+  domain      = "turkeltaub.dev"
+  nameservers = sort(aws_route53_zone.turkeltaub_dev.name_servers)
+
+  lifecycle {
+    ignore_changes = [nameservers]
+  }
+}
+
 resource "aws_route53_record" "root_mx_turkeltaub_dev" {
   zone_id = aws_route53_zone.turkeltaub_dev.zone_id
   name    = "turkeltaub.dev"
@@ -256,6 +310,21 @@ resource "aws_route53_record" "spf_turkeltaub_dev" {
   type    = "TXT"
   records = ["v=spf1 include:spf.messagingengine.com ?all"]
   ttl     = 300
+}
+
+# e10.computer
+
+resource "aws_route53_zone" "e10_computer" {
+  name = "e10.computer"
+}
+
+resource "porkbun_nameservers" "e10_computer" {
+  domain      = "e10.computer"
+  nameservers = sort(aws_route53_zone.e10_computer.name_servers)
+
+  lifecycle {
+    ignore_changes = [nameservers]
+  }
 }
 
 resource "aws_route53_record" "root_mx_e10_computer" {
@@ -306,6 +375,21 @@ resource "aws_route53_record" "spf_e10_computer" {
   ttl     = 300
 }
 
+# e10.llc
+
+resource "aws_route53_zone" "e10_llc" {
+  name = "e10.llc"
+}
+
+resource "porkbun_nameservers" "e10_llc" {
+  domain      = "e10.llc"
+  nameservers = sort(aws_route53_zone.e10_llc.name_servers)
+
+  lifecycle {
+    ignore_changes = [nameservers]
+  }
+}
+
 resource "aws_route53_record" "root_mx_e10_llc" {
   zone_id = aws_route53_zone.e10_llc.zone_id
   name    = "e10.llc"
@@ -349,6 +433,132 @@ resource "aws_route53_record" "fm3_domainkey_e10_llc" {
 resource "aws_route53_record" "spf_e10_llc" {
   zone_id = aws_route53_zone.e10_llc.zone_id
   name    = "e10.llc"
+  type    = "TXT"
+  records = ["v=spf1 include:spf.messagingengine.com ?all"]
+  ttl     = 300
+}
+
+# turkeltaub.net
+
+resource "aws_route53_zone" "turkeltaub_net" {
+  name = "turkeltaub.net"
+}
+
+resource "porkbun_nameservers" "turkeltaub_net" {
+  domain      = "turkeltaub.net"
+  nameservers = sort(aws_route53_zone.turkeltaub_net.name_servers)
+
+  lifecycle {
+    ignore_changes = [nameservers]
+  }
+}
+
+resource "aws_route53_record" "root_mx_turkeltaub_net" {
+  zone_id = aws_route53_zone.turkeltaub_net.zone_id
+  name    = "turkeltaub.net"
+  type    = "MX"
+  records = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "wildcard_mx_turkeltaub_net" {
+  zone_id = aws_route53_zone.turkeltaub_net.zone_id
+  name    = "*.turkeltaub.net"
+  type    = "MX"
+  records = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm1_domainkey_turkeltaub_net" {
+  zone_id = aws_route53_zone.turkeltaub_net.zone_id
+  name    = "fm1._domainkey.turkeltaub.net"
+  type    = "CNAME"
+  records = ["fm1.turkeltaub.net.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm2_domainkey_turkeltaub_net" {
+  zone_id = aws_route53_zone.turkeltaub_net.zone_id
+  name    = "fm2._domainkey.turkeltaub.net"
+  type    = "CNAME"
+  records = ["fm2.turkeltaub.net.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm3_domainkey_turkeltaub_net" {
+  zone_id = aws_route53_zone.turkeltaub_net.zone_id
+  name    = "fm3._domainkey.turkeltaub.net"
+  type    = "CNAME"
+  records = ["fm3.turkeltaub.net.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "spf_turkeltaub_net" {
+  zone_id = aws_route53_zone.turkeltaub_net.zone_id
+  name    = "turkeltaub.net"
+  type    = "TXT"
+  records = ["v=spf1 include:spf.messagingengine.com ?all"]
+  ttl     = 300
+}
+
+# turkeltaub.org
+
+resource "aws_route53_zone" "turkeltaub_org" {
+  name = "turkeltaub.org"
+}
+
+resource "porkbun_nameservers" "turkeltaub_org" {
+  domain      = "turkeltaub.org"
+  nameservers = sort(aws_route53_zone.turkeltaub_org.name_servers)
+
+  lifecycle {
+    ignore_changes = [nameservers]
+  }
+}
+
+resource "aws_route53_record" "root_mx_turkeltaub_org" {
+  zone_id = aws_route53_zone.turkeltaub_org.zone_id
+  name    = "turkeltaub.org"
+  type    = "MX"
+  records = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "wildcard_mx_turkeltaub_org" {
+  zone_id = aws_route53_zone.turkeltaub_org.zone_id
+  name    = "*.turkeltaub.org"
+  type    = "MX"
+  records = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm1_domainkey_turkeltaub_org" {
+  zone_id = aws_route53_zone.turkeltaub_org.zone_id
+  name    = "fm1._domainkey.turkeltaub.org"
+  type    = "CNAME"
+  records = ["fm1.turkeltaub.org.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm2_domainkey_turkeltaub_org" {
+  zone_id = aws_route53_zone.turkeltaub_org.zone_id
+  name    = "fm2._domainkey.turkeltaub.org"
+  type    = "CNAME"
+  records = ["fm2.turkeltaub.org.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "fm3_domainkey_turkeltaub_org" {
+  zone_id = aws_route53_zone.turkeltaub_org.zone_id
+  name    = "fm3._domainkey.turkeltaub.org"
+  type    = "CNAME"
+  records = ["fm3.turkeltaub.org.dkim.fmhosted.com"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "spf_turkeltaub_org" {
+  zone_id = aws_route53_zone.turkeltaub_org.zone_id
+  name    = "turkeltaub.org"
   type    = "TXT"
   records = ["v=spf1 include:spf.messagingengine.com ?all"]
   ttl     = 300
