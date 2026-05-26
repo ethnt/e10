@@ -74,7 +74,7 @@ in stdenvNoCC.mkDerivation rec {
     description = "FileFlows server and node with wrapper scripts";
     homepage = "https://fileflows.com/";
     license = lib.licenses.unfree;
-    platforms = [ "x86_64-linux" ];
+    platforms = [ "x86_64-linux" "aarch64-linux" ];
     maintainers = [ ];
   };
 }

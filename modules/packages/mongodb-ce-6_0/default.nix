@@ -4,6 +4,11 @@ let
   version = "6.0.17";
 
   srcs = version: {
+    "aarch64-linux" = {
+      url =
+        "https://fastdl.mongodb.org/linux/mongodb-linux-aarch64-ubuntu2204-${version}.tgz";
+      hash = "sha256-C/AX3Oip+W+dXhJzsXvEstFEIcGTVPQOPGRISgVYj9E=";
+    };
     "x86_64-linux" = {
       url =
         "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-${version}.tgz";

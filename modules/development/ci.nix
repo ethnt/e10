@@ -67,11 +67,11 @@ in {
       };
     };
 
-    ".github/workflows/build.yml" = {
-      name = "Check";
+    ".github/workflows/hosts.yml" = {
+      name = "Build hosts";
       jobs = {
         buildX86System = {
-          name = "Build system (x86)";
+          name = "Build host system (x86)";
           "runs-on" = "ubuntu-latest";
           "if" = ''
             github.ref == 'refs/heads/main' ||
@@ -90,6 +90,7 @@ in {
               '';
             }
             {
+              name = "Build \${{ matrix.host }} host system";
               run = ''
                 nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace
               '';
@@ -97,7 +98,7 @@ in {
           ];
         };
         buildARMSystem = {
-          name = "Build system (ARM)";
+          name = "Build host system (ARM)";
           "runs-on" = "ubuntu-24.04-arm";
           "if" = ''
             github.ref == 'refs/heads/main' ||
@@ -107,11 +108,42 @@ in {
             (_: host: host.config.nixpkgs.system == "aarch64-linux")
             self.nixosConfigurations);
           steps = setup ++ [{
+            name = "Build \${{ matrix.host }} host system";
             run = ''
               nix build .#nixosConfigurations.''${{ matrix.host }}.config.system.build.toplevel --accept-flake-config --show-trace
             '';
           }];
         };
+      };
+    };
+
+    ".github/workflows/packages.yml" = {
+      name = "Build packages";
+      on.push.paths = [ "flake.lock" "modules/packages/**/*.nix" ];
+      jobs.buildPackage = {
+        name = "Build package";
+        runs-on = "\${{ matrix.os }}";
+        strategy.matrix = {
+          package = l.attrNames self.packages.x86_64-linux;
+          architecture = [ "x86_64-linux" "aarch64-linux" ];
+          include = [
+            {
+              architecture = "x86_64-linux";
+              os = "ubuntu-24.04";
+            }
+            {
+              architecture = "aarch64-linux";
+              os = "ubuntu-24.04-arm";
+            }
+          ];
+        };
+        steps = setup ++ [{
+          name =
+            "Build \${{ matrix.package }} (\${{ matrix.architecture }}) package";
+          run = ''
+            nix build .#packages.''${{ matrix.architecture }}.''${{ matrix.package }} --keep-going --print-build-logs --show-trace --verbose
+          '';
+        }];
       };
     };
   };
