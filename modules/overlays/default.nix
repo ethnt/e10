@@ -15,10 +15,6 @@
     in {
       inherit (nixpkgs-master)
         gatus prowlarr radarr sabnzbd sonarr netbox plex immich;
-      # inherit (nixpkgs-master.python312Packages) pymdown-extensions onnx;
-
-      # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923
-      inherit (nixpkgs-master) thanos;
 
       inherit (self'.packages) declutarr fileflows mongodb-ce-6_0 tracearr;
     };
