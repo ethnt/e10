@@ -7,11 +7,16 @@ let
     auth.enabled = true;
     tls.enabled = false;
     go2rtc = {
-      streams.kitchen = [
-        "ffmpeg:rtsp://${cameraUsername}:\${FRIGATE_KITCHEN_PASSWORD}@${cameraAddress}:554/stream1"
-        "ffmpeg:kitchen#audio=aac"
-        "tapo://admin:{FRIGATE_TAPO_SHA256}@${cameraAddress}"
-      ];
+      streams = {
+        kitchen = [
+          "ffmpeg:rtsp://${cameraUsername}:${cameraPassword}@${cameraAddress}:554/stream1"
+          "ffmpeg:kitchen#audio=aac"
+          "tapo://admin:{FRIGATE_TAPO_SHA256}@${cameraAddress}"
+        ];
+        kitchen_sub = [
+          "ffmpeg:rtsp://${cameraUsername}:${cameraPassword}@${cameraAddress}:554/stream2"
+        ];
+      };
       api.origin = "*";
     };
     mqtt = {
@@ -33,12 +38,19 @@ let
     cameras.kitchen = {
       ffmpeg = {
         hwaccel_args = "preset-nvidia";
-        output_args.record = "preset-record-generic-audio-copy";
-        inputs = [{
-          path = "rtsp://127.0.0.1:8554/kitchen";
-          input_args = "preset-rtsp-restream";
-          roles = [ "audio" "detect" "record" ];
-        }];
+        output_args.record = "preset-record-generic-audio-aac";
+        inputs = [
+          {
+            path = "rtsp://127.0.0.1:8554/kitchen";
+            input_args = "preset-rtsp-restream";
+            roles = [ "audio" "record" ];
+          }
+          {
+            path = "rtsp://127.0.0.1:8554/kitchen_sub";
+            input_args = "preset-rtsp-restream";
+            roles = [ "detect" ];
+          }
+        ];
       };
       onvif = {
         host = cameraAddress;
