@@ -20,7 +20,7 @@
       # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923
       inherit (nixpkgs-master) thanos;
 
-      inherit (self'.packages) declutarr fileflows mongodb-ce-6_0 tracearr;
+      inherit (self'.packages) declutarr fileflows tracearr;
     };
   };
 }
