@@ -48,9 +48,9 @@ python3Packages.buildPythonApplication rec {
   # TODO: Actually run tests
   doCheck = false;
 
-
   meta = with lib; {
-    description = "Watches radarr, sonarr, lidarr, readarr and whisparr download queues and removes downloads if they become stalled or no longer needed.";
+    description =
+      "Watches radarr, sonarr, lidarr, readarr and whisparr download queues and removes downloads if they become stalled or no longer needed.";
     homepage = "https://github.com/ManiMatter/decluttarr";
     license = licenses.gpl3Only;
     platforms = platforms.linux;
