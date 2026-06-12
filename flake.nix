@@ -45,6 +45,9 @@
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
 
+    unifi-os-server.url = "github:rcambrj/unifi-os-server";
+    unifi-os-server.inputs.nixpkgs.follows = "nixpkgs";
+
     treefmt.url = "github:numtide/treefmt-nix";
     treefmt.inputs.nixpkgs.follows = "nixpkgs";
 

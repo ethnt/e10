@@ -321,7 +321,7 @@ in { config, lib, ... }: {
           })
           (mkEndpoint {
             name = "UniFi Controller";
-            url = "https://controller:8443";
+            url = "https://controller:11443";
             group = "Controller";
             extraConfig.client.insecure = true;
           })

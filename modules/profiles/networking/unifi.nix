@@ -1,17 +1,14 @@
-{ pkgs, lib, ... }: {
-  services.unifi = {
+{ config, ... }: {
+  services.unifi-os-server = {
     enable = true;
-    openFirewall = true;
-    unifiPackage = pkgs.unifi;
-    mongodbPackage = pkgs.mongodb-ce-6_0;
+    uosSystemIP =
+      (builtins.head config.networking.interfaces.ens18.ipv4.addresses).address;
+    openFirewallUiPort = true;
+    openFirewallServicePorts = true;
   };
 
-  # Set to 5 mintues by the NixOS module, but prevents shutdown of the host for
-  # that long. Shorten to make this happen quicker
-  systemd.services.unifi.serviceConfig.TimeoutSec = lib.mkOverride 10 "30s";
-
-  networking.firewall = {
-    allowedTCPPorts = [ 6789 8080 8880 8443 8843 ];
-    allowedUDPPorts = [ 8443 ];
-  };
+  # networking.firewall = {
+  #   allowedTCPPorts = [ 6789 8080 8880 8443 8843 ];
+  #   allowedUDPPorts = [ 8443 ];
+  # };
 }
