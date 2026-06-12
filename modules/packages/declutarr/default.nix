@@ -1,14 +1,14 @@
-{ python3Packages, fetchFromGitHub, makeWrapper }:
+{ python3Packages, fetchFromGitHub, makeWrapper, lib }:
 
 python3Packages.buildPythonApplication rec {
   name = "declutarr";
-  version = "2.0.0";
+  version = "2.1.0";
 
   src = fetchFromGitHub {
     owner = "ManiMatter";
     repo = "decluttarr";
     tag = "v${version}";
-    hash = "sha256-3mB5+ao3w+CkyTS/o1O9/7UXOoGkA/mTpJNEQxUTa9Q=";
+    hash = "sha256-pOuAQ2KKvhmUM6xX5iX9s33ZXL3OLx6yIOL8LZF1W64=";
   };
 
   pyproject = true;
@@ -48,5 +48,12 @@ python3Packages.buildPythonApplication rec {
   # TODO: Actually run tests
   doCheck = false;
 
-  meta.mainProgram = "declutarr";
+
+  meta = with lib; {
+    description = "Watches radarr, sonarr, lidarr, readarr and whisparr download queues and removes downloads if they become stalled or no longer needed.";
+    homepage = "https://github.com/ManiMatter/decluttarr";
+    license = licenses.gpl3Only;
+    platforms = platforms.linux;
+    mainProgram = "declutarr";
+  };
 }
