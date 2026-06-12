@@ -78,9 +78,9 @@
 
     customComponents = with pkgs.home-assistant-custom-components;
       [ frigate hass_web_proxy ] ++ [
-        (pkgs.home-assistant.python.pkgs.callPackage
+        (pkgs.home-assistant.python3Packages.callPackage
           ./components/ha_nationalgrid.nix {
-            aionatgrid = pkgs.home-assistant.python.pkgs.callPackage
+            aionatgrid = pkgs.home-assistant.python3Packages.callPackage
               ./packages/aionatgrid.nix { };
           })
       ];

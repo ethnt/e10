@@ -1,4 +1,4 @@
-{ python3Packages, fetchFromGitHub, makeWrapper, lib }:
+{ lib, fetchFromGitHub, makeWrapper, python3Packages }:
 
 python3Packages.buildPythonApplication rec {
   name = "declutarr";
