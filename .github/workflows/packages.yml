@@ -48,7 +48,6 @@ jobs:
         package:
         - declutarr
         - fileflows
-        - mongodb-ce-6_0
         - render-workflows
         - tf
         - tfl
