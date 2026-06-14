@@ -21,7 +21,7 @@
       inherit (nixpkgs-master) thanos;
 
       inherit (self'.packages)
-        declutarr fileflows tracearr unifi-os-server-image;
+        bichon declutarr fileflows tracearr unifi-os-server-image;
     };
   };
 }
