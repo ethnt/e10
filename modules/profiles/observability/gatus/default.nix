@@ -174,7 +174,7 @@ in { config, lib, ... }: {
             group = "HTPC";
           })
           (mkEndpoint {
-            name = "Jellyseerr";
+            name = "Seerr";
             url = "https://requests.e10.video";
             group = "HTPC";
           })
