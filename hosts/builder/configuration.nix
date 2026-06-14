@@ -5,6 +5,7 @@
       profiles.remote-builder.builder
       profiles.remote-builder.substituter
       profiles.services.attic-watch-store.default
+      profiles.services.cachix-watch-store.default
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
