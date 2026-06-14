@@ -52,6 +52,7 @@ jobs:
         - tf
         - tfl
         - tracearr
+        - unifi-os-server-image
 name: Build packages
 'on':
   push:

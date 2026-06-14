@@ -19,7 +19,6 @@ let
     [
       sops-nix.nixosModules.sops
       disko.nixosModules.disko
-      unifi-os-server.nixosModules.unifi-os-server
     ] ++ nixosModules;
 
   # https://github.com/zhaofengli/colmena/issues/60#issuecomment-1047199551
