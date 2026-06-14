@@ -19,6 +19,7 @@
       ntfyBAuthPass = config.sops.secrets.grafana_to_ntfy_ntfy_bauth_pass.path;
       bauthUser = "admin";
       bauthPass = config.sops.secrets.grafana_to_ntfy_bauth_pass.path;
+      port = 8099;
     };
   };
 }
