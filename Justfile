@@ -9,8 +9,8 @@ build host:
 build-all:
     colmena build {{ colmena_flags }}
 
-apply host:
-    colmena apply --on={{ host }} {{ colmena_flags }}
+apply host *args:
+    colmena apply --on={{ host }} {{ colmena_flags }} {{ args }}
 
 apply-all:
     colmena apply
