@@ -50,6 +50,8 @@ jobs:
         - declutarr
         - fileflows
         - mazanoke
+        - profilarr
+        - profilarr-parser
         - prometheus-plex-exporter
         - tf
         - tfl

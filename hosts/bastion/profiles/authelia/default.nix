@@ -150,6 +150,24 @@
             token_endpoint_auth_method = "client_secret_basic";
             claims_policy = "karakeep";
           }
+          {
+            client_id =
+              "a8Jy2n_CgUOu~nTlLlkgZQV7xJmhq5aW1N0eNePghiFL0Su5jysCJKOpaEpjvRd7yhhz589E";
+            client_name = "Profilarr";
+            client_secret =
+              "$pbkdf2-sha512$310000$BY/Aff8ySoJwVwoW5D7rrQ$7NFYYLhlaRyMLQzcheulIVtQtC5YP6rbW7mbMOSsGWBaPs.It/O8lBgKQ3uhlP7wkC0fgjBBqHvk8PEXZ1oTLA";
+            public = false;
+            authorization_policy = "two_factor";
+            require_pkce = false;
+            pkce_challenge_method = "";
+            redirect_uris = "https://profilarr.e10.camp/auth/oidc/callback";
+            scopes = [ "openid" "profile" "email" ];
+            response_types = [ "code" ];
+            grant_types = [ "authorization_code" ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "client_secret_post";
+          }
         ];
       };
 
@@ -198,6 +216,10 @@
         }
         {
           domain = "termix.e10.camp";
+          policy = "two_factor";
+        }
+        {
+          domain = "profilarr.e10.camp";
           policy = "two_factor";
         }
       ];

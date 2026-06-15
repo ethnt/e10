@@ -8,6 +8,8 @@ _: {
       fileflows = pkgs.callPackage ./fileflows { };
       mazanoke = pkgs.callPackage ./mazanoke { };
       tracearr = pkgs.callPackage ./tracearr { };
+      profilarr = pkgs.callPackage ./profilarr { };
+      profilarr-parser = pkgs.callPackage ./profilarr-parser { };
       unifi-os-server-image = pkgs.callPackage ./unifi-os-server-image { };
     };
   };
