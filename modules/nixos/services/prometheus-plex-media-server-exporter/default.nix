@@ -42,26 +42,43 @@ in {
 
     libraryRefreshInterval = mkOption {
       type = types.int;
+      description =
+        "How often to re-query expensive per-library counts (music tracks, episode counts, and library items) in minutes. Must be an integer number of minutes. Defaults to 15 when unset. Set to 0 to disable caching and always re-query";
       default = 15;
     };
 
     logLevel = mkOption {
       type = types.str;
+      description =
+        "Log verbosity. One of `debug`, `info`, `warn`, `error`. Defaults to `info`. Set to `debug` for verbose troubleshooting";
       default = "info";
     };
 
     logFormat = mkOption {
       type = types.str;
+      description =
+        "Log output format. Set to `console` for human-readable logs (development), or omit for structured JSON logs (production/containers)";
       default = "json";
     };
 
     envrionmentMode = mkOption {
       type = types.str;
+      description =
+        "Environment mode. Set to `development` for console logging, or omit for production JSON logging";
       default = "production";
+    };
+
+    skipTLSVerification = mkOption {
+      type = types.bool;
+      description =
+        "Optional convenience for connecting to Plex servers with self-signed or mismatched TLS certificates. When set to true the exporter (and the vendored Plex client) will skip TLS certificate verification for both HTTP and websocket connections. THIS IS INSECURE — only use in trusted networks or testing. Defaults to off";
+      default = false;
     };
 
     clientTimeoutSeconds = mkOption {
       type = types.int;
+      description =
+        "HTTP client timeout when contacting the Plex server (seconds). Defaults to `10`. Set higher for slow LANs or when your Plex server takes longer to respond (mostly due to size)";
       default = 10;
     };
 
@@ -92,12 +109,13 @@ in {
       wantedBy = [ "multi-user.target" ];
       environment = {
         PLEX_SERVER = cfg.url;
-        # PLEX_TOKEN = "$(cat ${cfg.tokenFile})";
-        # LIBRARY_REFRESH_INTERVAL = toString cfg.libraryRefreshInterval;
-        # LOG_LEVEL = cfg.logLevel;
-        # LOG_FORMAT = cfg.logFormat;
-        # ENVIRONMENT_MODE = cfg.envrionmentMode;
-        # CLIENT_TIMEOUT_SECONDS = toString cfg.clientTimeoutSeconds;
+        LIBRARY_REFRESH_INTERVAL = toString cfg.libraryRefreshInterval;
+        LOG_LEVEL = cfg.logLevel;
+        LOG_FORMAT = cfg.logFormat;
+        ENVIRONMENT_MODE = cfg.envrionmentMode;
+        SKIP_TLS_VERIFICATION =
+          if cfg.skipTLSVerification then "true" else "false";
+        CLIENT_TIMEOUT_SECONDS = toString cfg.clientTimeoutSeconds;
       };
       serviceConfig = {
         ExecStart = lib.getExe (pkgs.writeShellApplication {
