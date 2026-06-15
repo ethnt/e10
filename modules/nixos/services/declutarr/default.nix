@@ -90,8 +90,8 @@ in {
 
     systemd.services.declutarr = {
       enable = true;
-      wants = [ "network.online.target" ];
-      after = [ "network.online.target" ];
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
       preStart = ''
         ln -sf ${configFile} ${cfg.dataDir}/config/config.yaml

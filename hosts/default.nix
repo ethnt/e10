@@ -16,11 +16,7 @@ let
   }));
 
   commonModules = with inputs;
-    [
-      sops-nix.nixosModules.sops
-      disko.nixosModules.disko
-      unifi-os-server.nixosModules.unifi-os-server
-    ] ++ nixosModules;
+    [ sops-nix.nixosModules.sops disko.nixosModules.disko ] ++ nixosModules;
 
   # https://github.com/zhaofengli/colmena/issues/60#issuecomment-1047199551
   extraModules = with inputs; [

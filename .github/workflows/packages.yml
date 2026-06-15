@@ -46,12 +46,15 @@ jobs:
         - architecture: aarch64-linux
           os: ubuntu-24.04-arm
         package:
+        - bichon
         - declutarr
         - fileflows
-        - render-workflows
+        - mazanoke
+        - prometheus-plex-exporter
         - tf
         - tfl
         - tracearr
+        - unifi-os-server-image
 name: Build packages
 'on':
   push:

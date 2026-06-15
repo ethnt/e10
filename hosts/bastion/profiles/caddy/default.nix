@@ -115,7 +115,7 @@
 
       "requests.e10.video" = {
         host = hosts.htpc;
-        inherit (hosts.htpc.config.services.jellyseerr) port;
+        inherit (hosts.htpc.config.services.seerr) port;
         acme.environmentFile =
           config.sops.secrets.e10_video_lego_route53_credentials.path;
       };

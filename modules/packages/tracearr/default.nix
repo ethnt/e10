@@ -2,20 +2,20 @@
 , fetchFromGitHub, turbo, }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "tracearr";
-  version = "1.4.21";
+  version = "1.4.28";
 
   src = fetchFromGitHub {
     owner = "connorgallopo";
     repo = "Tracearr";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-KE/kMB620+Eksq21uaqzEeoQVIlJN2cEEkJVh9/ccBE=";
+    hash = "sha256-gZsdnvHTHNJYnP+1bvXngECqimWGwx9K5UIS0DF94w4=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
     pnpm = pnpm_10;
     fetcherVersion = 3;
-    hash = "sha256-lkA9eYuOc1J+tUM1Bd57ROsT8es6AAMjHB5AyoN7oqg=";
+    hash = "sha256-EJrC6T/EohYJCDEe/itxvqNS2SIRXN1oAwOoP3EYeQc=";
   };
 
   strictDeps = true;

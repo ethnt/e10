@@ -7,7 +7,7 @@
 
       nativeBuildInputs = with pkgs; [
         attic-client
-        authelia
+        # authelia
         awscli2
         cachix
         deadnix

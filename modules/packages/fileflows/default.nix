@@ -1,8 +1,6 @@
 { lib, stdenvNoCC, fetchzip, dotnetCorePackages, sqlite, libz, writeShellScript
 }:
 let
-  version = "26.4.9.6710";
-
   dotnet = dotnetCorePackages.aspnetcore_8_0;
   buildInputs = [ sqlite libz ];
 
@@ -44,12 +42,12 @@ let
   '';
 in stdenvNoCC.mkDerivation rec {
   pname = "fileflows";
-  inherit version;
+  version = "26.5.9.7184";
 
   src = fetchzip {
     url = "https://fileflows.com/downloads/Zip/${version}";
     extension = "zip";
-    hash = "sha256-rKNfhMb4saR9ae7V1/JW2xQHcWcjySXi1fqJpunVFTs=";
+    hash = "sha256-faxDk7ckBno3eM4dTnzvDwM/TPqepzu4qhnpnk8L3hM=";
     stripRoot = false;
   };
 
@@ -70,11 +68,10 @@ in stdenvNoCC.mkDerivation rec {
     substituteInPlace $out/bin/server $out/bin/node --replace-fail @OUT@ $out
   '';
 
-  meta = {
+  meta = with lib; {
     description = "FileFlows server and node with wrapper scripts";
     homepage = "https://fileflows.com/";
-    license = lib.licenses.unfree;
-    platforms = [ "x86_64-linux" "aarch64-linux" ];
-    maintainers = [ ];
+    license = licenses.unfree;
+    platforms = platforms.linux;
   };
 }

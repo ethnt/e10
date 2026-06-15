@@ -111,7 +111,7 @@
                     icon = "di:immich";
                   })
                   (mkSite {
-                    title = "Jellyseerr";
+                    title = "Seerr";
                     url = "https://requests.e10.video";
                     icon = "di:jellyseerr";
                   })
