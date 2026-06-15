@@ -15,13 +15,15 @@
     in {
       inherit (nixpkgs-master)
         gatus prowlarr radarr sabnzbd sonarr netbox plex immich;
+
       # inherit (nixpkgs-master.python312Packages) pymdown-extensions onnx;
 
       # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923
       inherit (nixpkgs-master) thanos;
 
       inherit (self'.packages)
-        bichon declutarr fileflows tracearr unifi-os-server-image;
+        bichon declutarr fileflows prometheus-plex-exporter tracearr
+        unifi-os-server-image;
     };
   };
 }

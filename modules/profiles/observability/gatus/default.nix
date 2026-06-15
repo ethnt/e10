@@ -185,7 +185,7 @@ in { config, lib, ... }: {
           })
           (mkEndpoint {
             name = "Prometheus Plex Exporter";
-            url = "http://htpc:9594";
+            url = "http://htpc:9000/metrics";
             group = "HTPC";
           })
           (mkEndpoint {
@@ -404,8 +404,16 @@ in { config, lib, ... }: {
             extraConfig.client.insecure = true;
           })
         ];
+        elderflower-kvm = [
+          (mkEndpoint {
+            name = "JetKVM";
+            url = "http://elderflower-kvm";
+            group = "Elderflower (KVM)";
+            extraConfig.client.insecure = true;
+          })
+        ];
       in bastion ++ omnibus ++ htpc ++ matrix ++ builder ++ controller
-      ++ monitor ++ pikvm;
+      ++ monitor ++ pikvm ++ elderflower-kvm;
     };
   };
 }
