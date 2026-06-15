@@ -124,7 +124,8 @@ in {
         name = "Build package";
         runs-on = "\${{ matrix.os }}";
         strategy.matrix = {
-          package = l.attrNames self.packages.x86_64-linux;
+          package = l.filter (name: name != "render-workflows")
+            (l.attrNames self.packages.x86_64-linux);
           architecture = [ "x86_64-linux" "aarch64-linux" ];
           include = [
             {
