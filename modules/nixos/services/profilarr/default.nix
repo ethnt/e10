@@ -162,7 +162,7 @@ in {
       };
     };
 
-    systemd.service.profilarr-parser = mkIf cfg.parser.enable {
+    systemd.services.profilarr-parser = mkIf cfg.parser.enable {
       description = "Profilarr - parser";
       wantedBy = [ "multi-user.target" "profilarr.service" ];
       after = [ "network.target" ];
