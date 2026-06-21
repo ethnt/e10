@@ -235,7 +235,7 @@
         targets = [
           "${hosts.htpc.config.networking.hostName}:${
             toString
-            hosts.htpc.config.services.prometheus.exporters.plex-media-server.port
+            hosts.htpc.config.services.plex-exporter.port
           }"
         ];
       }];

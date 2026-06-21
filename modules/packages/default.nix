@@ -7,8 +7,6 @@ _: {
       mazanoke = pkgs.callPackage ./mazanoke { };
       profilarr = pkgs.callPackage ./profilarr { };
       profilarr-parser = pkgs.callPackage ./profilarr-parser { };
-      prometheus-plex-exporter =
-        pkgs.callPackage ./prometheus-plex-exporter { };
       tracearr = pkgs.callPackage ./tracearr { };
       unifi-os-server-image = pkgs.callPackage ./unifi-os-server-image { };
     };

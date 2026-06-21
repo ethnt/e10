@@ -22,7 +22,7 @@
       profiles.services.attic-watch-store.default
       profiles.sharing.nfs-client
       profiles.telemetry.prometheus-dcgm-exporter
-      profiles.telemetry.prometheus-plex-media-server-exporter.default
+      profiles.telemetry.prometheus-plex-exporter.default
       profiles.virtualisation.docker
     ] ++ [ ./hardware-configuration.nix ./disk-config.nix ]
     ++ [ secrets.hosts.htpc.configuration ];
