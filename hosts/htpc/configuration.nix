@@ -10,7 +10,7 @@
       profiles.media-management.fileflows.server
       profiles.media-management.jellyfin
       profiles.media-management.plex
-      profiles.media-management.profilarr
+      profiles.media-management.profilarr.default
       profiles.media-management.prowlarr.default
       profiles.media-management.radarr.default
       profiles.media-management.sabnzbd.default

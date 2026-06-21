@@ -22,8 +22,8 @@
       inherit (nixpkgs-master) thanos;
 
       inherit (self'.packages)
-        bichon declutarr fileflows mazanoke prometheus-plex-exporter tracearr
-        unifi-os-server-image;
+        bichon declutarr fileflows mazanoke profilarr profilarr-parser
+        prometheus-plex-exporter tracearr unifi-os-server-image;
     };
   };
 }
