@@ -1379,10 +1379,11 @@
         "treefmt": "treefmt_2"
       },
       "locked": {
-        "dirtyRev": "fe916612b930c780d95387fbeab7b92d09d35121-dirty",
-        "dirtyShortRev": "fe91661-dirty",
-        "lastModified": 1782013724,
-        "narHash": "sha256-bOC+AAxT2yeoN47h5fH8xZreeTCuaWdsAwfa7SVpPrg=",
+        "lastModified": 1782060440,
+        "narHash": "sha256-iMKbpmX+lw60Tae3A3P+cJYvDiS6G3iRuY4AYil6nLk=",
+        "ref": "refs/heads/feature/v0.0.2",
+        "rev": "69b35411cb3fcbf9ebbbae80527b9e5741c8b2ba",
+        "revCount": 16,
         "type": "git",
         "url": "file:///Users/ethan/Workspace/plex_exporter"
       },
