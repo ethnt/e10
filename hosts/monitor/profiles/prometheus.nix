@@ -234,8 +234,7 @@
       static_configs = [{
         targets = [
           "${hosts.htpc.config.networking.hostName}:${
-            toString
-            hosts.htpc.config.services.plex-exporter.port
+            toString hosts.htpc.config.services.plex-exporter.port
           }"
         ];
       }];
