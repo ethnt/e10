@@ -52,7 +52,6 @@ jobs:
         - mazanoke
         - profilarr
         - profilarr-parser
-        - prometheus-plex-exporter
         - tf
         - tfl
         - tracearr
