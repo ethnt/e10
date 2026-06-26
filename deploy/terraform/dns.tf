@@ -390,54 +390,6 @@ resource "porkbun_nameservers" "e10_llc" {
   }
 }
 
-resource "aws_route53_record" "root_mx_e10_llc" {
-  zone_id = aws_route53_zone.e10_llc.zone_id
-  name    = "e10.llc"
-  type    = "MX"
-  records = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "wildcard_mx_e10_llc" {
-  zone_id = aws_route53_zone.e10_llc.zone_id
-  name    = "*.e10.llc"
-  type    = "MX"
-  records = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "fm1_domainkey_e10_llc" {
-  zone_id = aws_route53_zone.e10_llc.zone_id
-  name    = "fm1._domainkey.e10.llc"
-  type    = "CNAME"
-  records = ["fm1.e10.llc.dkim.fmhosted.com"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "fm2_domainkey_e10_llc" {
-  zone_id = aws_route53_zone.e10_llc.zone_id
-  name    = "fm2._domainkey.e10.llc"
-  type    = "CNAME"
-  records = ["fm2.e10.llc.dkim.fmhosted.com"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "fm3_domainkey_e10_llc" {
-  zone_id = aws_route53_zone.e10_llc.zone_id
-  name    = "fm3._domainkey.e10.llc"
-  type    = "CNAME"
-  records = ["fm3.e10.llc.dkim.fmhosted.com"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "spf_e10_llc" {
-  zone_id = aws_route53_zone.e10_llc.zone_id
-  name    = "e10.llc"
-  type    = "TXT"
-  records = ["v=spf1 include:spf.messagingengine.com ?all"]
-  ttl     = 300
-}
-
 # turkeltaub.net
 
 resource "aws_route53_zone" "turkeltaub_net" {
