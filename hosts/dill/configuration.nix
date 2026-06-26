@@ -1,13 +1,12 @@
-{ lib, suites, profiles, ... }: {
+{ lib, suites, ... }: {
   imports = with suites;
-    core ++ nuc ++ [ profiles.hypervisors.proxmox-ve ]
-    ++ [ ./hardware-configuration.nix ./disk-config.nix ];
+    core ++ nuc ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/nvme-CT4000P3SSD8_2322E6DDD8FE" ];
 
   deployment = {
-    deployable = false;
+    deployable = true;
     buildOnTarget = true;
     tags = [ "hypervisor" ];
   };

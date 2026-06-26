@@ -3,7 +3,10 @@
     lib.substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
 
   boot = {
-    zfs.devNodes = lib.mkForce "/dev/disk/by-id";
+    zfs = {
+      devNodes = lib.mkForce "/dev/disk/by-id";
+      forceImportRoot = false;
+    };
 
     initrd.supportedFilesystems = [ "zfs" ];
     supportedFilesystems = [ "zfs" ];
