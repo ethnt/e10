@@ -58,6 +58,9 @@
 
     e10-secrets.url = "git+ssh://git@github.com/ethnt/e10-secrets";
     # e10-secrets.url = "git+file:///Users/ethan/Workspace/e10-secrets";
+
+    plex-exporter.url = "github:ethnt/plex_exporter";
+    plex-exporter.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ self, flake-parts, ... }:
