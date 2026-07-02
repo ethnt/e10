@@ -56,4 +56,9 @@
     profiles.hardware.hidpi
     profiles.hardware.ssd
   ];
+
+  incus-virtual-machine = [
+    profiles.virtualisation.incus-virtual-machine
+    profiles.virtualisation.qemu
+  ];
 }

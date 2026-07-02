@@ -23,7 +23,7 @@
 
       inherit (self'.packages)
         bichon declutarr fileflows mazanoke profilarr profilarr-parser
-        prometheus-plex-exporter tracearr unifi-os-server-image;
+        prometheus-plex-exporter tracearr unifi-os-server-image incus-apply;
     };
   };
 }

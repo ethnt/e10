@@ -103,6 +103,15 @@
         inherit (hosts.htpc.config.services.profilarr) port;
       };
 
+      "incus.dill.e10.camp" = {
+        host = hosts.dill;
+        port = 8443;
+        skipTLSVerify = true;
+        extraReverseProxyConfig = ''
+          header_up Host {http.request.host}
+        '';
+      };
+
       "sabnzbd.e10.camp" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.sabnzbd.settings.misc) port;

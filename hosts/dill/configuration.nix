@@ -1,6 +1,8 @@
-{ lib, suites, ... }: {
+{ lib, suites, profiles, hosts, ... }: {
   imports = with suites;
-    core ++ nuc ++ [ ./hardware-configuration.nix ./disk-config.nix ];
+    core ++ nuc
+    ++ [ profiles.hypervisors.incus profiles.hardware.intel-graphics ]
+    ++ [ ./hardware-configuration.nix ./disk-config.nix ];
 
   boot.loader.grub.devices =
     [ "/dev/disk/by-id/nvme-CT4000P3SSD8_2322E6DDD8FE" ];
@@ -9,6 +11,32 @@
     deployable = true;
     buildOnTarget = true;
     tags = [ "hypervisor" ];
+  };
+
+  virtualisation.incus = {
+    preseed = {
+      config = {
+        core.https_address = ":8443";
+        oidc = {
+          issuer = "https://auth.e10.camp";
+          client.id =
+            "NE-kA1k.XTEv8Qe6oywlhfJHJVmLHg0474m3zD2nMjTm.ddl9rnK.Toq1WwetMP-BjYq4K0X";
+          audience = "https://incus.dill.e10.camp";
+        };
+      };
+    };
+    instances = [{
+      name = "fennel";
+      image = hosts.fennel.config.system.build.qemuImage;
+      metadata = hosts.fennel.config.system.build.metadata;
+      vm = true;
+      profiles = [ "default" ];
+      kind = "instance";
+      config = {
+        "limits.cpu" = 2;
+        "limits.memory" = "1GB";
+      };
+    }];
   };
 
   networking = {

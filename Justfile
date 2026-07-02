@@ -9,6 +9,10 @@ build host:
 build-all:
     colmena build {{ colmena_flags }}
 
+image host:
+    nom build .#nixosConfigurations.{{ host }}.config.system.build.qemuImage --print-out-paths
+    nom build .#nixosConfigurations.{{ host }}.config.system.build.metadata --print-out-paths
+
 apply host *args:
     colmena apply --on={{ host }} {{ colmena_flags }} {{ args }}
 
@@ -56,9 +60,6 @@ rsync *args:
 
 sync-e10-land:
     rsync -rtu --delete --progress -e "ssh -F $SSH_CONFIG_FILE" ~/Documents/e10.land/ matrix:/var/www/e10.land/
-
-image name:
-    nom build .#packages.x86_64-linux.{{ name }}-image
 
 terraform *args:
     terraform -chdir=./deploy/terraform/ {{ args }}
