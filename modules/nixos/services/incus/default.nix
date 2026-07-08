@@ -10,7 +10,7 @@ let
   imageAlias = instance:
     if isLocal instance then instance.name else instance.image;
 
-  configDir = pkgs.linkFarm "incus-apply-config" (map (instance: {
+  applyDir = pkgs.linkFarm "incus-apply-config" (map (instance: {
     name = "${instance.name}.yml";
     path = format.generate "${instance.name}.yml" {
       inherit (instance) kind;
@@ -19,6 +19,7 @@ let
       inherit (instance) profiles;
       inherit (instance) vm;
       inherit (instance) config;
+      inherit (instance) devices;
     };
   }) cfg.instances);
 
@@ -33,10 +34,17 @@ let
           --alias ${lib.escapeShellArg instance.name}
       fi
     '') cfg.instances;
+
+  flatten = prefix: attrs:
+    lib.foldlAttrs (acc: name: value:
+      let path = if prefix == "" then name else "${prefix}.${name}";
+      in acc // (if builtins.isAttrs value then
+        flatten path value
+      else {
+        ${path} = value;
+      })) { } attrs;
 in {
   options.virtualisation.incus = {
-    vms = mkOption { type = types.attrsOf (types.submodule vmOptions); };
-
     instances = mkOption {
       type = types.listOf (types.submodule {
         options = {
@@ -82,9 +90,21 @@ in {
             description = "Freeform configuration for this instance";
             default = { };
           };
+
+          devices = mkOption {
+            inherit (format) type;
+            description = "Freeform device overrides for this instance";
+            default = { };
+          };
         };
       });
       default = [ ];
+    };
+
+    config = mkOption {
+      inherit (format) type;
+      description = "Configuration settings to set";
+      default = { };
     };
   };
 
@@ -107,10 +127,16 @@ in {
           name = "incus-apply-exec";
           runtimeInputs =
             [ config.virtualisation.incus.package pkgs.incus-apply ];
-          text = ''
+          text = let
+            configLines = lib.concatStringsSep "\n" (lib.mapAttrsToList
+              (k: v: "incus config set ${lib.escapeShellArg "${k}=${v}"}")
+              (flatten "" cfg.config));
+          in ''
+            ${configLines}
+
             ${importScript}
 
-            incus-apply ${configDir} --yes --quiet
+            incus-apply ${applyDir} --yes --quiet
           '';
         });
       };

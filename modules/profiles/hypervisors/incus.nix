@@ -1,6 +1,4 @@
-{ pkgs, ... }: {
-  environment.systemPackages = [ pkgs.incus-apply ];
-
+{
   virtualisation.incus = {
     enable = true;
     ui.enable = true;
@@ -17,7 +15,7 @@
           root = {
             path = "/";
             pool = "default";
-            size = "36GiB";
+            size = "32GiB";
             type = "disk";
           };
         };

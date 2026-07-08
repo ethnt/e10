@@ -1,6 +1,6 @@
 { profiles }: {
   core = [
-    profiles.backups.restic.system
+    # profiles.backups.restic.system
     profiles.core.caching
     profiles.core.common
     profiles.core.nix-config
