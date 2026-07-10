@@ -1,9 +1,9 @@
 { lib, pkgs }:
 let
-  imageVersion = "f77bca81ecbf";
-  installerVersion = "5.1.15";
-  url = "https://fw-download.ubnt.com/data/unifi-os-server/24e0-linux-x64-5.1.15-926621de-c9d7-48cd-8921-a0ff3eebd3f4.15-x64";
-  sha256 = "sha256-BMjkAes0Mw/pnZTzWqNR4ODpeJXw2aS0Wf80+1DK0rs=";
+  imageVersion = "ab51f5e215ae";
+  installerVersion = "5.1.21";
+  url = "https://fw-download.ubnt.com/data/unifi-os-server/f5e2-linux-x64-5.1.21-a400c9c6-8328-4634-b223-ebfcf742720a.21-x64";
+  sha256 = "sha256-d+P+rBWVd5QC3Yf/jSDWb6o5yHtXJkb4b/AAZxEmJEU=";
 
   # TODO: Can remove when this fix is merged
   # https://github.com/nixos/nixpkgs/pull/530407
@@ -36,8 +36,10 @@ pkgs.stdenvNoCC.mkDerivation {
 
     work="$PWD/work"
     mkdir -p "$work"
+
     cp "$src" "$work/unifi-os-installer"
     chmod u+w "$work/unifi-os-installer"
+
     cd "$work"
 
     binwalk --threads 1 -e ./unifi-os-installer >/dev/null
