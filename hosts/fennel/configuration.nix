@@ -4,6 +4,7 @@
   deployment = {
     targetHost = "10.10.4.101";
     deployable = true;
+    incusVirtualMachine = true;
     buildOnTarget = false;
   };
 
