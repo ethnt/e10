@@ -168,6 +168,23 @@
             userinfo_signed_response_alg = "none";
             token_endpoint_auth_method = "client_secret_post";
           }
+          {
+            client_id =
+              "NE-kA1k.XTEv8Qe6oywlhfJHJVmLHg0474m3zD2nMjTm.ddl9rnK.Toq1WwetMP-BjYq4K0X";
+            client_name = "Incus (Dill)";
+            public = true;
+            authorization_policy = "two_factor";
+            require_pkce = false;
+            pkce_challenge_method = "";
+            redirect_uris = [ "https://incus.dill.e10.camp/oidc/callback" ];
+            audience = [ "https://incus.dill.e10.camp" ];
+            scopes = [ "openid" "profile" "email" "offline_access" ];
+            response_types = [ "code" ];
+            grant_types = [ "authorization_code" "refresh_token" ];
+            access_token_signed_response_alg = "RS256";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "none";
+          }
         ];
       };
 
@@ -220,6 +237,10 @@
         }
         {
           domain = "profilarr.e10.camp";
+          policy = "two_factor";
+        }
+        {
+          domain = "incus.dill.e10.camp";
           policy = "two_factor";
         }
       ];

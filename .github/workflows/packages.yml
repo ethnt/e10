@@ -49,6 +49,7 @@ jobs:
         - bichon
         - declutarr
         - fileflows
+        - incus-apply
         - mazanoke
         - profilarr
         - profilarr-parser

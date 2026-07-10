@@ -24,9 +24,9 @@ resource "aws_dynamodb_table" "terraform_state_lock" {
 
 terraform {
   backend "s3" {
-    bucket         = "deploy.e10.camp"
-    key            = "terraform.tfstate"
-    region         = "us-east-2"
-    dynamodb_table = "terraform_lock"
+    bucket       = "deploy.e10.camp"
+    key          = "terraform.tfstate"
+    region       = "us-east-2"
+    use_lockfile = true
   }
 }

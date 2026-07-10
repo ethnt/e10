@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib, ... }: {
   imports = [ ./postgresql.nix ./redis.nix ];
 
   sops.secrets = let
@@ -19,7 +19,7 @@
   services.authelia.instances.${config.networking.hostName} = {
     enable = true;
     settings = {
-      log.level = "info";
+      log.level = lib.mkDefault "info";
 
       server = {
         address = "tcp://127.0.0.1:9091";
