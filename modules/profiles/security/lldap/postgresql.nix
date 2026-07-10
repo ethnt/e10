@@ -3,9 +3,11 @@
 
   services.postgresql = {
     ensureDatabases = [ "lldap" ];
-    ensureUsers = [{
-      name = "lldap";
-      ensureDBOwnership = true;
-    }];
+    ensureUsers = [
+      {
+        name = "lldap";
+        ensureDBOwnership = true;
+      }
+    ];
   };
 }

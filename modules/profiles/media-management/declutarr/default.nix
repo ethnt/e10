@@ -33,22 +33,28 @@
       };
 
       instances = {
-        sonarr = [{
-          base_url = "https://sonarr.e10.camp";
-          api_key = config.sops.placeholder.sonarr_api_key;
-        }];
+        sonarr = [
+          {
+            base_url = "https://sonarr.e10.camp";
+            api_key = config.sops.placeholder.sonarr_api_key;
+          }
+        ];
 
-        radarr = [{
-          base_url = "https://radarr.e10.camp";
-          api_key = config.sops.placeholder.radarr_api_key;
-        }];
+        radarr = [
+          {
+            base_url = "https://radarr.e10.camp";
+            api_key = config.sops.placeholder.radarr_api_key;
+          }
+        ];
       };
 
       download_clients = {
-        sabnzbd = [{
-          base_url = "https://sabnzbd.e10.camp";
-          api_key = config.sops.placeholder.sabnzbd_api_key;
-        }];
+        sabnzbd = [
+          {
+            base_url = "https://sabnzbd.e10.camp";
+            api_key = config.sops.placeholder.sabnzbd_api_key;
+          }
+        ];
       };
     };
     owner = config.services.declutarr.user;

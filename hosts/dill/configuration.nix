@@ -1,11 +1,24 @@
-{ suites, profiles, hosts, ... }: {
-  imports = with suites;
-    core ++ nuc
-    ++ [ profiles.hypervisors.incus profiles.hardware.intel-graphics ]
-    ++ [ ./hardware-configuration.nix ./disk-config.nix ];
+{
+  suites,
+  profiles,
+  hosts,
+  ...
+}:
+{
+  imports =
+    with suites;
+    core
+    ++ nuc
+    ++ [
+      profiles.hypervisors.incus
+      profiles.hardware.intel-graphics
+    ]
+    ++ [
+      ./hardware-configuration.nix
+      ./disk-config.nix
+    ];
 
-  boot.loader.grub.devices =
-    [ "/dev/disk/by-id/nvme-CT4000P3SSD8_2322E6DDD8FE" ];
+  boot.loader.grub.devices = [ "/dev/disk/by-id/nvme-CT4000P3SSD8_2322E6DDD8FE" ];
 
   deployment = {
     deployable = true;
@@ -18,30 +31,31 @@
       core.https_address = ":8443";
       oidc = {
         issuer = "https://auth.e10.camp";
-        client.id =
-          "NE-kA1k.XTEv8Qe6oywlhfJHJVmLHg0474m3zD2nMjTm.ddl9rnK.Toq1WwetMP-BjYq4K0X";
+        client.id = "NE-kA1k.XTEv8Qe6oywlhfJHJVmLHg0474m3zD2nMjTm.ddl9rnK.Toq1WwetMP-BjYq4K0X";
         audience = "https://incus.dill.e10.camp";
       };
     };
-    instances = [{
-      name = "fennel";
-      image = hosts.fennel.config.system.build.qemuImage;
-      metadata = hosts.fennel.config.system.build.metadata;
-      vm = true;
-      profiles = [ "default" ];
-      kind = "instance";
-      config = {
-        "limits.cpu" = 16;
-        "limits.memory" = "8GiB";
-      };
-      devices = {
-        eth0 = {
-          type = "nic";
-          nictype = "bridged";
-          parent = "vmbr10";
+    instances = [
+      {
+        name = "fennel";
+        image = hosts.fennel.config.system.build.qemuImage;
+        metadata = hosts.fennel.config.system.build.metadata;
+        vm = true;
+        profiles = [ "default" ];
+        kind = "instance";
+        config = {
+          "limits.cpu" = 16;
+          "limits.memory" = "8GiB";
         };
-      };
-    }];
+        devices = {
+          eth0 = {
+            type = "nic";
+            nictype = "bridged";
+            parent = "vmbr10";
+          };
+        };
+      }
+    ];
   };
 
   networking = {
@@ -85,13 +99,15 @@
       "30-vmbr10" = {
         matchConfig.Name = "vmbr10";
         address = [ "10.10.4.0/24" ];
-        routes = [{
-          routeConfig = {
-            Destination = "0.0.0.0/0";
-            Gateway = "10.10.0.1";
-            GatewayOnLink = true;
-          };
-        }];
+        routes = [
+          {
+            routeConfig = {
+              Destination = "0.0.0.0/0";
+              Gateway = "10.10.0.1";
+              GatewayOnLink = true;
+            };
+          }
+        ];
         networkConfig.LinkLocalAddressing = "no";
         linkConfig.RequiredForOnline = "no";
       };

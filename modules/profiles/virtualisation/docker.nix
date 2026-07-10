@@ -20,14 +20,19 @@
   systemd.services.docker-update-containers = {
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = let docker = lib.getExe pkgs.docker;
-      in lib.getExe (pkgs.writeShellScriptBin "docker-update-containers" ''
-        images=$(${docker} ps -a --format="{{.Image}}" | sort -u)
+      ExecStart =
+        let
+          docker = lib.getExe pkgs.docker;
+        in
+        lib.getExe (
+          pkgs.writeShellScriptBin "docker-update-containers" ''
+            images=$(${docker} ps -a --format="{{.Image}}" | sort -u)
 
-        for image in $images; do
-          ${docker} pull "$image"
-        done
-      '');
+            for image in $images; do
+              ${docker} pull "$image"
+            done
+          ''
+        );
     };
   };
 }

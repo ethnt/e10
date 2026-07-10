@@ -4,12 +4,12 @@
     openFirewall = true;
     bind = "0.0.0.0";
     port = 6379;
-    settings = { protected-mode = false; };
+    settings = {
+      protected-mode = false;
+    };
   };
 
   services.blocky.settings.redis = {
-    address = "${config.services.redis.servers.blocky.bind}:${
-        toString config.services.redis.servers.blocky.port
-      }";
+    address = "${config.services.redis.servers.blocky.bind}:${toString config.services.redis.servers.blocky.port}";
   };
 }

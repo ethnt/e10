@@ -1,5 +1,7 @@
 { config, ... }: {
-  sops.secrets.cachix_auth_token = { sopsFile = ./secrets.json; };
+  sops.secrets.cachix_auth_token = {
+    sopsFile = ./secrets.json;
+  };
 
   services.cachix-watch-store = {
     enable = true;

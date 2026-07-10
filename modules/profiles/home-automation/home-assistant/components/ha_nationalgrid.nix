@@ -1,7 +1,14 @@
-{ fetchFromGitHub, home-assistant, buildHomeAssistantComponent, aionatgrid }:
+{
+  fetchFromGitHub,
+  home-assistant,
+  buildHomeAssistantComponent,
+  aionatgrid,
+}:
 
-let pythonPkgs = home-assistant.python3Packages;
-in buildHomeAssistantComponent rec {
+let
+  pythonPkgs = home-assistant.python3Packages;
+in
+buildHomeAssistantComponent rec {
   owner = "RyanMorash";
   domain = "national_grid";
   version = "0.1.1";

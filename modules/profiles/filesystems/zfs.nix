@@ -1,6 +1,5 @@
 { config, lib, ... }: {
-  networking.hostId =
-    lib.substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
+  networking.hostId = lib.substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
 
   boot = {
     zfs = {

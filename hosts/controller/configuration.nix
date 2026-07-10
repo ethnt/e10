@@ -1,6 +1,9 @@
 { profiles, suites, ... }: {
-  imports = with suites;
-    core ++ proxmox-vm ++ [
+  imports =
+    with suites;
+    core
+    ++ proxmox-vm
+    ++ [
       profiles.communications.mosquitto.default
       profiles.hardware.bluetooth
       profiles.home-automation.home-assistant.default
@@ -13,14 +16,23 @@
       profiles.telemetry.prometheus-nut-exporter
       profiles.telemetry.prometheus-smokeping-exporter
       profiles.telemetry.prometheus-unpoller-exporter.satan
-    ] ++ [ ./disk-config.nix ./hardware-configuration.nix ];
+    ]
+    ++ [
+      ./disk-config.nix
+      ./hardware-configuration.nix
+    ];
 
   deployment = {
     buildOnTarget = false;
-    tags = [ "@vm" "@build-on-target" ];
+    tags = [
+      "@vm"
+      "@build-on-target"
+    ];
   };
 
-  services.resolved.settings.Resolve = { DNSStubListener = "no"; };
+  services.resolved.settings.Resolve = {
+    DNSStubListener = "no";
+  };
 
   networking = {
     defaultGateway = {
@@ -36,15 +48,19 @@
     };
 
     interfaces = {
-      vlan2.ipv4.addresses = [{
-        address = "10.2.1.2";
-        prefixLength = 24;
-      }];
+      vlan2.ipv4.addresses = [
+        {
+          address = "10.2.1.2";
+          prefixLength = 24;
+        }
+      ];
 
-      ens18.ipv4.addresses = [{
-        address = "192.168.1.2";
-        prefixLength = 24;
-      }];
+      ens18.ipv4.addresses = [
+        {
+          address = "192.168.1.2";
+          prefixLength = 24;
+        }
+      ];
     };
   };
 

@@ -25,15 +25,22 @@
 
   services.loki = {
     enable = true;
-    extraFlags = [ "-config.expand-env=true" "-log.level=warn" ];
+    extraFlags = [
+      "-config.expand-env=true"
+      "-log.level=warn"
+    ];
     configuration = {
       auth_enabled = false;
-      server = { http_listen_port = 3100; };
+      server = {
+        http_listen_port = 3100;
+      };
       ingester = {
         lifecycler = {
           address = "0.0.0.0";
           ring = {
-            kvstore = { store = "memberlist"; };
+            kvstore = {
+              store = "memberlist";
+            };
             replication_factor = 1;
           };
           final_sleep = "0s";
@@ -68,16 +75,19 @@
           }
         ];
       };
-      compactor = { working_directory = "/var/lib/loki/compactor"; };
+      compactor = {
+        working_directory = "/var/lib/loki/compactor";
+      };
       storage_config = {
         tsdb_shipper = {
           active_index_directory = "/var/lib/loki/tsdb/index";
           cache_location = "/var/lib/loki/tsdb/cache";
         };
-        filesystem = { directory = "/var/lib/loki/chunks"; };
+        filesystem = {
+          directory = "/var/lib/loki/chunks";
+        };
         aws = {
-          s3 =
-            "s3://\${AWS_ACCESS_KEY_ID}:\${AWS_SECRET_ACCESS_KEY}@us-east-2/storage.loki.e10.camp";
+          s3 = "s3://\${AWS_ACCESS_KEY_ID}:\${AWS_SECRET_ACCESS_KEY}@us-east-2/storage.loki.e10.camp";
         };
       };
       memberlist = {
@@ -120,17 +130,14 @@
   };
 
   systemd.services.loki = {
-    serviceConfig.EnvironmentFile =
-      config.sops.templates."loki/environment_file".path;
+    serviceConfig.EnvironmentFile = config.sops.templates."loki/environment_file".path;
     wants = [ "sops-nix.service" ];
     after = [ "sops-nix.service" ];
   };
 
   networking.firewall = {
-    allowedTCPPorts =
-      [ config.services.loki.configuration.server.http_listen_port ];
-    allowedUDPPorts =
-      [ config.services.loki.configuration.server.http_listen_port ];
+    allowedTCPPorts = [ config.services.loki.configuration.server.http_listen_port ];
+    allowedUDPPorts = [ config.services.loki.configuration.server.http_listen_port ];
   };
 
   services.restic.backups = {

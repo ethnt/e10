@@ -2,9 +2,11 @@
 
 with lib;
 
-let cfg = config.services.wizarr;
+let
+  cfg = config.services.wizarr;
 
-in {
+in
+{
   options.services.wizarr = {
     enable = mkEnableOption "Enable Wizarr";
 
@@ -32,12 +34,13 @@ in {
 
     virtualisation.oci-containers.containers.wizarr = {
       image = "ghcr.io/wizarrrr/wizarr";
-      environment = { TZ = config.time.timeZone; };
+      environment = {
+        TZ = config.time.timeZone;
+      };
       ports = [ "${toString cfg.port}:5690" ];
       volumes = [ "${cfg.dataDir}:/data/database" ];
     };
 
-    networking.firewall =
-      mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
+    networking.firewall = mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
   };
 }

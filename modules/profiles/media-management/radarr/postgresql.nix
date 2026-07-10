@@ -1,14 +1,26 @@
-{ config, pkgs, lib, profiles, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  profiles,
+  ...
+}:
+{
   imports = [ profiles.databases.postgresql ];
 
   services.postgresqlBackup.databases = [ "radarr" ];
 
   services.postgresql = {
-    ensureDatabases = [ "radarr" "radarr_logs" ];
-    ensureUsers = [{
-      name = "radarr";
-      ensureDBOwnership = true;
-    }];
+    ensureDatabases = [
+      "radarr"
+      "radarr_logs"
+    ];
+    ensureUsers = [
+      {
+        name = "radarr";
+        ensureDBOwnership = true;
+      }
+    ];
 
     initialScriptText = lib.mkAfter ''
       ALTER DATABASE radarr_logs OWNER TO radarr;
@@ -24,13 +36,18 @@
       after = [ "postgresql.service" ];
       wants = [ "postgresql.service" ];
       serviceConfig = {
-        ExecStart = lib.getExe (pkgs.writeShellApplication {
-          name = "radarr-logs-cleanup";
-          runtimeInputs = [ pkgs.sudo config.services.postgresql.package ];
-          text = ''
-            sudo -u postgres psql --dbname="radarr_logs" --command="DELETE FROM \"Logs\" WHERE \"Time\" < now() - interval '24 hours'"
-          '';
-        });
+        ExecStart = lib.getExe (
+          pkgs.writeShellApplication {
+            name = "radarr-logs-cleanup";
+            runtimeInputs = [
+              pkgs.sudo
+              config.services.postgresql.package
+            ];
+            text = ''
+              sudo -u postgres psql --dbname="radarr_logs" --command="DELETE FROM \"Logs\" WHERE \"Time\" < now() - interval '24 hours'"
+            '';
+          }
+        );
       };
     };
 

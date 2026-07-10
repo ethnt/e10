@@ -10,17 +10,23 @@ let
     loader = haumea.lib.loaders.path;
   };
 
-  nixosModules = l.attrValues (flattenTree (haumea.lib.load {
-    src = ../modules/nixos;
-    loader = haumea.lib.loaders.path;
-  }));
+  nixosModules = l.attrValues (
+    flattenTree (
+      haumea.lib.load {
+        src = ../modules/nixos;
+        loader = haumea.lib.loaders.path;
+      }
+    )
+  );
 
-  commonModules = with inputs;
+  commonModules =
+    with inputs;
     [
       plex-exporter.nixosModules.plex-exporter
       sops-nix.nixosModules.sops
       disko.nixosModules.disko
-    ] ++ nixosModules;
+    ]
+    ++ nixosModules;
 
   # https://github.com/zhaofengli/colmena/issues/60#issuecomment-1047199551
   extraModules = with inputs; [
@@ -31,20 +37,44 @@ let
 
   suites = import ../modules/suites.nix { inherit profiles; };
 
-  mkHost = hostname:
-    { system, configuration ? ./${hostname}/configuration.nix, ... }:
-    withSystem system (_:
+  mkHost =
+    hostname:
+    {
+      system,
+      configuration ? ./${hostname}/configuration.nix,
+      ...
+    }:
+    withSystem system (
+      _:
       let
         baseConfiguration = _: { networking.hostName = hostname; };
-        modules = commonModules ++ [ baseConfiguration configuration ];
+        modules = commonModules ++ [
+          baseConfiguration
+          configuration
+        ];
         specialArgs = {
-          inherit inputs profiles suites secrets;
+          inherit
+            inputs
+            profiles
+            suites
+            secrets
+            ;
           flake = self;
           hosts = self.nixosConfigurations;
         };
-      in l.nixosSystem { inherit specialArgs modules system extraModules; });
+      in
+      l.nixosSystem {
+        inherit
+          specialArgs
+          modules
+          system
+          extraModules
+          ;
+      }
+    );
 
-in {
+in
+{
   flake.nixosConfigurations = {
     monitor = mkHost "monitor" { system = "aarch64-linux"; };
     omnibus = mkHost "omnibus" { system = "x86_64-linux"; };

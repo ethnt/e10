@@ -4,7 +4,11 @@ with lib;
 
 let
   cfg = config.services.thanos;
-  mkAddressPortOption = { defaultAddress ? "0.0.0.0", defaultPort ? 10100 }:
+  mkAddressPortOption =
+    {
+      defaultAddress ? "0.0.0.0",
+      defaultPort ? 10100,
+    }:
     mkOption {
       type = types.submodule {
         options = {
@@ -20,7 +24,8 @@ let
         };
       };
     };
-in {
+in
+{
   options.services.thanos = {
     sidecar = {
       http = mkAddressPortOption { defaultPort = 19190; };
@@ -37,35 +42,30 @@ in {
       grpc = mkAddressPortOption { defaultPort = 10902; };
     };
 
-    compact = { http = mkAddressPortOption { defaultPort = 19193; }; };
+    compact = {
+      http = mkAddressPortOption { defaultPort = 19193; };
+    };
   };
 
   config = {
     services.thanos = {
       sidecar = mkIf cfg.sidecar.enable {
-        http-address =
-          "${cfg.sidecar.http.address}:${toString cfg.sidecar.http.port}";
-        grpc-address =
-          "${cfg.sidecar.grpc.address}:${toString cfg.sidecar.grpc.port}";
+        http-address = "${cfg.sidecar.http.address}:${toString cfg.sidecar.http.port}";
+        grpc-address = "${cfg.sidecar.grpc.address}:${toString cfg.sidecar.grpc.port}";
       };
 
       store = mkIf cfg.store.enable {
-        http-address =
-          "${cfg.store.http.address}:${toString cfg.store.http.port}";
-        grpc-address =
-          "${cfg.store.grpc.address}:${toString cfg.store.grpc.port}";
+        http-address = "${cfg.store.http.address}:${toString cfg.store.http.port}";
+        grpc-address = "${cfg.store.grpc.address}:${toString cfg.store.grpc.port}";
       };
 
       query = mkIf cfg.query.enable {
-        http-address =
-          "${cfg.query.http.address}:${toString cfg.query.http.port}";
-        grpc-address =
-          "${cfg.query.grpc.address}:${toString cfg.query.grpc.port}";
+        http-address = "${cfg.query.http.address}:${toString cfg.query.http.port}";
+        grpc-address = "${cfg.query.grpc.address}:${toString cfg.query.grpc.port}";
       };
 
       compact = mkIf cfg.compact.enable {
-        http-address =
-          "${cfg.compact.http.address}:${toString cfg.compact.http.port}";
+        http-address = "${cfg.compact.http.address}:${toString cfg.compact.http.port}";
       };
     };
   };

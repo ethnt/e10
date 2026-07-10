@@ -1,15 +1,19 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.services.declutarr;
   format = pkgs.formats.yaml { };
-  configFile = if cfg.config != null then
-    format.generate "configuration.yaml" cfg.config
-  else
-    cfg.configFile;
-in {
+  configFile =
+    if cfg.config != null then format.generate "configuration.yaml" cfg.config else cfg.configFile;
+in
+{
   options.services.declutarr = {
     enable = mkEnableOption "Enable Declutarr";
 
@@ -50,11 +54,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    assertions = [{
-      assertion = !(cfg.config != null && cfg.configFile != null);
-      message =
-        "Only one of `config` or `configFile` can be configured at the same time";
-    }];
+    assertions = [
+      {
+        assertion = !(cfg.config != null && cfg.configFile != null);
+        message = "Only one of `config` or `configFile` can be configured at the same time";
+      }
+    ];
 
     systemd.tmpfiles.settings."10-declutarr" = {
       ${cfg.dataDir} = {

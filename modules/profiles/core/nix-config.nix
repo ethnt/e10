@@ -1,9 +1,17 @@
-{ flake, pkgs, lib, ... }: {
+{
+  flake,
+  pkgs,
+  lib,
+  ...
+}:
+{
   nixpkgs = {
     config = {
       allowUnfree = true;
-      permittedInsecurePackages =
-        [ "dotnet-sdk-6.0.428" "aspnetcore-runtime-6.0.36" ];
+      permittedInsecurePackages = [
+        "dotnet-sdk-6.0.428"
+        "aspnetcore-runtime-6.0.36"
+      ];
     };
     overlays = [
       flake.overlays.default
@@ -28,10 +36,21 @@
 
     settings = {
       allowed-users = [ "@wheel" ];
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       sandbox = true;
-      system-features = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-      trusted-users = [ "root" "@wheel" ];
+      system-features = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+      ];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
     };
   };
 }

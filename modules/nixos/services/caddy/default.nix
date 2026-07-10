@@ -2,70 +2,81 @@
 
 with lib;
 
-let cfg = config.services.caddy;
-in {
+let
+  cfg = config.services.caddy;
+in
+{
   options.services.caddy = {
     proxies = mkOption {
-      type = types.attrsOf (types.submodule {
-        options = {
-          host = mkOption { type = types.attrs; };
-          port = mkOption { type = types.oneOf [ types.port types.str ]; };
-          extraReverseProxyConfig = mkOption {
-            type = types.lines;
-            default = "";
-          };
-          extraConfig = mkOption {
-            type = types.lines;
-            default = "";
-          };
-          protected = mkOption {
-            type = types.bool;
-            default = false;
-          };
-          skipTLSVerify = mkOption {
-            type = types.bool;
-            default = false;
-          };
-          acme = mkOption {
-            type = types.submodule {
-              options = {
-                generate = mkOption {
-                  type = types.bool;
-                  default = false;
-                };
-                provider = mkOption {
-                  type = types.str;
-                  default = null;
-                };
-                environmentFile = mkOption {
-                  type = types.path;
-                  default = null;
+      type = types.attrsOf (
+        types.submodule {
+          options = {
+            host = mkOption { type = types.attrs; };
+            port = mkOption {
+              type = types.oneOf [
+                types.port
+                types.str
+              ];
+            };
+            extraReverseProxyConfig = mkOption {
+              type = types.lines;
+              default = "";
+            };
+            extraConfig = mkOption {
+              type = types.lines;
+              default = "";
+            };
+            protected = mkOption {
+              type = types.bool;
+              default = false;
+            };
+            skipTLSVerify = mkOption {
+              type = types.bool;
+              default = false;
+            };
+            acme = mkOption {
+              type = types.submodule {
+                options = {
+                  generate = mkOption {
+                    type = types.bool;
+                    default = false;
+                  };
+                  provider = mkOption {
+                    type = types.str;
+                    default = null;
+                  };
+                  environmentFile = mkOption {
+                    type = types.path;
+                    default = null;
+                  };
                 };
               };
+              default = { };
             };
-            default = { };
           };
-        };
-      });
+        }
+      );
       default = { };
     };
   };
 
   config = mkIf cfg.enable {
-    services.caddy.virtualHosts = mapAttrs (name: value:
+    services.caddy.virtualHosts = mapAttrs (
+      name: value:
       let
-        resolvedHost = if config.networking.hostName
-        == value.host.config.networking.hostName then
-          "localhost"
-        else
-          value.host.config.networking.hostName;
+        resolvedHost =
+          if config.networking.hostName == value.host.config.networking.hostName then
+            "localhost"
+          else
+            value.host.config.networking.hostName;
         autheliaForwardAuth = ''
           forward_auth localhost:9091 {
             uri /api/authz/forward-auth
             copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
           }
         '';
-      in {
+      in
+      {
         logFormat = ''
           output file ${config.services.caddy.logDir}/access-${name}.log {
             roll_size 1GiB
@@ -78,19 +89,18 @@ in {
 
           reverse_proxy ${resolvedHost}:${toString value.port} {
             ${value.extraReverseProxyConfig}
-            ${
-              optionalString value.skipTLSVerify ''
-                transport http {
-                  tls_insecure_skip_verify
-                }
-              ''
-            }
+            ${optionalString value.skipTLSVerify ''
+              transport http {
+                tls_insecure_skip_verify
+              }
+            ''}
           }
 
           ${value.extraConfig}
         '';
-      } // lib.optionalAttrs value.acme.generate { useACMEHost = name; })
-      cfg.proxies;
+      }
+      // lib.optionalAttrs value.acme.generate { useACMEHost = name; }
+    ) cfg.proxies;
 
     security.acme.certs = mapAttrs (name: value: {
       domain = name;

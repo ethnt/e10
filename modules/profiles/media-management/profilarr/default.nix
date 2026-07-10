@@ -14,8 +14,7 @@
     };
     oidc = {
       enable = true;
-      clientID =
-        "a8Jy2n_CgUOu~nTlLlkgZQV7xJmhq5aW1N0eNePghiFL0Su5jysCJKOpaEpjvRd7yhhz589E";
+      clientID = "a8Jy2n_CgUOu~nTlLlkgZQV7xJmhq5aW1N0eNePghiFL0Su5jysCJKOpaEpjvRd7yhhz589E";
       clientSecretFile = config.sops.secrets.profilarr_oidc_client_secret.path;
       discoveryURL = "https://auth.e10.camp/.well-known/openid-configuration";
     };

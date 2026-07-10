@@ -1,7 +1,10 @@
 { pkgs, lib, ... }: {
   services.postgresql = {
     enable = true;
-    package = pkgs.postgresql_15.withPackages (p: [ p.postgis p.timescaledb ]);
+    package = pkgs.postgresql_15.withPackages (p: [
+      p.postgis
+      p.timescaledb
+    ]);
     enableTCPIP = true;
     authentication = ''
       local all all trust
@@ -15,8 +18,7 @@
 
   services.postgresqlBackup = {
     enable = true;
-    databases = lib.mkDefault
-      [ ]; # Set individually so the service produces individual SQL files
+    databases = lib.mkDefault [ ]; # Set individually so the service produces individual SQL files
     startAt = "*-*-* 00:15:00";
   };
 

@@ -13,8 +13,7 @@
         smtp_use_tls = "yes";
         smtp_sas_auth_enable = "yes";
         smtp_sasl_security_options = "";
-        smtp_sasl_password_maps =
-          "texthash:${config.sops.secrets.postfix_sasl_password.path}";
+        smtp_sasl_password_maps = "texthash:${config.sops.secrets.postfix_sasl_password.path}";
       };
     };
   };

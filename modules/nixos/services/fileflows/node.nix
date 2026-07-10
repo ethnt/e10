@@ -1,9 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.services.fileflows.node;
-in {
+let
+  cfg = config.services.fileflows.node;
+in
+{
   options.services.fileflows.node = {
     enable = mkEnableOption "Enable FileFlows node";
 
@@ -59,17 +66,16 @@ in {
       };
 
       "${cfg.binDir}"."L+".argument = "${
-          pkgs.symlinkJoin {
-            name = "fileflows-node-extra-pkgs";
-            paths = cfg.extraPkgs;
-          }
-        }/bin";
+        pkgs.symlinkJoin {
+          name = "fileflows-node-extra-pkgs";
+          paths = cfg.extraPkgs;
+        }
+      }/bin";
     };
 
     systemd.services.fileflows-server = {
       description = "FileFlows node";
-      script =
-        "${cfg.package}/bin/node --no-gui --systemd-service --server ${cfg.serverUrl}";
+      script = "${cfg.package}/bin/node --no-gui --systemd-service --server ${cfg.serverUrl}";
       environment.FILEFLOWS_SERVER_BASE_DIR = cfg.dataDir;
 
       serviceConfig = {
@@ -101,7 +107,6 @@ in {
       groups = mkIf (cfg.group == "fileflows") { fileflows = { }; };
     };
 
-    networking.firewall =
-      mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
+    networking.firewall = mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
   };
 }

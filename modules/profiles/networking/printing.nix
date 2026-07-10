@@ -9,12 +9,14 @@
   };
 
   hardware.printers = {
-    ensurePrinters = [{
-      name = "Brother_HL-L2300D";
-      location = "Office";
-      deviceUri = "usb://Brother/HL-L2300D%20series?serial=U63878H0N332161";
-      model = "drv:///brlaser.drv/brl2300d.ppd";
-    }];
+    ensurePrinters = [
+      {
+        name = "Brother_HL-L2300D";
+        location = "Office";
+        deviceUri = "usb://Brother/HL-L2300D%20series?serial=U63878H0N332161";
+        model = "drv:///brlaser.drv/brl2300d.ppd";
+      }
+    ];
     ensureDefaultPrinter = "Brother_HL-L2300D";
   };
 
@@ -27,8 +29,14 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
-    allowInterfaces = [ "ens18" "vlan10" ];
-    denyInterfaces = [ "docker0" "veth*" ];
+    allowInterfaces = [
+      "ens18"
+      "vlan10"
+    ];
+    denyInterfaces = [
+      "docker0"
+      "veth*"
+    ];
     publish = {
       enable = true;
       userServices = true;

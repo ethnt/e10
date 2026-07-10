@@ -1,8 +1,15 @@
 { lib, ... }: {
   boot = {
     initrd = {
-      availableKernelModules =
-        [ "xhci_pci" "thunderbolt" "ahci" "nvme" "usbhid" "uas" "sd_mod" ];
+      availableKernelModules = [
+        "xhci_pci"
+        "thunderbolt"
+        "ahci"
+        "nvme"
+        "usbhid"
+        "uas"
+        "sd_mod"
+      ];
       kernelModules = [ ];
     };
 

@@ -17,99 +17,102 @@ let
     hdd6 = "/dev/disk/by-id/ata-ST20000NM007D-3DJ103_ZVT5MMBQ";
     hdd7 = "/dev/disk/by-id/ata-WDC_WD181KFGX-68CKWN0_PNG2ZUJP";
   };
-in {
+in
+{
   disko.devices = {
-    disk = let
-      addToZfsPool = { device, pool }: {
-        inherit device;
+    disk =
+      let
+        addToZfsPool = { device, pool }: {
+          inherit device;
 
-        type = "disk";
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                inherit pool;
-                type = "zfs";
+          type = "disk";
+          content = {
+            type = "gpt";
+            partitions = {
+              zfs = {
+                size = "100%";
+                content = {
+                  inherit pool;
+                  type = "zfs";
+                };
               };
             };
           };
         };
-      };
-    in {
-      root = {
-        type = "disk";
-        device = disks.scsi;
-        content = {
-          type = "gpt";
-          partitions = {
-            boot = {
-              size = "1M";
-              type = "EF02";
-            };
-
-            ESP = {
-              size = "1G";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
+      in
+      {
+        root = {
+          type = "disk";
+          device = disks.scsi;
+          content = {
+            type = "gpt";
+            partitions = {
+              boot = {
+                size = "1M";
+                type = "EF02";
               };
-            };
 
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "zroot";
+              ESP = {
+                size = "1G";
+                type = "EF00";
+                content = {
+                  type = "filesystem";
+                  format = "vfat";
+                  mountpoint = "/boot";
+                };
+              };
+
+              zfs = {
+                size = "100%";
+                content = {
+                  type = "zfs";
+                  pool = "zroot";
+                };
               };
             };
           };
         };
-      };
 
-      hdd0 = addToZfsPool {
-        device = disks.hdd0;
-        pool = "files";
-      };
+        hdd0 = addToZfsPool {
+          device = disks.hdd0;
+          pool = "files";
+        };
 
-      hdd1 = addToZfsPool {
-        device = disks.hdd1;
-        pool = "files";
-      };
+        hdd1 = addToZfsPool {
+          device = disks.hdd1;
+          pool = "files";
+        };
 
-      hdd2 = addToZfsPool {
-        device = disks.hdd2;
-        pool = "blockbuster";
-      };
+        hdd2 = addToZfsPool {
+          device = disks.hdd2;
+          pool = "blockbuster";
+        };
 
-      hdd3 = addToZfsPool {
-        device = disks.hdd3;
-        pool = "blockbuster";
-      };
+        hdd3 = addToZfsPool {
+          device = disks.hdd3;
+          pool = "blockbuster";
+        };
 
-      hdd4 = addToZfsPool {
-        device = disks.hdd4;
-        pool = "blockbuster";
-      };
+        hdd4 = addToZfsPool {
+          device = disks.hdd4;
+          pool = "blockbuster";
+        };
 
-      hdd5 = addToZfsPool {
-        device = disks.hdd5;
-        pool = "blockbuster";
-      };
+        hdd5 = addToZfsPool {
+          device = disks.hdd5;
+          pool = "blockbuster";
+        };
 
-      hdd6 = addToZfsPool {
-        device = disks.hdd6;
-        pool = "blockbuster";
-      };
+        hdd6 = addToZfsPool {
+          device = disks.hdd6;
+          pool = "blockbuster";
+        };
 
-      hdd7 = addToZfsPool {
-        device = disks.hdd7;
-        pool = "blockbuster";
+        hdd7 = addToZfsPool {
+          device = disks.hdd7;
+          pool = "blockbuster";
+        };
       };
-    };
 
     zpool = {
       zroot = {

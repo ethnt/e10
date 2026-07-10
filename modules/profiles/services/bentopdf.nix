@@ -6,10 +6,12 @@
     nginx = {
       enable = true;
       virtualHost = {
-        listen = [{
-          addr = "0.0.0.0";
-          port = 4152;
-        }];
+        listen = [
+          {
+            addr = "0.0.0.0";
+            port = 4152;
+          }
+        ];
       };
     };
   };

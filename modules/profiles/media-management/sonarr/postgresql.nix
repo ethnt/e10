@@ -1,14 +1,26 @@
-{ config, pkgs, lib, profiles, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  profiles,
+  ...
+}:
+{
   imports = [ profiles.databases.postgresql ];
 
   services.postgresqlBackup.databases = [ "sonarr" ];
 
   services.postgresql = {
-    ensureDatabases = [ "sonarr" "sonarr_logs" ];
-    ensureUsers = [{
-      name = "sonarr";
-      ensureDBOwnership = true;
-    }];
+    ensureDatabases = [
+      "sonarr"
+      "sonarr_logs"
+    ];
+    ensureUsers = [
+      {
+        name = "sonarr";
+        ensureDBOwnership = true;
+      }
+    ];
 
     initialScriptText = lib.mkAfter ''
       ALTER DATABASE sonarr_logs OWNER TO sonarr;
@@ -24,13 +36,18 @@
       after = [ "postgresql.service" ];
       wants = [ "postgresql.service" ];
       serviceConfig = {
-        ExecStart = lib.getExe (pkgs.writeShellApplication {
-          name = "sonarr-logs-cleanup";
-          runtimeInputs = [ pkgs.sudo config.services.postgresql.package ];
-          text = ''
-            sudo -u postgres psql --dbname="sonarr_logs" --command="DELETE FROM \"Logs\" WHERE \"Time\" < now() - interval '24 hours'"
-          '';
-        });
+        ExecStart = lib.getExe (
+          pkgs.writeShellApplication {
+            name = "sonarr-logs-cleanup";
+            runtimeInputs = [
+              pkgs.sudo
+              config.services.postgresql.package
+            ];
+            text = ''
+              sudo -u postgres psql --dbname="sonarr_logs" --command="DELETE FROM \"Logs\" WHERE \"Time\" < now() - interval '24 hours'"
+            '';
+          }
+        );
       };
     };
 

@@ -2,8 +2,10 @@
 
 with lib;
 
-let cfg = config.services.termix;
-in {
+let
+  cfg = config.services.termix;
+in
+{
   options.services.termix = {
     enable = mkEnableOption "Enable Termix";
 
@@ -46,8 +48,7 @@ in {
         TZ = config.time.timeZone;
         ENABLE_SSL = toString false;
       };
-      environmentFiles =
-        lib.optional (cfg.environmentFile != null) cfg.environmentFile;
+      environmentFiles = lib.optional (cfg.environmentFile != null) cfg.environmentFile;
       volumes = [ "${cfg.dataDir}:/app/data:rw" ];
       ports = [ "${toString cfg.port}:8095" ];
     };

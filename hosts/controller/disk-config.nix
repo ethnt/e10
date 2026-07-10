@@ -1,6 +1,10 @@
 _:
-let disks = { sda = "/dev/sda"; };
-in {
+let
+  disks = {
+    sda = "/dev/sda";
+  };
+in
+{
   disko.devices = {
     disk = {
       sda = {

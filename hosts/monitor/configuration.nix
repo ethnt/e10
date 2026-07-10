@@ -1,6 +1,10 @@
 { profiles, suites, ... }: {
-  imports = with suites;
-    core ++ aws ++ web ++ [
+  imports =
+    with suites;
+    core
+    ++ aws
+    ++ web
+    ++ [
       profiles.communications.grafana-to-ntfy.default
       profiles.communications.ntfy
       profiles.monitoring.loki.default
@@ -10,7 +14,8 @@
       profiles.observability.grafana
       profiles.observability.uptime-kuma
       profiles.telemetry.prometheus-redis-exporter
-    ] ++ [
+    ]
+    ++ [
       ./profiles/authelia
       ./profiles/caddy.nix
       ./profiles/prometheus.nix

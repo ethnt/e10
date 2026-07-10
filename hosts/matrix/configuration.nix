@@ -1,6 +1,15 @@
-{ lib, suites, profiles, ... }: {
-  imports = with suites;
-    core ++ proxmox-vm ++ [
+{
+  lib,
+  suites,
+  profiles,
+  ...
+}:
+{
+  imports =
+    with suites;
+    core
+    ++ proxmox-vm
+    ++ [
       profiles.databases.postgresql
       profiles.emulation.aarch64-linux
       profiles.filesystems.blockbuster
@@ -24,16 +33,22 @@
       profiles.telemetry.prometheus-nut-exporter
       profiles.virtualisation.docker
       profiles.web-servers.caddy
-    ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
+    ]
+    ++ [
+      ./hardware-configuration.nix
+      ./disk-config.nix
+    ];
 
-  boot.loader.grub.devices =
-    [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
+  boot.loader.grub.devices = [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
   satan.address = "10.10.3.101";
 
   deployment = {
     buildOnTarget = true;
-    tags = [ "@vm" "@build-on-target" ];
+    tags = [
+      "@vm"
+      "@build-on-target"
+    ];
   };
 
   networking = {
@@ -48,17 +63,21 @@
 
     interfaces = {
       vlan10.ipv4 = {
-        routes = [{
-          address = "0.0.0.0";
-          prefixLength = 0;
-          via = "10.10.0.1";
-          options.src = "10.10.3.101";
-          options.onlink = "";
-        }];
-        addresses = [{
-          address = "10.10.3.101";
-          prefixLength = 24;
-        }];
+        routes = [
+          {
+            address = "0.0.0.0";
+            prefixLength = 0;
+            via = "10.10.0.1";
+            options.src = "10.10.3.101";
+            options.onlink = "";
+          }
+        ];
+        addresses = [
+          {
+            address = "10.10.3.101";
+            prefixLength = 24;
+          }
+        ];
       };
     };
   };

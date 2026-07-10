@@ -46,7 +46,10 @@
     profiles.hardware.ssd
   ];
 
-  aws = [ profiles.virtualisation.aws profiles.networking.quad9 ];
+  aws = [
+    profiles.virtualisation.aws
+    profiles.networking.quad9
+  ];
 
   proxmox-vm = [
     profiles.virtualisation.qemu

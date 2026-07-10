@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   sops = {
     secrets = {
       restic_backup_password = {
@@ -62,8 +68,11 @@
         };
       };
     };
-  } // lib.mapAttrs' (name: _:
+  }
+  // lib.mapAttrs' (
+    name: _:
     lib.nameValuePair "restic-backups-${name}" {
       unitConfig.OnFailure = "restic-notify-failure@%n.service";
-    }) config.services.restic.backups;
+    }
+  ) config.services.restic.backups;
 }

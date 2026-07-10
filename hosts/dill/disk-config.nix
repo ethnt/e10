@@ -1,6 +1,10 @@
 _:
-let disks = { nvme = "/dev/disk/by-id/nvme-CT4000P3SSD8_2322E6DDD8FE"; };
-in {
+let
+  disks = {
+    nvme = "/dev/disk/by-id/nvme-CT4000P3SSD8_2322E6DDD8FE";
+  };
+in
+{
   disko.devices = {
     disk = {
       root = {

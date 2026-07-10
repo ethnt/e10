@@ -1,6 +1,16 @@
-{ config, pkgs, suites, profiles, ... }: {
-  imports = with suites;
-    core ++ proxmox-vm ++ [
+{
+  config,
+  pkgs,
+  suites,
+  profiles,
+  ...
+}:
+{
+  imports =
+    with suites;
+    core
+    ++ proxmox-vm
+    ++ [
       profiles.backups.restic-rest.default
       profiles.communications.postfix.default
       profiles.databases.postgresql
@@ -17,14 +27,20 @@
       profiles.users.files
       profiles.users.nicole
       profiles.users.proxmox
-    ] ++ [ ./hardware-configuration.nix ./disk-config.nix ];
+    ]
+    ++ [
+      ./hardware-configuration.nix
+      ./disk-config.nix
+    ];
 
-  boot.loader.grub.devices =
-    [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
+  boot.loader.grub.devices = [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
   deployment = {
     buildOnTarget = true;
-    tags = [ "@vm" "@build-on-target" ];
+    tags = [
+      "@vm"
+      "@build-on-target"
+    ];
   };
 
   satan.address = "10.10.1.101";
@@ -40,34 +56,34 @@
 
     interfaces = {
       vlan10.ipv4 = {
-        routes = [{
-          address = "0.0.0.0";
-          prefixLength = 0;
-          via = "10.10.0.1";
-          options.src = "10.10.1.101";
-          options.onlink = "";
-        }];
-        addresses = [{
-          address = "10.10.1.101";
-          prefixLength = 24;
-        }];
+        routes = [
+          {
+            address = "0.0.0.0";
+            prefixLength = 0;
+            via = "10.10.0.1";
+            options.src = "10.10.1.101";
+            options.onlink = "";
+          }
+        ];
+        addresses = [
+          {
+            address = "10.10.1.101";
+            prefixLength = 24;
+          }
+        ];
       };
     };
   };
 
-  services.nfs.server.exports = let
-    blockbusterOptions =
-      "rw,sync,no_subtree_check,insecure,crossmnt,all_squash,anonuid=${
-        toString config.users.users.blockbuster.uid
-      },anongid=${toString config.users.groups.blockbuster.gid}";
-    filesOptions =
-      "rw,sync,no_subtree_check,insecure,crossmnt,all_squash,anonuid=${
-        toString config.users.users.files.uid
-      },anongid=${toString config.users.groups.files.gid}";
-  in ''
-    ${config.disko.devices.zpool.blockbuster.datasets.root.mountpoint} 192.168.0.0/16(${blockbusterOptions}) 100.0.0.0/8(${blockbusterOptions}) 10.10.0.0/16(${blockbusterOptions})
-    ${config.disko.devices.zpool.files.datasets.root.mountpoint} 192.168.0.0/16(${filesOptions}) 100.0.0.0/8(${filesOptions}) 10.10.0.0/16(${filesOptions})
-  '';
+  services.nfs.server.exports =
+    let
+      blockbusterOptions = "rw,sync,no_subtree_check,insecure,crossmnt,all_squash,anonuid=${toString config.users.users.blockbuster.uid},anongid=${toString config.users.groups.blockbuster.gid}";
+      filesOptions = "rw,sync,no_subtree_check,insecure,crossmnt,all_squash,anonuid=${toString config.users.users.files.uid},anongid=${toString config.users.groups.files.gid}";
+    in
+    ''
+      ${config.disko.devices.zpool.blockbuster.datasets.root.mountpoint} 192.168.0.0/16(${blockbusterOptions}) 100.0.0.0/8(${blockbusterOptions}) 10.10.0.0/16(${blockbusterOptions})
+      ${config.disko.devices.zpool.files.datasets.root.mountpoint} 192.168.0.0/16(${filesOptions}) 100.0.0.0/8(${filesOptions}) 10.10.0.0/16(${filesOptions})
+    '';
 
   services.samba.settings = {
     proxmox = {
@@ -107,10 +123,8 @@
 
   services.restic.backups.files-rsync-net = {
     initialize = true;
-    repository =
-      "sftp://de2228@de2228.rsync.net/${config.networking.hostName}/files";
-    extraOptions =
-      [ "sftp.args='-i ${config.sops.secrets.rsync_net_ssh_key.path}'" ];
+    repository = "sftp://de2228@de2228.rsync.net/${config.networking.hostName}/files";
+    extraOptions = [ "sftp.args='-i ${config.sops.secrets.rsync_net_ssh_key.path}'" ];
     passwordFile = config.sops.secrets.restic_backup_password.path;
     paths = [ "/data/files" ];
     exclude = [
@@ -123,7 +137,11 @@
       Persistent = true;
       RandomizedDelaySec = "1h";
     };
-    pruneOpts = [ "--keep-daily 1" "--keep-weekly 1" "--keep-monthly 1" ];
+    pruneOpts = [
+      "--keep-daily 1"
+      "--keep-weekly 1"
+      "--keep-monthly 1"
+    ];
   };
 
   system.stateVersion = "24.05";

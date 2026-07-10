@@ -43,8 +43,17 @@
   };
 
   networking.firewall = {
-    allowedTCPPorts = [ 445 139 5357 ];
-    allowedUDPPorts = [ 137 138 3702 5353 ];
+    allowedTCPPorts = [
+      445
+      139
+      5357
+    ];
+    allowedUDPPorts = [
+      137
+      138
+      3702
+      5353
+    ];
   };
 
   environment.systemPackages = with pkgs; [ cifs-utils ];

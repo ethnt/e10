@@ -1,8 +1,10 @@
 {
-  perSystem = { config, pkgs, ... }:
+  perSystem =
+    { config, pkgs, ... }:
     let
       tflintWithPlugins = pkgs.tflint.withPlugins (p: [ p.tflint-ruleset-aws ]);
-    in {
+    in
+    {
       packages = {
         tf = pkgs.writeShellScriptBin "tf" ''
           set -euo pipefail

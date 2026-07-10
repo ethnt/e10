@@ -2,7 +2,8 @@
 let
   downloadDir = "/data/local/tmp/sabnzbd/inter";
   completeDir = "/data/local/tmp/sabnzbd/dst";
-in {
+in
+{
   sops = {
     secrets = {
       sabnzbd_admin_password = {
@@ -92,10 +93,8 @@ in {
           };
           servers = {
             "news-us.newsgroup.ninja" = {
-              username =
-                config.sops.placeholder.sabnzbd_newsgroup_ninja_username;
-              password =
-                config.sops.placeholder.sabnzbd_newsgroup_ninja_password;
+              username = config.sops.placeholder.sabnzbd_newsgroup_ninja_username;
+              password = config.sops.placeholder.sabnzbd_newsgroup_ninja_password;
             };
             "news.supernews.com" = {
               username = config.sops.placeholder.sabnzbd_supernews_username;
@@ -110,10 +109,8 @@ in {
               password = config.sops.placeholder.sabnzbd_newshosting_password;
             };
             "news.newsgroupdirect.com" = {
-              username =
-                config.sops.placeholder.sabnzbd_newsgroup_direct_username;
-              password =
-                config.sops.placeholder.sabnzbd_newsgroup_direct_password;
+              username = config.sops.placeholder.sabnzbd_newsgroup_direct_username;
+              password = config.sops.placeholder.sabnzbd_newsgroup_direct_password;
             };
             "news.eweka.nl" = {
               username = config.sops.placeholder.sabnzbd_eweka_username;

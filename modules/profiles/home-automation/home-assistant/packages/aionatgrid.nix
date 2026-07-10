@@ -1,5 +1,11 @@
-{ buildPythonPackage, fetchFromGitHub, setuptools, aiohttp, typing-extensions
-, pyjwt }:
+{
+  buildPythonPackage,
+  fetchFromGitHub,
+  setuptools,
+  aiohttp,
+  typing-extensions,
+  pyjwt,
+}:
 
 buildPythonPackage rec {
   pname = "aionatgrid";
@@ -17,5 +23,9 @@ buildPythonPackage rec {
   pyproject = true;
   build-system = [ setuptools ];
 
-  dependencies = [ aiohttp typing-extensions pyjwt ];
+  dependencies = [
+    aiohttp
+    typing-extensions
+    pyjwt
+  ];
 }
