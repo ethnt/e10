@@ -1,11 +1,11 @@
-{
-  lib,
-  stdenvNoCC,
-  fetchzip,
-  dotnetCorePackages,
-  sqlite,
-  libz,
-  writeShellScript,
+{ lib
+, stdenvNoCC
+, fetchzip
+, dotnetCorePackages
+, sqlite
+, libz
+, writeShellScript
+,
 }:
 let
   dotnet = dotnetCorePackages.aspnetcore_8_0;

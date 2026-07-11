@@ -1,16 +1,16 @@
-{
-  stdenv,
-  lib,
-  rustPlatform,
-  fetchFromGitHub,
-  fetchPnpmDeps,
-  nodejs_22,
-  pnpm,
-  pnpmConfigHook,
-  typescript,
-  pkg-config,
-  git,
-  openssl,
+{ stdenv
+, lib
+, rustPlatform
+, fetchFromGitHub
+, fetchPnpmDeps
+, nodejs_22
+, pnpm
+, pnpmConfigHook
+, typescript
+, pkg-config
+, git
+, openssl
+,
 }:
 
 rustPlatform.buildRustPackage (

@@ -1,19 +1,19 @@
-{
-  lib,
-  buildDotnetModule,
-  dotnetCorePackages,
-  fetchFromGitHub,
+{ lib
+, buildDotnetModule
+, dotnetCorePackages
+, fetchFromGitHub
+,
 }:
 
 buildDotnetModule rec {
   pname = "profilarr-parser";
-  version = "2.0.8";
+  version = "2.0.9";
 
   src = fetchFromGitHub {
     owner = "Dictionarry-Hub";
     repo = "Profilarr";
     tag = "v${version}";
-    hash = "sha256-tpgTeKJCeEfhoARpq5u9W8iFZNocTNOhihAJNsyfTLY=";
+    hash = "sha256-FfMBu58cfaZlgxlqyO0qBz702NVcdQDarkh6JiSncCs=";
   };
 
   sourceRoot = "${src.name}/src/services/parser";

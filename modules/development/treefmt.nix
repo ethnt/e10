@@ -2,7 +2,12 @@
   imports = [ inputs.treefmt.flakeModule ];
 
   perSystem =
-    { config, pkgs, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
     let
       settings = {
         projectRootFile = "flake.nix";
@@ -12,6 +17,7 @@
           deadnix.enable = true;
           terraform.enable = true;
           nixfmt.enable = true;
+          nixpkgs-fmt.enable = true;
           statix.enable = true;
           prettier.enable = true;
         };
@@ -22,6 +28,8 @@
             "**/secrets.json"
             "**/secrets.yml"
           ];
+          nixfmt.excludes = [ "modules/packages/**/*.nix" ];
+          nixpkgs-fmt.includes = lib.mkOverride 10 [ "modules/packages/**/*.nix" ];
         };
       };
     in

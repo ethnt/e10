@@ -1,25 +1,25 @@
-{
-  lib,
-  stdenv,
-  fetchFromGitHub,
-  deno,
-  cacert,
-  makeWrapper,
-  autoPatchelfHook,
-  sqlite,
-  git,
-  gnutar,
-  gzip,
+{ lib
+, stdenv
+, fetchFromGitHub
+, deno
+, cacert
+, makeWrapper
+, autoPatchelfHook
+, sqlite
+, git
+, gnutar
+, gzip
+,
 }:
 
 let
-  version = "2.0.8";
+  version = "2.0.9";
 
   src = fetchFromGitHub {
     owner = "Dictionarry-Hub";
     repo = "Profilarr";
     tag = "v${version}";
-    hash = "sha256-tpgTeKJCeEfhoARpq5u9W8iFZNocTNOhihAJNsyfTLY=";
+    hash = "sha256-FfMBu58cfaZlgxlqyO0qBz702NVcdQDarkh6JiSncCs=";
   };
 
   denoDeps = stdenv.mkDerivation {
@@ -66,13 +66,11 @@ let
     outputHashMode = "recursive";
     outputHash =
       {
-        x86_64-linux = "sha256-a+80eXiDgWzLKefqqF9hnquBr4RLhUucTUOJc6inCMs=";
-        aarch64-linux = "sha256-z4zIEEekyQRSLTkXLmIM5JA8vZBKUMGGtUuvtD0Xq0g=";
-      }
-      .${stdenv.hostPlatform.system}
+        x86_64-linux = "sha256-grOB5TLldkZ6O9x0MRR9+2jJoZFcjbkMM+e/vM4gnPw=";
+        aarch64-linux = "sha256-XIPWLAo1XmmKrCOSGPXsCD3uhljurV6TTKB5LJiitqk=";
+      }.${stdenv.hostPlatform.system}
         or (throw "profilarr: unsupported system ${stdenv.hostPlatform.system}");
   };
-
 in
 stdenv.mkDerivation {
   pname = "profilarr";
