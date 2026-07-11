@@ -16,7 +16,7 @@
       profiles.hardware.nvidia
       profiles.home-automation.frigate.default
       profiles.media-management.bazarr.default
-      profiles.media-management.declutarr.default
+      profiles.media-management.decluttarr.default
       profiles.media-management.fileflows.server
       profiles.media-management.jellyfin
       profiles.media-management.plex

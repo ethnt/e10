@@ -1,5 +1,5 @@
 { config, lib, ... }: {
-  sops.templates."declutarr/config.yml" = {
+  sops.templates."decluttarr/config.yml" = {
     content = lib.generators.toYAML { } {
       general = {
         log_level = "INFO";
@@ -57,13 +57,13 @@
         ];
       };
     };
-    owner = config.services.declutarr.user;
-    inherit (config.services.declutarr) group;
+    owner = config.services.decluttarr.user;
+    inherit (config.services.decluttarr) group;
     mode = "0700";
   };
 
-  services.declutarr = {
+  services.decluttarr = {
     enable = true;
-    configFile = config.sops.templates."declutarr/config.yml".path;
+    configFile = config.sops.templates."decluttarr/config.yml".path;
   };
 }

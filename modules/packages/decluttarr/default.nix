@@ -6,7 +6,7 @@
 }:
 
 python3Packages.buildPythonApplication rec {
-  name = "declutarr";
+  name = "decluttarr";
   version = "2.1.0";
 
   src = fetchFromGitHub {

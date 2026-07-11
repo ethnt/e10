@@ -2,7 +2,7 @@ _: {
   perSystem = { pkgs, ... }: {
     packages = {
       bichon = pkgs.callPackage ./bichon { };
-      declutarr = pkgs.callPackage ./declutarr { };
+      decluttarr = pkgs.callPackage ./decluttarr { };
       fileflows = pkgs.callPackage ./fileflows { };
       incus-apply = pkgs.callPackage ./incus-apply { };
       mazanoke = pkgs.callPackage ./mazanoke { };

@@ -56,7 +56,7 @@
 
           inherit (self'.packages)
             bichon
-            declutarr
+            decluttarr
             fileflows
             mazanoke
             profilarr

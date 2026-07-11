@@ -8,33 +8,33 @@
 with lib;
 
 let
-  cfg = config.services.declutarr;
+  cfg = config.services.decluttarr;
   format = pkgs.formats.yaml { };
   configFile =
     if cfg.config != null then format.generate "configuration.yaml" cfg.config else cfg.configFile;
 in
 {
-  options.services.declutarr = {
-    enable = mkEnableOption "Enable Declutarr";
+  options.services.decluttarr = {
+    enable = mkEnableOption "Enable Decluttarr";
 
     package = mkOption {
       type = types.package;
-      default = pkgs.declutarr;
+      default = pkgs.decluttarr;
     };
 
     dataDir = mkOption {
       type = types.path;
-      default = "/var/lib/declutarr";
+      default = "/var/lib/decluttarr";
     };
 
     user = mkOption {
       type = types.str;
-      default = "declutarr";
+      default = "decluttarr";
     };
 
     group = mkOption {
       type = types.str;
-      default = "declutarr";
+      default = "decluttarr";
     };
 
     config = mkOption {
@@ -61,7 +61,7 @@ in
       }
     ];
 
-    systemd.tmpfiles.settings."10-declutarr" = {
+    systemd.tmpfiles.settings."10-decluttarr" = {
       ${cfg.dataDir} = {
         "d" = {
           inherit (cfg) user group;
@@ -85,15 +85,15 @@ in
     };
 
     users = {
-      users.declutarr = mkIf (cfg.user == "declutarr") {
+      users.decluttarr = mkIf (cfg.user == "decluttarr") {
         inherit (cfg) group;
         isSystemUser = true;
       };
 
-      groups = mkIf (cfg.group == "declutarr") { declutarr = { }; };
+      groups = mkIf (cfg.group == "decluttarr") { decluttarr = { }; };
     };
 
-    systemd.services.declutarr = {
+    systemd.services.decluttarr = {
       enable = true;
       wants = [ "network-online.target" ];
       after = [ "network-online.target" ];
