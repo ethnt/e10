@@ -20,6 +20,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
+
     nixpkgs-master.url = "github:NixOS/nixpkgs";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -100,6 +102,7 @@
             permittedInsecurePackages = [
               "dotnet-sdk-6.0.428"
               "aspnetcore-runtime-6.0.36"
+              "pnpm-9.15.9"
             ];
           };
 

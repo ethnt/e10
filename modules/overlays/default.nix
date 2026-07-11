@@ -18,6 +18,20 @@
               permittedInsecurePackages = [
                 "dotnet-sdk-6.0.428"
                 "aspnetcore-runtime-6.0.36"
+                "pnpm-9.15.9"
+              ];
+            };
+          };
+
+          nixpkgs-stable = import inputs.nixpkgs-stable {
+            inherit system;
+
+            config = {
+              allowUnfree = true;
+              permittedInsecurePackages = [
+                "dotnet-sdk-6.0.428"
+                "aspnetcore-runtime-6.0.36"
+                "pnpm-9.15.9"
               ];
             };
           };
@@ -34,10 +48,11 @@
             immich
             ;
 
-          # inherit (nixpkgs-master.python312Packages) pymdown-extensions onnx;
-
           # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923
           inherit (nixpkgs-master) thanos;
+
+          # Avoiding build failure on unstable: https://github.com/NixOS/nixpkgs/issues/540609
+          inherit (nixpkgs-stable) gdalMinimal;
 
           inherit (self'.packages)
             bichon

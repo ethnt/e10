@@ -44,10 +44,9 @@
   satan.address = "10.10.3.101";
 
   deployment = {
-    buildOnTarget = true;
+    buildOnTarget = false;
     tags = [
       "@vm"
-      "@build-on-target"
     ];
   };
 
