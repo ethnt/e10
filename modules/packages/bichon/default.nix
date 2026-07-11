@@ -16,12 +16,12 @@
 rustPlatform.buildRustPackage (
   let
     pname = "bichon";
-    version = "1.5.2";
+    version = "1.6.2";
     source = fetchFromGitHub {
       owner = "rustmailer";
       repo = "bichon";
       rev = version;
-      hash = "sha256-QvAUM1fncnbmXGJ4fhq7c4ZvE4rquMQqdqq6RlOIBxI=";
+      hash = "sha256-a8BAO93eI2eiFwmvMqUsgL1KZ11X3qg/r/Iw6ckMSTs=";
     };
     frontend = stdenv.mkDerivation (finalAttrs: {
       pname = "${pname}-frontend";
@@ -40,8 +40,8 @@ rustPlatform.buildRustPackage (
 
       pnpmDeps = fetchPnpmDeps {
         inherit (finalAttrs) pname version src;
-        fetcherVersion = 3;
-        hash = "sha256-7EkSYTUXOtYewvOoKJiOSNmpowJj27/Ea8PAcebJCzA=";
+        fetcherVersion = 4;
+        hash = "sha256-Ax8z1sjt8v6XOenhw7eRuEEo0huPv9fbcfzqc8RxJEc=";
         sourceRoot = "${finalAttrs.src.name}/web";
       };
 
@@ -72,7 +72,7 @@ rustPlatform.buildRustPackage (
 
     src = source;
 
-    cargoHash = "sha256-keEOzDf2DSOC2g8mLMuZhi1FwCaBXzo1yk0WmIcTFuI=";
+    cargoHash = "sha256-GC/2bswme76bAFRCsBHFi3lWnYx5x5H58emCmkiyKfE=";
 
     nativeBuildInputs = [
       pkg-config
