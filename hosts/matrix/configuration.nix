@@ -10,6 +10,7 @@
     core
     ++ proxmox-vm
     ++ [
+      profiles.applications.umami.default
       profiles.databases.postgresql
       profiles.emulation.aarch64-linux
       profiles.filesystems.blockbuster

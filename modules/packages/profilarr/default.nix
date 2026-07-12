@@ -1,15 +1,15 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, deno
-, cacert
-, makeWrapper
-, autoPatchelfHook
-, sqlite
-, git
-, gnutar
-, gzip
-,
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  deno,
+  cacert,
+  makeWrapper,
+  autoPatchelfHook,
+  sqlite,
+  git,
+  gnutar,
+  gzip,
 }:
 
 let
@@ -67,8 +67,9 @@ let
     outputHash =
       {
         x86_64-linux = "sha256-eyrIsA8KTajDvMNR0kjOHhPVPd30KgMuv+qeV7zaO/Q=";
-        aarch64-linux = "sha256-XIPWLAo1XmmKrCOSGPXsCD3uhljurV6TTKB5LJiitqk=";
-      }.${stdenv.hostPlatform.system}
+        aarch64-linux = "sha256-Mk58kzWjgVSQZdu0YFhknt1J0TEyWfKF0DiOFH5r9XU=";
+      }
+      .${stdenv.hostPlatform.system}
         or (throw "profilarr: unsupported system ${stdenv.hostPlatform.system}");
   };
 in
