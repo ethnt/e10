@@ -26,7 +26,6 @@
     buildOnTarget = false;
     tags = [
       "@vm"
-      "@build-on-target"
     ];
   };
 

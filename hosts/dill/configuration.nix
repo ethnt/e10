@@ -101,11 +101,9 @@
         address = [ "10.10.4.0/24" ];
         routes = [
           {
-            routeConfig = {
-              Destination = "0.0.0.0/0";
-              Gateway = "10.10.0.1";
-              GatewayOnLink = true;
-            };
+            Destination = "0.0.0.0/0";
+            Gateway = "10.10.0.1";
+            GatewayOnLink = true;
           }
         ];
         networkConfig.LinkLocalAddressing = "no";

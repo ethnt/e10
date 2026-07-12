@@ -18,11 +18,9 @@
     address = [ "10.10.4.101/24" ];
     routes = [
       {
-        routeConfig = {
-          Destination = "0.0.0.0/0";
-          Gateway = "10.10.0.1";
-          GatewayOnLink = true;
-        };
+        Destination = "0.0.0.0/0";
+        Gateway = "10.10.0.1";
+        GatewayOnLink = true;
       }
     ];
     networkConfig.DHCP = "no";
