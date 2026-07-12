@@ -1,6 +1,8 @@
 { config, ... }:
-let storagePath = "/data/files/services/atticd/storage";
-in {
+let
+  storagePath = "/data/files/services/atticd/storage";
+in
+{
   imports = [ ./postgresql.nix ];
 
   sops.secrets = {

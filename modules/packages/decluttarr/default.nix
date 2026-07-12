@@ -1,7 +1,12 @@
-{ lib, fetchFromGitHub, makeWrapper, python3Packages }:
+{ lib
+, fetchFromGitHub
+, makeWrapper
+, python3Packages
+,
+}:
 
 python3Packages.buildPythonApplication rec {
-  name = "declutarr";
+  name = "decluttarr";
   version = "2.1.0";
 
   src = fetchFromGitHub {
@@ -49,8 +54,7 @@ python3Packages.buildPythonApplication rec {
   doCheck = false;
 
   meta = with lib; {
-    description =
-      "Watches radarr, sonarr, lidarr, readarr and whisparr download queues and removes downloads if they become stalled or no longer needed.";
+    description = "Watches radarr, sonarr, lidarr, readarr and whisparr download queues and removes downloads if they become stalled or no longer needed.";
     homepage = "https://github.com/ManiMatter/decluttarr";
     license = licenses.gpl3Only;
     platforms = platforms.linux;

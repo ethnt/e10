@@ -1,5 +1,8 @@
 { pkgs, lib, ... }: {
-  imports = [ ./postgresql.nix ./redis.nix ];
+  imports = [
+    ./postgresql.nix
+    ./redis.nix
+  ];
 
   environment.systemPackages = [ pkgs.blocky ];
 
@@ -25,8 +28,7 @@
           "basil.satan.network" = "10.10.2.0";
           "cardamom.satan.network" = "10.10.3.0";
           "elderflower.satan.network" = "10.2.1.0";
-          "matrix.local" =
-            "10.10.3.101"; # TODO: Required for Bonjour printer sharing
+          "matrix.local" = "10.10.3.101"; # TODO: Required for Bonjour printer sharing
         };
       };
       blocking = {
@@ -38,7 +40,9 @@
           };
           concurrency = 16;
         };
-        denylists = { ads = [ "https://big.oisd.nl/domainswild" ]; };
+        denylists = {
+          ads = [ "https://big.oisd.nl/domainswild" ];
+        };
         allowlists = {
           ads = [
             (pkgs.writeText "ads-allowlist.txt" ''
@@ -49,7 +53,9 @@
             '')
           ];
         };
-        clientGroupsBlock = { default = [ "ads" ]; };
+        clientGroupsBlock = {
+          default = [ "ads" ];
+        };
       };
       caching = {
         prefetching = true;
@@ -61,22 +67,29 @@
       };
       clientLookup = {
         upstream = "192.168.1.1:5335";
-        singleNameOrder = [ 1 2 ];
+        singleNameOrder = [
+          1
+          2
+        ];
       };
       conditional = {
-        mapping = let
-          reverseDnsServer = "192.168.1.1:5335";
-          addresses = [
-            "arpa"
-            "1.168.192.in-addr.arpa"
-            "168.192.in-addr.arpa"
-            "10.10.in-addr.arpa"
-            "."
-          ];
-        in builtins.listToAttrs (map (name: {
-          inherit name;
-          value = reverseDnsServer;
-        }) addresses);
+        mapping =
+          let
+            reverseDnsServer = "192.168.1.1:5335";
+            addresses = [
+              "arpa"
+              "1.168.192.in-addr.arpa"
+              "168.192.in-addr.arpa"
+              "10.10.in-addr.arpa"
+              "."
+            ];
+          in
+          builtins.listToAttrs (
+            map (name: {
+              inherit name;
+              value = reverseDnsServer;
+            }) addresses
+          );
       };
       prometheus = {
         enable = true;
@@ -92,6 +105,9 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 53 4022 ];
+  networking.firewall.allowedTCPPorts = [
+    53
+    4022
+  ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 }

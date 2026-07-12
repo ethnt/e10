@@ -1,9 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.services.fileflows.server;
-in {
+let
+  cfg = config.services.fileflows.server;
+in
+{
   options.services.fileflows.server = {
     enable = mkEnableOption "Enable FileFlows server";
 
@@ -54,8 +61,7 @@ in {
 
     openFirewall = mkOption {
       type = types.bool;
-      description =
-        "Open ports in the firewall for the FileFlows web interface";
+      description = "Open ports in the firewall for the FileFlows web interface";
       default = false;
     };
   };
@@ -70,19 +76,16 @@ in {
       };
 
       "${cfg.binDir}"."L+".argument = "${
-          pkgs.symlinkJoin {
-            name = "fileflows-server-extra-pkgs";
-            paths = cfg.extraPkgs;
-          }
-        }/bin";
+        pkgs.symlinkJoin {
+          name = "fileflows-server-extra-pkgs";
+          paths = cfg.extraPkgs;
+        }
+      }/bin";
     };
 
     systemd.services.fileflows-server = {
       description = "FileFlows server";
-      script =
-        "${cfg.package}/bin/server --no-gui --systemd-service --urls=http://[::]:${
-          toString cfg.port
-        }";
+      script = "${cfg.package}/bin/server --no-gui --systemd-service --urls=http://[::]:${toString cfg.port}";
       environment.FILEFLOWS_SERVER_BASE_DIR = cfg.dataDir;
 
       serviceConfig = {
@@ -114,7 +117,6 @@ in {
       groups = mkIf (cfg.group == "fileflows") { fileflows = { }; };
     };
 
-    networking.firewall =
-      mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
+    networking.firewall = mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
   };
 }

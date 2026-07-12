@@ -1,9 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.services.profilarr;
-in {
+let
+  cfg = config.services.profilarr;
+in
+{
   options.services.profilarr = {
     enable = mkEnableOption "Enable Profilarr";
 
@@ -61,8 +68,7 @@ in {
 
           https = mkOption {
             type = types.bool;
-            description =
-              "If the Profilarr parser should be exposed with HTTPS";
+            description = "If the Profilarr parser should be exposed with HTTPS";
             default = false;
           };
 
@@ -93,8 +99,7 @@ in {
 
           clientSecretFile = mkOption {
             type = types.str;
-            description =
-              "File containing client secret for Profilarr OIDC authentication";
+            description = "File containing client secret for Profilarr OIDC authentication";
           };
 
           discoveryURL = mkOption {
@@ -126,10 +131,12 @@ in {
         PORT = toString cfg.port;
         ORIGIN = cfg.origin;
         TZ = config.time.timeZone;
-      } // lib.optionalAttrs cfg.parser.enable {
+      }
+      // lib.optionalAttrs cfg.parser.enable {
         PARSER_HOST = cfg.parser.listenAddress;
         PARSER_PORT = toString cfg.parser.port;
-      } // lib.optionalAttrs cfg.oidc.enable {
+      }
+      // lib.optionalAttrs cfg.oidc.enable {
         AUTH = "oidc";
         OIDC_CLIENT_ID = cfg.oidc.clientID;
         OIDC_DISCOVERY_URL = cfg.oidc.discoveryURL;
@@ -139,20 +146,24 @@ in {
         Type = "simple";
         User = cfg.user;
         Group = cfg.group;
-        ExecStart = lib.getExe (pkgs.writeShellApplication {
-          name = "profilarr-exec-start";
-          text = let
-            oidcClientSecret = lib.optionalString cfg.oidc.enable ''
-              export OIDC_CLIENT_SECRET
+        ExecStart = lib.getExe (
+          pkgs.writeShellApplication {
+            name = "profilarr-exec-start";
+            text =
+              let
+                oidcClientSecret = lib.optionalString cfg.oidc.enable ''
+                  export OIDC_CLIENT_SECRET
 
-              OIDC_CLIENT_SECRET=$(cat ${cfg.oidc.clientSecretFile})
-            '';
-          in ''
-            ${oidcClientSecret}
+                  OIDC_CLIENT_SECRET=$(cat ${cfg.oidc.clientSecretFile})
+                '';
+              in
+              ''
+                ${oidcClientSecret}
 
-            ${lib.getExe' cfg.package "profilarr"}
-          '';
-        });
+                ${lib.getExe' cfg.package "profilarr"}
+              '';
+          }
+        );
         Restart = "on-failure";
         RestartSec = 5;
 
@@ -164,20 +175,25 @@ in {
 
     systemd.services.profilarr-parser = mkIf cfg.parser.enable {
       description = "Profilarr - parser";
-      wantedBy = [ "multi-user.target" "profilarr.service" ];
+      wantedBy = [
+        "multi-user.target"
+        "profilarr.service"
+      ];
       after = [ "network.target" ];
 
       serviceConfig = {
         Type = "simple";
         User = cfg.user;
         Group = cfg.group;
-        ExecStart = let
-          urls = "${
+        ExecStart =
+          let
+            urls = "${
               if cfg.parser.https then "https" else "http"
             }://${cfg.parser.listenAddress}:${toString cfg.parser.port}";
-        in ''
-          ${lib.getExe' cfg.parser.package "profilarr-parser"} --urls ${urls}
-        '';
+          in
+          ''
+            ${lib.getExe' cfg.parser.package "profilarr-parser"} --urls ${urls}
+          '';
         Restart = "on-failure";
         RestartSec = 5;
       };
@@ -192,10 +208,13 @@ in {
         uid = 978;
       };
 
-      groups = mkIf (cfg.group == "profilarr") { profilarr = { gid = 978; }; };
+      groups = mkIf (cfg.group == "profilarr") {
+        profilarr = {
+          gid = 978;
+        };
+      };
     };
 
-    networking.firewall =
-      mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
+    networking.firewall = mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
   };
 }

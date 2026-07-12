@@ -2,9 +2,11 @@
 
 with lib;
 
-let cfg = config.services.prometheus.exporters.dcgm-exporter;
+let
+  cfg = config.services.prometheus.exporters.dcgm-exporter;
 
-in {
+in
+{
   options.services.prometheus.exporters.dcgm-exporter = {
     enable = mkEnableOption "Enable dcgm exporter";
 
@@ -28,10 +30,12 @@ in {
         NVIDIA_DRIVER_CAPABILITIES = "compute,video,utility";
         NVIDIA_VISIBLE_DEVICES = "all";
       };
-      extraOptions = [ "--cap-add=SYS_ADMIN" "--device=nvidia.com/gpu=all" ];
+      extraOptions = [
+        "--cap-add=SYS_ADMIN"
+        "--device=nvidia.com/gpu=all"
+      ];
     };
 
-    networking.firewall =
-      mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
+    networking.firewall = mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
   };
 }

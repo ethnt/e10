@@ -51,7 +51,9 @@
           username = "";
           vip = false;
         };
-        analytics = { enabled = false; };
+        analytics = {
+          enabled = false;
+        };
         anidb = {
           api_client = "";
           api_client_ver = 1;
@@ -61,8 +63,12 @@
           anidb_api_client_ver = 1;
           search_threshold = 6;
         };
-        anticaptcha = { anti_captcha_key = ""; };
-        assrt = { token = ""; };
+        anticaptcha = {
+          anti_captcha_key = "";
+        };
+        assrt = {
+          token = "";
+        };
         auth = {
           apikey = config.sops.placeholder.bazarr_api_key;
           password = "";
@@ -80,12 +86,16 @@
           hour = 3;
           retention = 31;
         };
-        betaseries = { token = ""; };
+        betaseries = {
+          token = "";
+        };
         cinemaz = {
           cookies = "";
           user_agent = "";
         };
-        cors = { enabled = false; };
+        cors = {
+          enabled = false;
+        };
         deathbycaptcha = {
           password = "";
           username = "";
@@ -246,7 +256,9 @@
           update_movie_library = false;
           update_series_library = false;
         };
-        podnapisi = { verify_ssl = true; };
+        podnapisi = {
+          verify_ssl = true;
+        };
         postgresql = {
           database = "";
           enabled = false;
@@ -256,7 +268,10 @@
           username = "";
         };
         proxy = {
-          exclude = [ "localhost" "127.0.0.1" ];
+          exclude = [
+            "localhost"
+            "127.0.0.1"
+          ];
           password = "";
           port = "";
           type = null;
@@ -315,7 +330,9 @@
           sync_only_monitored_series = true;
           use_ffprobe_cache = true;
         };
-        subdl = { api_key = ""; };
+        subdl = {
+          api_key = "";
+        };
         subf2m = {
           user_agent = "";
           verify_ssl = true;

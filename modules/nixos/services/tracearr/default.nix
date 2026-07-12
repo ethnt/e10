@@ -1,9 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.services.tracearr;
-in {
+let
+  cfg = config.services.tracearr;
+in
+{
   options.services.tracearr = {
     enable = mkEnableOption "Enable Tracearr";
 
@@ -103,24 +110,32 @@ in {
       };
     };
 
-    services.postgresql = mkIf cfg.database.createLocally {
-      enable = true;
-      ensureDatabases = [ cfg.database.name ];
-      ensureUsers = [{
-        name = cfg.database.user;
-        ensureDBOwnership = true;
-      }];
-    } // mkIf cfg.database.enableTimescaleDB {
-      extensions = ps: with ps; [ timescaledb timescaledb_toolkit ];
-      settings = {
-        shared_preload_libraries = [ "timescaledb" ];
-        max_locks_per_transaction = 256;
+    services.postgresql =
+      mkIf cfg.database.createLocally {
+        enable = true;
+        ensureDatabases = [ cfg.database.name ];
+        ensureUsers = [
+          {
+            name = cfg.database.user;
+            ensureDBOwnership = true;
+          }
+        ];
+      }
+      // mkIf cfg.database.enableTimescaleDB {
+        extensions =
+          ps: with ps; [
+            timescaledb
+            timescaledb_toolkit
+          ];
+        settings = {
+          shared_preload_libraries = [ "timescaledb" ];
+          max_locks_per_transaction = 256;
+        };
+        initialScriptText = lib.mkAfter ''
+          CREATE EXTENSION IF NOT EXISTS timescaledb;
+          CREATE EXTENSION IF NOT EXISTS timescaledb_toolkit;
+        '';
       };
-      initialScriptText = lib.mkAfter ''
-        CREATE EXTENSION IF NOT EXISTS timescaledb;
-        CREATE EXTENSION IF NOT EXISTS timescaledb_toolkit;
-      '';
-    };
 
     services.redis = mkIf cfg.redis.createLocally {
       servers.${cfg.redis.name} = {
@@ -132,21 +147,23 @@ in {
 
     systemd.services.tracearr = {
       enable = true;
-      wants = [ "network-online.target" ]
-        ++ (lib.optional cfg.database.createLocally "postgresql.service")
-        ++ (lib.optional cfg.redis.createLocally
-          "redis-${cfg.redis.name}.service");
-      after = [ "network-online.target" ]
-        ++ (lib.optional cfg.database.createLocally "postgresql.service")
-        ++ (lib.optional cfg.redis.createLocally
-          "redis-${cfg.redis.name}.service");
+      wants = [
+        "network-online.target"
+      ]
+      ++ (lib.optional cfg.database.createLocally "postgresql.service")
+      ++ (lib.optional cfg.redis.createLocally "redis-${cfg.redis.name}.service");
+      after = [
+        "network-online.target"
+      ]
+      ++ (lib.optional cfg.database.createLocally "postgresql.service")
+      ++ (lib.optional cfg.redis.createLocally "redis-${cfg.redis.name}.service");
       wantedBy = [ "multi-user.target" ];
       environment = {
-        DATABASE_URL = if cfg.database.url != null then
-          cfg.database.url
-        else
-          (mkIf cfg.database.createLocally
-            "postgres:///${cfg.database.name}?host=/run/postgresql&user=${cfg.database.user}");
+        DATABASE_URL =
+          if cfg.database.url != null then
+            cfg.database.url
+          else
+            (mkIf cfg.database.createLocally "postgres:///${cfg.database.name}?host=/run/postgresql&user=${cfg.database.user}");
         REDIS_URL = "redis://${cfg.redis.host}:${toString cfg.redis.port}";
         PORT = toString cfg.port;
         APP_VERSION = cfg.package.version;
@@ -172,7 +189,6 @@ in {
       groups.${cfg.group} = { };
     };
 
-    networking.firewall =
-      mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
+    networking.firewall = mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
   };
 }

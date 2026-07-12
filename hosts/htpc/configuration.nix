@@ -1,12 +1,22 @@
-{ suites, profiles, pkgs, secrets, ... }: {
-  imports = with suites;
-    core ++ proxmox-vm ++ [
+{
+  suites,
+  profiles,
+  pkgs,
+  secrets,
+  ...
+}:
+{
+  imports =
+    with suites;
+    core
+    ++ proxmox-vm
+    ++ [
       profiles.filesystems.blockbuster
       profiles.filesystems.files.personal
       profiles.hardware.nvidia
       profiles.home-automation.frigate.default
       profiles.media-management.bazarr.default
-      profiles.media-management.declutarr.default
+      profiles.media-management.decluttarr.default
       profiles.media-management.fileflows.server
       profiles.media-management.jellyfin
       profiles.media-management.plex
@@ -24,11 +34,18 @@
       profiles.telemetry.prometheus-dcgm-exporter
       profiles.telemetry.prometheus-plex-exporter.default
       profiles.virtualisation.docker
-    ] ++ [ ./hardware-configuration.nix ./disk-config.nix ]
+    ]
+    ++ [
+      ./hardware-configuration.nix
+      ./disk-config.nix
+    ]
     ++ [ secrets.hosts.htpc.configuration ];
 
   deployment = {
-    tags = [ "@vm" "@build-on-target" ];
+    tags = [
+      "@vm"
+      "@build-on-target"
+    ];
     buildOnTarget = true;
   };
 
@@ -47,17 +64,21 @@
 
     interfaces = {
       vlan10.ipv4 = {
-        routes = [{
-          address = "0.0.0.0";
-          prefixLength = 0;
-          via = "10.10.0.1";
-          options.src = "10.10.2.101";
-          options.onlink = "";
-        }];
-        addresses = [{
-          address = "10.10.2.101";
-          prefixLength = 24;
-        }];
+        routes = [
+          {
+            address = "0.0.0.0";
+            prefixLength = 0;
+            via = "10.10.0.1";
+            options.src = "10.10.2.101";
+            options.onlink = "";
+          }
+        ];
+        addresses = [
+          {
+            address = "10.10.2.101";
+            prefixLength = 24;
+          }
+        ];
       };
     };
   };

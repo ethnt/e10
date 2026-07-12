@@ -50,5 +50,7 @@
     ];
   };
 
-  users.groups.ldap = { gid = 979; };
+  users.groups.ldap = {
+    gid = 979;
+  };
 }

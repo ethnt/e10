@@ -1,9 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.services.mazanoke;
-in {
+let
+  cfg = config.services.mazanoke;
+in
+{
   options.services.mazanoke = {
     enable = mkEnableOption "Enable Mazanoke";
 
@@ -44,10 +51,7 @@ in {
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart =
-          "${lib.getExe pkgs.darkhttpd} ${cfg.package}/share/mazanoke --port ${
-            toString cfg.port
-          }";
+        ExecStart = "${lib.getExe pkgs.darkhttpd} ${cfg.package}/share/mazanoke --port ${toString cfg.port}";
         Restart = "always";
         User = cfg.user;
         Group = cfg.group;
@@ -63,7 +67,6 @@ in {
       groups = mkIf (cfg.group == "mazanoke") { mazanoke = { }; };
     };
 
-    networking.firewall =
-      mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
+    networking.firewall = mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
   };
 }

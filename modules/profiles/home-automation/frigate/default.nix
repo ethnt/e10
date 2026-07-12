@@ -1,4 +1,9 @@
-{ config, hosts, pkgs, ... }:
+{
+  config,
+  hosts,
+  pkgs,
+  ...
+}:
 let
   cameraAddress = "192.168.1.102";
   cameraUsername = "viewer";
@@ -25,7 +30,11 @@ let
       user = "frigate";
       password = "{FRIGATE_MQTT_PASSWORD}";
     };
-    detectors = { onnx_0 = { type = "onnx"; }; };
+    detectors = {
+      onnx_0 = {
+        type = "onnx";
+      };
+    };
     model = {
       model_type = "yolox";
       width = 416;
@@ -43,7 +52,10 @@ let
           {
             path = "rtsp://127.0.0.1:8554/kitchen";
             input_args = "preset-rtsp-restream";
-            roles = [ "audio" "record" ];
+            roles = [
+              "audio"
+              "record"
+            ];
           }
           {
             path = "rtsp://127.0.0.1:8554/kitchen_sub";
@@ -77,7 +89,8 @@ let
     detect.enabled = true;
     objects.filters.person.min_score = 0.8;
   };
-in {
+in
+{
   sops = {
     secrets = {
       frigate_mqtt_password.sopsFile = ./secrets.json;
@@ -114,8 +127,7 @@ in {
       "/mnt/files/services/frigate:/media/frigate"
     ];
     devices = [ "/dev/dri:/dev/dri" ];
-    environmentFiles =
-      [ config.sops.templates."frigate/environment_file".path ];
+    environmentFiles = [ config.sops.templates."frigate/environment_file".path ];
     ports = [
       "8971:8971"
       "8554:8554"
@@ -135,5 +147,10 @@ in {
     ];
   };
 
-  networking.firewall.allowedTCPPorts = [ 1984 5000 8090 8971 ];
+  networking.firewall.allowedTCPPorts = [
+    1984
+    5000
+    8090
+    8971
+  ];
 }

@@ -1,9 +1,16 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 
-let cfg = config.services.attic-watch-store;
-in {
+let
+  cfg = config.services.attic-watch-store;
+in
+{
   options.services.attic-watch-store = {
     enable = mkEnableOption "Enable Attic watch store daemon";
 
@@ -107,7 +114,6 @@ in {
       };
     };
 
-    users.groups =
-      mkIf (cfg.group == "attic-watch-store") { attic-watch-store.gid = 3450; };
+    users.groups = mkIf (cfg.group == "attic-watch-store") { attic-watch-store.gid = 3450; };
   };
 }

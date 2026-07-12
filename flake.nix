@@ -20,6 +20,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
+
     nixpkgs-master.url = "github:NixOS/nixpkgs";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -60,7 +62,8 @@
     plex-exporter.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, flake-parts, ... }:
+  outputs =
+    inputs@{ self, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         ./lib
@@ -83,7 +86,11 @@
         ./hosts
       ];
 
-      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
 
       perSystem = { system, ... }: {
         _module.args.pkgs = import inputs.nixpkgs {
@@ -92,8 +99,11 @@
           # TODO: Make this on a per-system basis, and maybe per-package
           config = {
             allowUnfree = true;
-            permittedInsecurePackages =
-              [ "dotnet-sdk-6.0.428" "aspnetcore-runtime-6.0.36" ];
+            permittedInsecurePackages = [
+              "dotnet-sdk-6.0.428"
+              "aspnetcore-runtime-6.0.36"
+              "pnpm-9.15.9"
+            ];
           };
 
           overlays = [

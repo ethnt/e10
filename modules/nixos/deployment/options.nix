@@ -17,5 +17,7 @@ with lib;
     };
   };
 
-  config = { deployment.targetHost = mkDefault config.networking.hostName; };
+  config = {
+    deployment.targetHost = mkDefault config.networking.hostName;
+  };
 }

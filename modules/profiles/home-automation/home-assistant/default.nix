@@ -1,4 +1,11 @@
-{ config, pkgs, lib, profiles, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  profiles,
+  ...
+}:
+{
   imports = [ profiles.services.matter-server ] ++ [ ./postgresql.nix ];
 
   sops = {
@@ -64,8 +71,8 @@
       "zha"
     ];
 
-    extraPackages = python3Packages:
-      with python3Packages; [
+    extraPackages =
+      python3Packages: with python3Packages; [
         # HomeKit Bridge
         aiohomekit
         base36
@@ -76,17 +83,19 @@
         pyqrcode
       ];
 
-    customComponents = with pkgs.home-assistant-custom-components;
-      [ frigate hass_web_proxy ] ++ [
-        (pkgs.home-assistant.python3Packages.callPackage
-          ./components/ha_nationalgrid.nix {
-            aionatgrid = pkgs.home-assistant.python3Packages.callPackage
-              ./packages/aionatgrid.nix { };
-          })
+    customComponents =
+      with pkgs.home-assistant-custom-components;
+      [
+        frigate
+        hass_web_proxy
+      ]
+      ++ [
+        (pkgs.home-assistant.python3Packages.callPackage ./components/ha_nationalgrid.nix {
+          aionatgrid = pkgs.home-assistant.python3Packages.callPackage ./packages/aionatgrid.nix { };
+        })
       ];
 
-    customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules;
-      [ advanced-camera-card ];
+    customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [ advanced-camera-card ];
 
     config = {
       default_config = { };
@@ -120,10 +129,17 @@
 
   networking.firewall = {
     allowedUDPPorts = [ 5353 ];
-    allowedTCPPorts = [ 8123 1400 21063 21064 ];
-    allowedTCPPortRanges = [{
-      from = 21063;
-      to = 21068;
-    }];
+    allowedTCPPorts = [
+      8123
+      1400
+      21063
+      21064
+    ];
+    allowedTCPPortRanges = [
+      {
+        from = 21063;
+        to = 21068;
+      }
+    ];
   };
 }

@@ -16,8 +16,10 @@
     virtualHost = "speedtest-tracker";
   };
 
-  services.nginx.virtualHosts."speedtest-tracker".listen = [{
-    addr = "0.0.0.0";
-    port = 8881;
-  }];
+  services.nginx.virtualHosts."speedtest-tracker".listen = [
+    {
+      addr = "0.0.0.0";
+      port = 8881;
+    }
+  ];
 }

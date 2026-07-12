@@ -20,7 +20,14 @@
   };
 
   networking.firewall = {
-    allowedTCPPorts = [ 80 443 2019 ];
-    allowedUDPPorts = [ 80 443 ];
+    allowedTCPPorts = [
+      80
+      443
+      2019
+    ];
+    allowedUDPPorts = [
+      80
+      443
+    ];
   };
 }

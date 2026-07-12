@@ -1,5 +1,5 @@
 { config, lib, ... }: {
-  sops.templates."declutarr/config.yml" = {
+  sops.templates."decluttarr/config.yml" = {
     content = lib.generators.toYAML { } {
       general = {
         log_level = "INFO";
@@ -33,31 +33,37 @@
       };
 
       instances = {
-        sonarr = [{
-          base_url = "https://sonarr.e10.camp";
-          api_key = config.sops.placeholder.sonarr_api_key;
-        }];
+        sonarr = [
+          {
+            base_url = "https://sonarr.e10.camp";
+            api_key = config.sops.placeholder.sonarr_api_key;
+          }
+        ];
 
-        radarr = [{
-          base_url = "https://radarr.e10.camp";
-          api_key = config.sops.placeholder.radarr_api_key;
-        }];
+        radarr = [
+          {
+            base_url = "https://radarr.e10.camp";
+            api_key = config.sops.placeholder.radarr_api_key;
+          }
+        ];
       };
 
       download_clients = {
-        sabnzbd = [{
-          base_url = "https://sabnzbd.e10.camp";
-          api_key = config.sops.placeholder.sabnzbd_api_key;
-        }];
+        sabnzbd = [
+          {
+            base_url = "https://sabnzbd.e10.camp";
+            api_key = config.sops.placeholder.sabnzbd_api_key;
+          }
+        ];
       };
     };
-    owner = config.services.declutarr.user;
-    inherit (config.services.declutarr) group;
+    owner = config.services.decluttarr.user;
+    inherit (config.services.decluttarr) group;
     mode = "0700";
   };
 
-  services.declutarr = {
+  services.decluttarr = {
     enable = true;
-    configFile = config.sops.templates."declutarr/config.yml".path;
+    configFile = config.sops.templates."decluttarr/config.yml".path;
   };
 }

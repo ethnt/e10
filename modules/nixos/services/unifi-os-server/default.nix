@@ -1,16 +1,35 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib)
-    head importJSON mkEnableOption mkIf mkOption optional optionals types;
+    head
+    importJSON
+    mkEnableOption
+    mkIf
+    mkOption
+    optional
+    optionals
+    types
+    ;
 
   cfg = config.services.unifi-os-server;
 
   imageFile = "${cfg.package}/image.tar";
   imageManifest = importJSON "${cfg.package}/manifest.json";
-  imageTag =
-    cfg.package.passthru.imageTag or (head (head imageManifest).RepoTags);
+  imageTag = cfg.package.passthru.imageTag or (head (head imageManifest).RepoTags);
 
-  stateSubdirs = [ "persistent" "data" "srv" "unifi" "mongodb" "log" ];
+  stateSubdirs = [
+    "persistent"
+    "data"
+    "srv"
+    "unifi"
+    "mongodb"
+    "log"
+  ];
 
   mkStateRule = subdir: "d ${cfg.stateDir}/${subdir} 0755 root root -";
 
@@ -68,23 +87,19 @@ let
     "${ucorePreStartFix}:/etc/systemd/system/unifi-core.service.d/prestart-fix.conf:ro"
     "${nginxPreStartFix}:/etc/systemd/system/nginx.service.d/prestart-fix.conf:ro"
     "${mongoPreStartFix}:/etc/systemd/system/mongodb.service.d/prestart-fix.conf:ro"
-  ] ++ optional cfg.debugLogging
-    "${ucoreDebug}:/etc/systemd/system/unifi-core.service.d/debug.conf:ro";
+  ]
+  ++ optional cfg.debugLogging "${ucoreDebug}:/etc/systemd/system/unifi-core.service.d/debug.conf:ro";
 
-  portMappings = optional (cfg.ports.ui != null) "${toString cfg.ports.ui}:443"
-    ++ optional (cfg.ports.uapDeviceInform != null)
-    "${toString cfg.ports.uapDeviceInform}:8080"
-    ++ optional (cfg.ports.controllerHttps != null)
-    "${toString cfg.ports.controllerHttps}:8443"
-    ++ optional (cfg.ports.mobileSpeedTest != null)
-    "${toString cfg.ports.mobileSpeedTest}:6789"
-    ++ optional (cfg.ports.httpCaptivePortal != null)
-    "${toString cfg.ports.httpCaptivePortal}:8880"
-    ++ optional (cfg.ports.httpsCaptivePortal != null)
-    "${toString cfg.ports.httpsCaptivePortal}:8843"
+  portMappings =
+    optional (cfg.ports.ui != null) "${toString cfg.ports.ui}:443"
+    ++ optional (cfg.ports.uapDeviceInform != null) "${toString cfg.ports.uapDeviceInform}:8080"
+    ++ optional (cfg.ports.controllerHttps != null) "${toString cfg.ports.controllerHttps}:8443"
+    ++ optional (cfg.ports.mobileSpeedTest != null) "${toString cfg.ports.mobileSpeedTest}:6789"
+    ++ optional (cfg.ports.httpCaptivePortal != null) "${toString cfg.ports.httpCaptivePortal}:8880"
+    ++ optional (cfg.ports.httpsCaptivePortal != null) "${toString cfg.ports.httpsCaptivePortal}:8843"
     ++ optional (cfg.ports.stun != null) "${toString cfg.ports.stun}:3478/udp"
-    ++ optional (cfg.ports.deviceDiscovery != null)
-    "${toString cfg.ports.deviceDiscovery}:10001/udp" ++ cfg.extraPorts;
+    ++ optional (cfg.ports.deviceDiscovery != null) "${toString cfg.ports.deviceDiscovery}:10001/udp"
+    ++ cfg.extraPorts;
 
   serviceTCPPorts = builtins.filter (port: port != null) [
     cfg.ports.uapDeviceInform
@@ -99,15 +114,15 @@ let
     cfg.ports.deviceDiscovery
   ];
 
-in {
+in
+{
   options.services.unifi-os-server = {
     enable = mkEnableOption "UniFi OS Server container (podman)";
 
     package = mkOption {
       type = types.package;
       default = pkgs.unifi-os-server-image;
-      description =
-        "Package containing the extracted UniFi OS Server OCI archive.";
+      description = "Package containing the extracted UniFi OS Server OCI archive.";
     };
 
     stateDir = mkOption {
@@ -119,8 +134,7 @@ in {
     debugLogging = mkOption {
       type = types.bool;
       default = false;
-      description =
-        "Whether to capture unifi-core stdout and stderr in the state directory.";
+      description = "Whether to capture unifi-core stdout and stderr in the state directory.";
     };
 
     uosSystemIP = mkOption {
@@ -163,15 +177,13 @@ in {
           httpCaptivePortal = mkOption {
             type = types.nullOr types.port;
             default = 8880;
-            description =
-              "Host port used for UniFi HTTP captive portal traffic.";
+            description = "Host port used for UniFi HTTP captive portal traffic.";
           };
 
           httpsCaptivePortal = mkOption {
             type = types.nullOr types.port;
             default = 8843;
-            description =
-              "Host port used for UniFi HTTPS captive portal traffic.";
+            description = "Host port used for UniFi HTTPS captive portal traffic.";
           };
 
           stun = mkOption {
@@ -194,22 +206,19 @@ in {
     extraPorts = mkOption {
       type = types.listOf types.str;
       default = [ ];
-      description =
-        "Additional port mappings passed to podman in `host:container[/protocol]` form.";
+      description = "Additional port mappings passed to podman in `host:container[/protocol]` form.";
     };
 
     openFirewallUiPort = mkOption {
       type = types.bool;
       default = false;
-      description =
-        "Whether to open the UniFi OS Server web UI port in the firewall.";
+      description = "Whether to open the UniFi OS Server web UI port in the firewall.";
     };
 
     openFirewallServicePorts = mkOption {
       type = types.bool;
       default = false;
-      description =
-        "Whether to open UniFi OS Server service ports in the firewall.";
+      description = "Whether to open UniFi OS Server service ports in the firewall.";
     };
 
     environment = mkOption {
@@ -235,13 +244,11 @@ in {
     assertions = [
       {
         assertion = config.virtualisation.podman.enable;
-        message =
-          "services.unifi-os-server requires virtualisation.podman.enable = true.";
+        message = "services.unifi-os-server requires virtualisation.podman.enable = true.";
       }
       {
         assertion = config.virtualisation.oci-containers.backend == "podman";
-        message = ''
-          services.unifi-os-server requires virtualisation.oci-containers.backend = "podman".'';
+        message = ''services.unifi-os-server requires virtualisation.oci-containers.backend = "podman".'';
       }
     ];
 
@@ -252,8 +259,7 @@ in {
       allowedUDPPorts = optionals cfg.openFirewallServicePorts serviceUDPPorts;
     };
 
-    systemd.tmpfiles.rules = [ "d ${cfg.stateDir} 0755 root root -" ]
-      ++ map mkStateRule stateSubdirs;
+    systemd.tmpfiles.rules = [ "d ${cfg.stateDir} 0755 root root -" ] ++ map mkStateRule stateSubdirs;
 
     systemd.services.podman-unifi-os-server = {
       restartTriggers = [ cfg.package ];
@@ -279,11 +285,9 @@ in {
         PRODUCT_NAME = "uosserver";
         UOS_SYSTEM_IP = cfg.uosSystemIP;
         UOS_SERVER_VERSION = cfg.package.version;
-        FIRMWARE_PLATFORM = if pkgs.stdenv.hostPlatform.isAarch64 then
-          "linux-arm64"
-        else
-          "linux-x64";
-      } // cfg.environment;
+        FIRMWARE_PLATFORM = if pkgs.stdenv.hostPlatform.isAarch64 then "linux-arm64" else "linux-x64";
+      }
+      // cfg.environment;
 
       volumes = requiredVolumeMounts ++ cfg.extraVolumes;
 
@@ -291,7 +295,8 @@ in {
         "--systemd=always"
         "--add-host=host.docker.internal:host-gateway"
         "--pids-limit=8192"
-      ] ++ cfg.extraOptions;
+      ]
+      ++ cfg.extraOptions;
     };
   };
 }

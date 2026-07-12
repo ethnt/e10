@@ -5,4 +5,7 @@ let
     src = ./src;
     inputs = { inherit (inputs.nixpkgs) lib; };
   };
-in { flake.lib = lib; }
+in
+{
+  flake.lib = lib;
+}

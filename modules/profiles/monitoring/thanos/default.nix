@@ -32,8 +32,7 @@
           endpoint = "s3.us-east-2.amazonaws.com";
           region = "us-east-2";
           access_key = config.sops.placeholder.thanos_storage_aws_access_key_id;
-          secret_key =
-            config.sops.placeholder.thanos_storage_aws_secret_access_key;
+          secret_key = config.sops.placeholder.thanos_storage_aws_secret_access_key;
         };
       };
       mode = "0777";
@@ -82,15 +81,17 @@
     };
   };
 
-  systemd.services = let
-    additionalServiceConfig = {
-      wants = [ "sops-nix.service" ];
-      after = [ "sops-nix.service" ];
+  systemd.services =
+    let
+      additionalServiceConfig = {
+        wants = [ "sops-nix.service" ];
+        after = [ "sops-nix.service" ];
+      };
+    in
+    {
+      thanos-sidecar = additionalServiceConfig;
+      thanos-store = additionalServiceConfig;
+      thanos-query = additionalServiceConfig;
+      thanos-compact = additionalServiceConfig;
     };
-  in {
-    thanos-sidecar = additionalServiceConfig;
-    thanos-store = additionalServiceConfig;
-    thanos-query = additionalServiceConfig;
-    thanos-compact = additionalServiceConfig;
-  };
 }

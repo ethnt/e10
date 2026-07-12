@@ -1,10 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.services.prometheus.exporters.exportarr-sabnzbd;
+let
+  cfg = config.services.prometheus.exporters.exportarr-sabnzbd;
 
-in {
+in
+{
   options.services.prometheus.exporters.exportarr-sabnzbd = {
     enable = mkEnableOption "Enable sabnzbd exportarr";
 
@@ -36,13 +43,10 @@ in {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
       script = ''
-        ${getExe cfg.package} sabnzbd --port ${
-          toString cfg.port
-        } --url ${cfg.url} --api-key-file ${cfg.apiKeyFile}
+        ${getExe cfg.package} sabnzbd --port ${toString cfg.port} --url ${cfg.url} --api-key-file ${cfg.apiKeyFile}
       '';
     };
 
-    networking.firewall =
-      mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
+    networking.firewall = mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
   };
 }

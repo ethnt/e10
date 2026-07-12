@@ -1,21 +1,28 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
-let cfg = config.services.postgresql;
+let
+  cfg = config.services.postgresql;
 
-in {
+in
+{
   options.services.postgresql = {
     initialScriptText = mkOption {
       type = types.lines;
-      description =
-        "SQL to run on the initial start of PostgreSQL. This will get packaged into `services.postgresql.initialScript`";
+      description = "SQL to run on the initial start of PostgreSQL. This will get packaged into `services.postgresql.initialScript`";
       default = "";
     };
   };
 
   config = mkIf cfg.enable {
-    services.postgresql.initialScript = mkDefault
-      (pkgs.writeText "postgresql-initial-script" cfg.initialScriptText);
+    services.postgresql.initialScript = mkDefault (
+      pkgs.writeText "postgresql-initial-script" cfg.initialScriptText
+    );
   };
 }

@@ -1,5 +1,8 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ attic-client cachix ];
+  environment.systemPackages = with pkgs; [
+    attic-client
+    cachix
+  ];
 
   nix.settings = {
     substituters = [

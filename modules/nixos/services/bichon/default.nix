@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -9,7 +14,8 @@ let
     BICHON_HTTP_PORT = toString cfg.port;
     BICHON_BIND_IP = cfg.listenAddress;
   };
-in {
+in
+{
   options.services.bichon = {
     enable = mkEnableOption "Enable Bichon";
 

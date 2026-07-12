@@ -12,10 +12,7 @@
     enable = true;
 
     loki = {
-      url = "http://${hosts.monitor.config.networking.hostName}:${
-          toString
-          hosts.monitor.config.services.loki.configuration.server.http_listen_port
-        }";
+      url = "http://${hosts.monitor.config.networking.hostName}:${toString hosts.monitor.config.services.loki.configuration.server.http_listen_port}";
     };
   };
 }

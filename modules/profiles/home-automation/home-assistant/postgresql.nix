@@ -3,10 +3,12 @@
 
   services.postgresql = {
     ensureDatabases = [ "hass" ];
-    ensureUsers = [{
-      name = "hass";
-      ensureDBOwnership = true;
-    }];
+    ensureUsers = [
+      {
+        name = "hass";
+        ensureDBOwnership = true;
+      }
+    ];
   };
 
   services.postgresqlBackup.databases = [ "hass" ];
@@ -16,7 +18,12 @@
 
     config.recorder = {
       db_url = "postgresql:///hass?host=/run/postgresql";
-      exclude = { entities = [ "sun.sun" "sensor.date" ]; };
+      exclude = {
+        entities = [
+          "sun.sun"
+          "sensor.date"
+        ];
+      };
     };
   };
 }

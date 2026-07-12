@@ -1,5 +1,8 @@
 { config, ... }: {
-  imports = [ ./postgresql.nix ./redis.nix ];
+  imports = [
+    ./postgresql.nix
+    ./redis.nix
+  ];
 
   sops = {
     secrets = {

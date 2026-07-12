@@ -1,8 +1,18 @@
-{ lib, stdenvNoCC, fetchzip, dotnetCorePackages, sqlite, libz, writeShellScript
+{ lib
+, stdenvNoCC
+, fetchzip
+, dotnetCorePackages
+, sqlite
+, libz
+, writeShellScript
+,
 }:
 let
   dotnet = dotnetCorePackages.aspnetcore_8_0;
-  buildInputs = [ sqlite libz ];
+  buildInputs = [
+    sqlite
+    libz
+  ];
 
   server-script = writeShellScript "fileflows-server-unsubstituted.sh" ''
     export LD_LIBRARY_PATH="${lib.makeLibraryPath buildInputs}:$LD_LIBRARY_PATH"
@@ -40,7 +50,8 @@ let
     cd Node
     exec "${dotnet}/bin/dotnet" FileFlows.Node.dll "$@"
   '';
-in stdenvNoCC.mkDerivation rec {
+in
+stdenvNoCC.mkDerivation rec {
   pname = "fileflows";
   version = "26.5.9.7184";
 

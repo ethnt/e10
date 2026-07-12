@@ -37,10 +37,8 @@
 
       NEXTAUTH_URL = "https://karakeep.e10.camp";
 
-      OAUTH_WELLKNOWN_URL =
-        "https://auth.e10.camp/.well-known/openid-configuration";
-      OAUTH_CLIENT_ID =
-        "4_PUhlKbm03-XaIAR-tBOzaCkf6dQfhgBY-xnrewL5jsOCp0UXPsbSvnaxgLXEp6kKsqjqND";
+      OAUTH_WELLKNOWN_URL = "https://auth.e10.camp/.well-known/openid-configuration";
+      OAUTH_CLIENT_ID = "4_PUhlKbm03-XaIAR-tBOzaCkf6dQfhgBY-xnrewL5jsOCp0UXPsbSvnaxgLXEp6kKsqjqND";
       OAUTH_PROVIDER_NAME = "Authelia";
       OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING = "true";
     };

@@ -1,25 +1,39 @@
-{ lib, stdenv, fetchFromGitHub, deno, cacert, makeWrapper, autoPatchelfHook
-, sqlite, git, gnutar, gzip }:
+{ lib
+, stdenv
+, fetchFromGitHub
+, deno
+, cacert
+, makeWrapper
+, autoPatchelfHook
+, sqlite
+, git
+, gnutar
+, gzip
+,
+}:
 
 let
-  version = "2.0.8";
+  version = "2.0.9";
 
   src = fetchFromGitHub {
     owner = "Dictionarry-Hub";
     repo = "Profilarr";
     tag = "v${version}";
-    hash = "sha256-tpgTeKJCeEfhoARpq5u9W8iFZNocTNOhihAJNsyfTLY=";
+    hash = "sha256-FfMBu58cfaZlgxlqyO0qBz702NVcdQDarkh6JiSncCs=";
   };
 
   denoDeps = stdenv.mkDerivation {
     pname = "profilarr-deno-deps";
     inherit version src;
 
-    nativeBuildInputs = [ deno cacert sqlite ];
+    nativeBuildInputs = [
+      deno
+      cacert
+      sqlite
+    ];
 
     SSL_CERT_FILE = "${cacert}/etc/ssl/certs/ca-bundle.crt";
-    DENO_SQLITE_PATH =
-      "${sqlite.out}/lib/libsqlite3${stdenv.hostPlatform.extensions.sharedLibrary}";
+    DENO_SQLITE_PATH = "${sqlite.out}/lib/libsqlite3${stdenv.hostPlatform.extensions.sharedLibrary}";
 
     buildPhase = ''
       runHook preBuild
@@ -50,25 +64,35 @@ let
     dontFixup = true;
 
     outputHashMode = "recursive";
-    outputHash = {
-      x86_64-linux = "sha256-a+80eXiDgWzLKefqqF9hnquBr4RLhUucTUOJc6inCMs=";
-      aarch64-linux = "sha256-z4zIEEekyQRSLTkXLmIM5JA8vZBKUMGGtUuvtD0Xq0g=";
-    }.${stdenv.hostPlatform.system} or (throw
-      "profilarr: unsupported system ${stdenv.hostPlatform.system}");
+    outputHash =
+      {
+        x86_64-linux = "sha256-eyrIsA8KTajDvMNR0kjOHhPVPd30KgMuv+qeV7zaO/Q=";
+        aarch64-linux = "sha256-XIPWLAo1XmmKrCOSGPXsCD3uhljurV6TTKB5LJiitqk=";
+      }.${stdenv.hostPlatform.system}
+        or (throw "profilarr: unsupported system ${stdenv.hostPlatform.system}");
   };
-
-in stdenv.mkDerivation {
+in
+stdenv.mkDerivation {
   pname = "profilarr";
   inherit version src;
 
-  nativeBuildInputs = [ deno makeWrapper autoPatchelfHook cacert ];
-  buildInputs = [ stdenv.cc.cc.lib sqlite ];
+  nativeBuildInputs = [
+    deno
+    makeWrapper
+    autoPatchelfHook
+    cacert
+  ];
+  buildInputs = [
+    stdenv.cc.cc.lib
+    sqlite
+  ];
 
-  autoPatchelfIgnoreMissingDeps =
-    [ "libc.musl-x86_64.so.1" "libc.musl-aarch64.so.1" ];
+  autoPatchelfIgnoreMissingDeps = [
+    "libc.musl-x86_64.so.1"
+    "libc.musl-aarch64.so.1"
+  ];
 
-  DENO_SQLITE_PATH =
-    "${sqlite.out}/lib/libsqlite3${stdenv.hostPlatform.extensions.sharedLibrary}";
+  DENO_SQLITE_PATH = "${sqlite.out}/lib/libsqlite3${stdenv.hostPlatform.extensions.sharedLibrary}";
 
   postPatch = ''
     substituteInPlace svelte.config.js \
@@ -110,7 +134,13 @@ in stdenv.mkDerivation {
     makeWrapper ${lib.getExe deno} $out/bin/profilarr \
       --run "cd $out/lib/profilarr" \
       --add-flags "run -A dist/build/mod.ts" \
-      --prefix PATH : ${lib.makeBinPath [ git gnutar gzip ]} \
+      --prefix PATH : ${
+        lib.makeBinPath [
+          git
+          gnutar
+          gzip
+        ]
+      } \
       --set-default DENO_DIR "$out/share/deno-dir" \
       --set-default DENO_NO_UPDATE_CHECK 1 \
       --set-default DENO_SQLITE_PATH "$DENO_SQLITE_PATH" \

@@ -25,17 +25,13 @@
     settings = {
       CSRF_TRUSTED_ORIGINS = [
         "https://netbox.e10.camp"
-        "http://${config.networking.hostName}:${
-          toString config.services.netbox.port
-        }"
+        "http://${config.networking.hostName}:${toString config.services.netbox.port}"
         "http://${config.networking.hostName}:8002"
       ];
       REMOTE_AUTH_ENABLED = true;
-      REMOTE_AUTH_BACKEND =
-        "social_core.backends.open_id_connect.OpenIdConnectAuth";
+      REMOTE_AUTH_BACKEND = "social_core.backends.open_id_connect.OpenIdConnectAuth";
       SOCIAL_AUTH_OIDC_OIDC_ENDPOINT = "https://auth.e10.camp";
-      SOCIAL_AUTH_OIDC_KEY =
-        "gY0aO8QGJT.~UbRntqa72YTm54DSUHr3HeBu4zMBlWwMwlJwLtbhXflUCAczeC-snr9I_5tZ";
+      SOCIAL_AUTH_OIDC_KEY = "gY0aO8QGJT.~UbRntqa72YTm54DSUHr3HeBu4zMBlWwMwlJwLtbhXflUCAczeC-snr9I_5tZ";
     };
     extraConfig = ''
       import os
@@ -59,9 +55,7 @@
         not path /static/*
       }
 
-      reverse_proxy @proxied http://localhost:${
-        toString config.services.netbox.port
-      }
+      reverse_proxy @proxied http://localhost:${toString config.services.netbox.port}
 
       file_server
     '';
@@ -72,5 +66,8 @@
 
   services.postgresqlBackup.databases = [ "netbox" ];
 
-  networking.firewall.allowedTCPPorts = [ config.services.netbox.port 8002 ];
+  networking.firewall.allowedTCPPorts = [
+    config.services.netbox.port
+    8002
+  ];
 }
