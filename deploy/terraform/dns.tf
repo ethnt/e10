@@ -37,6 +37,30 @@ resource "aws_route53_record" "wildcard_e10_video" {
   records = [aws_eip.bastion.public_ip]
 }
 
+resource "aws_route53_record" "em824837_e10_video" {
+  zone_id = aws_route53_zone.e10_video.zone_id
+  name    = "em824837.e10.video"
+  type    = "CNAME"
+  records = ["return.smtp2go.net"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "s824837_domainkey_e10_video" {
+  zone_id = aws_route53_zone.e10_video.zone_id
+  name    = "s824837._domainkey.e10.video"
+  type    = "CNAME"
+  records = ["dkim.smtp2go.net"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "link_email_e10_video" {
+  zone_id = aws_route53_zone.e10_video.zone_id
+  name    = "link.email.e10.video"
+  type    = "CNAME"
+  records = ["track.smtp2go.net"]
+  ttl     = 300
+}
+
 # e10.land
 
 resource "aws_route53_zone" "e10_land" {
@@ -139,6 +163,38 @@ resource "aws_route53_record" "wildcard_e10_camp" {
   records = [aws_eip.bastion.public_ip]
 }
 
+resource "aws_route53_record" "em824837_e10_camp" {
+  zone_id = aws_route53_zone.e10_camp.zone_id
+  name    = "em824837.e10.camp"
+  type    = "CNAME"
+  records = ["return.smtp2go.net"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "s824837_domainkey_e10_camp" {
+  zone_id = aws_route53_zone.e10_camp.zone_id
+  name    = "s824837._domainkey.e10.camp"
+  type    = "CNAME"
+  records = ["dkim.smtp2go.net"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "link_email_e10_camp" {
+  zone_id = aws_route53_zone.e10_camp.zone_id
+  name    = "link.email.e10.camp"
+  type    = "CNAME"
+  records = ["track.smtp2go.net"]
+  ttl     = 300
+}
+
+resource "aws_route53_record" "auth_monitor_e10_camp" {
+  zone_id = aws_route53_zone.e10_camp.zone_id
+  name    = "auth.monitor.e10.camp"
+  type    = "A"
+  records = [aws_eip.monitor.public_ip]
+  ttl     = 300
+}
+
 # satan.network
 
 resource "aws_route53_zone" "satan_network" {
@@ -157,6 +213,37 @@ resource "porkbun_nameservers" "satan_network" {
 resource "aws_route53_record" "unifi_satan_network" {
   zone_id = aws_route53_zone.satan_network.zone_id
   name    = "unifi.satan.network"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.bastion.public_ip]
+}
+
+# e10.network
+
+resource "aws_route53_zone" "e10_network" {
+  name = "e10.network"
+}
+
+resource "porkbun_nameservers" "e10_network" {
+  domain      = "e10.network"
+  nameservers = sort(aws_route53_zone.e10_network.name_servers)
+
+  lifecycle {
+    ignore_changes = [nameservers]
+  }
+}
+
+resource "aws_route53_record" "root_e10_network" {
+  zone_id = aws_route53_zone.e10_network.zone_id
+  name    = "e10.network"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.bastion.public_ip]
+}
+
+resource "aws_route53_record" "wildcard_e10_network" {
+  zone_id = aws_route53_zone.e10_network.zone_id
+  name    = "*.e10.network"
   type    = "A"
   ttl     = 300
   records = [aws_eip.bastion.public_ip]
@@ -513,61 +600,5 @@ resource "aws_route53_record" "spf_turkeltaub_org" {
   name    = "turkeltaub.org"
   type    = "TXT"
   records = ["v=spf1 include:spf.messagingengine.com ?all"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "em824837_e10_video" {
-  zone_id = aws_route53_zone.e10_video.zone_id
-  name    = "em824837.e10.video"
-  type    = "CNAME"
-  records = ["return.smtp2go.net"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "s824837_domainkey_e10_video" {
-  zone_id = aws_route53_zone.e10_video.zone_id
-  name    = "s824837._domainkey.e10.video"
-  type    = "CNAME"
-  records = ["dkim.smtp2go.net"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "link_email_e10_video" {
-  zone_id = aws_route53_zone.e10_video.zone_id
-  name    = "link.email.e10.video"
-  type    = "CNAME"
-  records = ["track.smtp2go.net"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "em824837_e10_camp" {
-  zone_id = aws_route53_zone.e10_camp.zone_id
-  name    = "em824837.e10.camp"
-  type    = "CNAME"
-  records = ["return.smtp2go.net"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "s824837_domainkey_e10_camp" {
-  zone_id = aws_route53_zone.e10_camp.zone_id
-  name    = "s824837._domainkey.e10.camp"
-  type    = "CNAME"
-  records = ["dkim.smtp2go.net"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "link_email_e10_camp" {
-  zone_id = aws_route53_zone.e10_camp.zone_id
-  name    = "link.email.e10.camp"
-  type    = "CNAME"
-  records = ["track.smtp2go.net"]
-  ttl     = 300
-}
-
-resource "aws_route53_record" "auth_monitor_e10_camp" {
-  zone_id = aws_route53_zone.e10_camp.zone_id
-  name    = "auth.monitor.e10.camp"
-  type    = "A"
-  records = [aws_eip.monitor.public_ip]
   ttl     = 300
 }
