@@ -7,6 +7,7 @@
       {
         name = "umami";
         ensureDBOwnership = true;
+        ensureClauses.login = true;
       }
     ];
   };
