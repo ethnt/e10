@@ -1,13 +1,13 @@
-{
-  lib,
-  stdenv,
-  pnpm,
-  fetchPnpmDeps,
-  pnpmConfigHook,
-  makeWrapper,
-  nodejs,
-  fetchFromGitHub,
-  turbo,
+{ lib
+, stdenv
+, pnpm
+, fetchPnpmDeps
+, pnpmConfigHook
+, makeWrapper
+, nodejs
+, fetchFromGitHub
+, turbo
+,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "tracearr";
