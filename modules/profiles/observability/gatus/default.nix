@@ -308,6 +308,11 @@ in
               url = "https://karakeep.e10.camp";
               group = "Matrix";
             })
+            (mkEndpoint {
+              name = "Umami";
+              url = "https://analytics.e10.camp";
+              group = "Matrix";
+            })
           ];
           builder = [
             (mkEndpoint {
