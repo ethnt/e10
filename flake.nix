@@ -96,7 +96,6 @@
         _module.args.pkgs = import inputs.nixpkgs {
           inherit system;
 
-          # TODO: Make this on a per-system basis, and maybe per-package
           config = {
             allowUnfree = true;
             permittedInsecurePackages = [
