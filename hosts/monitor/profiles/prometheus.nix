@@ -167,12 +167,12 @@
       scrape_interval = "5s";
     }
     {
-      job_name = "satan_controller";
+      job_name = "controller_unifi_os";
       metrics_path = "/metrics";
       static_configs = [
         {
           targets = [
-            "${hosts.controller.config.networking.hostName}:${toString hosts.controller.config.services.prometheus.exporters.unpoller.port}"
+            "${hosts.controller.config.networking.hostName}:9130"
           ];
         }
       ];
@@ -351,6 +351,18 @@
       metrics_path = "/prometheus";
       static_configs = [ { targets = [ "speedtest-tracker.e10.camp" ]; } ];
       scrape_interval = "45m";
+    }
+    {
+      job_name = "ping";
+      metrics_path = "/metrics";
+      static_configs = [
+        {
+          targets = [
+            "${hosts.controller.config.networking.hostName}:${toString hosts.controller.config.services.prometheus.exporters.ping.port}"
+          ];
+        }
+      ];
+      scrape_interval = "5s";
     }
   ]
   ++ lib.flatten (
