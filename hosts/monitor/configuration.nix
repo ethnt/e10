@@ -9,6 +9,7 @@
       profiles.communications.ntfy
       profiles.monitoring.loki.default
       profiles.monitoring.rsyslogd
+      profiles.telemetry.vector.syslog
       profiles.monitoring.thanos.default
       profiles.observability.gatus.default
       profiles.observability.grafana
