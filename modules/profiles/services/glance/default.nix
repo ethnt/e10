@@ -212,6 +212,11 @@
                         icon = "di:tracearr";
                       })
                       (mkSite {
+                        title = "Umami";
+                        url = "https://analytics.e10.camp";
+                        icon = "di:umami";
+                      })
+                      (mkSite {
                         title = "UniFi";
                         url = "https://unifi.satan.network";
                         icon = "di:unifi";

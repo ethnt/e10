@@ -1,6 +1,6 @@
 { lib
 , stdenv
-, pnpm_10
+, pnpm
 , fetchPnpmDeps
 , pnpmConfigHook
 , makeWrapper
@@ -11,21 +11,27 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "tracearr";
-  version = "1.4.28";
+  version = "1.4.31";
 
   src = fetchFromGitHub {
     owner = "connorgallopo";
     repo = "Tracearr";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-gZsdnvHTHNJYnP+1bvXngECqimWGwx9K5UIS0DF94w4=";
+    hash = "sha256-jsCKZ0HKHZ3YkLx1kruvSp/MOsP74Lr8TRXsVMQPlv8=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
-    pnpm = pnpm_10;
-    fetcherVersion = 3;
-    hash = "sha256-EJrC6T/EohYJCDEe/itxvqNS2SIRXN1oAwOoP3EYeQc=";
+    inherit pnpm;
+    fetcherVersion = 4;
+    hash = "sha256-8K20khCKaTHYC9r/TfWldoN+53XcueSVlFfd4G6K9vU=";
   };
+
+  # The pnpm version is required, but nixpkgs doesn't provide the exact version that Tracearr requires
+  # We can fudge this by replacing the version in the `package.json` with the one we have
+  postPatch = ''
+    sed -i 's|"packageManager": "pnpm@[^"]*"|"packageManager": "pnpm@${pnpm.version}"|' package.json
+  '';
 
   strictDeps = true;
 
@@ -35,7 +41,7 @@ stdenv.mkDerivation (finalAttrs: {
     makeWrapper
     nodejs
     pnpmConfigHook
-    pnpm_10
+    pnpm
     turbo
   ];
 
@@ -58,11 +64,7 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   preInstall = ''
-    rm node_modules/.modules.yaml
-
-    CI=true pnpm prune --prod --ignore-scripts
-
-    find -type f \( -name "*.d.ts" -o -name "*.map" \) -exec rm -rf {} +
+    find . -type f \( -name "*.d.ts" -o -name "*.map" \) -delete
   '';
 
   installPhase = ''

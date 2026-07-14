@@ -8,7 +8,7 @@
 ,
 }:
 let
-  dotnet = dotnetCorePackages.aspnetcore_8_0;
+  dotnet = dotnetCorePackages.aspnetcore_10_0;
   buildInputs = [
     sqlite
     libz
@@ -37,8 +37,8 @@ let
     export LD_LIBRARY_PATH="${lib.makeLibraryPath buildInputs}:$LD_LIBRARY_PATH"
 
     if [ -z "$FILEFLOWS_NODE_BASE_DIR" ]; then
-        echo "ERROR: Environment variable FILEFLOWS_NODE_BASE_DIR is not defined"
-        exit 1
+      echo "ERROR: Environment variable FILEFLOWS_NODE_BASE_DIR is not defined"
+      exit 1
     fi
 
     cd "$FILEFLOWS_NODE_BASE_DIR"
@@ -53,12 +53,12 @@ let
 in
 stdenvNoCC.mkDerivation rec {
   pname = "fileflows";
-  version = "26.5.9.7184";
+  version = "26.7.2.7443";
 
   src = fetchzip {
     url = "https://fileflows.com/downloads/Zip/${version}";
     extension = "zip";
-    hash = "sha256-faxDk7ckBno3eM4dTnzvDwM/TPqepzu4qhnpnk8L3hM=";
+    hash = "sha256-JG26rRoxxZzrUm7usBYBJTtjCAzZbI048T8bJCTox4A=";
     stripRoot = false;
   };
 

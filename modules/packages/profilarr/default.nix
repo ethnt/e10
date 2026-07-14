@@ -67,7 +67,7 @@ let
     outputHash =
       {
         x86_64-linux = "sha256-eyrIsA8KTajDvMNR0kjOHhPVPd30KgMuv+qeV7zaO/Q=";
-        aarch64-linux = "sha256-XIPWLAo1XmmKrCOSGPXsCD3uhljurV6TTKB5LJiitqk=";
+        aarch64-linux = "sha256-Mk58kzWjgVSQZdu0YFhknt1J0TEyWfKF0DiOFH5r9XU=";
       }.${stdenv.hostPlatform.system}
         or (throw "profilarr: unsupported system ${stdenv.hostPlatform.system}");
   };

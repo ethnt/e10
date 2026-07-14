@@ -295,6 +295,11 @@
         port = 8971;
       };
 
+      "analytics.e10.camp" = {
+        host = hosts.matrix;
+        port = hosts.matrix.config.services.umami.settings.PORT;
+      };
+
       "e10.video" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.plex) port;

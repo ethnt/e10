@@ -3,7 +3,7 @@
     enable = true;
     globalConfig = ''
       admin :2019 {
-        origins 127.0.0.1 100.0.0.0/8
+        origins 127.0.0.1 http://:2019 100.0.0.0/8
       }
 
       debug
