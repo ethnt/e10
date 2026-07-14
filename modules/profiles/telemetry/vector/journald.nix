@@ -17,7 +17,6 @@
         parse_journald = {
           type = "remap";
           inputs = [ "filter_journald" ];
-          # TODO: Properly parse vector/thanos logs
           source = ''
             priority = to_int(.PRIORITY) ?? 6
 
@@ -105,9 +104,28 @@
             del(.USER_UNIT)
           '';
         };
+
+        parse_structured_logs = {
+          type = "remap";
+          inputs = [ "parse_journald" ];
+          source = ''
+            unit = string(.labels.unit) ?? ""
+
+            if unit == "vector.service" || starts_with(unit, "thanos-") {
+              parsed, err = parse_json(.message)
+              if err == null {
+                level = string(parsed.level) ?? null
+                if level != null {
+                  .labels.level = downcase!(level)
+                }
+                .message = string(parsed.msg) ?? string(parsed.message) ?? .message
+              }
+            }
+          '';
+        };
       };
 
-      sinks.loki.inputs = lib.mkAfter [ "parse_journald" ];
+      sinks.loki.inputs = lib.mkAfter [ "parse_structured_logs" ];
     };
   };
 }
