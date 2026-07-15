@@ -70,7 +70,8 @@ in
           else
             value.host.config.networking.hostName;
         autheliaForwardAuth = ''
-          forward_auth localhost:9091 {
+          @authRequired not path /manifest.json /manifest.webmanifest /browserconfig.xml /sw.js /service-worker.js
+          forward_auth @authRequired localhost:9091 {
             uri /api/authz/forward-auth
             copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
           }

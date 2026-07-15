@@ -228,17 +228,6 @@
       "auth.e10.camp" = {
         host = hosts.bastion;
         port = 9091;
-        # TODO: This (somewhat) fixes issues with PWAs grabbing manifest.json files
-        # https://github.com/authelia/authelia/discussions/4629
-        extraConfig = ''
-          header Access-Control-Allow-Origin "*"
-        '';
-      };
-
-      "unifi.satan.network" = {
-        host = hosts.controller;
-        port = 8443;
-        skipTLSVerify = true;
       };
 
       "speedtest-tracker.e10.camp" = {
