@@ -4,7 +4,7 @@
     # glxinfo
     pciutils
     cudatoolkit
-    linuxPackages.nvidia_x11
+    config.hardware.nvidia.package
     nvtopPackages.full
     nvitop
   ];
@@ -15,7 +15,7 @@
   };
 
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
 
     modesetting.enable = true;
     nvidiaSettings = true;

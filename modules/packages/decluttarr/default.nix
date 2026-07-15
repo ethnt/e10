@@ -50,8 +50,7 @@ python3Packages.buildPythonApplication rec {
     runHook postInstall
   '';
 
-  # TODO: Actually run tests
-  doCheck = false;
+  doCheck = true;
 
   meta = with lib; {
     description = "Watches radarr, sonarr, lidarr, readarr and whisparr download queues and removes downloads if they become stalled or no longer needed.";

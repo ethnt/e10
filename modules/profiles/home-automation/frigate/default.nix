@@ -33,6 +33,7 @@ let
     detectors = {
       onnx_0 = {
         type = "onnx";
+        device = "cuda:0";
       };
     };
     model = {
@@ -143,7 +144,7 @@ in
     extraOptions = [
       "--shm-size=1024mb"
       "--cap-add=SYS_ADMIN"
-      "--device=nvidia.com/gpu=all"
+      "--device=nvidia.com/gpu=1"
     ];
   };
 

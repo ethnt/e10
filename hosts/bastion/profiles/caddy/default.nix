@@ -201,16 +201,12 @@
 
       "ldap.e10.camp" = {
         host = hosts.bastion;
-        # FIXME: This will throw an error complaining that `services.lldap.settings.ldap_base_dn` was accessed but has
-        #   no value defined (when it definitely is set)
-        # port = hosts.controller.config.services.lldap.settings.http_port;
-        port = 17170;
+        port = hosts.bastion.config.services.lldap.settings.http_port;
       };
 
       "pdf.e10.camp" = {
         host = hosts.matrix;
-        # inherit (hosts.matrix.config.services.bentopdf) port;
-        port = 4152;
+        inherit ((builtins.head hosts.matrix.config.services.bentopdf.nginx.virtualHost.listen)) port;
         protected = true;
       };
 
