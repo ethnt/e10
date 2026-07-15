@@ -6,7 +6,7 @@
     ++ web
     ++ [
       profiles.communications.grafana-to-ntfy.default
-      profiles.communications.ntfy
+      profiles.communications.ntfy.default
       profiles.monitoring.loki.default
       profiles.monitoring.rsyslogd
       profiles.telemetry.vector.syslog

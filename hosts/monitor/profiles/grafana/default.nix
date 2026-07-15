@@ -178,7 +178,7 @@
                   type = "webhook";
                   settings = {
                     httpMethod = "POST";
-                    url = "http://0.0.0.0:8000";
+                    url = "http://localhost:${toString config.services.grafana-to-ntfy.settings.port}";
                     username = "admin";
                     password = "$__file{${config.sops.secrets.grafana_to_ntfy_password.path}}";
                   };
@@ -217,6 +217,7 @@
 
         rules.settings = {
           apiVersion = 1;
+          deleteRules = [ ];
           groups = [
             {
               orgId = 1;
@@ -385,210 +386,6 @@
                     severity = "critical";
                   };
                   isPaused = false;
-                }
-                {
-                  uid = "e1a38758-5093-49e2-8041-ae81225b1ca5";
-                  title = "Packet loss is greater than 1%";
-                  condition = "C";
-                  data = [
-                    {
-                      refId = "A";
-                      relativeTimeRange = {
-                        from = 600;
-                        to = 0;
-                      };
-                      datasourceUid = "P5DCFC7561CCDE821";
-                      model = {
-                        datasource = {
-                          type = "prometheus";
-                          uid = "P5DCFC7561CCDE821";
-                        };
-                        editorMode = "code";
-                        expr = ''
-                          (smokeping_requests_total{host="1.1.1.1", job="smokeping_controller"} - smokeping_response_duration_seconds_count{host="1.1.1.1", job="smokeping_controller"})/smokeping_requests_total{host="1.1.1.1", job="smokeping_controller"}
-                        '';
-                        instant = false;
-                        intervalMs = 1000;
-                        legendFormat = "__auto";
-                        maxDataPoints = 43200;
-                        range = true;
-                        refId = "A";
-                      };
-                    }
-                    {
-                      refId = "B";
-                      relativeTimeRange = {
-                        from = 600;
-                        to = 0;
-                      };
-                      datasourceUid = "__expr__";
-                      model = {
-                        conditions = [
-                          {
-                            evaluator = {
-                              params = [
-                                0
-                                0
-                              ];
-                              type = "gt";
-                            };
-                            operator = {
-                              type = "and";
-                            };
-                            query = {
-                              params = [ ];
-                            };
-                            reducer = {
-                              params = [ ];
-                              type = "avg";
-                            };
-                            type = "query";
-                          }
-                        ];
-                        datasource = {
-                          name = "Expression";
-                          type = "__expr__";
-                          uid = "__expr__";
-                        };
-                        expression = "A";
-                        intervalMs = 1000;
-                        maxDataPoints = 43200;
-                        reducer = "mean";
-                        refId = "B";
-                        type = "reduce";
-                      };
-                    }
-                    {
-                      refId = "C";
-                      relativeTimeRange = {
-                        from = 600;
-                        to = 0;
-                      };
-                      datasourceUid = "__expr__";
-                      model = {
-                        conditions = [
-                          {
-                            evaluator = {
-                              params = [ 1.0e-2 ];
-                              type = "gt";
-                            };
-                            operator = {
-                              type = "and";
-                            };
-                            query = {
-                              params = [ ];
-                            };
-                            reducer = {
-                              params = [ ];
-                              type = "avg";
-                            };
-                            type = "query";
-                          }
-                        ];
-                        datasource = {
-                          name = "Expression";
-                          type = "__expr__";
-                          uid = "__expr__";
-                        };
-                        expression = "B";
-                        intervalMs = 1000;
-                        maxDataPoints = 43200;
-                        refId = "C";
-                        type = "threshold";
-                      };
-                    }
-                  ];
-                  noDataState = "NoData";
-                  execErrState = "Error";
-                  for = "5m";
-                  annotations = {
-                    description = "";
-                    runbook_url = "";
-                    summary = "";
-                  };
-                  labels = {
-                    severity = "critical";
-                  };
-                  isPaused = false;
-                }
-                {
-                  uid = "C6AC6046-EBEF-49E8-A810-A124B01AC3D1";
-                  title = "ZFS pool degraded";
-                  condition = "C";
-                  data = [
-                    {
-                      refId = "A";
-                      relativeTimeRange = {
-                        from = 600;
-                        to = 0;
-                      };
-                      datasourceUid = "P5DCFC7561CCDE821";
-                      model = {
-                        datasource = {
-                          type = "prometheus";
-                          uid = "P5DCFC7561CCDE821";
-                        };
-                        editorMode = "code";
-                        expr = "zfs_pool_health";
-                        instant = true;
-                        intervalMs = 1000;
-                        legendFormat = "__auto";
-                        maxDataPoints = 43200;
-                        range = false;
-                        refId = "A";
-                      };
-                    }
-                    {
-                      refId = "C";
-                      relativeTimeRange = {
-                        from = 0;
-                        to = 0;
-                      };
-                      datasourceUid = "__expr__";
-                      model = {
-                        conditions = [
-                          {
-                            evaluator = {
-                              params = [ 0 ];
-                              type = "gt";
-                            };
-                            operator = {
-                              type = "and";
-                            };
-                            query = {
-                              params = [ "C" ];
-                            };
-                            reducer = {
-                              params = [ ];
-                              type = "last";
-                            };
-                            type = "query";
-                          }
-                        ];
-                        datasource = {
-                          type = "__expr__";
-                          uid = "__expr__";
-                        };
-                        expression = "A";
-                        intervalMs = 1000;
-                        maxDataPoints = 43200;
-                        refId = "C";
-                        type = "threshold";
-                      };
-                    }
-                  ];
-                  noDataState = "NoData";
-                  execErrState = "Error";
-                  for = "1m";
-                  annotations = {
-                    pool = ''{{index $labels "pool"}}'';
-                    summary = "ZFS pool {{pool}} unhealthy";
-                  };
-                  labels = { };
-                  isPaused = false;
-                  notification_settings = {
-                    receiver = "Ntfy";
-                  };
                 }
               ];
             }
