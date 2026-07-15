@@ -151,6 +151,10 @@
           name = "Gatus Service Monitoring";
           options.path = ./provisioning/gatus.json;
         }
+        {
+          name = "Restic Backups";
+          options.path = ./provisioning/restic.json;
+        }
       ];
 
       alerting = {
@@ -222,7 +226,7 @@
             {
               orgId = 1;
               name = "Default";
-              interval = "60s";
+              interval = "10s";
               folder = "Homelab";
               rules = [
                 {
@@ -382,6 +386,163 @@
                     runbook_url = "";
                     summary = "";
                   };
+                  labels = {
+                    severity = "critical";
+                  };
+                  isPaused = false;
+                }
+                {
+                  uid = "5FCBAC28-A8F2-4C8F-8B9E-B7BA22111EAC";
+                  title = "Packet loss greater than 1%";
+                  condition = "C";
+                  data = [
+                    {
+                      refId = "A";
+                      relativeTimeRange = {
+                        from = 600;
+                        to = 0;
+                      };
+                      datasourceUid = "P5DCFC7561CCDE821";
+                      model = {
+                        datasource = {
+                          type = "prometheus";
+                          uid = "P5DCFC7561CCDE821";
+                        };
+                        expr = "ping_loss_ratio * 100";
+                        instant = true;
+                        intervalMs = 1000;
+                        legendFormat = "__auto";
+                        maxDataPoints = 43200;
+                        range = false;
+                        refId = "A";
+                      };
+                    }
+                    {
+                      refId = "C";
+                      queryType = "expression";
+                      relativeTimeRange = {
+                        from = 0;
+                        to = 0;
+                      };
+                      datasourceUid = "__expr__";
+                      model = {
+                        conditions = [
+                          {
+                            evaluator = {
+                              params = [
+                                1
+                              ];
+                              type = "gt";
+                            };
+                            operator = {
+                              type = "and";
+                            };
+                            query = {
+                              params = [
+                                "C"
+                              ];
+                            };
+                            reducer = {
+                              params = [ ];
+                              type = "last";
+                            };
+                            type = "query";
+                          }
+                        ];
+                        datasource = {
+                          type = "__expr__";
+                          uid = "__expr__";
+                        };
+                        expression = "A";
+                        intervalMs = 1000;
+                        maxDataPoints = 43200;
+                        refId = "C";
+                        type = "threshold";
+                      };
+                    }
+                  ];
+                  noDataState = "NoData";
+                  execErrState = "Error";
+                  for = "1m";
+                  annotations = { };
+                  labels = { };
+                  isPaused = false;
+                }
+                {
+                  uid = "EEA7E464-4F51-4B2B-9681-68F36E070082";
+                  title = "Packet loss greater than 10%";
+                  condition = "C";
+                  data = [
+                    {
+                      refId = "A";
+                      relativeTimeRange = {
+                        from = 600;
+                        to = 0;
+                      };
+                      datasourceUid = "P5DCFC7561CCDE821";
+                      model = {
+                        datasource = {
+                          type = "prometheus";
+                          uid = "P5DCFC7561CCDE821";
+                        };
+                        editorMode = "code";
+                        expr = "ping_loss_ratio * 100";
+                        instant = true;
+                        intervalMs = 1000;
+                        legendFormat = "__auto";
+                        maxDataPoints = 43200;
+                        range = false;
+                        refId = "A";
+                      };
+                    }
+                    {
+                      refId = "C";
+                      queryType = "expression";
+                      relativeTimeRange = {
+                        from = 0;
+                        to = 0;
+                      };
+                      datasourceUid = "__expr__";
+                      model = {
+                        conditions = [
+                          {
+                            evaluator = {
+                              params = [
+                                10
+                              ];
+                              type = "gt";
+                            };
+                            operator = {
+                              type = "and";
+                            };
+                            query = {
+                              params = [
+                                "C"
+                              ];
+                            };
+                            reducer = {
+                              params = [ ];
+                              type = "last";
+                            };
+                            type = "query";
+                          }
+                        ];
+                        datasource = {
+                          type = "__expr__";
+                          uid = "__expr__";
+                        };
+                        expression = "A";
+                        intervalMs = 1000;
+                        maxDataPoints = 43200;
+                        refId = "C";
+                        type = "threshold";
+                      };
+                    }
+                  ];
+                  noDataState = "NoData";
+                  execErrState = "Error";
+                  for = "1m";
+                  annotations = { };
                   labels = {
                     severity = "critical";
                   };

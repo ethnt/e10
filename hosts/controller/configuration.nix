@@ -14,8 +14,10 @@
       profiles.services.attic-watch-store.default
       profiles.services.termix.default
       profiles.telemetry.prometheus-nut-exporter
+      profiles.telemetry.prometheus-ping-exporter
       profiles.telemetry.prometheus-smokeping-exporter
-      profiles.telemetry.prometheus-unpoller-exporter.satan
+      profiles.telemetry.unpoller.default
+      # profiles.telemetry.prometheus-unpoller-exporter.satan
     ]
     ++ [
       ./disk-config.nix
