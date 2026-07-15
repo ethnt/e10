@@ -45,6 +45,7 @@
             sonarr
             netbox
             plex
+            prometheus-dcgm-exporter
             immich
             ;
 
