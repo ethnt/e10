@@ -49,6 +49,7 @@
   services.thanos = {
     sidecar = {
       enable = true;
+      log.format = "json";
       http.port = 19190;
       grpc.port = 10900;
       objstore.config-file =
@@ -57,6 +58,7 @@
 
     store = {
       enable = true;
+      log.format = "json";
       http.port = 19191;
       grpc.port = 10901;
       objstore.config-file =
@@ -65,6 +67,7 @@
 
     query = {
       enable = true;
+      log.format = "json";
       http.port = 19192;
       grpc.port = 10902;
       endpoints = [
@@ -75,6 +78,7 @@
 
     compact = {
       enable = true;
+      log.format = "json";
       http.port = 19193;
       objstore.config-file =
         config.sops.templates."thanos/sidecar_object_storage_configuration.json".path;

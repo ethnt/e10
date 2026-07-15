@@ -1,4 +1,6 @@
 { hosts, ... }: {
+  systemd.services.vector.environment.VECTOR_LOG_FORMAT = "json";
+
   services.vector = {
     enable = true;
 
