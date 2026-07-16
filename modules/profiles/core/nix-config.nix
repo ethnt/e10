@@ -42,12 +42,6 @@
         "flakes"
       ];
       sandbox = true;
-      system-features = [
-        "nixos-test"
-        "benchmark"
-        "big-parallel"
-        "kvm"
-      ];
       trusted-users = [
         "root"
         "@wheel"

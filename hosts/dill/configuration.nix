@@ -22,7 +22,6 @@
 
   deployment = {
     deployable = true;
-    buildOnTarget = true;
     tags = [ "hypervisor" ];
   };
 
@@ -37,9 +36,9 @@
     };
     instances = [
       {
-        name = "fennel";
-        image = hosts.fennel.config.system.build.qemuImage;
-        metadata = hosts.fennel.config.system.build.metadata;
+        name = "fabricator";
+        image = hosts.fabricator.config.system.build.qemuImage;
+        metadata = hosts.fabricator.config.system.build.metadata;
         vm = true;
         profiles = [ "default" ];
         kind = "instance";

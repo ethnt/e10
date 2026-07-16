@@ -1,11 +1,19 @@
-{ suites, ... }: {
-  imports = with suites; minimal ++ incus-virtual-machine;
+{ suites, profiles, ... }: {
+  imports =
+    with suites;
+    core
+    ++ incus-virtual-machine
+    ++ [
+      profiles.remote-builder.builder
+      profiles.remote-builder.substituter
+      profiles.services.attic-watch-store.default
+      profiles.services.cachix-watch-store.default
+    ];
 
   deployment = {
     targetHost = "10.10.4.101";
     deployable = true;
     incusVirtualMachine = true;
-    buildOnTarget = false;
   };
 
   networking = {
@@ -25,6 +33,8 @@
     ];
     networkConfig.DHCP = "no";
   };
+
+  nix.gc.automatic = false;
 
   system.stateVersion = "25.05";
 }

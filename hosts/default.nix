@@ -84,6 +84,6 @@ in
     builder = mkHost "builder" { system = "x86_64-linux"; };
     bastion = mkHost "bastion" { system = "aarch64-linux"; };
     dill = mkHost "dill" { system = "x86_64-linux"; };
-    fennel = mkHost "fennel" { system = "x86_64-linux"; };
+    fabricator = mkHost "fabricator" { system = "x86_64-linux"; };
   };
 }
