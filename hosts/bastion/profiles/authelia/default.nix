@@ -127,24 +127,6 @@
             token_endpoint_auth_method = "client_secret_basic";
           }
           {
-            client_id = "BhZjM_kfrPU38DOigEa9HToE2XTdYsmSMOxUBmUOgxLkZr4xMB45u2E8QoJYlqe3hwJMReZy";
-            client_name = "Termix";
-            client_secret = "$pbkdf2-sha512$310000$sH.OLrn2ClPUYSaNhDQgog$IZOLyiRi4qmukot3qQWwZF39z6UnuzZrJWxC6sEjslM3T8ZuRUOBfHN6y7lUuyvZB8FO2MnxG1rrHBx3wwMi/w";
-            public = false;
-            authorization_policy = "two_factor";
-            consent_mode = "implicit";
-            claims_policy = "legacy";
-            grant_types = [ "authorization_code" ];
-            response_types = [ "code" ];
-            scopes = [
-              "openid"
-              "profile"
-              "email"
-            ];
-            redirect_uris = [ "https://termix.e10.camp/users/oidc/callback" ];
-            token_endpoint_auth_method = "client_secret_post";
-          }
-          {
             client_id = "4_PUhlKbm03-XaIAR-tBOzaCkf6dQfhgBY-xnrewL5jsOCp0UXPsbSvnaxgLXEp6kKsqjqND";
             client_name = "Karakeep";
             client_secret = "$pbkdf2-sha512$310000$XuC9/i/.AWXy/G4A/aOazw$ZozktGPjpHfhmjEzdhNsjeLMw/XhbRK/ePqRPfzbTA04pEOlFTOon2s.yWYyuQv5wzCp0QUGHz2gkczfZsetyQ";
@@ -258,10 +240,6 @@
         }
         {
           domain = "mazanoke.e10.camp";
-          policy = "two_factor";
-        }
-        {
-          domain = "termix.e10.camp";
           policy = "two_factor";
         }
         {

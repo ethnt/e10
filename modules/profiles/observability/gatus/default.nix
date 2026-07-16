@@ -182,11 +182,6 @@ in
               group = "HTPC";
             })
             (mkEndpoint {
-              name = "Wizarr";
-              url = "https://join.e10.video";
-              group = "HTPC";
-            })
-            (mkEndpoint {
               name = "Bazarr";
               url = "https://bazarr.e10.camp";
               group = "HTPC";
@@ -379,11 +374,6 @@ in
             (mkEndpoint {
               name = "Prometheus Unpoller Exporter";
               url = "http://controller:9130";
-              group = "Controller";
-            })
-            (mkEndpoint {
-              name = "Termix";
-              url = "http://termix.e10.camp";
               group = "Controller";
             })
           ];
