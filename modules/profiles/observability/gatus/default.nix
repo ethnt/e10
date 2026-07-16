@@ -366,6 +366,11 @@ in
               group = "Controller";
             })
             (mkEndpoint {
+              name = "Prometheus Ping Exporter";
+              url = "http://controller:9374";
+              group = "Controller";
+            })
+            (mkEndpoint {
               name = "Prometheus Unpoller Exporter";
               url = "http://controller:9130";
               group = "Controller";
@@ -408,6 +413,11 @@ in
             (mkEndpoint {
               name = "Prometheus Node Exporter";
               url = "http://monitor:9100";
+              group = "Monitor";
+            })
+            (mkEndpoint {
+              name = "Prometheus Ping Exporter";
+              url = "http://monitor:9374";
               group = "Monitor";
             })
           ];

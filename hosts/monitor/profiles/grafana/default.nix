@@ -155,6 +155,10 @@
           name = "Restic Backups";
           options.path = ./provisioning/restic.json;
         }
+        {
+          name = "Ping Exporter";
+          options.path = ./provisioning/ping.json;
+        }
       ];
 
       alerting = {
