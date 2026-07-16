@@ -41,9 +41,7 @@
     ++ [ secrets.hosts.htpc.configuration ];
 
   deployment = {
-    tags = [
-      "@vm"
-    ];
+    vmType = "proxmox";
   };
 
   satan.address = "10.10.2.101";

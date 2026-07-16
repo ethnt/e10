@@ -21,11 +21,7 @@
   satan.address = "10.10.2.102";
 
   deployment = {
-    buildOnTarget = true;
-    tags = [
-      "@vm"
-      "@build-on-target"
-    ];
+    vmType = "proxmox";
   };
 
   nix.gc.automatic = false;

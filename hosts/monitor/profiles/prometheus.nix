@@ -25,6 +25,10 @@
       static_configs = [ { targets = [ "cardamom:9100" ]; } ];
     }
     {
+      job_name = "host_dill";
+      static_configs = [ { targets = [ "dill:9100" ]; } ];
+    }
+    {
       job_name = "host_satan";
       static_configs = [ { targets = [ "satan:9100" ]; } ];
     }
@@ -111,6 +115,18 @@
           ];
         }
       ];
+    }
+    {
+      job_name = "node_fabricator";
+      metrics_path = "/metrics";
+      static_configs = [
+        {
+          targets = [
+            "${hosts.fabricator.config.networking.hostName}:${toString hosts.fabricator.config.services.prometheus.exporters.ping.port}"
+          ];
+        }
+      ];
+      scrape_interval = "5s";
     }
     {
       job_name = "smartctl_omnibus";

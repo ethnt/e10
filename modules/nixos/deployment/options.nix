@@ -10,10 +10,15 @@ with lib;
       default = true;
     };
 
-    incusVirtualMachine = mkOption {
-      type = types.bool;
-      description = "Is this an Incus VM?";
-      default = false;
+    vmType = mkOption {
+      type = types.nullOr (
+        types.enum [
+          "proxmox"
+          "incus"
+          "aws-ec2"
+        ]
+      );
+      description = "What type of VM this node is";
     };
   };
 

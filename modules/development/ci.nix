@@ -129,7 +129,7 @@ in
               contains(github.event.head_commit.message, '[build]')
             '';
             strategy.matrix.host = l.attrNames (
-              l.filterAttrs (_: host: host.config.deployment.incusVirtualMachine) self.nixosConfigurations
+              l.filterAttrs (_: host: host.config.deployment.vmType == "incus") self.nixosConfigurations
             );
             steps = setup ++ [
               {

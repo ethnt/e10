@@ -21,8 +21,7 @@
   boot.loader.grub.devices = [ "/dev/disk/by-id/nvme-CT4000P3SSD8_2322E6DDD8FE" ];
 
   deployment = {
-    deployable = true;
-    tags = [ "hypervisor" ];
+    tags = [ "@hypervisor" ];
   };
 
   virtualisation.incus = {

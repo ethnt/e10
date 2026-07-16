@@ -26,9 +26,7 @@
     ];
 
   deployment = {
-    tags = [
-      "@vm"
-    ];
+    vmType = "proxmox";
   };
 
   services.resolved.settings.Resolve = {

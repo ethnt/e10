@@ -1,4 +1,3 @@
-_:
 let
   disks = {
     scsi = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";

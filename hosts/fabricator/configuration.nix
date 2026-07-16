@@ -2,7 +2,7 @@
   imports =
     with suites;
     core
-    ++ incus-virtual-machine
+    ++ incus-vm
     ++ [
       profiles.remote-builder.builder
       profiles.remote-builder.substituter
@@ -12,8 +12,7 @@
 
   deployment = {
     targetHost = "10.10.4.101";
-    deployable = true;
-    incusVirtualMachine = true;
+    vmType = "incus";
   };
 
   networking = {
