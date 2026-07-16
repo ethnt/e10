@@ -353,12 +353,24 @@
       scrape_interval = "45m";
     }
     {
-      job_name = "ping";
+      job_name = "ping_controller";
       metrics_path = "/metrics";
       static_configs = [
         {
           targets = [
             "${hosts.controller.config.networking.hostName}:${toString hosts.controller.config.services.prometheus.exporters.ping.port}"
+          ];
+        }
+      ];
+      scrape_interval = "5s";
+    }
+    {
+      job_name = "ping_monitor";
+      metrics_path = "/metrics";
+      static_configs = [
+        {
+          targets = [
+            "${hosts.monitor.config.networking.hostName}:${toString hosts.monitor.config.services.prometheus.exporters.ping.port}"
           ];
         }
       ];

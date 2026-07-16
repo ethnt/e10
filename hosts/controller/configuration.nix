@@ -16,15 +16,16 @@
       profiles.telemetry.prometheus-ping-exporter
       profiles.telemetry.prometheus-smokeping-exporter
       profiles.telemetry.unpoller.default
-      # profiles.telemetry.prometheus-unpoller-exporter.satan
     ]
     ++ [
       ./disk-config.nix
       ./hardware-configuration.nix
+    ]
+    ++ [
+      ./profiles/prometheus-ping-exporter.nix
     ];
 
   deployment = {
-    buildOnTarget = false;
     tags = [
       "@vm"
     ];

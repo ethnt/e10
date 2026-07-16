@@ -14,12 +14,14 @@
       profiles.observability.gatus.default
       profiles.observability.grafana
       profiles.observability.uptime-kuma
+      profiles.telemetry.prometheus-ping-exporter
       profiles.telemetry.prometheus-redis-exporter
     ]
     ++ [
       ./profiles/authelia
       ./profiles/caddy.nix
       ./profiles/prometheus.nix
+      ./profiles/prometheus-ping-exporter.nix
       ./profiles/grafana/default.nix
     ];
 
