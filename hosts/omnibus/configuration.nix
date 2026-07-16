@@ -36,7 +36,6 @@
   boot.loader.grub.devices = [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
   deployment = {
-    buildOnTarget = true;
     tags = [
       "@vm"
       "@build-on-target"

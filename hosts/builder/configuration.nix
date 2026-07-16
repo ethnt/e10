@@ -5,6 +5,7 @@
     ++ proxmox-vm
     ++ [
       profiles.emulation.aarch64-linux
+      profiles.emulation.i686-linux
       profiles.remote-builder.builder
       profiles.remote-builder.substituter
       profiles.services.attic-watch-store.default
