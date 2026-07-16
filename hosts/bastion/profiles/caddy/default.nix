@@ -128,12 +128,6 @@
         acme.environmentFile = config.sops.secrets.e10_video_lego_route53_credentials.path;
       };
 
-      "join.e10.video" = {
-        host = hosts.htpc;
-        inherit (hosts.htpc.config.services.wizarr) port;
-        acme.environmentFile = config.sops.secrets.e10_video_lego_route53_credentials.path;
-      };
-
       "tautulli.e10.camp" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.tautulli) port;
@@ -241,11 +235,6 @@
       "tracearr.e10.camp" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.tracearr) port;
-      };
-
-      "termix.e10.camp" = {
-        host = hosts.controller;
-        inherit (hosts.controller.config.services.termix) port;
       };
 
       "bichon.e10.camp" = {

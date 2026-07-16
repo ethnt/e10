@@ -202,11 +202,6 @@
                         icon = "di:tautulli";
                       })
                       (mkSite {
-                        title = "Termix";
-                        url = "https://termix.e10.camp";
-                        icon = "di:termix";
-                      })
-                      (mkSite {
                         title = "Tracearr";
                         url = "https://tracearr.e10.camp";
                         icon = "di:tracearr";
@@ -220,11 +215,6 @@
                         title = "UniFi";
                         url = "https://unifi.satan.network";
                         icon = "di:unifi";
-                      })
-                      (mkSite {
-                        title = "Wizarr";
-                        url = "https://join.e10.video";
-                        icon = "di:wizarr";
                       })
                     ];
                 }
