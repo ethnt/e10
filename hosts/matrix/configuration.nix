@@ -25,7 +25,6 @@
       profiles.services.bichon
       profiles.services.changedetection-io
       profiles.services.e10-land
-      profiles.services.glance.default
       profiles.services.karakeep.default
       profiles.services.mazanoke
       profiles.services.miniflux.default

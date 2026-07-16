@@ -187,12 +187,6 @@
         '';
       };
 
-      "glance.e10.camp" = {
-        host = hosts.matrix;
-        inherit (hosts.matrix.config.services.glance.settings.server) port;
-        protected = true;
-      };
-
       "ldap.e10.camp" = {
         host = hosts.bastion;
         port = hosts.bastion.config.services.lldap.settings.http_port;

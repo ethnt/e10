@@ -231,10 +231,6 @@
           methods = [ "HEAD" ];
         }
         {
-          domain = "glance.e10.camp";
-          policy = "two_factor";
-        }
-        {
           domain = "pdf.e10.camp";
           policy = "two_factor";
         }
