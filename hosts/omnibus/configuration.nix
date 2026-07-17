@@ -36,10 +36,7 @@
   boot.loader.grub.devices = [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
 
   deployment = {
-    tags = [
-      "@vm"
-      "@build-on-target"
-    ];
+    vmType = "proxmox";
   };
 
   satan.address = "10.10.1.101";

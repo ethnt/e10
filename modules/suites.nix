@@ -60,8 +60,8 @@
     profiles.hardware.ssd
   ];
 
-  incus-virtual-machine = [
-    profiles.virtualisation.incus-virtual-machine
+  incus-vm = [
+    profiles.virtualisation.incus-vm
     profiles.virtualisation.qemu
   ];
 }

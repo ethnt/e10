@@ -367,7 +367,7 @@ in
             })
             (mkEndpoint {
               name = "Prometheus Ping Exporter";
-              url = "http://controller:9374";
+              url = "http://controller:9427";
               group = "Controller";
             })
             (mkEndpoint {
@@ -417,7 +417,7 @@ in
             })
             (mkEndpoint {
               name = "Prometheus Ping Exporter";
-              url = "http://monitor:9374";
+              url = "http://monitor:9427";
               group = "Monitor";
             })
           ];
@@ -437,6 +437,13 @@ in
               extraConfig.client.insecure = true;
             })
           ];
+          fabricator = [
+            (mkEndpoint {
+              name = "Prometheus Node Exporter";
+              url = "http://fabricator:9100";
+              group = "Fabricator";
+            })
+          ];
         in
         bastion
         ++ omnibus
@@ -446,7 +453,8 @@ in
         ++ controller
         ++ monitor
         ++ pikvm
-        ++ elderflower-kvm;
+        ++ elderflower-kvm
+        ++ fabricator;
     };
   };
 }

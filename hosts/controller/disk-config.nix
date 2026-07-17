@@ -1,4 +1,3 @@
-_:
 let
   disks = {
     sda = "/dev/sda";

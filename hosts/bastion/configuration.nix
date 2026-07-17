@@ -17,7 +17,10 @@
     ]
     ++ [ secrets.hosts.bastion.configuration ];
 
-  deployment.tags = [ "@external" ];
+  deployment = {
+    vmType = "aws-ec2";
+    tags = [ "@external" ];
+  };
 
   system.stateVersion = "25.05";
 }

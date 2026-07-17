@@ -25,7 +25,10 @@
       ./profiles/grafana/default.nix
     ];
 
-  deployment.tags = [ "@external" ];
+  deployment = {
+    vmType = "aws-ec2";
+    tags = [ "@external" ];
+  };
 
   system.stateVersion = "24.05";
 }

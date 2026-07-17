@@ -44,9 +44,7 @@
   satan.address = "10.10.3.101";
 
   deployment = {
-    tags = [
-      "@vm"
-    ];
+    vmType = "proxmox";
   };
 
   networking = {
