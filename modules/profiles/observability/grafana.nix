@@ -3,8 +3,9 @@
     enable = true;
 
     declarativePlugins = with pkgs.grafanaPlugins; [
-      grafana-piechart-panel
       grafana-clock-panel
+      grafana-mqtt-datasource
+      grafana-piechart-panel
     ];
 
     settings = {

@@ -20,6 +20,7 @@
       grafana_smtp2go_username = sopsConfig;
       grafana_smtp2go_password = sopsConfig;
       grafana_authelia_client_secret = sopsConfig;
+      grafana_controller_mosquitto_password = sopsConfig;
     };
 
   services.grafana = {
@@ -88,6 +89,18 @@
               user = "blocky";
               database = "blocky";
               sslmode = "disable";
+            };
+          }
+          {
+            name = "MQTT";
+            type = "grafana-mqtt-datasource";
+            access = "proxy";
+            jsonData = {
+              uri = "tcp://${hosts.controller.config.networking.hostName}:${toString (builtins.head hosts.controller.config.services.mosquitto.listeners).port}";
+              username = "grafana";
+            };
+            secureJsonData = {
+              password = "$__file{${config.sops.secrets.grafana_controller_mosquitto_password.path}}";
             };
           }
         ];
@@ -164,6 +177,10 @@
         {
           name = "Ping Exporter";
           options.path = ./provisioning/ping.json;
+        }
+        {
+          name = "Frigate";
+          options.path = ./provisioning/frigate.json;
         }
       ];
 

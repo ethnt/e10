@@ -1,5 +1,6 @@
 { config, ... }: {
   sops.secrets = {
+    mosquitto_grafana_password.sopsFile = ./secrets.json;
     mosquitto_frigate_password.sopsFile = ./secrets.json;
     mosquitto_hass_password.sopsFile = ./secrets.json;
     mosquitto_jetkvm_password.sopsFile = ./secrets.json;
@@ -11,6 +12,12 @@
     listeners = [
       {
         users = {
+          grafana = {
+            passwordFile = config.sops.secrets.mosquitto_grafana_password.path;
+            acl = [
+              "read #"
+            ];
+          };
           hass = {
             passwordFile = config.sops.secrets.mosquitto_hass_password.path;
             acl = [
