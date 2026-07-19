@@ -403,7 +403,7 @@
             builtins.replaceStrings [ "-" ] [ "_" ] name
           }";
           metrics_path = "/";
-          scrape_interval = "30s";
+          scrape_interval = "5m";
           static_configs = [
             {
               targets = [
