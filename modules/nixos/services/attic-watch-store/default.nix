@@ -84,6 +84,8 @@ in
         User = cfg.user;
         Group = cfg.group;
         LoadCredential = "auth-token:${cfg.cache.authTokenFile}";
+        Restart = "on-failure";
+        RestartSec = "5s";
       };
       path = [ cfg.package ];
       script = ''
