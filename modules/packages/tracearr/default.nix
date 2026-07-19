@@ -7,24 +7,23 @@
 , nodejs
 , fetchFromGitHub
 , turbo
-,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "tracearr";
-  version = "1.4.31";
+  version = "1.5.0";
 
   src = fetchFromGitHub {
     owner = "connorgallopo";
     repo = "Tracearr";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-jsCKZ0HKHZ3YkLx1kruvSp/MOsP74Lr8TRXsVMQPlv8=";
+    hash = "sha256-11zew0DXOU6rpAvJZjhCyccEknplT5p88DAciMjitS0=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
     inherit pnpm;
     fetcherVersion = 4;
-    hash = "sha256-8K20khCKaTHYC9r/TfWldoN+53XcueSVlFfd4G6K9vU=";
+    hash = "sha256-IIBtFY3ybQMw0V5qqk0rP6ZNgkhT63uZWUR1eKxRAKE=";
   };
 
   # The pnpm version is required, but nixpkgs doesn't provide the exact version that Tracearr requires
