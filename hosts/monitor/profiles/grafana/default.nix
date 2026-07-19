@@ -1,4 +1,10 @@
-{ config, hosts, ... }: {
+{
+  config,
+  hosts,
+  lib,
+  ...
+}:
+{
   sops.secrets =
     let
       sopsConfig = {
@@ -227,6 +233,110 @@
           apiVersion = 1;
           deleteRules = [ ];
           groups = [
+            {
+              orgId = 1;
+              name = "Daily";
+              interval = "24h";
+              folder = "Homelab";
+              rules = lib.pipe hosts [
+                (lib.mapAttrs (
+                  hostname: host:
+                  lib.mapAttrs' (
+                    backupName: backup:
+                    lib.nameValuePair "restic_${hostname}_${builtins.replaceStrings [ "-" ] [ "_" ] backupName}" {
+                      inherit hostname;
+                      inherit (backup) repository;
+                    }
+                  ) host.config.services.restic.backups
+                ))
+                lib.attrValues
+                lib.mergeAttrsList
+                (lib.mapAttrs (
+                  jobName: info: {
+                    uid = jobName;
+                    title = "Missed backup for ${info.hostname} (${info.repository})";
+                    condition = "C";
+                    data = [
+                      {
+                        refId = "A";
+                        relativeTimeRange = {
+                          from = 600;
+                          to = 0;
+                        };
+                        datasourceUid = "P5DCFC7561CCDE821";
+                        model = {
+                          datasource = {
+                            type = "prometheus";
+                            uid = "P5DCFC7561CCDE821";
+                          };
+                          editorMode = "code";
+                          expr = "time() - restic_backup_timestamp{job=\"${jobName}\"}";
+                          instant = true;
+                          interval = "";
+                          intervalMs = 1000;
+                          legendFormat = "__auto";
+                          maxDataPoints = 43200;
+                          range = false;
+                          refId = "A";
+                        };
+                      }
+                      {
+                        refId = "C";
+                        queryType = "expression";
+                        relativeTimeRange = {
+                          from = 0;
+                          to = 0;
+                        };
+                        datasourceUid = "__expr__";
+                        model = {
+                          conditions = [
+                            {
+                              evaluator = {
+                                params = [
+                                  86400
+                                ];
+                                type = "gt";
+                              };
+                              operator = {
+                                type = "and";
+                              };
+                              query = {
+                                params = [
+                                  "C"
+                                ];
+                              };
+                              reducer = {
+                                params = [ ];
+                                type = "last";
+                              };
+                              type = "query";
+                            }
+                          ];
+                          datasource = {
+                            type = "__expr__";
+                            uid = "__expr__";
+                          };
+                          expression = "A";
+                          intervalMs = 1000;
+                          maxDataPoints = 43200;
+                          refId = "C";
+                          type = "threshold";
+                        };
+                      }
+                    ];
+                    noDataState = "Alerting";
+                    execErrState = "Error";
+                    annotations = { };
+                    labels = { };
+                    isPaused = false;
+                    notification_settings = {
+                      receiver = "Email";
+                    };
+                  }
+                ))
+                lib.attrValues
+              ];
+            }
             {
               orgId = 1;
               name = "Default";
