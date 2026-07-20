@@ -30,6 +30,12 @@
         sopsFile = ./secrets.yml;
         mode = "0777";
       };
+
+      healthchecks_ping_key = {
+        format = "yaml";
+        sopsFile = ./secrets.yml;
+        mode = "0600";
+      };
     };
 
     templates = {
@@ -51,28 +57,53 @@
     '';
   };
 
-  systemd.services = {
-    "restic-notify-failure@" = {
-      description = "Notify on restic backup failure for %i";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = pkgs.writeShellApplication {
-          name = "restic-notify-failure";
-          runtimeInputs = with pkgs; [ apprise ];
-          text = ''
-            apprise \
-              --title "[E10] Backup failed for ${config.networking.hostName}" \
-              --body "Backup failed for ${config.networking.hostName}: %i" \
-              "$(cat ${config.sops.secrets.apprise_url_ses.path})"
-          '';
+  systemd.services =
+    (lib.mapAttrs' (
+      name: _:
+      lib.nameValuePair "restic-notify-success-${name}" {
+        description = "Ping Healthchecks on Restic backup success for ${name}";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart =
+            let
+              script = pkgs.writeShellApplication {
+                name = "restic-notify-success";
+                runtimeInputs = with pkgs; [ curl ];
+                text = ''
+                  curl -fsS -m 10 --retry 3 \
+                    "https://healthchecks.e10.camp/ping/$(cat ${config.sops.secrets.healthchecks_ping_key.path})/${config.networking.hostName}-${name}"
+                '';
+              };
+            in
+            "${script}/bin/restic-notify-success";
+        };
+      }
+    ) config.services.restic.backups)
+    // {
+      "restic-notify-failure@" = {
+        description = "Notify on Restic backup failure for %i";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = pkgs.writeShellApplication {
+            name = "restic-notify-failure";
+            runtimeInputs = with pkgs; [ apprise ];
+            text = ''
+              apprise \
+                --title "[E10] Backup failed for ${config.networking.hostName}" \
+                --body "Backup failed for ${config.networking.hostName}: %i" \
+                "$(cat ${config.sops.secrets.apprise_url_ses.path})"
+            '';
+          };
         };
       };
-    };
-  }
-  // lib.mapAttrs' (
-    name: _:
-    lib.nameValuePair "restic-backups-${name}" {
-      unitConfig.OnFailure = "restic-notify-failure@%n.service";
     }
-  ) config.services.restic.backups;
+    // lib.mapAttrs' (
+      name: _:
+      lib.nameValuePair "restic-backups-${name}" {
+        unitConfig = {
+          OnFailure = "restic-notify-failure@%n.service";
+          OnSuccess = "restic-notify-success-${name}.service";
+        };
+      }
+    ) config.services.restic.backups;
 }

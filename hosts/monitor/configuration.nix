@@ -10,6 +10,7 @@
       profiles.monitoring.loki.default
       profiles.monitoring.rsyslogd
       profiles.telemetry.vector.syslog
+      profiles.monitoring.healthchecks.default
       profiles.monitoring.thanos.default
       profiles.observability.gatus.default
       profiles.observability.grafana
@@ -23,6 +24,7 @@
       ./profiles/prometheus.nix
       ./profiles/prometheus-ping-exporter.nix
       ./profiles/grafana/default.nix
+      ./profiles/healthchecks/default.nix
     ];
 
   deployment = {
