@@ -247,11 +247,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1767018483,
-        "narHash": "sha256-BX3ogzhAv5QGxn7H2h4VZf4NcftNp0rWQrsNr4KB17A=",
+        "lastModified": 1784495994,
+        "narHash": "sha256-VV+mSFXAhY9Vl4n3IizYudLOIoOc7KLGcOLVjQTDuw0=",
         "ref": "refs/heads/main",
-        "rev": "cba82016e3adcb83c90000ddf1340686f800b38b",
-        "revCount": 2,
+        "rev": "ecee262a4c82c319b95572d51e8bb46f68433d4e",
+        "revCount": 3,
         "type": "git",
         "url": "ssh://git@github.com/ethnt/e10-secrets"
       },
@@ -1362,15 +1362,16 @@
         "treefmt": "treefmt_2"
       },
       "locked": {
-        "lastModified": 1782171250,
-        "narHash": "sha256-hP7dipoqpP0dQeS0Z0CcMkp0+n++29qqscqCe1htvbE=",
+        "lastModified": 1784385217,
+        "narHash": "sha256-LqAQBFCV3TRJFHG6sVSgnIglcqVrCN43Qq8M0nCIcYE=",
         "owner": "ethnt",
         "repo": "plex_exporter",
-        "rev": "60b2366b47631afbd6f5065e3b8211cb7f33d377",
+        "rev": "a6f98fd381107cd5af2b7ff7ada77bbf4770669c",
         "type": "github"
       },
       "original": {
         "owner": "ethnt",
+        "ref": "fix/unknown-stream-type",
         "repo": "plex_exporter",
         "type": "github"
       }

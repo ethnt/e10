@@ -15,6 +15,14 @@
     package = inputs.plex-exporter.packages.${pkgs.stdenv.hostPlatform.system}.default;
     url = "https://e10.video";
     tokenFile = config.sops.secrets.plex_token.path;
+    logLevel = "info";
+    logFormat = "console";
     openFirewall = true;
+  };
+
+  systemd.services.plex-exporter = {
+    environment = {
+      METRICS_REFRESH_INTERVAL = "900";
+    };
   };
 }

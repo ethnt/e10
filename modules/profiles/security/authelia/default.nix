@@ -53,7 +53,7 @@
       };
 
       access_control = {
-        default_policy = "bypass";
+        default_policy = "deny";
 
         networks = [
           {

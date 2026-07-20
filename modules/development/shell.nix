@@ -21,6 +21,7 @@
         deadnix
         just
         nix-output-monitor
+        nurl
         sops
         statix
       ];

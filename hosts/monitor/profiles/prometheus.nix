@@ -393,26 +393,30 @@
       scrape_interval = "5s";
     }
   ]
-  ++ lib.flatten (
-    lib.mapAttrsToList (
+  ++ lib.pipe hosts [
+    (lib.mapAttrsToList (
       _: host:
-      lib.mapAttrsToList (
-        name: backup:
-        lib.optional backup.exporter.enable {
-          job_name = "restic_${host.config.networking.hostName}_${
-            builtins.replaceStrings [ "-" ] [ "_" ] name
-          }";
-          metrics_path = "/";
-          scrape_interval = "30s";
-          static_configs = [
-            {
-              targets = [
-                "${host.config.networking.hostName}:${toString backup.exporter.port}"
-              ];
-            }
-          ];
-        }
-      ) host.config.services.restic.backups
-    ) hosts
-  );
+      lib.pipe host.config.services.restic.backups [
+        (lib.mapAttrsToList (
+          name: backup:
+          lib.optional backup.exporter.enable {
+            job_name = "restic_${host.config.networking.hostName}_${
+              builtins.replaceStrings [ "-" ] [ "_" ] name
+            }";
+            metrics_path = "/";
+            scrape_interval = "5m";
+            static_configs = [
+              {
+                targets = [
+                  "${host.config.networking.hostName}:${toString backup.exporter.port}"
+                ];
+              }
+            ];
+          }
+        ))
+        lib.flatten
+      ]
+    ))
+    lib.flatten
+  ];
 }
