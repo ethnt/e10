@@ -6,7 +6,7 @@
   ...
 }:
 {
-  imports = [ profiles.services.matter-server ] ++ [ ./postgresql.nix ];
+  imports = [ profiles.services.matterjs-server ] ++ [ ./postgresql.nix ];
 
   sops = {
     secrets = {
@@ -121,11 +121,16 @@
     };
   };
 
-  systemd.services.home-assistant.preStart = lib.mkAfter ''
+  systemd.services.home-assistant = {
+    after = [
+      "matterjs-server.service"
+    ];
+    preStart = lib.mkAfter ''
     touch /var/lib/hass/automations.yaml
     touch /var/lib/hass/scenes.yaml
     touch /var/lib/hass/scripts.yaml
   '';
+  };
 
   networking.firewall = {
     allowedUDPPorts = [ 5353 ];
