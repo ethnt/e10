@@ -25,6 +25,11 @@
         port = config.services.uptime-kuma.settings.PORT;
       };
 
+      "healthchecks.e10.camp" = {
+        host = hosts.monitor;
+        port = config.services.healthchecks.port;
+      };
+
       "ntfy.e10.camp" = {
         host = hosts.monitor;
         port = 2586;
