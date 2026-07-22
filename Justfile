@@ -43,9 +43,6 @@ nixos-anywhere hostname host:
 render-workflows:
     nix run .#render-workflows
 
-ansible playbook:
-    ansible-playbook -i deploy/ansible/inventory.yml deploy/ansible/{{ playbook }}.yml
-
 ssh host:
     ssh -F $SSH_CONFIG_FILE root@{{ host }}
 
@@ -76,3 +73,5 @@ push-result-to-cache:
 #     authelia crypto hash generate pbkdf2 --variant sha512 --random --random.length 72 --random.charset rfc3986
 
 alias fmt := format
+
+mod ansible 'deploy/ansible/Justfile'

@@ -1,5 +1,43 @@
 ---
 - name: Install os-acme-client
-  ansibleguy.opnsense.package:
+  oxlorg.opnsense.package:
     name: os-acme-client
     action: install
+
+- name: Configure ACME client plugin
+  oxlorg.opnsense.acme_general:
+    enabled: true
+    auto_renewal: true
+    show_intro: false
+
+- name: Add ACME account
+  oxlorg.opnsense.acme_account:
+    name: Ethan Turkeltaub
+    enabled: true
+    email: admin@e10.camp
+    ca: letsencrypt
+  register: _acme_account
+
+- name: Configure ACME challenge types
+  oxlorg.opnsense.acme_validation:
+    name: "OPNsense Web UI - Challenge"
+    method: dns01
+    dns_service: dns_aws
+    dns_aws_id: "{{ AWS_ACCESS_KEY_ID }}"
+    dns_aws_secret: "{{ AWS_SECRET_ACCESS_KEY }}"
+    http_opn_interface: wan
+  register: _acme_validation
+
+- name: Create restart action
+  oxlorg.opnsense.acme_action:
+    name: Restart OPNsense Web UI
+    type: configd_restart_gui
+  register: _acme_restart_action
+
+- name: Create router.satan.network certificate
+  oxlorg.opnsense.acme_certificate:
+    name: router.satan.network
+    description: OPNsense certificate
+    account: "{{ _acme_account.diff.after.uuid }}"
+    validation: "{{ _acme_validation.diff.after.uuid }}"
+    restart_actions: ["{{ _acme_restart_action.diff.after.name }}"]

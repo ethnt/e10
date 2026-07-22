@@ -7,3 +7,77 @@
 #     group: wheel
 #     mode: "0400"
 #     backup: true
+
+- name: Configure dnsmasq
+  oxlorg.opnsense.dnsmasq_general:
+    enabled: true
+    port: 53
+    dhcp_fqdn: true
+    dhcpfirst: true
+    domain_needed: true
+    forward_private_reverse: false
+    regdhcp: true
+    regdhcpstatic: true
+    resolv_system: false
+    strict_order: true
+
+- name: Create LAN dnsmasq DHCP range
+  oxlorg.opnsense.dnsmasq_range:
+    description: "[Ansible] LAN DHCP range"
+    interface: "LAN"
+    start_addr: 192.168.1.50
+    end_addr: 192.168.1.254
+    lease_time: 86400
+
+- name: Create Management dnsmasq DHCP range
+  oxlorg.opnsense.dnsmasq_range:
+    description: "[Ansible] Management DHCP range"
+    interface: "Management"
+    start_addr: 10.2.0.2
+    end_addr: 10.2.0.254
+    lease_time: 86400
+
+- name: Create Homelab dnsmasq DHCP range
+  oxlorg.opnsense.dnsmasq_range:
+    description: "[Ansible] Homelab DHCP range"
+    interface: "Homelab"
+    start_addr: 10.10.0.2
+    end_addr: 10.10.255.254
+    lease_time: 86400
+
+- name: Create Guest dnsmasq DHCP range
+  oxlorg.opnsense.dnsmasq_range:
+    description: "[Ansible] Guest DHCP range"
+    interface: "Guest"
+    start_addr: 10.50.0.2
+    end_addr: 10.50.0.254
+    lease_time: 86400
+
+- name: Create IoT dnsmasq DHCP range
+  oxlorg.opnsense.dnsmasq_range:
+    description: "[Ansible] IoT DHCP range"
+    interface: "IoT"
+    start_addr: 10.100.0.2
+    end_addr: 10.100.0.254
+    lease_time: 86400
+
+- name: Create plex.direct dnsmasq domain
+  oxlorg.opnsense.dnsmasq_domain:
+    description: "[Ansible] plex.direct"
+    sequence: 1
+    domain: plex.direct
+    ip: 1.1.1.1
+
+- name: Create matrix dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] matrix host"
+    host: matrix
+    domain: satan.network
+    ip: ["10.10.3.101"]
+
+- name: Create router dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] router host"
+    host: router
+    domain: satan.network
+    ip: ["192.168.1.1"]

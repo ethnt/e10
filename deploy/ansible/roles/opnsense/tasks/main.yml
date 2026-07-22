@@ -1,7 +1,16 @@
 ---
+- name: Load secrets
+  community.sops.load_vars:
+    file: ../../secrets.json
+
 - name: Import tasks
   ansible.builtin.include_tasks: "{{ task_file }}"
   loop:
+    - vlans.yml
+    - aliases.yml
+    - rules.yml
+    - nat.yml
+    - dhcp.yml
     - dnsmasq.yml
     - git.yml
     - qemu.yml
@@ -9,5 +18,6 @@
     - prometheus-node-exporter.yml
     - ddclient.yml
     - acme.yml
+    - syslog.yml
   loop_control:
     loop_var: task_file

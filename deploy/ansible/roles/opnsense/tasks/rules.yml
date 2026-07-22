@@ -1,0 +1,95 @@
+---
+- name: Create GeoIP denylist rule
+  oxlorg.opnsense.rule:
+    description: "[Ansible] Denylist GeoIP to WAN rule"
+    interface: "wan"
+    direction: "in"
+    action: "reject"
+    protocol: "any"
+    source_net: "Denylist_GeoIP"
+    log: true
+    quick: true
+
+- name: Create LAN rules
+  oxlorg.opnsense.rule_multi:
+    rules:
+      - description: "[Ansible] LAN to any rule"
+        interface: "lan"
+        direction: "in"
+        action: "pass"
+        ip_protocol: "inet46"
+        protocol: "any"
+        source_net: "lan"
+        destination_net: "any"
+
+- name: Create Management rules
+  oxlorg.opnsense.rule_multi:
+    rules:
+      - description: "[Ansible] Management to any rule"
+        interface: "opt1"
+        direction: "in"
+        action: "pass"
+        ip_protocol: "inet46"
+        protocol: "any"
+        source_net: "opt1"
+        destination_net: "any"
+
+- name: Create Homelab rules
+  oxlorg.opnsense.rule_multi:
+    rules:
+      - description: "[Ansible] Homelab to any rule"
+        interface: "opt2"
+        direction: "in"
+        action: "pass"
+        ip_protocol: "inet46"
+        protocol: "any"
+        source_net: "opt2"
+        destination_net: "any"
+
+- name: Create Tailscale rules
+  oxlorg.opnsense.rule_multi:
+    rules:
+      - description: "[Ansible] Tailscale to any rule"
+        interface: "opt3"
+        direction: "in"
+        action: "pass"
+        ip_protocol: "inet46"
+        protocol: "any"
+        source_net: "opt3"
+        destination_net: "any"
+
+- name: Create IoT rules
+  oxlorg.opnsense.rule_multi:
+    rules:
+      - description: "[Ansible] IoT to DNS rule"
+        interface: "opt5"
+        quick: true
+        direction: "in"
+        action: "pass"
+        ip_protocol: "inet46"
+        protocol: "TCP/UDP"
+        source_net: "opt5"
+        destination_net: "opt5ip"
+        destination_port: "53"
+
+      - description: "[Ansible] IoT to private networks block rule"
+        interface: "opt5"
+        sequence: 2
+        quick: true
+        direction: "in"
+        action: "block"
+        ip_protocol: "inet46"
+        protocol: "any"
+        source_net: "opt5"
+        destination_net: "PrivateNetworks"
+
+      - description: "[Ansible] IoT to any (Internet) rule"
+        interface: "opt5"
+        sequence: 3
+        quick: true
+        direction: "in"
+        action: "pass"
+        ip_protocol: "inet46"
+        protocol: "any"
+        source_net: "opt5"
+        destination_net: "any"

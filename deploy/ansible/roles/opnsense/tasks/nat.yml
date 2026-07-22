@@ -1,0 +1,48 @@
+---
+- name: Create Tailscale IPv4 to LAN outbound NAT rule
+  oxlorg.opnsense.nat_source:
+    description: "[Ansible] Tailscale IPv4 to LAN"
+    interface: "wan"
+    ip_protocol: "inet"
+    protocol: "UDP"
+    source_net: "lan"
+    target: "wanip"
+    static_port: true
+
+- name: Create Tailscale IPv4 to Homelab outbound NAT rule
+  oxlorg.opnsense.nat_source:
+    description: "[Ansible] Tailscale IPv4 to Homelab"
+    interface: "wan"
+    ip_protocol: "inet"
+    protocol: "UDP"
+    source_net: "opt2"
+    target: "wanip"
+    static_port: true
+
+- name: Create Tailscale IPv6 to LAN outbound NAT rule
+  oxlorg.opnsense.nat_source:
+    description: "[Ansible] Tailscale IPv6 to LAN"
+    interface: "wan"
+    ip_protocol: "inet6"
+    protocol: "UDP"
+    source_net: "lan"
+    target: "wanip"
+    static_port: true
+
+- name: Create Tailscale IPv6 to Homelab outbound NAT rule
+  oxlorg.opnsense.nat_source:
+    description: "[Ansible] Tailscale IPv6 to Homelab"
+    interface: "wan"
+    ip_protocol: "inet6"
+    protocol: "UDP"
+    source_net: "opt2"
+    target: "wanip"
+    static_port: true
+
+- name: Create PlayStation 5 outbound NAT rule
+  oxlorg.opnsense.nat_source:
+    description: "[Ansible] PlayStation 5"
+    interface: "wan"
+    source_net: "PS5_Host"
+    target: "wanip"
+    static_port: true

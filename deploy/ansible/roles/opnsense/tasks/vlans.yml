@@ -1,0 +1,28 @@
+---
+- name: Create Management VLAN
+  oxlorg.opnsense.interface_vlan:
+    description: Management
+    device: vlan01
+    interface: ixl1
+    vlan: 2
+
+- name: Create Homelab VLAN
+  oxlorg.opnsense.interface_vlan:
+    description: Homelab
+    device: vlan02
+    interface: ixl1
+    vlan: 10
+
+- name: Create Guest VLAN
+  oxlorg.opnsense.interface_vlan:
+    description: Guest
+    device: vlan010
+    interface: ixl1
+    vlan: 50
+
+- name: Create IoT VLAN
+  oxlorg.opnsense.interface_vlan:
+    description: IoT
+    device: vlan011
+    interface: ixl1
+    vlan: 100
