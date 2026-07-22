@@ -6,6 +6,6 @@
     - tailscale.yml
     - nut.yml
     - prometheus-node-exporter.yml
-    - promtail.yml
+    - vector.yml
   loop_control:
     loop_var: task_file

@@ -1,0 +1,44 @@
+---
+- name: Add Vector repository
+  ansible.builtin.deb822_repository:
+    name: vector
+    types: deb
+    uris: https://apt.vector.dev/
+    suites: stable
+    components: vector-0
+    signed_by: https://keys.datadoghq.com/DATADOG_APT_KEY_CURRENT.public
+
+- name: Install Vector
+  ansible.builtin.apt:
+    name: vector
+    state: present
+    update_cache: true
+
+- name: Create vector group
+  ansible.builtin.group:
+    name: vector
+    state: present
+    system: true
+
+- name: Create vector user
+  ansible.builtin.user:
+    name: vector
+    group: vector
+    shell: /usr/sbin/nologin
+    system: true
+    createhome: false
+
+- name: Write vector configuration file
+  notify:
+    - Restart vector
+  ansible.builtin.copy:
+    src: ./vector/vector.yaml
+    dest: /etc/vector/vector.yaml
+    mode: "0644"
+
+- name: Start vector
+  ansible.builtin.systemd:
+    daemon_reload: true
+    name: vector
+    state: started
+    enabled: true

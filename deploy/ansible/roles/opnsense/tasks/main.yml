@@ -10,7 +10,6 @@
     - aliases.yml
     - rules.yml
     - nat.yml
-    - dhcp.yml
     - dnsmasq.yml
     - git.yml
     - qemu.yml
