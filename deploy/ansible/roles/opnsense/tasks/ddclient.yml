@@ -1,5 +1,5 @@
 ---
 - name: Install os-ddclient
-  ansibleguy.opnsense.package:
+  oxlorg.opnsense.package:
     name: os-ddclient
     action: install

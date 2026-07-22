@@ -1,0 +1,10 @@
+default:
+    @just --choose
+
+# Install Ansible dependencies
+install:
+    ansible-galaxy install -r requirements.yml
+
+# Run an Ansible playbook
+playbook playbook *args:
+    ansible-playbook -i inventory.yml {{ playbook }}.yml {{ args }}

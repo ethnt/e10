@@ -66,11 +66,6 @@ provider "improvmx" {
   token = data.sops_file.secrets.data["IMPROVMX_API_TOKEN"]
 }
 
-provider "opnsense" {
-  uri            = "http://192.168.1.1"
-  allow_insecure = true
-}
-
 provider "porkbun" {
   api_key        = data.sops_file.secrets.data["PORKBUN_API_KEY"]
   secret_api_key = data.sops_file.secrets.data["PORKBUN_API_SECRET"]

@@ -37,11 +37,6 @@ terraform {
       version = "0.7.1"
     }
 
-    opnsense = {
-      source  = "browningluke/opnsense"
-      version = "0.24.0"
-    }
-
     porkbun = {
       source  = "kyswtn/porkbun"
       version = "0.1.3"

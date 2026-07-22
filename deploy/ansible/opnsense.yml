@@ -4,6 +4,12 @@
   connection: local
   gather_facts: no
   module_defaults:
-    group/ansibleguy.opnsense.all: "{{ opnsense_collection_defaults }}"
+    group/oxlorg.opnsense.all: "{{ opnsense_collection_defaults }}"
+    oxlorg.opnsense.rule:
+      match_fields: ["description"]
+    oxlorg.opnsense.rule_multi:
+      match_fields: ["description"]
+    oxlorg.opnsense.nat_source:
+      match_fields: ["description"]
   roles:
     - opnsense

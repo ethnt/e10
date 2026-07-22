@@ -1,6 +1,6 @@
 ---
 - name: Enable Unbound
-  ansibleguy.opnsense.unbound_general:
+  oxlorg.opnsense.unbound_general:
     enabled: true
     port: 5335
     # interfaces: 'all'

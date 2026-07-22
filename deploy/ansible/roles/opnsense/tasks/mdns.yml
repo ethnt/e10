@@ -1,5 +1,5 @@
 ---
 - name: Install os-mdns-repeater
-  ansibleguy.opnsense.package:
+  oxlorg.opnsense.package:
     name: os-mdns-repeater
     action: install
