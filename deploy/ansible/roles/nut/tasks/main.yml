@@ -6,7 +6,7 @@
 
 - name: Copy nut.conf
   ansible.builtin.copy:
-    src: ./nut/nut.conf
+    src: nut.conf
     dest: /etc/nut/nut.conf
     owner: root
     group: nut
@@ -15,20 +15,20 @@
 
 - name: Write upsmon.conf
   ansible.builtin.template:
-    src: ./nut/upsmon.conf.j2
+    src: upsmon.conf.j2
     dest: /etc/nut/upsmon.conf
     owner: root
     group: nut
     mode: "0644"
 
 - name: Ensure nut-client is running (on Debian)
-  when: ansible_distribution == "Debian"
+  when: ansible_facts["distribution"] == "Debian"
   ansible.builtin.systemd:
     name: nut-client
     state: started
 
 - name: Ensure nut-monitor is running (on Arch)
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts["distribution"] == "Archlinux"
   ansible.builtin.systemd:
     name: nut-monitor
     state: started

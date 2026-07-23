@@ -3,4 +3,8 @@
   hosts: proxmox
   roles:
     - proxmox
-    - common
+    # - common
+    # - tailscale
+    # - prometheus-node-exporter
+    # - nut
+    # - vector

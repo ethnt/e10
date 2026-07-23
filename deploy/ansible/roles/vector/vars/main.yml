@@ -1,0 +1,9 @@
+---
+vector_version: "0.57.0"
+
+vector_target_map:
+  aarch64: aarch64-unknown-linux-gnu
+  armv7l: armv7-unknown-linux-gnueabihf
+  x86_64: x86_64-unknown-linux-gnu
+
+vector_target: "{{ vector_target_map[ansible_facts['architecture']] }}"

@@ -1,0 +1,108 @@
+---
+- name: Add Vector repository (Debian)
+  when: ansible_facts["distribution"] == "Debian"
+  ansible.builtin.deb822_repository:
+    name: vector
+    types: deb
+    uris: https://apt.vector.dev/
+    suites: stable
+    components: vector-0
+    signed_by: https://keys.datadoghq.com/DATADOG_APT_KEY_CURRENT.public
+
+- name: Install Vector (Debian)
+  when: ansible_facts["distribution"] == "Debian"
+  ansible.builtin.apt:
+    name: vector
+    state: present
+    update_cache: true
+
+- name: Install Vector (Arch Linux)
+  when: ansible_facts["distribution"] == "Archlinux"
+  block:
+    - name: Download Vector archive
+      ansible.builtin.get_url:
+        url: "https://github.com/vectordotdev/vector/releases/download/v{{ vector_version }}/vector-{{ vector_version }}-{{ vector_target }}.tar.gz"
+        checksum: "sha256:https://github.com/vectordotdev/vector/releases/download/v{{ vector_version }}/vector-{{ vector_version }}-SHA256SUMS"
+        dest: "/tmp/vector-{{ vector_version }}.tar.gz"
+        mode: "0644"
+
+    - name: Create Vector extraction directory
+      ansible.builtin.file:
+        path: "/tmp/vector-{{ vector_version }}"
+        state: directory
+        mode: "0755"
+
+    - name: Extract Vector archive
+      ansible.builtin.unarchive:
+        src: "/tmp/vector-{{ vector_version }}.tar.gz"
+        dest: "/tmp/vector-{{ vector_version }}"
+        remote_src: true
+
+    - name: Install Vector binary
+      ansible.builtin.copy:
+        src: "/tmp/vector-{{ vector_version }}/vector-{{ vector_target }}/bin/vector"
+        dest: /usr/bin/vector
+        remote_src: true
+        owner: root
+        group: root
+        mode: "0755"
+      notify:
+        - Restart vector
+
+    - name: Install Vector systemd unit
+      ansible.builtin.copy:
+        src: "/tmp/vector-{{ vector_version }}/vector-{{ vector_target }}/etc/systemd/vector.service"
+        dest: /etc/systemd/system/vector.service
+        remote_src: true
+        owner: root
+        group: root
+        mode: "0644"
+      notify:
+        - Restart vector
+
+- name: Create vector group
+  ansible.builtin.group:
+    name: vector
+    state: present
+    system: true
+
+- name: Create vector user
+  ansible.builtin.user:
+    name: vector
+    group: vector
+    groups: systemd-journal
+    append: true
+    shell: /usr/sbin/nologin
+    system: true
+    createhome: false
+
+- name: Create vector configuration directory
+  ansible.builtin.file:
+    path: /etc/vector
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Create vector state directory
+  ansible.builtin.file:
+    path: /var/lib/vector
+    state: directory
+    owner: vector
+    group: vector
+    mode: "0755"
+
+- name: Write vector configuration file
+  notify:
+    - Restart vector
+  ansible.builtin.copy:
+    src: vector.yaml
+    dest: /etc/vector/vector.yaml
+    mode: "0644"
+
+- name: Start vector
+  ansible.builtin.systemd:
+    daemon_reload: true
+    name: vector
+    state: started
+    enabled: true
