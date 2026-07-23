@@ -9,8 +9,9 @@
     pvesm add cifs omnibus \
       --server omnibus \
       --share proxmox \
-      --content backup,images,iso,vztmpl
-      --prune-backups keep-all=1
-      --username proxmox
+      --content backup,images,iso,vztmpl \
+      --prune-backups keep-all=1 \
+      --username proxmox \
       --password {{ lookup('env', 'OMNIBUS_PASSWORD') }}
   when: '"omnibus" not in omnibus_storage.stdout'
+  no_log: true

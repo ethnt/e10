@@ -37,6 +37,10 @@
       static_configs = [ { targets = [ "elderflower:9100" ]; } ];
     }
     {
+      job_name = "host_pikvm";
+      static_configs = [ { targets = [ "pikvm:9100" ]; } ];
+    }
+    {
       job_name = "node_builder";
       static_configs = [
         {
@@ -391,6 +395,27 @@
         }
       ];
       scrape_interval = "5s";
+    }
+    {
+      job_name = "elderflower-jetkvm";
+      metrics_path = "/metrics";
+      static_configs = [
+        {
+          targets = [ "elderflower-kvm:80" ];
+        }
+      ];
+    }
+    {
+      job_name = "pikvm-kvmd";
+      metrics_path = "/api/export/prometheus/metrics";
+      static_configs = [
+        {
+          targets = [ "pikvm:80" ];
+        }
+      ];
+      tls_config = {
+        insecure_skip_verify = true;
+      };
     }
   ]
   ++ lib.pipe hosts [
