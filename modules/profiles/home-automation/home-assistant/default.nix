@@ -126,10 +126,10 @@
       "matterjs-server.service"
     ];
     preStart = lib.mkAfter ''
-    touch /var/lib/hass/automations.yaml
-    touch /var/lib/hass/scenes.yaml
-    touch /var/lib/hass/scripts.yaml
-  '';
+      touch /var/lib/hass/automations.yaml
+      touch /var/lib/hass/scenes.yaml
+      touch /var/lib/hass/scripts.yaml
+    '';
   };
 
   networking.firewall = {
