@@ -1,15 +1,10 @@
 ---
-- name: Load secrets
-  community.sops.load_vars:
-    file: ../../secrets.json
-
 - name: Import tasks
   ansible.builtin.include_tasks: "{{ task_file }}"
   loop:
     - vlans.yml
     - aliases.yml
     - rules.yml
-    - nat.yml
     - dnsmasq.yml
     - git.yml
     - qemu.yml
@@ -18,5 +13,7 @@
     - ddclient.yml
     - acme.yml
     - syslog.yml
+    # BUG: https://github.com/O-X-L/ansible-opnsense/issues/433
+    # - nat.yml
   loop_control:
     loop_var: task_file

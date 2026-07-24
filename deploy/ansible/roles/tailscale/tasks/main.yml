@@ -1,7 +1,7 @@
 ---
-- name: Load secrets
+- name: Load Tailscale secrets
   community.sops.load_vars:
-    file: ../../secrets.json
+    file: ../../modules/profiles/networking/tailscale/secrets.json
 
 - name: Remove legacy Tailscale apt source
   when: ansible_facts["distribution"] == 'Debian'
@@ -38,6 +38,6 @@
   failed_when: false
 
 - name: Start Tailscale
-  ansible.builtin.command: tailscale up --authkey={{ TAILSCALE_AUTH_KEY }}
+  ansible.builtin.command: tailscale up --authkey={{ tailscale_auth_key }}
   when: (tailscale_status.stdout | default('{}', true) | from_json).BackendState | default('') != "Running"
   no_log: true

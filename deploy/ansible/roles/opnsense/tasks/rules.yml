@@ -57,6 +57,14 @@
         protocol: "any"
         source_net: "opt3"
         destination_net: "any"
+      - description: "[Ansible] Tailscale from any"
+        interface: "opt3"
+        direction: "in"
+        action: "pass"
+        ip_protocol: "inet46"
+        protocol: "any"
+        source_net: "any"
+        destination_net: "any"
 
 - name: Create IoT rules
   oxlorg.opnsense.rule_multi:
