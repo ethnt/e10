@@ -32,7 +32,6 @@
       - "charon"
       - "configd.py"
       - "ddclient"
-      - "dhcpd"
       - "dnsmasq"
       - "dpinger"
       - "filterlog"

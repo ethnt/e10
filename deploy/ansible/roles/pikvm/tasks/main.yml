@@ -1,0 +1,9 @@
+---
+- name: Copy kvmd override configuration
+  ansible.builtin.copy:
+    src: kvmd/override.yaml
+    dest: /etc/kvmd/override.yaml
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true

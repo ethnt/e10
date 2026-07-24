@@ -74,6 +74,7 @@
     host: matrix
     domain: satan.network
     ip: ["10.10.3.101"]
+    hardware_addr: 06:8d:3e:8f:5f:23
 
 - name: Create router dnsmasq host
   oxlorg.opnsense.dnsmasq_host:
@@ -81,3 +82,4 @@
     host: router
     domain: satan.network
     ip: ["192.168.1.1"]
+    hardware_addr: 64:62:66:22:85:18

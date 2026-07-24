@@ -2,5 +2,10 @@
 - name: Configure Proxmox nodes
   hosts: proxmox
   roles:
-    - proxmox
+    - secrets
     - common
+    - tailscale
+    - prometheus-node-exporter
+    - nut
+    - vector
+    - proxmox

@@ -1,0 +1,43 @@
+---
+- name: Load Tailscale secrets
+  community.sops.load_vars:
+    file: ../../modules/profiles/networking/tailscale/secrets.json
+
+- name: Remove legacy Tailscale apt source
+  when: ansible_facts["distribution"] == 'Debian'
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/tailscale.list
+    state: absent
+
+- name: Add Tailscale repository
+  when: ansible_facts["distribution"] == 'Debian'
+  ansible.builtin.deb822_repository:
+    name: tailscale
+    types: deb
+    uris: 'https://pkgs.tailscale.com/stable/{{ ansible_facts["distribution"] | lower }}'
+    suites: '{{ ansible_facts["distribution_release"] | lower }}'
+    components: main
+    signed_by: 'https://pkgs.tailscale.com/stable/{{ ansible_facts["distribution"] | lower }}/{{ ansible_facts["distribution_release"] | lower }}.noarmor.gpg'
+
+- name: Install Tailscale
+  ansible.builtin.package:
+    name: "{{ tailscale_package }}"
+    state: present
+    update_cache: true
+
+- name: Ensure Tailscale is running
+  ansible.builtin.systemd:
+    name: tailscaled
+    state: started
+    enabled: true
+
+- name: Check Tailscale status
+  ansible.builtin.command: tailscale status --json
+  register: tailscale_status
+  changed_when: false
+  failed_when: false
+
+- name: Start Tailscale
+  ansible.builtin.command: tailscale up --authkey={{ tailscale_auth_key }}
+  when: (tailscale_status.stdout | default('{}', true) | from_json).BackendState | default('') != "Running"
+  no_log: true
