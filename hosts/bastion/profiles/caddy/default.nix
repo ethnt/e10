@@ -268,6 +268,19 @@
         port = hosts.matrix.config.services.umami.settings.PORT;
       };
 
+      "stirling-pdf.e10.camp" = {
+        host = hosts.matrix;
+        port = hosts.matrix.config.services.stirling-pdf.environment.SERVER_PORT;
+        protected = true;
+        extraConfig = ''
+          encode gzip zstd
+
+          request_body {
+            max_size 2000MiB
+          }
+        '';
+      };
+
       "e10.video" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.plex) port;

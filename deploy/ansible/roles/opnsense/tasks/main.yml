@@ -13,7 +13,6 @@
     - ddclient.yml
     - acme.yml
     - syslog.yml
-    # BUG: https://github.com/O-X-L/ansible-opnsense/issues/433
-    # - nat.yml
+    - nat.yml
   loop_control:
     loop_var: task_file

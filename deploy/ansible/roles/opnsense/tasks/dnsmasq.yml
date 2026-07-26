@@ -1,8 +1,8 @@
 ---
 # - name: Copy edns0.conf
 #   ansible.builtin.copy:
-#     src: ./dnsmasq/edns0.conf
-#     dest: /usr/local/etc/dnsmasq.conf.d/edns0.conf
+#     src: dnsmasq/edns0.conf
+#     dest: "/usr/local/etc/dnsmasq.conf.d/edns0.conf"
 #     owner: root
 #     group: wheel
 #     mode: "0400"
@@ -18,7 +18,7 @@
     forward_private_reverse: false
     regdhcp: true
     regdhcpstatic: true
-    resolv_system: false
+    resolv_system: true
     strict_order: true
 
 - name: Create LAN dnsmasq DHCP range
@@ -33,15 +33,15 @@
   oxlorg.opnsense.dnsmasq_range:
     description: "[Ansible] Management DHCP range"
     interface: "Management"
-    start_addr: 10.2.0.2
-    end_addr: 10.2.0.254
+    start_addr: 10.2.100.2
+    end_addr: 10.2.255.254
     lease_time: 86400
 
 - name: Create Homelab dnsmasq DHCP range
   oxlorg.opnsense.dnsmasq_range:
     description: "[Ansible] Homelab DHCP range"
     interface: "Homelab"
-    start_addr: 10.10.0.2
+    start_addr: 10.10.100.2
     end_addr: 10.10.255.254
     lease_time: 86400
 
@@ -57,8 +57,8 @@
   oxlorg.opnsense.dnsmasq_range:
     description: "[Ansible] IoT DHCP range"
     interface: "IoT"
-    start_addr: 10.100.0.2
-    end_addr: 10.100.0.254
+    start_addr: 10.100.100.1
+    end_addr: 10.100.255.254
     lease_time: 86400
 
 - name: Create plex.direct dnsmasq domain
@@ -83,3 +83,25 @@
     domain: satan.network
     ip: ["192.168.1.1"]
     hardware_addr: 64:62:66:22:85:18
+
+- name: Create PS5 dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] PlayStation 5"
+    host: ps5
+    domain: satan.network
+    ip: ["10.100.0.101"]
+    hardware_addr: 00:e4:21:15:bd:e8
+
+- name: Create unifi dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] unifi host"
+    host: unifi
+    ip: ["192.168.1.2"]
+    local: true
+
+- name: Set DHCP option 43 to UniFi inform URL
+  oxlorg.opnsense.dnsmasq_option:
+    description: "[Ansible] Option 43 for UniFi inform URL"
+    type: set
+    option: 43
+    value: 01043139322E3136382E312E32 # 0143 + `192.168.1.2` hex-encoded

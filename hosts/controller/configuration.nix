@@ -46,6 +46,11 @@
       interface = "ens18";
     };
 
+    vlans.vlan10 = {
+      id = 10;
+      interface = "ens18";
+    };
+
     vlans.vlan100 = {
       id = 100;
       interface = "ens18";
@@ -55,6 +60,13 @@
       vlan2.ipv4.addresses = [
         {
           address = "10.2.1.2";
+          prefixLength = 24;
+        }
+      ];
+
+      vlan10.ipv4.addresses = [
+        {
+          address = "10.10.1.2";
           prefixLength = 24;
         }
       ];

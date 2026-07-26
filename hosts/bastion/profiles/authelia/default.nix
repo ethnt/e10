@@ -246,6 +246,10 @@
           domain = "incus.dill.e10.camp";
           policy = "two_factor";
         }
+        {
+          domain = "stirling-pdf.e10.camp";
+          policy = "two_factor";
+        }
       ];
     };
   };

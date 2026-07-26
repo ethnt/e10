@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cameraAddress = "192.168.1.102";
+  cameraAddress = "192.168.1.214"; # TODO: Put on IoT network with static address
   cameraUsername = "viewer";
   cameraPassword = "{FRIGATE_KITCHEN_PASSWORD}";
   configFile = (pkgs.formats.yaml { }).generate "frigate.yml" {
@@ -89,6 +89,10 @@ let
     };
     detect.enabled = true;
     objects.filters.person.min_score = 0.8;
+    face_recognition = {
+      enabled = true;
+      model_size = "small";
+    };
   };
 in
 {

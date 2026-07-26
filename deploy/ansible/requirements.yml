@@ -2,8 +2,13 @@
 collections:
   - name: community.sops
 
-  - name: oxlorg.opnsense
-    version: 26.1.11
+  - name: https://github.com/O-X-L/ansible-opnsense.git
+    type: git
+    version: latest
+    # NOTE: pinned to `main` (not a tagged release) to get the `nat_destination`
+    # module, added in https://github.com/O-X-L/ansible-opnsense/pull/430 after
+    # the 26.1.11 release. `main` is marked "unstable" upstream - revert to a
+    # pinned release once one ships with this module.
 
   - name: community.proxmox
     version: 2.0.0
