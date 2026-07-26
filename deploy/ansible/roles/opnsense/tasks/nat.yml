@@ -1,48 +1,123 @@
 ---
-- name: Create Tailscale IPv4 to LAN outbound NAT rule
-  oxlorg.opnsense.nat_source:
-    description: "[Ansible] Tailscale IPv4 to LAN"
-    interface: "wan"
-    ip_protocol: "inet"
-    protocol: "UDP"
-    source_net: "lan"
-    target: "wanip"
-    static_port: true
+# BUG: https://github.com/O-X-L/ansible-opnsense/issues/433
+# nat_source is broken against OPNsense 26.7+, so outbound/SNAT rules
+# (incl. the PS5 static-port rule) stay manual until it's fixed upstream.
 
-- name: Create Tailscale IPv4 to Homelab outbound NAT rule
-  oxlorg.opnsense.nat_source:
-    description: "[Ansible] Tailscale IPv4 to Homelab"
-    interface: "wan"
-    ip_protocol: "inet"
-    protocol: "UDP"
-    source_net: "opt2"
-    target: "wanip"
-    static_port: true
+# - name: Create Tailscale IPv4 to LAN outbound NAT rule
+#   oxlorg.opnsense.nat_source:
+#     description: "[Ansible] Tailscale IPv4 to LAN"
+#     interface: "wan"
+#     ip_protocol: "inet"
+#     protocol: "UDP"
+#     source_net: "lan"
+#     target: "wanip"
+#     static_port: true
 
-- name: Create Tailscale IPv6 to LAN outbound NAT rule
-  oxlorg.opnsense.nat_source:
-    description: "[Ansible] Tailscale IPv6 to LAN"
-    interface: "wan"
-    ip_protocol: "inet6"
-    protocol: "UDP"
-    source_net: "lan"
-    target: "wanip"
-    static_port: true
+# - name: Create Tailscale IPv4 to Homelab outbound NAT rule
+#   oxlorg.opnsense.nat_source:
+#     description: "[Ansible] Tailscale IPv4 to Homelab"
+#     interface: "wan"
+#     ip_protocol: "inet"
+#     protocol: "UDP"
+#     source_net: "opt2"
+#     target: "wanip"
+#     static_port: true
 
-- name: Create Tailscale IPv6 to Homelab outbound NAT rule
-  oxlorg.opnsense.nat_source:
-    description: "[Ansible] Tailscale IPv6 to Homelab"
-    interface: "wan"
-    ip_protocol: "inet6"
-    protocol: "UDP"
-    source_net: "opt2"
-    target: "wanip"
-    static_port: true
+# - name: Create Tailscale IPv6 to LAN outbound NAT rule
+#   oxlorg.opnsense.nat_source:
+#     description: "[Ansible] Tailscale IPv6 to LAN"
+#     interface: "wan"
+#     ip_protocol: "inet6"
+#     protocol: "UDP"
+#     source_net: "lan"
+#     target: "wanip"
+#     static_port: true
 
-- name: Create PlayStation 5 outbound NAT rule
-  oxlorg.opnsense.nat_source:
-    description: "[Ansible] PlayStation 5"
-    interface: "wan"
-    source_net: "PS5_Host"
-    target: "wanip"
-    static_port: true
+# - name: Create Tailscale IPv6 to Homelab outbound NAT rule
+#   oxlorg.opnsense.nat_source:
+#     description: "[Ansible] Tailscale IPv6 to Homelab"
+#     interface: "wan"
+#     ip_protocol: "inet6"
+#     protocol: "UDP"
+#     source_net: "opt2"
+#     target: "wanip"
+#     static_port: true
+
+# - name: Create PlayStation 5 outbound NAT rule
+#   oxlorg.opnsense.nat_source:
+#     description: "[Ansible] PlayStation 5"
+#     interface: "wan"
+#     source_net: "PS5_MAC"
+#     target: "wanip"
+#     static_port: true
+
+- name: Create Plex port forward rule (TCP 32400)
+  oxlorg.opnsense.nat_destination:
+    match_fields: ["description"]
+    interface: ["wan"]
+    destination_net: "wanip"
+    target: "HTPC_Host"
+    associated_rule: "pass"
+    description: "[Ansible] Plex port forwarding"
+    protocol: tcp/udp
+    ip_protocol: inet46
+    local_port: Plex_Port
+    nat_reflection: purenat
+    destination_port: Plex_Port
+    sequence: 100
+    source_net: ""
+
+- name: Create PlayStation 5 port forward rule (TCP 80)
+  oxlorg.opnsense.nat_destination:
+    match_fields: ["description"]
+    interface: ["wan"]
+    destination_net: "wanip"
+    target: "PS5_MAC"
+    associated_rule: "pass"
+    description: "[Ansible] PS5 voice/party chat (TCP 80)"
+    protocol: TCP
+    destination_port: 80
+
+- name: Create PlayStation 5 port forward rule (TCP 443)
+  oxlorg.opnsense.nat_destination:
+    match_fields: ["description"]
+    interface: ["wan"]
+    destination_net: "wanip"
+    target: "PS5_MAC"
+    associated_rule: "pass"
+    description: "[Ansible] PS5 voice/party chat (TCP 443)"
+    protocol: TCP
+    destination_port: 443
+
+- name: Create PlayStation 5 port forward rule (TCP 3478-3480)
+  oxlorg.opnsense.nat_destination:
+    match_fields: ["description"]
+    interface: ["wan"]
+    destination_net: "wanip"
+    target: "PS5_MAC"
+    associated_rule: "pass"
+    description: "[Ansible] PS5 voice/party chat (TCP 3478-3480)"
+    protocol: TCP
+    destination_port: "3478-3480"
+
+- name: Create PlayStation 5 port forward rule (UDP 3478-3479)
+  oxlorg.opnsense.nat_destination:
+    match_fields: ["description"]
+    interface: ["wan"]
+    destination_net: "wanip"
+    target: "PS5_MAC"
+    associated_rule: "pass"
+    description: "[Ansible] PS5 voice/party chat (UDP 3478-3479)"
+    protocol: UDP
+    destination_port: "3478-3479"
+
+- name: Create PlayStation 5 port forward rule (UDP 3658)
+  oxlorg.opnsense.nat_destination:
+    match_fields: ["description"]
+    interface: ["wan"]
+    destination_net: "wanip"
+    target: "PS5_MAC"
+    associated_rule: "pass"
+    description: "[Ansible] PS5 voice/party chat (UDP 3658)"
+    protocol: UDP
+    destination_port: 3658

@@ -6,7 +6,7 @@
       ruleset(name="remote"){
         # https://www.rsyslog.com/doc/v8-stable/configuration/modules/omfwd.html
         # https://grafana.com/docs/loki/latest/clients/promtail/scraping/#rsyslog-output-configuration
-        action(type="omfwd" Target="localhost" Port="1514" Protocol="tcp" Template="RSYSLOG_SyslogProtocol23Format" TCP_Framing="octet-counted")
+        action(type="omfwd" Target="0.0.0.0" Port="1514" Protocol="tcp" Template="RSYSLOG_SyslogProtocol23Format" TCP_Framing="octet-counted")
       }
 
       # https://www.rsyslog.com/doc/v8-stable/configuration/modules/imudp.html

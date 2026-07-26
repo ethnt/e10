@@ -2,10 +2,10 @@
 - name: Configure PiKVM
   hosts: pikvm
   roles:
-    - secrets
-    - common
-    - nut
-    - prometheus-node-exporter
-    - tailscale
-    - vector
+    # - secrets
+    # - common
+    # - nut
+    # - prometheus-node-exporter
+    # - tailscale
+    # - vector
     - pikvm

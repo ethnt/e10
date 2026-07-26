@@ -319,10 +319,19 @@ in
           controller = [
             (mkEndpoint {
               name = "Blocky (DNS)";
-              url = "tcp://controller:53";
+              url = "controller";
               group = "Controller";
               interval = "30s";
-              conditions = [ "[CONNECTED] == true" ];
+              conditions = [
+                "[CONNECTED] == true"
+                "[RESPONSE_TIME] < 50"
+              ];
+              extraConfig = {
+                dns = {
+                  query-name = "healthcheck.blocky";
+                  query-type = "A";
+                };
+              };
             })
             (mkEndpoint {
               name = "Blocky (API)";

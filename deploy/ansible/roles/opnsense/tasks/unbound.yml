@@ -3,7 +3,7 @@
   oxlorg.opnsense.unbound_general:
     enabled: true
     port: 5335
-    # interfaces: 'all'
+    interfaces: "all"
     register_dhcp_leases: true
     register_dhcp_static_mappings: true
     local_zone_type: inform

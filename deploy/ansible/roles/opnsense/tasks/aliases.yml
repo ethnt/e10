@@ -15,10 +15,15 @@
             "192.168.0.0/16",
           ]
 
-      - name: PS5_Host
+      - name: PS5_MAC
         description: "[Ansible] PlayStation 5 (MAC address)"
         type: mac
         content: ["00:e4:21:15:bd:e8"]
+
+      - name: PS5_Host
+        description: "[Ansible] PlayStation 5 (reserved IP)"
+        type: host
+        content: ["10.100.0.101"]
 
       - name: HTPC_Host
         description: "[Ansible] HTPC (host)"
@@ -34,6 +39,11 @@
         description: "[Ansible] Matrix (host)"
         type: host
         content: ["10.10.3.101"]
+
+      - name: TESmart_MAC
+        description: "[Ansible] TESmart KVM (MAC address)"
+        type: mac
+        content: ["84:c2:e4:ca:ba:b1"]
 
       - name: Denylist_GeoIP
         description: "[Ansible] Countries to deny access to (geoip)"
