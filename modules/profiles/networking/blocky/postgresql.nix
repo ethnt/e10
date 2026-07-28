@@ -1,7 +1,22 @@
-{ profiles, ... }: {
+{
+  config,
+  pkgs,
+  profiles,
+  ...
+}:
+{
   imports = [ profiles.databases.postgresql ];
 
   services.postgresql = {
+    extensions =
+      ps: with ps; [
+        timescaledb
+        timescaledb_toolkit
+      ];
+    settings = {
+      shared_preload_libraries = [ "timescaledb" ];
+      max_locks_per_transaction = 256;
+    };
     initialScriptText = ''
       CREATE ROLE blocky WITH LOGIN PASSWORD 'blocky' CREATEDB;
       CREATE DATABASE blocky;
@@ -20,9 +35,9 @@
   };
 
   services.blocky.settings.queryLog = {
-    type = "postgresql";
+    type = "timescale";
     target = "postgres://blocky:blocky@localhost:5432/blocky";
-    logRetentionDays = 90;
+    logRetentionDays = 180;
     flushInterval = "5s";
   };
 
@@ -32,5 +47,22 @@
       Restart = "on-failure";
       RestartSec = "1";
     };
+  };
+
+  services.postgresqlBackup.databases = [ "blocky" ];
+
+  systemd.services."migrate-tracearr-db-timescale-extension" = {
+    requiredBy = [ "tracearr.service" ];
+    before = [ "tracearr.service" ];
+    after = [ "postgresql.target" ];
+    environment.PGPORT = toString config.services.postgresql.settings.port;
+    path = [ pkgs.postgresql ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "postgres";
+    };
+    script = ''
+      psql tracearr -c 'ALTER EXTENSION timescaledb UPDATE;'
+    '';
   };
 }
