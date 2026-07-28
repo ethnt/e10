@@ -33,7 +33,14 @@
       ./disk-config.nix
     ];
 
-  boot.loader.grub.devices = [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
+  boot = {
+    loader.grub.devices = [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0" ];
+
+    extraModprobeConfig = ''
+      options zfs zfs_arc_min=8589934592 # 8 GiB
+      options zfs zfs_arc_max=51539607552 # 48 GiB
+    '';
+  };
 
   deployment = {
     vmType = "proxmox";
