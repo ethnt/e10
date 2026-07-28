@@ -42,6 +42,7 @@
         };
         denylists = {
           ads = [ "https://big.oisd.nl/domainswild" ];
+          ps5 = [ ];
         };
         allowlists = {
           ads = [
@@ -52,9 +53,21 @@
               link.dwell.com
             '')
           ];
+          ps5 = [
+            (pkgs.writeText "ps5-allowlist.txt" ''
+              googleads.g.doubleclick.net
+              insights-collector.newrelic.com
+              smetrics.aem.playstation.com
+              static.doubleclick.net
+            '')
+          ];
         };
         clientGroupsBlock = {
           default = [ "ads" ];
+          "10.100.0.101/32" = [
+            "ads"
+            "ps5"
+          ];
         };
       };
       caching = {

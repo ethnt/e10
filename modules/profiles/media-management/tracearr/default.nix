@@ -3,7 +3,7 @@
 # `ALTER EXTENSION timescaledb UPDATE;` in the `tracearr` database
 #
 # See: https://github.com/NixOS/nixpkgs/issues/214367
-{ config, ... }: {
+{ config, pkgs, ... }: {
   sops.secrets = {
     maxmind_license_key = {
       sopsFile = ./secrets.yml;
@@ -34,6 +34,21 @@
     jwtSecretFile = config.sops.secrets.tracearr_jwt_secret.path;
     maxmindLicenseKeyFile = config.sops.secrets.maxmind_license_key.path;
     trustProxy = true;
+  };
+
+  systemd.services."migrate-tracearr-db-timescale-extension" = {
+    requiredBy = [ "tracearr.service" ];
+    before = [ "tracearr.service" ];
+    after = [ "postgresql.target" ];
+    environment.PGPORT = toString config.services.postgresql.settings.port;
+    path = [ pkgs.postgresql ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "postgres";
+    };
+    script = ''
+      psql tracearr -c 'ALTER EXTENSION timescaledb UPDATE;'
+    '';
   };
 
   services.postgresqlBackup.databases = [ "tracearr" ];
