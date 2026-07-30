@@ -38,7 +38,7 @@
 
     extraModprobeConfig = ''
       options zfs zfs_arc_min=8589934592 # 8 GiB
-      options zfs zfs_arc_max=51539607552 # 48 GiB
+      options zfs zfs_arc_max=85899345920 # 80 GiB
     '';
   };
 

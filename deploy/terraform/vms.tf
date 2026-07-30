@@ -12,13 +12,14 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
   migrate    = true
 
   cpu {
-    cores   = 4
+    cores   = 8
     sockets = 1
     type    = "host"
   }
 
   memory {
-    dedicated = 53248
+    dedicated = 98304
+    floating  = 0
   }
 
   disk {

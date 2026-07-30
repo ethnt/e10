@@ -2,10 +2,10 @@ let
   disks = {
     scsi = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
 
-    nvme0 = "/dev/disk/by-id/nvme-eui.0025384a51403eec";
-    nvme1 = "/dev/disk/by-id/nvme-eui.0025384a51403ea5";
-    nvme2 = "/dev/disk/by-id/nvme-eui.0025384a51403e68";
-    nvme3 = "/dev/disk/by-id/nvme-eui.0025384a514037ac";
+    nvme0 = "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S7LANJ0YA11905J";
+    nvme1 = "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S7LANJ0YA10743W";
+    nvme2 = "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S7LANJ0YA12037F";
+    nvme3 = "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S7LANJ0YA11966V";
 
     hdd0 = "/dev/disk/by-id/ata-ST20000NM007D-3DJ103_ZVT5YRX1";
     hdd1 = "/dev/disk/by-id/ata-ST20000NM007D-3DJ103_ZVT5JMZQ";
@@ -190,7 +190,7 @@ in
         };
 
         postCreateHook = ''
-          zpool add -f files log mirror ${disks.nvme0} ${disks.nvme1}
+          zpool add -f files log mirror ${disks.nvme2} ${disks.nvme3}
         '';
 
         datasets = {
@@ -224,8 +224,8 @@ in
         };
 
         postCreateHook = ''
-          zpool add -f blockbuster log ${disks.nvme2}
-          zpool add -f blockbuster cache ${disks.nvme3}
+          zpool add -f blockbuster log ${disks.nvme0}
+          zpool add -f blockbuster cache ${disks.nvme1}
         '';
 
         datasets = {
