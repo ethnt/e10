@@ -1,4 +1,8 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+let
+  routerUpstream = "192.168.1.1:5335";
+in
+{
   imports = [
     ./postgresql.nix
     ./redis.nix
@@ -55,8 +59,13 @@
           ];
           ps5 = [
             (pkgs.writeText "ps5-allowlist.txt" ''
+              beacons4.gvt2.com
+              checkout.ea.com
               googleads.g.doubleclick.net
               insights-collector.newrelic.com
+              pin-river.data.ea.com
+              rtm.tnt-ea.com
+              sdk.split.io
               smetrics.aem.playstation.com
               static.doubleclick.net
             '')
@@ -79,7 +88,7 @@
         maxItemsCount = 0;
       };
       clientLookup = {
-        upstream = "192.168.1.1:5335";
+        upstream = routerUpstream;
         singleNameOrder = [
           1
           2
@@ -88,12 +97,13 @@
       conditional = {
         mapping =
           let
-            reverseDnsServer = "192.168.1.1:5335";
+            reverseDnsServer = routerUpstream;
             addresses = [
               "arpa"
               "1.168.192.in-addr.arpa"
               "168.192.in-addr.arpa"
               "10.10.in-addr.arpa"
+              "10.in-addr.arpa"
               "."
             ];
           in
