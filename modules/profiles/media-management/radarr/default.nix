@@ -1,12 +1,13 @@
-{ flake, config, ... }: {
-  imports = [ ./postgresql.nix ];
+{
+  flake,
+  config,
+  profiles,
+  ...
+}:
+{
+  imports = [ profiles.secrets.radarr.default ] ++ [ ./postgresql.nix ];
 
   sops = {
-    secrets.radarr_api_key = {
-      sopsFile = ./secrets.yml;
-      format = "yaml";
-    };
-
     templates."radarr/config.xml" = {
       content =
         flake.lib.generators.toXML
