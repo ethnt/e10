@@ -1,12 +1,13 @@
-{ flake, config, ... }: {
-  imports = [ ./postgresql.nix ];
+{
+  flake,
+  config,
+  profiles,
+  ...
+}:
+{
+  imports = [ profiles.secrets.sonarr.default ] ++ [ ./postgresql.nix ];
 
   sops = {
-    secrets.sonarr_api_key = {
-      sopsFile = ./secrets.yml;
-      format = "yaml";
-    };
-
     templates."sonarr/config.xml" = {
       content =
         flake.lib.generators.toXML

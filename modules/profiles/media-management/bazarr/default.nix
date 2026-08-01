@@ -1,4 +1,15 @@
-{ config, lib, ... }: {
+{
+  config,
+  lib,
+  profiles,
+  ...
+}:
+{
+  imports = [
+    profiles.secrets.sonarr.default
+    profiles.secrets.radarr.default
+  ];
+
   sops = {
     secrets = {
       bazarr_api_key = {
@@ -7,16 +18,6 @@
       };
 
       bazarr_flask_secret_key = {
-        sopsFile = ./secrets.yml;
-        format = "yaml";
-      };
-
-      bazarr_radarr_api_key = {
-        sopsFile = ./secrets.yml;
-        format = "yaml";
-      };
-
-      bazarr_sonarr_api_key = {
         sopsFile = ./secrets.yml;
         format = "yaml";
       };
@@ -279,7 +280,7 @@
           username = "";
         };
         radarr = {
-          apikey = config.sops.placeholder.bazarr_radarr_api_key;
+          apikey = config.sops.placeholder.radarr_api_key;
           base_url = "";
           defer_search_signalr = false;
           excluded_tags = [ ];
@@ -310,7 +311,7 @@
           year = 90;
         };
         sonarr = {
-          apikey = config.sops.placeholder.bazarr_sonarr_api_key;
+          apikey = config.sops.placeholder.sonarr_api_key;
           base_url = "";
           defer_search_signalr = false;
           episodes_sync = 60;
