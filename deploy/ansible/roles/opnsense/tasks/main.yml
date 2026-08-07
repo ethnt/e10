@@ -9,8 +9,8 @@
     - git.yml
     - qemu.yml
     - mdns.yml
-    - prometheus-node-exporter.yml
     - ddclient.yml
+    - prometheus-node-exporter.yml
     - acme.yml
     - syslog.yml
     - nat.yml

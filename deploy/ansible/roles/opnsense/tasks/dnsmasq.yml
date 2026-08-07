@@ -99,6 +99,42 @@
     ip: ["192.168.1.2"]
     local: true
 
+- name: Create TP-Link EP25 (Espresso Machine) dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] TP-Link EP25 (Espresso Machine)"
+    ip: ["10.100.67.105"]
+    hardware_addr: 9c:53:22:9b:38:0c
+
+- name: Create TP-Link EP25 (Metro Lamp) dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] TP-Link EP25 (Metro Lamp)"
+    ip: ["10.100.241.38"]
+    hardware_addr: 9c:53:22:9b:38:e9
+
+- name: Create TP-Link EP25 (Pringle Lamp) dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] TP-Link EP25 (Pringle Lamp)"
+    ip: ["10.100.58.12"]
+    hardware_addr: 9c:53:22:9b:12:7b
+
+- name: Create TP-Link KP401 (Living Room Balcony) dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] TP-Link KP401 (Living Room Balcony)"
+    ip: ["10.100.143.175"]
+    hardware_addr: f0:09:0d:4a:cc:02
+
+- name: Create TP-Link KP401 (Bedroom Balcony) dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] TP-Link KP401 (Bedroom Balcony)"
+    ip: ["10.100.143.212"]
+    hardware_addr: f0:09:0d:4a:da:87
+
+- name: Create Tapo C220 (Kitchen) dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] Tapo C220 (Kitchen)"
+    ip: ["10.100.152.13"]
+    hardware_addr: e0:d3:62:ba:3d:de
+
 - name: Set DHCP option 43 to UniFi inform URL
   oxlorg.opnsense.dnsmasq_option:
     description: "[Ansible] Option 43 for UniFi inform URL"
