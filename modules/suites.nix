@@ -52,12 +52,13 @@
   ];
 
   proxmox-vm = [
-    profiles.virtualisation.qemu
     profiles.filesystems.hybrid-boot
     profiles.filesystems.zfs
-    profiles.hardware.intel
     profiles.hardware.hidpi
+    profiles.hardware.intel
+    profiles.hardware.serial-console
     profiles.hardware.ssd
+    profiles.virtualisation.qemu
   ];
 
   incus-vm = [
