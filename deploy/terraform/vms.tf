@@ -8,6 +8,8 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
 
   scsi_hardware = "virtio-scsi-single"
 
+  machine = "q35"
+
   boot_order = ["scsi0"]
   migrate    = true
 
@@ -52,6 +54,7 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
     type   = "std"
   }
 
+  # LSI 9400-16i
   hostpci {
     device = "hostpci0"
     id     = "0000:07:00"
@@ -60,6 +63,7 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
     xvga   = false
   }
 
+  # QNAP QM2-4P-384 (slot 1)
   hostpci {
     device = "hostpci1"
     id     = "0000:03:00"
@@ -68,6 +72,7 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
     xvga   = false
   }
 
+  # QNAP QM2-4P-384 (slot 2)
   hostpci {
     device = "hostpci2"
     id     = "0000:04:00"
@@ -76,6 +81,7 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
     xvga   = false
   }
 
+  # QNAP QM2-4P-384 (slot 3)
   hostpci {
     device = "hostpci3"
     id     = "0000:05:00"
@@ -84,6 +90,7 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
     xvga   = false
   }
 
+  # QNAP QM2-4P-384 (slot 4)
   hostpci {
     device = "hostpci4"
     id     = "0000:06:00"
