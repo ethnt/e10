@@ -57,6 +57,7 @@
     profiles.filesystems.zfs
     profiles.hardware.intel
     profiles.hardware.hidpi
+    profiles.hardware.serial-console
     profiles.hardware.ssd
   ];
 

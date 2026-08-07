@@ -49,9 +49,6 @@
             immich
             ;
 
-          # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923
-          inherit (nixpkgs-master) thanos;
-
           # Avoiding build failure on unstable: https://github.com/NixOS/nixpkgs/issues/540609
           inherit (nixpkgs-stable) gdalMinimal;
 
