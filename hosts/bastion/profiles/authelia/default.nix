@@ -91,9 +91,12 @@
             require_pkce = false;
             pkce_challenge_method = "";
             redirect_uris = [
+              "app.immich:///oauth-callback"
+              "http://matrix:2283/auth/login"
+              "http://matrix:2283/user-settings"
+              "https://immich.e10.camp/api/oauth/mobile-redirect"
               "https://immich.e10.camp/auth/login"
               "https://immich.e10.camp/user-settings"
-              "app.immich:///oauth-callback"
             ];
             scopes = [
               "openid"
