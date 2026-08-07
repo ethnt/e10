@@ -15,6 +15,7 @@
       profiles.telemetry.prometheus-nut-exporter
       profiles.telemetry.prometheus-ping-exporter
       profiles.telemetry.prometheus-smokeping-exporter
+      profiles.telemetry.snmpd
       profiles.telemetry.unpoller.default
     ]
     ++ [
