@@ -10,20 +10,20 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "tracearr";
-  version = "1.5.0";
+  version = "2.0.0";
 
   src = fetchFromGitHub {
     owner = "connorgallopo";
     repo = "Tracearr";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-11zew0DXOU6rpAvJZjhCyccEknplT5p88DAciMjitS0=";
+    tag = "v2.0.0";
+    hash = "sha256-LwQ2NFRLnxSjpzEmUYYBg9CKk3B8Bq/goQKbr0dc7Vo=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
     inherit pnpm;
     fetcherVersion = 4;
-    hash = "sha256-IIBtFY3ybQMw0V5qqk0rP6ZNgkhT63uZWUR1eKxRAKE=";
+    hash = "sha256-gOEiEA4Bfbd4iJ5ihOCvHL8jFwYMgQmT9qsqlw3dJBo=";
   };
 
   # The pnpm version is required, but nixpkgs doesn't provide the exact version that Tracearr requires
