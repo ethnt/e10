@@ -1,3 +1,5 @@
+# NOTE: Plugin migrations need to be run manually. This can be done on device:
+#   $ netbox-manage migrate
 { config, pkgs, ... }: {
   sops.secrets = {
     netbox_secret_key = {
@@ -19,6 +21,12 @@
   services.netbox = {
     enable = true;
     package = pkgs.netbox;
+    plugins =
+      _ps: with pkgs.netboxPlugins; [
+        netbox-attachments
+        netbox-interface-synchronization
+        netbox-inventory
+      ];
     secretKeyFile = config.sops.secrets.netbox_secret_key.path;
     apiTokenPeppersFile = config.sops.secrets.netbox_api_token_peppers.path;
     listenAddress = "0.0.0.0";
@@ -32,6 +40,11 @@
       REMOTE_AUTH_BACKEND = "social_core.backends.open_id_connect.OpenIdConnectAuth";
       SOCIAL_AUTH_OIDC_OIDC_ENDPOINT = "https://auth.e10.camp";
       SOCIAL_AUTH_OIDC_KEY = "gY0aO8QGJT.~UbRntqa72YTm54DSUHr3HeBu4zMBlWwMwlJwLtbhXflUCAczeC-snr9I_5tZ";
+      PLUGINS = [
+        "netbox_attachments"
+        "netbox_interface_synchronization"
+        "netbox_inventory"
+      ];
     };
     extraConfig = ''
       import os
