@@ -1201,6 +1201,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-blocky-0-31": {
+      "locked": {
+        "lastModified": 1780671162,
+        "narHash": "sha256-NTuvQ/kRtji6+FQgAN5ldITHBB8oHR9Dr6nQndCzzXM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "18ed26979e702670938a10b1478c00927d074045",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "18ed26979e702670938a10b1478c00927d074045",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1765674936,
@@ -1263,11 +1279,11 @@
     },
     "nixpkgs-master_2": {
       "locked": {
-        "lastModified": 1783716565,
-        "narHash": "sha256-mTNJGKx0g51qonmkitrfAfC05427WHk3LLgnTnx/dQg=",
+        "lastModified": 1786220919,
+        "narHash": "sha256-moSLiP0KAmE9Ee3E1c7ASGl/O0G4PyxalfxPlIJc0iI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ca0dda25a583b465f5c19cb214e155c97a7c11c0",
+        "rev": "c1ac00fe51937e7e33cb991fea922a1b8f11f1d3",
         "type": "github"
       },
       "original": {
@@ -1389,6 +1405,7 @@
         "nixos-anywhere": "nixos-anywhere_2",
         "nixos-hardware": "nixos-hardware_2",
         "nixpkgs": "nixpkgs_3",
+        "nixpkgs-blocky-0-31": "nixpkgs-blocky-0-31",
         "nixpkgs-master": "nixpkgs-master_2",
         "nixpkgs-stable": "nixpkgs-stable_3",
         "plex-exporter": "plex-exporter",
