@@ -1378,16 +1378,15 @@
         "treefmt": "treefmt_2"
       },
       "locked": {
-        "lastModified": 1784385217,
-        "narHash": "sha256-LqAQBFCV3TRJFHG6sVSgnIglcqVrCN43Qq8M0nCIcYE=",
+        "lastModified": 1786115169,
+        "narHash": "sha256-cItgXHoQjjj3/JhSBv9alyaAFk6clTGn4xhNioB7zns=",
         "owner": "ethnt",
         "repo": "plex_exporter",
-        "rev": "a6f98fd381107cd5af2b7ff7ada77bbf4770669c",
+        "rev": "c2717a264e9d99a161b47374cc8e878ac0d2c6b3",
         "type": "github"
       },
       "original": {
         "owner": "ethnt",
-        "ref": "fix/unknown-stream-type",
         "repo": "plex_exporter",
         "type": "github"
       }
