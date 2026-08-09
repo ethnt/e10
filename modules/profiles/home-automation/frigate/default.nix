@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cameraAddress = "192.168.1.214"; # TODO: Put on IoT network with static address
+  cameraAddress = "10.100.152.13";
   cameraUsername = "viewer";
   cameraPassword = "{FRIGATE_KITCHEN_PASSWORD}";
   configFile = (pkgs.formats.yaml { }).generate "frigate.yml" {
@@ -13,10 +13,12 @@ let
     tls.enabled = false;
     go2rtc = {
       streams = {
+        # NOTE: Need to restream from `kitchen_tapo` to `kitchen_live` for dashboard view:
+        # https://github.com/AlexxIT/go2rtc/issues/1634
+        kitchen_tapo = [ "tapo://admin:{FRIGATE_TAPO_SHA256}@${cameraAddress}" ];
+        kitchen_live = [ "ffmpeg:cam_tapo#video=copy#audio=copy" ];
         kitchen = [
           "ffmpeg:rtsp://${cameraUsername}:${cameraPassword}@${cameraAddress}:554/stream1"
-          "ffmpeg:kitchen#audio=aac"
-          "tapo://admin:{FRIGATE_TAPO_SHA256}@${cameraAddress}"
         ];
         kitchen_sub = [
           "ffmpeg:rtsp://${cameraUsername}:${cameraPassword}@${cameraAddress}:554/stream2"
@@ -51,7 +53,7 @@ let
         output_args.record = "preset-record-generic-audio-aac";
         inputs = [
           {
-            path = "rtsp://127.0.0.1:8554/kitchen";
+            path = "rtsp://127.0.0.1:8554/kitchen_live";
             input_args = "preset-rtsp-restream";
             roles = [
               "audio"
@@ -76,18 +78,24 @@ let
         alerts = {
           retain = {
             days = 30;
-            mode = "motion";
+            mode = "all";
           };
         };
         detections = {
           retain = {
             days = 30;
-            mode = "motion";
+            mode = "all";
           };
+        };
+        motion = {
+          days = 30;
         };
       };
     };
-    detect.enabled = true;
+    detect = {
+      enabled = true;
+      fps = 5;
+    };
     objects.filters.person.min_score = 0.8;
     face_recognition = {
       enabled = true;
@@ -98,9 +106,17 @@ in
 {
   sops = {
     secrets = {
-      frigate_mqtt_password.sopsFile = ./secrets.json;
-      frigate_kitchen_password.sopsFile = ./secrets.json;
-      frigate_tapo_sha256.sopsFile = ./secrets.json;
+      frigate_mqtt_password = {
+        sopsFile = ./secrets.json;
+      };
+
+      frigate_kitchen_password = {
+        sopsFile = ./secrets.json;
+      };
+
+      frigate_tapo_sha256 = {
+        sopsFile = ./secrets.json;
+      };
     };
 
     templates."frigate/environment_file" = {
