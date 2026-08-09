@@ -9,48 +9,6 @@
 
   services.prometheus.scrapeConfigs = [
     {
-      job_name = "host_router";
-      static_configs = [ { targets = [ "router:9100" ]; } ];
-    }
-    {
-      job_name = "host_anise";
-      static_configs = [ { targets = [ "anise:9100" ]; } ];
-    }
-    {
-      job_name = "host_basil";
-      static_configs = [ { targets = [ "basil:9100" ]; } ];
-    }
-    {
-      job_name = "host_cardamom";
-      static_configs = [ { targets = [ "cardamom:9100" ]; } ];
-    }
-    {
-      job_name = "host_dill";
-      static_configs = [ { targets = [ "dill:9100" ]; } ];
-    }
-    {
-      job_name = "host_satan";
-      static_configs = [ { targets = [ "satan:9100" ]; } ];
-    }
-    {
-      job_name = "host_elderflower";
-      static_configs = [ { targets = [ "elderflower:9100" ]; } ];
-    }
-    {
-      job_name = "host_pikvm";
-      static_configs = [ { targets = [ "pikvm:9100" ]; } ];
-    }
-    {
-      job_name = "node_builder";
-      static_configs = [
-        {
-          targets = [
-            "${hosts.builder.config.networking.hostName}:${toString hosts.builder.config.services.prometheus.exporters.node.port}"
-          ];
-        }
-      ];
-    }
-    {
       job_name = "blocky";
       static_configs = [
         {
@@ -61,79 +19,31 @@
       ];
     }
     {
-      job_name = "node_bastion";
-      static_configs = [
-        {
-          targets = [
-            "${hosts.bastion.config.networking.hostName}:${toString hosts.bastion.config.services.prometheus.exporters.node.port}"
-          ];
-        }
-      ];
-    }
-    {
-      job_name = "node_controller";
-      static_configs = [
-        {
-          targets = [
-            "${hosts.controller.config.networking.hostName}:${toString hosts.controller.config.services.prometheus.exporters.node.port}"
-          ];
-        }
-      ];
-    }
-    {
-      job_name = "node_monitor";
-      static_configs = [
-        {
-          targets = [
-            "${hosts.monitor.config.networking.hostName}:${toString hosts.monitor.config.services.prometheus.exporters.node.port}"
-          ];
-        }
-      ];
-    }
-    {
-      job_name = "node_omnibus";
-      static_configs = [
-        {
-          targets = [
-            "${hosts.omnibus.config.networking.hostName}:${toString hosts.omnibus.config.services.prometheus.exporters.node.port}"
-          ];
-        }
-      ];
-    }
-    {
-      job_name = "node_htpc";
-      static_configs = [
-        {
-          targets = [
-            "${hosts.htpc.config.networking.hostName}:${toString hosts.htpc.config.services.prometheus.exporters.node.port}"
-          ];
-        }
-      ];
-    }
-    {
-      job_name = "node_matrix";
+      job_name = "node";
       static_configs = [
         {
           targets = [
             "${hosts.matrix.config.networking.hostName}:${toString hosts.matrix.config.services.prometheus.exporters.node.port}"
+            "${hosts.htpc.config.networking.hostName}:${toString hosts.htpc.config.services.prometheus.exporters.node.port}"
+            "${hosts.omnibus.config.networking.hostName}:${toString hosts.omnibus.config.services.prometheus.exporters.node.port}"
+            "${hosts.monitor.config.networking.hostName}:${toString hosts.monitor.config.services.prometheus.exporters.node.port}"
+            "${hosts.controller.config.networking.hostName}:${toString hosts.controller.config.services.prometheus.exporters.node.port}"
+            "${hosts.bastion.config.networking.hostName}:${toString hosts.bastion.config.services.prometheus.exporters.node.port}"
+            "${hosts.builder.config.networking.hostName}:${toString hosts.builder.config.services.prometheus.exporters.node.port}"
+            "router:9100"
+            "anise:9100"
+            "basil:9100"
+            "cardamom:9100"
+            "dill:9100"
+            "satan:9100"
+            "elderflower:9100"
+            "pikvm:9100"
           ];
         }
       ];
     }
     {
-      job_name = "node_fabricator";
-      metrics_path = "/metrics";
-      static_configs = [
-        {
-          targets = [
-            "${hosts.fabricator.config.networking.hostName}:${toString hosts.fabricator.config.services.prometheus.exporters.ping.port}"
-          ];
-        }
-      ];
-      scrape_interval = "5s";
-    }
-    {
-      job_name = "smartctl_omnibus";
+      job_name = "smartctl";
       static_configs = [
         {
           targets = [
@@ -143,7 +53,7 @@
       ];
     }
     {
-      job_name = "zfs_omnibus";
+      job_name = "zfs";
       static_configs = [
         {
           targets = [
@@ -153,29 +63,19 @@
       ];
     }
     {
-      job_name = "nut_matrix";
+      job_name = "nut";
       metrics_path = "/ups_metrics";
       static_configs = [
         {
           targets = [
+            "${hosts.controller.config.networking.hostName}:${toString hosts.controller.config.services.prometheus.exporters.nut.port}"
             "${hosts.matrix.config.networking.hostName}:${toString hosts.matrix.config.services.prometheus.exporters.nut.port}"
           ];
         }
       ];
     }
     {
-      job_name = "nut_controller";
-      metrics_path = "/ups_metrics";
-      static_configs = [
-        {
-          targets = [
-            "${hosts.controller.config.networking.hostName}:${toString hosts.controller.config.services.prometheus.exporters.nut.port}"
-          ];
-        }
-      ];
-    }
-    {
-      job_name = "smokeping_controller";
+      job_name = "smokeping";
       metrics_path = "/metrics";
       static_configs = [
         {
@@ -187,7 +87,7 @@
       scrape_interval = "5s";
     }
     {
-      job_name = "controller_unifi_os";
+      job_name = "unifi";
       metrics_path = "/metrics";
       static_configs = [
         {
@@ -264,24 +164,29 @@
       ];
     }
     {
-      job_name = "authelia_bastion";
+      job_name = "authelia";
       metrics_path = "/metrics";
-      static_configs = [ { targets = [ "${hosts.bastion.config.networking.hostName}:9959" ]; } ];
+      static_configs = [
+        {
+          targets = [
+            "${hosts.bastion.config.networking.hostName}:9959"
+            "${hosts.monitor.config.networking.hostName}:9959"
+          ];
+        }
+      ];
     }
     {
-      job_name = "caddy_bastion";
+      job_name = "caddy";
       metrics_path = "/metrics";
-      static_configs = [ { targets = [ "${hosts.bastion.config.networking.hostName}:2019" ]; } ];
-    }
-    {
-      job_name = "caddy_matrix";
-      metrics_path = "/metrics";
-      static_configs = [ { targets = [ "${hosts.matrix.config.networking.hostName}:2019" ]; } ];
-    }
-    {
-      job_name = "caddy_monitor";
-      metrics_path = "/metrics";
-      static_configs = [ { targets = [ "${hosts.monitor.config.networking.hostName}:2019" ]; } ];
+      static_configs = [
+        {
+          targets = [
+            "${hosts.matrix.config.networking.hostName}:2019"
+            "${hosts.monitor.config.networking.hostName}:2019"
+            "${hosts.bastion.config.networking.hostName}:2019"
+          ];
+        }
+      ];
     }
     {
       job_name = "pve";
@@ -340,7 +245,7 @@
       ];
     }
     {
-      job_name = "htpc_gpu";
+      job_name = "gpu";
       static_configs = [
         {
           targets = [
@@ -373,23 +278,12 @@
       scrape_interval = "45m";
     }
     {
-      job_name = "ping_controller";
+      job_name = "ping";
       metrics_path = "/metrics";
       static_configs = [
         {
           targets = [
             "${hosts.controller.config.networking.hostName}:${toString hosts.controller.config.services.prometheus.exporters.ping.port}"
-          ];
-        }
-      ];
-      scrape_interval = "5s";
-    }
-    {
-      job_name = "ping_monitor";
-      metrics_path = "/metrics";
-      static_configs = [
-        {
-          targets = [
             "${hosts.monitor.config.networking.hostName}:${toString hosts.monitor.config.services.prometheus.exporters.ping.port}"
           ];
         }
@@ -397,7 +291,7 @@
       scrape_interval = "5s";
     }
     {
-      job_name = "elderflower-jetkvm";
+      job_name = "jetkvm";
       metrics_path = "/metrics";
       static_configs = [
         {
@@ -406,7 +300,7 @@
       ];
     }
     {
-      job_name = "pikvm-kvmd";
+      job_name = "pikvm";
       metrics_path = "/api/export/prometheus/metrics";
       static_configs = [
         {
