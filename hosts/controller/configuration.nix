@@ -10,9 +10,7 @@
       profiles.networking.blocky.default
       profiles.networking.speedtest-tracker.default
       profiles.networking.unifi
-      profiles.power.eaton-5p550r
       profiles.services.attic-watch-store.default
-      profiles.telemetry.prometheus-nut-exporter
       profiles.telemetry.prometheus-ping-exporter
       profiles.telemetry.prometheus-smokeping-exporter
       profiles.telemetry.unpoller.default
