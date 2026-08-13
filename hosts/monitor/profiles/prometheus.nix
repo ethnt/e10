@@ -30,6 +30,8 @@
             "${hosts.controller.config.networking.hostName}:${toString hosts.controller.config.services.prometheus.exporters.node.port}"
             "${hosts.bastion.config.networking.hostName}:${toString hosts.bastion.config.services.prometheus.exporters.node.port}"
             "${hosts.builder.config.networking.hostName}:${toString hosts.builder.config.services.prometheus.exporters.node.port}"
+            "${hosts.nut-network.config.networking.hostName}:${toString hosts.nut-network.config.services.prometheus.exporters.node.port}"
+            "${hosts.nut-homelab.config.networking.hostName}:${toString hosts.nut-homelab.config.services.prometheus.exporters.node.port}"
             "router:9100"
             "anise:9100"
             "basil:9100"
@@ -68,8 +70,8 @@
       static_configs = [
         {
           targets = [
-            "${hosts.controller.config.networking.hostName}:${toString hosts.controller.config.services.prometheus.exporters.nut.port}"
-            "${hosts.matrix.config.networking.hostName}:${toString hosts.matrix.config.services.prometheus.exporters.nut.port}"
+            "${hosts.nut-network.config.networking.hostName}:${toString hosts.nut-network.config.services.prometheus.exporters.nut.port}"
+            "${hosts.nut-homelab.config.networking.hostName}:${toString hosts.nut-homelab.config.services.prometheus.exporters.nut.port}"
           ];
         }
       ];

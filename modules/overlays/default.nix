@@ -35,16 +35,13 @@
               ];
             };
           };
-
-          nixpkgs-blocky-0-31 = import inputs.nixpkgs-blocky-0-31 {
-            inherit system;
-
-            config = {
-              allowUnfree = true;
-            };
-          };
         in
         {
+          multiverse = inputs.nixpkgs-multiverse.lib.mkMultiverse {
+            inherit system;
+            config.allowUnfree = true;
+          };
+
           inherit (nixpkgs-master)
             gatus
             prowlarr
@@ -56,9 +53,6 @@
             prometheus-dcgm-exporter
             immich
             ;
-
-          # Avoiding EDNS0 bug: https://github.com/0xERR0R/blocky/issues/2212
-          inherit (nixpkgs-blocky-0-31) blocky;
 
           # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923
           inherit (nixpkgs-master) thanos;

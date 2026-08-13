@@ -1,0 +1,15 @@
+---
+- name: Install os-nut
+  oxlorg.opnsense.package:
+    name: os-nut
+    action: install
+
+- name: Configure NUT
+  oxlorg.opnsense.nut:
+    enabled: true
+    mode: netclient
+    name: "{{ nut_server_name }}"
+    netclient_enable: true
+    netclient_address: "{{ nut_server_host }}"
+    netclient_user: "follower"
+    netclient_password: "132010"

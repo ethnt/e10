@@ -12,6 +12,7 @@ in
 
   services.blocky = {
     enable = true;
+    package = pkgs.multiverse.version "blocky" "0.31.0"; # Avoiding EDNS0 bug: https://github.com/0xERR0R/blocky/issues/2212
     settings = {
       ports.http = 4022;
       upstreams = {
@@ -95,24 +96,17 @@ in
         ];
       };
       conditional = {
-        mapping =
-          let
-            reverseDnsServer = routerUpstream;
-            addresses = [
-              "arpa"
-              "1.168.192.in-addr.arpa"
-              "168.192.in-addr.arpa"
-              "10.10.in-addr.arpa"
-              "10.in-addr.arpa"
-              "."
-            ];
-          in
-          builtins.listToAttrs (
-            map (name: {
-              inherit name;
-              value = reverseDnsServer;
-            }) addresses
-          );
+        mapping = {
+          "1.168.192.in-addr.arpa" = "192.168.1.1:5335";
+          "10.10.in-addr.arpa" = "10.10.0.1:5335";
+          "100.10.in-addr.arpa" = "10.100.0.1:5335";
+          "168.192.in-addr.arpa" = "192.168.1.1:5335";
+          "2.10.in-addr.arpa" = "10.2.0.1:5335";
+          "5.10.in-addr.arpa" = "10.5.0.1:5335";
+          "10.in-addr.arpa" = "192.168.1.1:5335";
+          "arpa" = "192.168.1.1:5335";
+          "." = "192.168.1.1:5335";
+        };
       };
       prometheus = {
         enable = true;

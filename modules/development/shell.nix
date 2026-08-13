@@ -19,6 +19,8 @@
         awscli2
         cachix
         deadnix
+        freeipmi
+        ipmitool
         just
         nix-output-monitor
         nurl

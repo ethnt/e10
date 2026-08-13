@@ -1,3 +1,5 @@
 ---
 ansible_python_interpreter: "{{ ansible_playbook_python }}"
 ansible_python3_interpreter: "{{ ansible_playbook_python }}"
+nut_server_name: eaton
+nut_server_host: "10.2.100.1"

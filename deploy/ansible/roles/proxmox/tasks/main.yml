@@ -3,8 +3,8 @@
   ansible.builtin.include_tasks: "{{ task_file }}"
   loop:
     - apt.yml
-    # - intel-microcode.yml
-    # - users.yml
-    # - storage.yml
+    - intel-microcode.yml
+    - users.yml
+    - storage.yml
   loop_control:
     loop_var: task_file

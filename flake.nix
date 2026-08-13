@@ -24,7 +24,9 @@
 
     nixpkgs-master.url = "github:NixOS/nixpkgs";
 
-    nixpkgs-blocky-0-31.url = "github:NixOS/nixpkgs/18ed26979e702670938a10b1478c00927d074045";
+    # nixpkgs-blocky-0-31.url = "github:NixOS/nixpkgs/18ed26979e702670938a10b1478c00927d074045";
+
+    nixpkgs-multiverse.url = "github:fzakaria/nixpkgs-multiverse";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
