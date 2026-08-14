@@ -14,5 +14,6 @@
     - acme.yml
     - syslog.yml
     - nat.yml
+    - nut.yml
   loop_control:
     loop_var: task_file

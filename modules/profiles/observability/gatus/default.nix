@@ -272,11 +272,6 @@ in
               protected = true;
             })
             (mkEndpoint {
-              name = "Prometheus NUT Exporter";
-              url = "http://matrix:9199";
-              group = "Matrix";
-            })
-            (mkEndpoint {
               name = "Caddy";
               url = "http://matrix:2019/config";
               group = "Matrix";
@@ -365,13 +360,8 @@ in
               group = "Controller";
             })
             (mkEndpoint {
-              name = "Prometheus NUT Exporter";
-              url = "http://controller:9199";
-              group = "Controller";
-            })
-            (mkEndpoint {
               name = "Prometheus Smokeping Exporter";
-              url = "http://controller:9199";
+              url = "http://controller:9374";
               group = "Controller";
             })
             (mkEndpoint {
@@ -453,6 +443,32 @@ in
               group = "Fabricator";
             })
           ];
+          nut-network = [
+            (mkEndpoint {
+              name = "Network UPS Tools";
+              url = "tcp://nut-network:3493";
+              group = "NUT (Network)";
+              conditions = [ "[CONNECTED] == true" ];
+            })
+            (mkEndpoint {
+              name = "Prometheus NUT Exporter";
+              url = "http://nut-network:9199";
+              group = "NUT (Network)";
+            })
+          ];
+          nut-homelab = [
+            (mkEndpoint {
+              name = "Prometheus NUT Exporter";
+              url = "http://nut-homelab:9199";
+              group = "NUT (Homelab)";
+            })
+            (mkEndpoint {
+              name = "Network UPS Tools";
+              url = "tcp://nut-homelab:3493";
+              group = "NUT (Homelab)";
+              conditions = [ "[CONNECTED] == true" ];
+            })
+          ];
         in
         bastion
         ++ omnibus
@@ -463,7 +479,9 @@ in
         ++ monitor
         ++ pikvm
         ++ elderflower-kvm
-        ++ fabricator;
+        ++ fabricator
+        ++ nut-network
+        ++ nut-homelab;
     };
   };
 }

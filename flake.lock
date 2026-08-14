@@ -1201,22 +1201,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-blocky-0-31": {
-      "locked": {
-        "lastModified": 1780671162,
-        "narHash": "sha256-NTuvQ/kRtji6+FQgAN5ldITHBB8oHR9Dr6nQndCzzXM=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "18ed26979e702670938a10b1478c00927d074045",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "18ed26979e702670938a10b1478c00927d074045",
-        "type": "github"
-      }
-    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1765674936,
@@ -1289,6 +1273,21 @@
       "original": {
         "owner": "NixOS",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-multiverse": {
+      "locked": {
+        "lastModified": 1786394090,
+        "narHash": "sha256-+jF1hYf1fLWb0o82OGkSy0Ab3f+Qav9oprbJPDyngmY=",
+        "owner": "fzakaria",
+        "repo": "nixpkgs-multiverse",
+        "rev": "f8ec017e5956c67f9d53d4e3acc6a6b9e6038379",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fzakaria",
+        "repo": "nixpkgs-multiverse",
         "type": "github"
       }
     },
@@ -1404,8 +1403,8 @@
         "nixos-anywhere": "nixos-anywhere_2",
         "nixos-hardware": "nixos-hardware_2",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs-blocky-0-31": "nixpkgs-blocky-0-31",
         "nixpkgs-master": "nixpkgs-master_2",
+        "nixpkgs-multiverse": "nixpkgs-multiverse",
         "nixpkgs-stable": "nixpkgs-stable_3",
         "plex-exporter": "plex-exporter",
         "sops-nix": "sops-nix_2",

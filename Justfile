@@ -9,9 +9,12 @@ build host:
 build-all:
     colmena build {{ colmena_flags }}
 
-image host:
+qemu-image host:
     nom build .#nixosConfigurations.{{ host }}.config.system.build.qemuImage --print-out-paths
     nom build .#nixosConfigurations.{{ host }}.config.system.build.metadata --print-out-paths
+
+sd-image host:
+    nom build .#nixosConfigurations.{{ host }}.config.system.build.sdImage --print-out-paths
 
 apply host *args:
     colmena apply --on={{ host }} {{ colmena_flags }} {{ args }}

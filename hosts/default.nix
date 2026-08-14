@@ -85,5 +85,7 @@ in
     bastion = mkHost "bastion" { system = "aarch64-linux"; };
     dill = mkHost "dill" { system = "x86_64-linux"; };
     fabricator = mkHost "fabricator" { system = "x86_64-linux"; };
+    nut-network = mkHost "nut-network" { system = "aarch64-linux"; };
+    nut-homelab = mkHost "nut-homelab" { system = "aarch64-linux"; };
   };
 }

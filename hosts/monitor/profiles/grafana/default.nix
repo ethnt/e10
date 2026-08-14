@@ -274,7 +274,7 @@
                         };
                         editorMode = "code";
                         expr = ''
-                          network_ups_tools_ups_status{instance="matrix:9199",flag="OB"}
+                          network_ups_tools_ups_status{instance="nut-homelab:9199",flag="OB"}
                         '';
                         instant = true;
                         intervalMs = 1000;
@@ -355,7 +355,7 @@
                         };
                         editorMode = "code";
                         expr = ''
-                          network_ups_tools_ups_status{instance="controller:9199",flag="OB"}
+                          network_ups_tools_ups_status{instance="nut-network:9199",flag="OB"}
                         '';
                         instant = true;
                         intervalMs = 1000;

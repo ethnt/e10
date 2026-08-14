@@ -65,4 +65,8 @@
     profiles.virtualisation.incus-vm
     profiles.virtualisation.qemu
   ];
+
+  rpi4 = [
+    profiles.hardware.rpi4
+  ];
 }

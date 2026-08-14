@@ -9,6 +9,8 @@ keys:
   - &host_controller age15jjykch8km3l8atssu0n9us6d2xg58z0ds9s0djtdh9l954sud5szqxv29
   - &host_dill age12yvljlgg94z8qfwyezz6mtmrpldxvfcqwzsuyfekszu296fg6upseeyc0t
   - &host_fabricator age10zakwy8z5448vj7ur2h7vn8wfzvt2nxwq4pk4wx6cs34mlg58yasdjhc7l
+  - &host_nut_a age1jfca7c8vxmaggvj6u529qg7vp2sr4drdvrvfjnvd56mpe7pyagcqs5lf5x
+  - &host_nut_b age1hmxzd2287l7mj80szgmm7l8ak02hmw4qvvp5jysaaqxa9wlzwddsq8nl0j
 
 creation_rules:
   - path_regex: '^.*secrets\.(json|yml)'
@@ -24,3 +26,5 @@ creation_rules:
           - *host_bastion
           - *host_dill
           - *host_fabricator
+          - *host_nut_a
+          - *host_nut_b
