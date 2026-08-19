@@ -122,7 +122,12 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [ yt-dlp ];
+  environment.systemPackages = with pkgs; [
+    yt-dlp
+    mbuffer
+    pv
+    util-linux
+  ];
 
   services.restic.backups.files-rsync-net = {
     initialize = true;
