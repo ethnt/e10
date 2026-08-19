@@ -56,7 +56,6 @@
       "homeassistant_hardware"
       "homeassistant_sky_connect"
       "homekit_controller"
-      "hue"
       "ipp"
       "isal"
       "matter"
