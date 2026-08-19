@@ -207,10 +207,12 @@ in
 
       blockbuster = {
         type = "zpool";
+        mode = "raidz2";
 
         options = {
           ashift = "12";
           autotrim = "on";
+          autoexpand = "on";
         };
 
         rootFsOptions = {
@@ -218,14 +220,14 @@ in
           compression = "lz4";
           dnodesize = "auto";
           normalization = "formD";
-          relatime = "on";
+          atime = "off";
           xattr = "sa";
           mountpoint = "none";
         };
 
         postCreateHook = ''
-          zpool add -f blockbuster log ${disks.nvme0}
-          zpool add -f blockbuster cache ${disks.nvme1}
+          # zpool add -f blockbuster log ${disks.nvme0}
+          # zpool add -f blockbuster cache ${disks.nvme1}
         '';
 
         datasets = {
@@ -244,6 +246,7 @@ in
             options = {
               canmount = "on";
               mountpoint = "legacy";
+              recordsize = "1M";
             };
           };
 
