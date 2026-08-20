@@ -2,6 +2,7 @@
   config,
   hosts,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -16,12 +17,12 @@ let
         # NOTE: Need to restream from `kitchen_tapo` to `kitchen_live` for dashboard view:
         # https://github.com/AlexxIT/go2rtc/issues/1634
         kitchen_tapo = [ "tapo://admin:{FRIGATE_TAPO_SHA256}@${cameraAddress}" ];
-        kitchen_live = [ "ffmpeg:cam_tapo#video=copy#audio=copy" ];
+        kitchen_live = [ "ffmpeg:kitchen_tapo#video=copy#audio=copy" ];
         kitchen = [
-          "ffmpeg:rtsp://${cameraUsername}:${cameraPassword}@${cameraAddress}:554/stream1"
+          "rtsp://${cameraUsername}:${cameraPassword}@${cameraAddress}:554/stream1"
         ];
         kitchen_sub = [
-          "ffmpeg:rtsp://${cameraUsername}:${cameraPassword}@${cameraAddress}:554/stream2"
+          "rtsp://${cameraUsername}:${cameraPassword}@${cameraAddress}:554/stream2"
         ];
       };
       api.origin = "*";
@@ -31,6 +32,7 @@ let
       host = hosts.controller.config.networking.hostName;
       user = "frigate";
       password = "{FRIGATE_MQTT_PASSWORD}";
+      topic_prefix = "frigate";
     };
     detectors = {
       onnx_0 = {
@@ -39,12 +41,13 @@ let
       };
     };
     model = {
-      model_type = "yolox";
-      width = 416;
-      height = 416;
-      input_dtype = "float_denorm";
+      model_type = "yolo-generic";
+      width = 640;
+      height = 640;
       input_tensor = "nchw";
-      path = "/config/model_cache/yolo_tiny.onnx";
+      input_pixel_format = "rgb";
+      input_dtype = "float";
+      path = "/config/model_cache/yolo9_c.onnx";
       labelmap_path = "/labelmap/coco-80.txt";
     };
     cameras.kitchen = {
@@ -99,8 +102,12 @@ let
     objects.filters.person.min_score = 0.8;
     face_recognition = {
       enabled = true;
-      model_size = "small";
+      model_size = "large";
     };
+  };
+  yoloModel = pkgs.fetchurl {
+    url = "https://huggingface.co/LibreYOLO/libreyolo-web/resolve/main/yolo9_c.onnx";
+    hash = "sha256-+SHmIeEH4D2mR8b0E5jHQiiWXTz3lDofwfpG9Av9oQQ=";
   };
 in
 {
@@ -139,6 +146,12 @@ in
     };
   };
 
+  systemd.services."${config.virtualisation.oci-containers.backend}-frigate".preStart = ''
+    if ! ${lib.getExe' pkgs.diffutils "cmp"} -s ${yoloModel} /var/lib/frigate/model_cache/yolo9_c.onnx; then
+      install -Dm644 ${yoloModel} /var/lib/frigate/model_cache/yolo9_c.onnx
+    fi
+  '';
+
   virtualisation.oci-containers.containers.frigate = {
     image = "ghcr.io/blakeblackshear/frigate:stable-tensorrt";
     volumes = [
@@ -164,7 +177,7 @@ in
     extraOptions = [
       "--shm-size=1024mb"
       "--cap-add=SYS_ADMIN"
-      "--device=nvidia.com/gpu=1"
+      "--device=nvidia.com/gpu=all"
     ];
   };
 

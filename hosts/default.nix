@@ -87,5 +87,6 @@ in
     fabricator = mkHost "fabricator" { system = "x86_64-linux"; };
     nut-network = mkHost "nut-network" { system = "aarch64-linux"; };
     nut-homelab = mkHost "nut-homelab" { system = "aarch64-linux"; };
+    whirlwind = mkHost "whirlwind" { system = "x86_64-linux"; };
   };
 }

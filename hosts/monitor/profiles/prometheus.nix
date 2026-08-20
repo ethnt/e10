@@ -32,6 +32,7 @@
             "${hosts.builder.config.networking.hostName}:${toString hosts.builder.config.services.prometheus.exporters.node.port}"
             "${hosts.nut-network.config.networking.hostName}:${toString hosts.nut-network.config.services.prometheus.exporters.node.port}"
             "${hosts.nut-homelab.config.networking.hostName}:${toString hosts.nut-homelab.config.services.prometheus.exporters.node.port}"
+            "${hosts.whirlwind.config.networking.hostName}:${toString hosts.whirlwind.config.services.prometheus.exporters.node.port}"
             "router:9100"
             "anise:9100"
             "basil:9100"
@@ -252,6 +253,7 @@
         {
           targets = [
             "${hosts.htpc.config.networking.hostName}:${toString hosts.htpc.config.services.prometheus.exporters.dcgm-exporter.port}"
+            "${hosts.whirlwind.config.networking.hostName}:${toString hosts.whirlwind.config.services.prometheus.exporters.dcgm-exporter.port}"
           ];
         }
       ];
@@ -270,7 +272,7 @@
     {
       job_name = "frigate";
       metrics_path = "/api/metrics";
-      static_configs = [ { targets = [ "htpc:5000" ]; } ];
+      static_configs = [ { targets = [ "whirlwind:5000" ]; } ];
       scrape_interval = "15s";
     }
     {

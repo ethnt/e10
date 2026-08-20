@@ -14,7 +14,6 @@
       profiles.filesystems.blockbuster
       profiles.filesystems.files.personal
       profiles.hardware.nvidia
-      profiles.home-automation.frigate.default
       profiles.media-management.bazarr.default
       profiles.media-management.decluttarr.default
       profiles.media-management.fileflows.server
