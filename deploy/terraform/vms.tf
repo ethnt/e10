@@ -172,10 +172,78 @@ resource "proxmox_virtual_environment_vm" "htpc" {
     rombar = true
     xvga   = false
   }
+}
+
+resource "proxmox_virtual_environment_vm" "whirlwind" {
+  provider = proxmox.basil
+
+  node_name = "basil"
+
+  name  = "whirlwind"
+  vm_id = 103
+
+  scsi_hardware = "virtio-scsi-single"
+
+  machine = "q35"
+
+  boot_order = ["scsi0"]
+  migrate    = true
+
+  cpu {
+    cores   = 4
+    sockets = 1
+    type    = "host"
+    flags   = ["+pcid", "+spec-ctrl", "+ssbd"]
+  }
+
+  memory {
+    dedicated = 16384
+  }
+
+  disk {
+    aio               = "io_uring"
+    backup            = true
+    cache             = "none"
+    datastore_id      = "local-zfs"
+    discard           = "ignore"
+    file_format       = "raw"
+    file_id           = null
+    interface         = "scsi0"
+    iothread          = true
+    path_in_datastore = "vm-103-disk-0"
+    replicate         = true
+    serial            = null
+    size              = 256
+    ssd               = false
+  }
+
+  network_device {
+    bridge   = "vmbr0"
+    firewall = false
+    model    = "virtio"
+  }
+
+  # serial_device {
+  #   device = "socket"
+  # }
+
+  agent {
+    enabled = true
+    type    = "virtio"
+  }
+
+  operating_system {
+    type = "l26"
+  }
+
+  # vga {
+  #   memory = 16
+  #   type   = "std"
+  # }
 
   # GeForce RTX 4060 Ti
   hostpci {
-    device = "hostpci1"
+    device = "hostpci0"
     id     = "0000:01:00"
     pcie   = true
     rombar = true
@@ -199,14 +267,14 @@ resource "proxmox_virtual_environment_vm" "builder" {
   migrate    = true
 
   cpu {
-    cores   = 8
+    cores   = 4
     sockets = 1
     type    = "host"
     flags   = ["+pcid", "+spec-ctrl", "+ssbd"]
   }
 
   memory {
-    dedicated = 32768
+    dedicated = 16384
   }
 
   disk {
@@ -351,7 +419,7 @@ resource "proxmox_virtual_environment_vm" "router" {
   }
 
   memory {
-    dedicated = 8192
+    dedicated = 16384
   }
 
   disk {

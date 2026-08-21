@@ -11,6 +11,7 @@ keys:
   - &host_fabricator age10zakwy8z5448vj7ur2h7vn8wfzvt2nxwq4pk4wx6cs34mlg58yasdjhc7l
   - &host_nut_a age1jfca7c8vxmaggvj6u529qg7vp2sr4drdvrvfjnvd56mpe7pyagcqs5lf5x
   - &host_nut_b age1hmxzd2287l7mj80szgmm7l8ak02hmw4qvvp5jysaaqxa9wlzwddsq8nl0j
+  - &host_whirlwind age1dtf3ahstj5mhzcqf4d2zc54d5dds69ka32dqpmpsskyaz04dtshq9ryxat
 
 creation_rules:
   - path_regex: '^.*secrets\.(json|yml)'
@@ -28,3 +29,4 @@ creation_rules:
           - *host_fabricator
           - *host_nut_a
           - *host_nut_b
+          - *host_whirlwind

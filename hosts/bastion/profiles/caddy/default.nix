@@ -278,7 +278,7 @@ in
       };
 
       "frigate.e10.camp" = {
-        host = hosts.htpc;
+        host = hosts.whirlwind;
         port = 8971;
       };
 
