@@ -14,6 +14,8 @@
       profiles.filesystems.blockbuster
       profiles.filesystems.files.personal
       profiles.hardware.nvidia
+      # profiles.media-management.tdarr.server
+      # profiles.media-management.tdarr.node
       profiles.media-management.bazarr.default
       profiles.media-management.decluttarr.default
       profiles.media-management.fileflows.server

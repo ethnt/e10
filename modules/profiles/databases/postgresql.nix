@@ -1,7 +1,7 @@
 { pkgs, lib, ... }: {
   services.postgresql = {
     enable = true;
-    package = pkgs.postgresql_15.withPackages (p: [
+    package = pkgs.postgresql_18.withPackages (p: [
       p.postgis
       p.timescaledb
     ]);

@@ -73,10 +73,10 @@ in
       }/bin";
     };
 
-    systemd.services.fileflows-server = {
+    systemd.services.fileflows-node = {
       description = "FileFlows node";
       script = "${cfg.package}/bin/node --no-gui --systemd-service --server ${cfg.serverUrl}";
-      environment.FILEFLOWS_SERVER_BASE_DIR = cfg.dataDir;
+      environment.FILEFLOWS_NODE_BASE_DIR = cfg.dataDir;
 
       serviceConfig = {
         Type = "simple";
@@ -106,7 +106,5 @@ in
 
       groups = mkIf (cfg.group == "fileflows") { fileflows = { }; };
     };
-
-    networking.firewall = mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
   };
 }

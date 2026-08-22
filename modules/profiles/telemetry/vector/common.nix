@@ -16,6 +16,7 @@
           except_fields = [ "labels" ];
           timestamp_format = "rfc3339";
         };
+        dangerously_allow_unconfined_template_resolution = true;
 
         labels."*" = "{{ labels }}";
       };

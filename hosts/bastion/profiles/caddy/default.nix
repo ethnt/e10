@@ -160,8 +160,8 @@ in
       };
 
       "fileflows.e10.camp" = {
-        host = hosts.htpc;
-        inherit (hosts.htpc.config.services.fileflows.server) port;
+        host = hosts.whirlwind;
+        inherit (hosts.whirlwind.config.services.fileflows.server) port;
         protected = true;
       };
 
@@ -274,7 +274,8 @@ in
 
       "hass.e10.camp" = {
         host = hosts.controller;
-        port = hosts.controller.config.services.home-assistant.config.http.server_port;
+        # port = hosts.controller.config.services.home-assistant.config.http.server_port;
+        port = 8123;
       };
 
       "frigate.e10.camp" = {
