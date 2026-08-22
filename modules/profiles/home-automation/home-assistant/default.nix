@@ -41,7 +41,6 @@
 
   services.home-assistant = {
     enable = true;
-    openFirewall = true;
 
     # See the list of component packages here:
     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/home-assistant/component-packages.nix
@@ -64,9 +63,12 @@
       "netatmo"
       "opower"
       "radio_browser"
+      "roomba"
       "sonos"
       "switchbot"
       "tplink"
+      "unifi_discovery"
+      "withings"
       "zha"
     ];
 
@@ -90,7 +92,9 @@
       ]
       ++ [
         (pkgs.home-assistant.python3Packages.callPackage ./components/ha_nationalgrid.nix {
-          aionatgrid = pkgs.home-assistant.python3Packages.callPackage ./packages/aionatgrid.nix { };
+          py-nationalgrid =
+            pkgs.home-assistant.python3Packages.callPackage ./packages/py-nationalgrid.nix
+              { };
         })
       ];
 
@@ -112,10 +116,6 @@
         longitude = "!secret longitude";
         elevation = "!secret elevation";
         unit_system = "us_customary";
-      };
-      http = {
-        use_x_forwarded_for = true;
-        trusted_proxies = [ "100.0.0.0/8" ];
       };
     };
   };

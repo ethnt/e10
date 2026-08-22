@@ -2,29 +2,28 @@
   fetchFromGitHub,
   home-assistant,
   buildHomeAssistantComponent,
-  aionatgrid,
+  py-nationalgrid,
 }:
 
 let
   pythonPkgs = home-assistant.python3Packages;
 in
 buildHomeAssistantComponent rec {
-  owner = "RyanMorash";
-  domain = "national_grid";
-  version = "0.1.1";
+  owner = "virtitnerd";
+  domain = "national_grid_us";
+  version = "1.0.2";
 
   src = fetchFromGitHub {
-    owner = "RyanMorash";
+    owner = "virtitnerd";
     repo = "ha_nationalgrid";
     tag = "v${version}";
-    hash = "sha256-dw0kRmQ0duyHDmxLXhdcwGXC8uvo0bda9wVpJ1WtmG0=";
+    hash = "sha256-+2/x8mXt2gwb5V7kr5ns35HAbBsA99zUiXS7+k66igA=";
   };
 
   dependencies = with pythonPkgs; [
     colorlog
     homeassistant
-    pip
     ruff
-    aionatgrid
+    py-nationalgrid
   ];
 }

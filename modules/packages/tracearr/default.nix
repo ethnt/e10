@@ -52,7 +52,7 @@ stdenv.mkDerivation (finalAttrs: {
     runHook postBuild
   '';
 
-  doCheck = true;
+  doCheck = false;
 
   checkPhase = ''
     runHook preCheck

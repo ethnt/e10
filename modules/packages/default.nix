@@ -1,4 +1,4 @@
-_: {
+{
   perSystem = { pkgs, ... }: {
     packages = {
       bichon = pkgs.callPackage ./bichon { };

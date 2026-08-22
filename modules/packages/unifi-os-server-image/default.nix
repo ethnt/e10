@@ -4,14 +4,6 @@ let
   installerVersion = "5.1.21";
   url = "https://fw-download.ubnt.com/data/unifi-os-server/f5e2-linux-x64-5.1.21-a400c9c6-8328-4634-b223-ebfcf742720a.21-x64";
   sha256 = "sha256-d+P+rBWVd5QC3Yf/jSDWb6o5yHtXJkb4b/AAZxEmJEU=";
-
-  # TODO: Can remove when this fix is merged
-  # https://github.com/nixos/nixpkgs/pull/530407
-  binwalk = pkgs.binwalk.override {
-    uefi-firmware-parser = pkgs.python3Packages.uefi-firmware-parser.overridePythonAttrs (old: {
-      build-system = (old.build-system or [ ]) ++ [ pkgs.python3Packages.setuptools-scm ];
-    });
-  };
 in
 pkgs.stdenvNoCC.mkDerivation {
   pname = "unifi-os-server";
@@ -19,13 +11,11 @@ pkgs.stdenvNoCC.mkDerivation {
 
   src = pkgs.fetchurl { inherit url sha256; };
 
-  nativeBuildInputs = [
+  nativeBuildInputs = with pkgs; [
     binwalk
-  ]
-  ++ (with pkgs; [
     coreutils
     findutils
-  ]);
+  ];
 
   dontUnpack = true;
 

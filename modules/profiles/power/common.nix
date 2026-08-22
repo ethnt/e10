@@ -38,4 +38,10 @@
       };
     };
   };
+
+  # Sometimes a USB device might be mid-reset, so add retries to `upsdrv`
+  systemd.services.upsdrv.serviceConfig = {
+    Restart = "on-failure";
+    RestartSec = 5;
+  };
 }

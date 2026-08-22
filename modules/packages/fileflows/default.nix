@@ -53,12 +53,11 @@ let
 in
 stdenvNoCC.mkDerivation rec {
   pname = "fileflows";
-  version = "26.7.2.7443";
-
+  version = "26.7.9.7525";
   src = fetchzip {
     url = "https://fileflows.com/downloads/Zip/${version}";
     extension = "zip";
-    hash = "sha256-JG26rRoxxZzrUm7usBYBJTtjCAzZbI048T8bJCTox4A=";
+    hash = "sha256-ouWKDqfUcv3N1sdIXmLjqQogk9C1juBhHTkkV1N3FVc=";
     stripRoot = false;
   };
 

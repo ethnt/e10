@@ -5,6 +5,8 @@
     ++ proxmox-vm
     ++ [
       profiles.filesystems.files.personal
+      profiles.filesystems.blockbuster
+      profiles.media-management.fileflows.server
       profiles.hardware.nvidia
       profiles.home-automation.frigate.default
       profiles.sharing.nfs-client

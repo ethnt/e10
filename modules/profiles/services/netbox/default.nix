@@ -1,6 +1,10 @@
 # NOTE: Plugin migrations need to be run manually. This can be done on device:
 #   $ netbox-manage migrate
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+let
+  port = 8001;
+in
+{
   sops.secrets = {
     netbox_secret_key = {
       sopsFile = ./secrets.json;
@@ -21,6 +25,7 @@
   services.netbox = {
     enable = true;
     package = pkgs.netbox;
+    bind = "[::1]:${toString port}";
     plugins =
       _ps: with pkgs.netboxPlugins; [
         netbox-attachments
@@ -29,11 +34,11 @@
       ];
     secretKeyFile = config.sops.secrets.netbox_secret_key.path;
     apiTokenPeppersFile = config.sops.secrets.netbox_api_token_peppers.path;
-    listenAddress = "0.0.0.0";
+    # listenAddress = "0.0.0.0";
     settings = {
       CSRF_TRUSTED_ORIGINS = [
         "https://netbox.e10.camp"
-        "http://${config.networking.hostName}:${toString config.services.netbox.port}"
+        "http://${config.networking.hostName}:${toString port}"
         "http://${config.networking.hostName}:8002"
       ];
       REMOTE_AUTH_ENABLED = true;
@@ -68,7 +73,7 @@
         not path /static/*
       }
 
-      reverse_proxy @proxied http://localhost:${toString config.services.netbox.port}
+      reverse_proxy @proxied http://localhost:${toString port}
 
       file_server
     '';
@@ -80,7 +85,7 @@
   services.postgresqlBackup.databases = [ "netbox" ];
 
   networking.firewall.allowedTCPPorts = [
-    config.services.netbox.port
+    port
     8002
   ];
 }
