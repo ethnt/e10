@@ -26,6 +26,7 @@
         nurl
         sops
         statix
+        zstd
       ];
 
       shellHook =

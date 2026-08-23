@@ -77,6 +77,9 @@
       };
 
       session = {
+        inactivity = "1h";
+        expiration = "1d";
+        remember_me = "2M";
         redis = {
           host = "0.0.0.0";
           port = toString config.services.redis.servers."authelia-${config.networking.hostName}".port;
