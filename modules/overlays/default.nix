@@ -63,7 +63,9 @@
           pythonPackagesExtensions = pkgs.pythonPackagesExtensions ++ [
             (_pyfinal: pyprev: {
               # https://github.com/NixOS/nixpkgs/issues/542586
-              paho-mqtt = pyprev.paho-mqtt.overridePythonAttrs (_: { doCheck = false; });
+              paho-mqtt = pyprev.paho-mqtt.overridePythonAttrs (_: {
+                doCheck = false;
+              });
             })
           ];
         };

@@ -13,14 +13,6 @@ let
     _: c: c.config.deployment.deployable
   ) self.nixosConfigurations;
 
-  # colmena re-evaluates each node with `evalConfig`, applying
-  # `meta.nodeNixpkgs.<name>.overlays` on top of the node's own modules (which
-  # also declare `nixpkgs.overlays`). Handing it the already-overlaid
-  # `configuration.pkgs` therefore applies every overlay twice. For most hosts
-  # that is harmless, but the nixos-raspberrypi firmware overlays are not
-  # idempotent and a second application causes infinite recursion. For those
-  # hosts we hand colmena a *base* (un-overlaid) Nixpkgs from the same source,
-  # so the node's modules apply the RPi overlays exactly once.
   nodeNixpkgsFor =
     configuration:
     if (configuration.config.boot.loader.raspberry-pi.enable or false) then
