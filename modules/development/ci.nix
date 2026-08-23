@@ -83,7 +83,9 @@ in
               contains(github.event.head_commit.message, '[build]')
             '';
             strategy.matrix.host = l.attrNames (
-              l.filterAttrs (_: host: host.config.nixpkgs.system == "x86_64-linux") self.nixosConfigurations
+              l.filterAttrs (
+                _: host: host.pkgs.stdenv.hostPlatform.system == "x86_64-linux"
+              ) self.nixosConfigurations
             );
             steps = setup ++ [
               {
@@ -110,7 +112,9 @@ in
               contains(github.event.head_commit.message, '[build]')
             '';
             strategy.matrix.host = l.attrNames (
-              l.filterAttrs (_: host: host.config.nixpkgs.system == "aarch64-linux") self.nixosConfigurations
+              l.filterAttrs (
+                _: host: host.pkgs.stdenv.hostPlatform.system == "aarch64-linux"
+              ) self.nixosConfigurations
             );
             steps = setup ++ [
               {

@@ -5,6 +5,7 @@
     extra-substituters = [
       "https://nix-community.cachix.org"
       "https://numtide.cachix.org"
+      "https://nixos-raspberrypi.cachix.org"
       "https://cache.e10.camp/e10"
       "https://e10.cachix.org"
     ];
@@ -12,6 +13,7 @@
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
+      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
       "e10.cachix.org-1:/++Tmo/ghEqnLwsQJdXn04c262agRCK5PaPYz8NcVfo="
       "e10:h64l3MobkrdOGab0Xaambo3ROC/w05Yi70oJ8U8ZEfQ="
     ];
@@ -36,6 +38,8 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
 
     haumea.url = "github:nix-community/haumea";
     haumea.inputs.nixpkgs.follows = "nixpkgs";
@@ -65,7 +69,7 @@
   };
 
   outputs =
-    inputs@{ self, flake-parts, ... }:
+    inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         ./lib
@@ -100,17 +104,7 @@
 
           config = {
             allowUnfree = true;
-            permittedInsecurePackages = [
-              "dotnet-sdk-6.0.428"
-              "aspnetcore-runtime-6.0.36"
-              "pnpm-9.15.9"
-            ];
           };
-
-          overlays = [
-            self.overlays.default
-            (_final: prev: { inherit (prev.lixPackageSets.stable) colmena; })
-          ];
         };
       };
     };

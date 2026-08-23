@@ -6,8 +6,7 @@
     ++ [
       profiles.power.eaton-5p550r
       profiles.telemetry.prometheus-nut-exporter
-    ]
-    ++ [ ./hardware-configuration.nix ];
+    ];
 
   deployment.targetHost = "10.2.100.1";
 
@@ -35,6 +34,7 @@
           DHCP = "no";
           LinkLocalAddressing = "no";
         };
+        linkConfig.RequiredForOnline = "no";
       };
       "20-vlan2" = {
         matchConfig.Name = "vlan2";
@@ -49,7 +49,7 @@
         networkConfig = {
           LinkLocalAddressing = "no";
         };
-        linkConfig.RequiredForOnline = "no";
+        linkConfig.RequiredForOnline = "routable";
       };
     };
   };

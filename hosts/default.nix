@@ -59,6 +59,7 @@ let
             suites
             secrets
             ;
+          inherit (inputs) nixos-raspberrypi;
           flake = self;
           hosts = self.nixosConfigurations;
         };
@@ -73,6 +74,43 @@ let
       }
     );
 
+  mkRaspberryPiHost =
+    hostname:
+    {
+      configuration ? ./${hostname}/configuration.nix,
+      ...
+    }:
+    let
+      baseConfiguration = _: { networking.hostName = hostname; };
+      raspberryPiOverrides =
+        { lib, ... }:
+        {
+          boot.supportedFilesystems.zfs = lib.mkForce false;
+        };
+      modules = commonModules ++ [
+        baseConfiguration
+        raspberryPiOverrides
+        configuration
+      ];
+      specialArgs = {
+        inherit
+          inputs
+          profiles
+          suites
+          secrets
+          ;
+        flake = self;
+        hosts = self.nixosConfigurations;
+      };
+    in
+    inputs.nixos-raspberrypi.lib.nixosSystem {
+      inherit
+        specialArgs
+        modules
+        extraModules
+        ;
+    };
+
 in
 {
   flake.nixosConfigurations = {
@@ -85,8 +123,8 @@ in
     bastion = mkHost "bastion" { system = "aarch64-linux"; };
     dill = mkHost "dill" { system = "x86_64-linux"; };
     fabricator = mkHost "fabricator" { system = "x86_64-linux"; };
-    nut-network = mkHost "nut-network" { system = "aarch64-linux"; };
-    nut-homelab = mkHost "nut-homelab" { system = "aarch64-linux"; };
+    nut-network = mkRaspberryPiHost "nut-network" { };
+    nut-homelab = mkRaspberryPiHost "nut-homelab" { };
     whirlwind = mkHost "whirlwind" { system = "x86_64-linux"; };
   };
 }

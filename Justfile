@@ -16,6 +16,12 @@ qemu-image host:
 sd-image host:
     nom build .#nixosConfigurations.{{ host }}.config.system.build.sdImage --print-out-paths
 
+# Burns an SD image. `device` is `/dev/diskN`, `raw-device` is `/dev/rdiskN`
+burn-sd-image image device raw-device:
+    diskutil unmountDisk {{ device }}
+    zstdcat {{ image }} | sudo dd of={{ raw-device }} status=progress bs=4M
+    diskutil eject {{ device }}
+
 apply host *args:
     colmena apply --on={{ host }} {{ colmena_flags }} {{ args }}
 
