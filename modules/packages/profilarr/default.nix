@@ -129,7 +129,7 @@ stdenv.mkDerivation {
     runHook preInstall
 
     mkdir -p $out/lib/profilarr $out/bin $out/share
-    cp -r node_modules dist src static deno.json deno.lock package.json \
+    cp -r node_modules dist src static deno.jsonc deno.lock \
       tsconfig.json svelte.config.js vite.config.ts $out/lib/profilarr/
     cp -r $DENO_DIR $out/share/deno-dir
 
