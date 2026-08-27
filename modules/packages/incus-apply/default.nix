@@ -1,23 +1,20 @@
-{ buildGo126Module, fetchFromGitHub }:
+{ buildGo126Module, fetchFromGitHub, nix-update-script }:
 
-buildGo126Module {
+buildGo126Module rec {
   pname = "incus-apply";
   name = "incus-apply";
+  version = "0.1.1";
 
   src = fetchFromGitHub {
     owner = "abiosoft";
     repo = "incus-apply";
-    tag = "v0.1.1";
+    tag = "v${version}";
     hash = "sha256-eeRcGfGZD7Tg4psAK1IzKgpAkI5RcrBiqyADk0eTdLY=";
   };
 
   vendorHash = "sha256-u+nl3P7YNl+3DJIXo7pnDKF4PkoYLaHf3B1LqF9b+V8=";
 
-  # ldflags = [
-  #   "-X main.version=${self.shortRev or self.dirtyShortRev or "dev"}"
-  #   "-X main.commit=${self.rev or self.dirtyRev or "none"}"
-  #   "-X main.date=${self.lastModifiedDate or "unknown"}"
-  # ];
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Declarative configuration management for Incus";

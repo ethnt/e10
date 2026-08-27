@@ -13,13 +13,13 @@
 }:
 
 let
-  version = "2.0.9";
+  version = "2.2.0";
 
   src = fetchFromGitHub {
     owner = "Dictionarry-Hub";
     repo = "Profilarr";
     tag = "v${version}";
-    hash = "sha256-FfMBu58cfaZlgxlqyO0qBz702NVcdQDarkh6JiSncCs=";
+    hash = "sha256-88BT9GUEaPCPmD4pURcknaXrSzYHzjYnDResc4Uc2qY=";
   };
 
   denoDeps = stdenv.mkDerivation {
@@ -58,6 +58,10 @@ let
       cp -r node_modules $out/node_modules
       cp -r $DENO_DIR $out/deno-dir
 
+      find $out -type l -lname '${deno}*' -delete
+
+      rm -f $out/deno-dir/*_cache_v2 $out/deno-dir/*_cache_v2-shm $out/deno-dir/*_cache_v2-wal
+
       runHook postInstall
     '';
 
@@ -66,8 +70,8 @@ let
     outputHashMode = "recursive";
     outputHash =
       {
-        x86_64-linux = "sha256-eyrIsA8KTajDvMNR0kjOHhPVPd30KgMuv+qeV7zaO/Q=";
-        aarch64-linux = "sha256-Mk58kzWjgVSQZdu0YFhknt1J0TEyWfKF0DiOFH5r9XU=";
+        x86_64-linux = "sha256-ll8x57a9zFGTIrAaCfnfnpcTnuHqGQF2eOHdd7Gidco=";
+        aarch64-linux = "sha256-npeoRIUHRvPu8QsZ7bGQCRyQy3suPqgMnvrI6HN5kBo=";
       }.${stdenv.hostPlatform.system}
         or (throw "profilarr: unsupported system ${stdenv.hostPlatform.system}");
   };
@@ -127,7 +131,7 @@ stdenv.mkDerivation {
     runHook preInstall
 
     mkdir -p $out/lib/profilarr $out/bin $out/share
-    cp -r node_modules dist src static deno.json deno.lock package.json \
+    cp -r node_modules dist src static deno.jsonc deno.lock \
       tsconfig.json svelte.config.js vite.config.ts $out/lib/profilarr/
     cp -r $DENO_DIR $out/share/deno-dir
 
@@ -148,6 +152,8 @@ stdenv.mkDerivation {
 
     runHook postInstall
   '';
+
+  passthru.denoDeps = denoDeps;
 
   meta = {
     description = "Configuration management for Radarr and Sonarr";

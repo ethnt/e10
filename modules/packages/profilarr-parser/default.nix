@@ -2,18 +2,19 @@
 , buildDotnetModule
 , dotnetCorePackages
 , fetchFromGitHub
+, nix-update-script
 ,
 }:
 
 buildDotnetModule rec {
   pname = "profilarr-parser";
-  version = "2.0.9";
+  version = "2.2.0";
 
   src = fetchFromGitHub {
     owner = "Dictionarry-Hub";
     repo = "Profilarr";
     tag = "v${version}";
-    hash = "sha256-FfMBu58cfaZlgxlqyO0qBz702NVcdQDarkh6JiSncCs=";
+    hash = "sha256-88BT9GUEaPCPmD4pURcknaXrSzYHzjYnDResc4Uc2qY=";
   };
 
   sourceRoot = "${src.name}/src/services/parser";
@@ -33,6 +34,8 @@ buildDotnetModule rec {
   postFixup = ''
     mv $out/bin/Parser $out/bin/profilarr-parser
   '';
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Release title parser microservice for Profilarr";

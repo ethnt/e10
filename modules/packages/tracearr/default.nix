@@ -7,23 +7,24 @@
 , nodejs
 , fetchFromGitHub
 , turbo
+, nix-update-script
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "tracearr";
-  version = "2.0.0";
+  version = "2.1.0";
 
   src = fetchFromGitHub {
     owner = "connorgallopo";
     repo = "Tracearr";
-    tag = "v2.0.0";
-    hash = "sha256-LwQ2NFRLnxSjpzEmUYYBg9CKk3B8Bq/goQKbr0dc7Vo=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-075XXIFuOYcshElOD11TAjc2679Y7d8GU1XVuqBMquc=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
     inherit pnpm;
     fetcherVersion = 4;
-    hash = "sha256-gOEiEA4Bfbd4iJ5ihOCvHL8jFwYMgQmT9qsqlw3dJBo=";
+    hash = "sha256-siXWtc8O8lWT+KGxGaPNDeTqXONFZhOHhNdXMwOGS1s=";
   };
 
   # The pnpm version is required, but nixpkgs doesn't provide the exact version that Tracearr requires
@@ -85,12 +86,20 @@ stdenv.mkDerivation (finalAttrs: {
     find $out/lib -xtype l -delete
   '';
 
+  passthru.updateScript = nix-update-script { };
+
   meta = {
     description = "Real-time monitoring for Plex, Jellyfin, and Emby servers. Track streams, analyze playback, and detect account sharing from a single dashboard.";
     mainProgram = "tracearr";
     homepage = "https://tracearr.com";
     license = lib.licenses.agpl3Plus;
     platforms = lib.platforms.linux ++ lib.platforms.darwin;
-    maintainers = with lib.maintainers; [ ethnt ];
+    maintainers = [
+      {
+        name = "Ethan Turkeltaub";
+        github = "ethnt";
+        githubId = 137037;
+      }
+    ];
   };
 })
