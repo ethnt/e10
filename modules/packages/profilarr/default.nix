@@ -60,6 +60,8 @@ let
 
       find $out -type l -lname '${deno}*' -delete
 
+      rm -f $out/deno-dir/*_cache_v2 $out/deno-dir/*_cache_v2-shm $out/deno-dir/*_cache_v2-wal
+
       runHook postInstall
     '';
 
@@ -69,7 +71,7 @@ let
     outputHash =
       {
         x86_64-linux = "sha256-gJAOWVzYxCehcFrrkdCfb0H+prc3zAJHErgMICAO5uI=";
-        aarch64-linux = "sha256-gJAOWVzYxCehcFrrkdCfb0H+prc3zAJHErgMICAO5uI=";
+        aarch64-linux = "sha256-VaIVFm2ay2yRAeu4u7EDUrUddHDCviNIy/s4hhV+5Ok=";
       }.${stdenv.hostPlatform.system}
         or (throw "profilarr: unsupported system ${stdenv.hostPlatform.system}");
   };
