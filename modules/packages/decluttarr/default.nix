@@ -2,6 +2,7 @@
 , fetchFromGitHub
 , makeWrapper
 , python3Packages
+, nix-update-script
 ,
 }:
 
@@ -51,6 +52,8 @@ python3Packages.buildPythonApplication rec {
   '';
 
   doCheck = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
     description = "Watches radarr, sonarr, lidarr, readarr and whisparr download queues and removes downloads if they become stalled or no longer needed.";

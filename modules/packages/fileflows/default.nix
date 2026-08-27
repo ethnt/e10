@@ -5,7 +5,6 @@
 , sqlite
 , libz
 , writeShellScript
-,
 }:
 let
   dotnet = dotnetCorePackages.aspnetcore_10_0;
@@ -53,11 +52,11 @@ let
 in
 stdenvNoCC.mkDerivation rec {
   pname = "fileflows";
-  version = "26.7.9.7525";
+  version = "26.8.1.7965";
   src = fetchzip {
-    url = "https://fileflows.com/downloads/Zip/${version}";
-    extension = "zip";
-    hash = "sha256-ouWKDqfUcv3N1sdIXmLjqQogk9C1juBhHTkkV1N3FVc=";
+    url = "https://fileflows.com/downloads/TarXz/${version}";
+    extension = "tar.xz";
+    hash = "sha256-0Ch8X2U30YrM1TWA0hyeFZiV3r/GgzQaLpspmH+QVFY=";
     stripRoot = false;
   };
 

@@ -13,13 +13,13 @@
 }:
 
 let
-  version = "2.0.9";
+  version = "2.2.0";
 
   src = fetchFromGitHub {
     owner = "Dictionarry-Hub";
     repo = "Profilarr";
     tag = "v${version}";
-    hash = "sha256-FfMBu58cfaZlgxlqyO0qBz702NVcdQDarkh6JiSncCs=";
+    hash = "sha256-88BT9GUEaPCPmD4pURcknaXrSzYHzjYnDResc4Uc2qY=";
   };
 
   denoDeps = stdenv.mkDerivation {
@@ -58,6 +58,8 @@ let
       cp -r node_modules $out/node_modules
       cp -r $DENO_DIR $out/deno-dir
 
+      find $out -type l -lname '${deno}*' -delete
+
       runHook postInstall
     '';
 
@@ -66,8 +68,8 @@ let
     outputHashMode = "recursive";
     outputHash =
       {
-        x86_64-linux = "sha256-eyrIsA8KTajDvMNR0kjOHhPVPd30KgMuv+qeV7zaO/Q=";
-        aarch64-linux = "sha256-Mk58kzWjgVSQZdu0YFhknt1J0TEyWfKF0DiOFH5r9XU=";
+        x86_64-linux = "sha256-gJAOWVzYxCehcFrrkdCfb0H+prc3zAJHErgMICAO5uI=";
+        aarch64-linux = "sha256-gJAOWVzYxCehcFrrkdCfb0H+prc3zAJHErgMICAO5uI=";
       }.${stdenv.hostPlatform.system}
         or (throw "profilarr: unsupported system ${stdenv.hostPlatform.system}");
   };
@@ -148,6 +150,8 @@ stdenv.mkDerivation {
 
     runHook postInstall
   '';
+
+  passthru.denoDeps = denoDeps;
 
   meta = {
     description = "Configuration management for Radarr and Sonarr";

@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub }:
+{ stdenv, fetchFromGitHub, nix-update-script }:
 
 stdenv.mkDerivation rec {
   pname = "mazaonke";
@@ -20,4 +20,6 @@ stdenv.mkDerivation rec {
 
     runHook postBuild
   '';
+
+  passthru.updateScript = nix-update-script { };
 }

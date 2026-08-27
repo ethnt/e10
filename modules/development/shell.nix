@@ -23,6 +23,7 @@
         ipmitool
         just
         nix-output-monitor
+        nix-update
         nurl
         sops
         statix
