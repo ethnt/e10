@@ -22,7 +22,7 @@ in
     dataDir = mkOption {
       type = types.path;
       description = "Path to store FileFlows files in";
-      default = "/var/lib/fileflows";
+      default = "/var/lib/fileflows/node";
     };
 
     user = mkOption {
