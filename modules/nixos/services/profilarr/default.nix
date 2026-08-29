@@ -205,12 +205,12 @@ in
         isSystemUser = true;
         home = cfg.dataDir;
         createHome = true;
-        uid = 978;
+        uid = 976;
       };
 
       groups = mkIf (cfg.group == "profilarr") {
         profilarr = {
-          gid = 978;
+          gid = 976;
         };
       };
     };
