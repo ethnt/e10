@@ -57,6 +57,7 @@ jobs:
         - tfl
         - tracearr
         - unifi-os-server-image
+        - wizarr
 name: Build packages
 'on':
   push:
