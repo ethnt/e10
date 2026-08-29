@@ -58,6 +58,7 @@
             tracearr
             unifi-os-server-image
             incus-apply
+            wizarr
             ;
 
           pythonPackagesExtensions = pkgs.pythonPackagesExtensions ++ [

@@ -10,6 +10,7 @@
       profilarr-parser = pkgs.callPackage ./profilarr-parser { };
       tracearr = pkgs.callPackage ./tracearr { };
       unifi-os-server-image = pkgs.callPackage ./unifi-os-server-image { };
+      wizarr = pkgs.callPackage ./wizarr { };
     };
   };
 }
