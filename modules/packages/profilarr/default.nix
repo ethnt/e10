@@ -58,10 +58,6 @@ let
       cp -r node_modules $out/node_modules
       cp -r $DENO_DIR $out/deno-dir
 
-      find $out -type l -lname '${deno}*' -delete
-
-      rm -f $out/deno-dir/*_cache_v2 $out/deno-dir/*_cache_v2-shm $out/deno-dir/*_cache_v2-wal
-
       runHook postInstall
     '';
 
@@ -124,6 +120,8 @@ stdenv.mkDerivation {
 
     APP_BASE_PATH=./dist/build deno run -A --cached-only npm:vite build
 
+    deno cache dist/build/mod.ts
+
     runHook postBuild
   '';
 
@@ -137,7 +135,7 @@ stdenv.mkDerivation {
 
     makeWrapper ${lib.getExe deno} $out/bin/profilarr \
       --run "cd $out/lib/profilarr" \
-      --add-flags "run -A dist/build/mod.ts" \
+      --add-flags "run -A --cached-only --frozen dist/build/mod.ts" \
       --prefix PATH : ${
         lib.makeBinPath [
           git
@@ -152,8 +150,6 @@ stdenv.mkDerivation {
 
     runHook postInstall
   '';
-
-  passthru.denoDeps = denoDeps;
 
   meta = {
     description = "Configuration management for Radarr and Sonarr";
