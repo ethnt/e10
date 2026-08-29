@@ -143,6 +143,12 @@ in
         acme.environmentFile = config.sops.templates.e10_video_lego_route53_credentials.path;
       };
 
+      "setup.e10.video" = {
+        host = hosts.htpc;
+        inherit (hosts.htpc.config.services.wizarr) port;
+        acme.environmentFile = config.sops.templates.e10_video_lego_route53_credentials.path;
+      };
+
       "tautulli.e10.camp" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.tautulli) port;
