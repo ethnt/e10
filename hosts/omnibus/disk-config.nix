@@ -226,8 +226,7 @@ in
         };
 
         postCreateHook = ''
-          # zpool add -f blockbuster log ${disks.nvme0}
-          # zpool add -f blockbuster cache ${disks.nvme1}
+          zpool add blockbuster log mirror /dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S7LANJ0YA10743W /dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S7LANJ0YA11905J
         '';
 
         datasets = {
