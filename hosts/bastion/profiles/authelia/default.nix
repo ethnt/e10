@@ -48,8 +48,47 @@
       };
 
       identity_providers.oidc = {
+        # OpenCloud's web UI is a browser-side OIDC client, so it exchanges the
+        # authorization code from `cloud.e10.camp` via `fetch`. Authelia sends no
+        # CORS headers on these endpoints unless they are opted in here.
+        cors = {
+          endpoints = [
+            "authorization"
+            "token"
+            "revocation"
+            "introspection"
+            "userinfo"
+          ];
+          allowed_origins = [ "https://cloud.e10.camp" ];
+        };
+
+        # OpenCloud maps roles from the `groups` claim and has no fallback: a user
+        # in neither group authenticates fine and then gets a 500 with "no roles in
+        # user claims". Deny them here instead, so they get Authelia's access-denied
+        # page rather than a broken OpenCloud. Flat `subject` lists are OR'd.
+        authorization_policies = {
+          opencloud = {
+            default_policy = "deny";
+            rules = [
+              {
+                policy = "one_factor";
+                subject = [
+                  "group:opencloud_users"
+                  "group:opencloud_admins"
+                ];
+              }
+            ];
+          };
+        };
+
         claims_policies = {
           karakeep.id_token = [ "email" ];
+          opencloud.id_token = [
+            "email"
+            "preferred_username"
+            "name"
+            "groups"
+          ];
           legacy.id_token = [
             "email"
             "email_verified"
@@ -193,6 +232,113 @@
             access_token_signed_response_alg = "RS256";
             userinfo_signed_response_alg = "none";
             token_endpoint_auth_method = "none";
+          }
+          {
+            client_id = "QAGTWBU5gQ5aemug~ORuMe.J~cZWuqCZbRSIw7il_Eo.nWKR3irBuTLde~IitPzQkwEIfGXI";
+            client_name = "OpenCloud";
+            public = true;
+            authorization_policy = "opencloud";
+            require_pkce = true;
+            pkce_challenge_method = "S256";
+            redirect_uris = [
+              "https://cloud.e10.camp/"
+              "https://cloud.e10.camp/oidc-callback.html"
+              "https://cloud.e10.camp/oidc-silent-redirect.html"
+            ];
+            scopes = [
+              "openid"
+              "profile"
+              "email"
+              "groups"
+              "offline_access"
+            ];
+            response_types = [ "code" ];
+            grant_types = [
+              "authorization_code"
+              "refresh_token"
+            ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "none";
+            claims_policy = "opencloud";
+          }
+          {
+            client_id = "OpenCloudDesktop";
+            client_name = "OpenCloud (Desktop)";
+            public = true;
+            authorization_policy = "opencloud";
+            require_pkce = true;
+            pkce_challenge_method = "S256";
+            redirect_uris = [
+              "http://127.0.0.1"
+              "http://localhost"
+            ];
+            scopes = [
+              "openid"
+              "profile"
+              "email"
+              "groups"
+              "offline_access"
+            ];
+            response_types = [ "code" ];
+            grant_types = [
+              "authorization_code"
+              "refresh_token"
+            ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "none";
+            claims_policy = "opencloud";
+          }
+          {
+            client_id = "OpenCloudAndroid";
+            client_name = "OpenCloud (Android)";
+            public = true;
+            authorization_policy = "opencloud";
+            require_pkce = true;
+            pkce_challenge_method = "S256";
+            redirect_uris = [ "oc://android.opencloud.eu" ];
+            scopes = [
+              "openid"
+              "profile"
+              "email"
+              "groups"
+              "offline_access"
+            ];
+            response_types = [ "code" ];
+            grant_types = [
+              "authorization_code"
+              "refresh_token"
+            ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "none";
+            claims_policy = "opencloud";
+          }
+          {
+            client_id = "OpenCloudIOS";
+            client_name = "OpenCloud (iOS)";
+            public = true;
+            authorization_policy = "opencloud";
+            require_pkce = true;
+            pkce_challenge_method = "S256";
+            redirect_uris = [ "oc://ios.opencloud.eu" ];
+            scopes = [
+              "openid"
+              "profile"
+              "email"
+              "groups"
+              "offline_access"
+            ];
+            response_types = [ "code" ];
+            grant_types = [
+              "authorization_code"
+              "refresh_token"
+            ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "none";
+            claims_policy = "opencloud";
           }
         ];
       };

@@ -17,6 +17,7 @@
       profiles.hardware.nvme
       profiles.services.attic-watch-store.default
       profiles.services.atticd.default
+      profiles.services.opencloud.default
       profiles.sharing.nfs-server
       profiles.sharing.samba
       profiles.telemetry.prometheus-smartctl-exporter

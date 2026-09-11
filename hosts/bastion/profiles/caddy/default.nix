@@ -307,6 +307,18 @@ in
         '';
       };
 
+      "cloud.e10.camp" = {
+        host = hosts.omnibus;
+        inherit (hosts.omnibus.config.services.opencloud) port;
+        extraConfig = ''
+          encode gzip zstd
+
+          request_body {
+            max_size 50GiB
+          }
+        '';
+      };
+
       "e10.video" = {
         host = hosts.htpc;
         inherit (hosts.htpc.config.services.plex) port;
