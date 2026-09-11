@@ -1,7 +1,7 @@
 { flake, config, ... }:
 let
-  downloadDir = "/data/local/tmp/sabnzbd/inter";
-  completeDir = "/data/local/tmp/sabnzbd/dst";
+  downloadDir = "/mnt/blockbuster/tmp/sabnzbd/inter";
+  completeDir = "/mnt/blockbuster/tmp/sabnzbd/dst";
 in
 {
   sops = {
@@ -268,6 +268,8 @@ in
     "d '${downloadDir}' 0777 ${config.services.sabnzbd.user} ${config.services.sabnzbd.group} - -"
     "d '${completeDir}' 0777 ${config.services.sabnzbd.user} ${config.services.sabnzbd.group} - -"
   ];
+
+  systemd.services.sabnzbd.unitConfig.RequiresMountsFor = [ "/mnt/blockbuster" ];
 
   services.prometheus.exporters.exportarr-sabnzbd = {
     enable = true;

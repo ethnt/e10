@@ -23,6 +23,8 @@ let
 
     cd "$FILEFLOWS_SERVER_BASE_DIR"
 
+    rm -rf Server Node FlowRunner
+
     cp -r @OUT@/fileflows/Server .
     cp -r @OUT@/fileflows/Node .
     cp -r @OUT@/fileflows/FlowRunner .
@@ -41,6 +43,8 @@ let
     fi
 
     cd "$FILEFLOWS_NODE_BASE_DIR"
+
+    rm -rf Node FlowRunner
 
     cp -r @OUT@/fileflows/Node .
     cp -r @OUT@/fileflows/FlowRunner .
