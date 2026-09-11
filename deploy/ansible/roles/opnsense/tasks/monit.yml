@@ -1,0 +1,26 @@
+---
+# NOTE: Monit SMTP needs to be configured manually
+
+- name: Configure gateway alert test
+  oxlorg.opnsense.monit_test:
+    name: "NonZeroStatus"
+    type: "ProgramStatus"
+    condition: "status != 0"
+    action: "alert"
+
+- name: Configure gateway failover check
+  oxlorg.opnsense.monit_service:
+    enabled: true
+    name: "gateway_alert"
+    type: "custom"
+    path: "/usr/local/opnsense/scripts/monit/gateway_alert.php"
+    tests: ["NonZeroStatus"]
+
+- name: Configure alert recipient
+  oxlorg.opnsense.monit_alert:
+    enabled: true
+    recipient: "ethan+e10@turkeltaub.dev"
+    reminder: 10
+    format: |
+      From: router@e10.camp
+      Subject: [Router] $SERVICE on $HOST

@@ -15,5 +15,6 @@
     - syslog.yml
     - nat.yml
     - nut.yml
+    - monit.yml
   loop_control:
     loop_var: task_file
