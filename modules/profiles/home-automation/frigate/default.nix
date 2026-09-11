@@ -76,6 +76,9 @@ let
         user = cameraUsername;
         password = cameraPassword;
       };
+      motion = {
+        mask = [ "0.899,0.732,0.885,0.811,0.852,0.801,0.856,0.715" ];
+      };
       record = {
         enabled = true;
         alerts = {

@@ -9,7 +9,6 @@ with lib;
 
 let
   cfg = config.services.prometheus.exporters.exportarr-sabnzbd;
-
 in
 {
   options.services.prometheus.exporters.exportarr-sabnzbd = {
