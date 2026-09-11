@@ -16,6 +16,7 @@
       options = [
         "x-systemd.automount"
         "exec"
+        "nconnect=8"
       ];
     };
 }
