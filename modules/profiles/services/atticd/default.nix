@@ -26,7 +26,7 @@ in
       listen = "[::]:8080";
       require-proof-of-possession = true;
 
-      database.url = "postgresql:///atticd?host=/run/postgresql";
+      database.url = "postgresql://atticd@localhost/atticd?host=/run/postgresql";
 
       api-endpoint = "https://cache.e10.camp/";
 
