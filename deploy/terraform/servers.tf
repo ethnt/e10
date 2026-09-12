@@ -5,7 +5,7 @@ resource "hcloud_server" "gateway" {
 
   server_type = "cpx11"
 
-  location = "ash"
+  location = var.hcloud_primary_location
 
   image = "debian-12"
 
@@ -53,7 +53,7 @@ resource "hcloud_server" "monitor" {
 
   server_type = "cpx21"
 
-  location = "hil"
+  location = var.hcloud_secondary_location
 
   image = "debian-12"
 
