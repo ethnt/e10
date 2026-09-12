@@ -211,8 +211,8 @@ in
       };
 
       "ldap.e10.camp" = {
-        host = hosts.bastion;
-        port = hosts.bastion.config.services.lldap.settings.http_port;
+        host = hosts.gateway;
+        port = hosts.gateway.config.services.lldap.settings.http_port;
       };
 
       "pdf.e10.camp" = {
@@ -233,8 +233,8 @@ in
       };
 
       "auth.e10.camp" = {
-        host = hosts.bastion;
-        port = portFromAddress hosts.bastion.config.services.authelia.instances.bastion.settings.server.address;
+        host = hosts.gateway;
+        port = portFromAddress hosts.gateway.config.services.authelia.instances.gateway.settings.server.address;
       };
 
       "speedtest-tracker.e10.camp" = {

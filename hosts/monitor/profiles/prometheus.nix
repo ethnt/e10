@@ -28,7 +28,7 @@
             "${hosts.omnibus.config.networking.hostName}:${toString hosts.omnibus.config.services.prometheus.exporters.node.port}"
             "${hosts.monitor.config.networking.hostName}:${toString hosts.monitor.config.services.prometheus.exporters.node.port}"
             "${hosts.controller.config.networking.hostName}:${toString hosts.controller.config.services.prometheus.exporters.node.port}"
-            "${hosts.bastion.config.networking.hostName}:${toString hosts.bastion.config.services.prometheus.exporters.node.port}"
+            "${hosts.gateway.config.networking.hostName}:${toString hosts.gateway.config.services.prometheus.exporters.node.port}"
             "${hosts.builder.config.networking.hostName}:${toString hosts.builder.config.services.prometheus.exporters.node.port}"
             "${hosts.nut-network.config.networking.hostName}:${toString hosts.nut-network.config.services.prometheus.exporters.node.port}"
             "${hosts.nut-homelab.config.networking.hostName}:${toString hosts.nut-homelab.config.services.prometheus.exporters.node.port}"
@@ -172,7 +172,7 @@
       static_configs = [
         {
           targets = [
-            "${hosts.bastion.config.networking.hostName}:9959"
+            "${hosts.gateway.config.networking.hostName}:9959"
             "${hosts.monitor.config.networking.hostName}:9959"
           ];
         }
@@ -186,7 +186,7 @@
           targets = [
             "${hosts.matrix.config.networking.hostName}:2019"
             "${hosts.monitor.config.networking.hostName}:2019"
-            "${hosts.bastion.config.networking.hostName}:2019"
+            "${hosts.gateway.config.networking.hostName}:2019"
           ];
         }
       ];

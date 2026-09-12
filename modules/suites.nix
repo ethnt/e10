@@ -66,6 +66,10 @@
     profiles.virtualisation.qemu
   ];
 
+  hcloud = [
+    profiles.virtualisation.qemu
+  ];
+
   rpi4 = [
     profiles.hardware.rpi4
     profiles.filesystems.log2ram

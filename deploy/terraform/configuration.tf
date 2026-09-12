@@ -70,3 +70,7 @@ provider "porkbun" {
   api_key        = data.sops_file.secrets.data["PORKBUN_API_KEY"]
   secret_api_key = data.sops_file.secrets.data["PORKBUN_API_SECRET"]
 }
+
+provider "hcloud" {
+  token = data.sops_file.secrets.data["HETZNER_API_TOKEN"]
+}

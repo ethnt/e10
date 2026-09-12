@@ -16,27 +16,27 @@
       };
     in
     {
-      bastion_authelia_ldap_password = secretConfig;
-      bastion_authelia_jwt_secret = secretConfig;
-      bastion_authelia_storage_encryption_key = secretConfig;
-      bastion_authelia_session_secret = secretConfig;
-      bastion_authelia_oidc_hmac_secret = secretConfig;
-      bastion_authelia_issuer_private_key = secretConfig;
+      gateway_authelia_ldap_password = secretConfig;
+      gateway_authelia_jwt_secret = secretConfig;
+      gateway_authelia_storage_encryption_key = secretConfig;
+      gateway_authelia_session_secret = secretConfig;
+      gateway_authelia_oidc_hmac_secret = secretConfig;
+      gateway_authelia_issuer_private_key = secretConfig;
     };
 
   services.authelia.instances.${config.networking.hostName} = {
     secrets = {
-      jwtSecretFile = config.sops.secrets.bastion_authelia_jwt_secret.path;
-      storageEncryptionKeyFile = config.sops.secrets.bastion_authelia_storage_encryption_key.path;
-      sessionSecretFile = config.sops.secrets.bastion_authelia_session_secret.path;
+      jwtSecretFile = config.sops.secrets.gateway_authelia_jwt_secret.path;
+      storageEncryptionKeyFile = config.sops.secrets.gateway_authelia_storage_encryption_key.path;
+      sessionSecretFile = config.sops.secrets.gateway_authelia_session_secret.path;
 
       # NOTE: These need to be commented out if there are no OIDC clients present, otherwise Authelia will fail to start
-      oidcHmacSecretFile = config.sops.secrets.bastion_authelia_oidc_hmac_secret.path;
-      oidcIssuerPrivateKeyFile = config.sops.secrets.bastion_authelia_issuer_private_key.path;
+      oidcHmacSecretFile = config.sops.secrets.gateway_authelia_oidc_hmac_secret.path;
+      oidcIssuerPrivateKeyFile = config.sops.secrets.gateway_authelia_issuer_private_key.path;
     };
 
     environmentVariables.AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE =
-      config.sops.secrets.bastion_authelia_ldap_password.path;
+      config.sops.secrets.gateway_authelia_ldap_password.path;
 
     settings = {
       authentication_backend.ldap = {
@@ -48,9 +48,6 @@
       };
 
       identity_providers.oidc = {
-        # OpenCloud's web UI is a browser-side OIDC client, so it exchanges the
-        # authorization code from `cloud.e10.camp` via `fetch`. Authelia sends no
-        # CORS headers on these endpoints unless they are opted in here.
         cors = {
           endpoints = [
             "authorization"
@@ -62,10 +59,6 @@
           allowed_origins = [ "https://cloud.e10.camp" ];
         };
 
-        # OpenCloud maps roles from the `groups` claim and has no fallback: a user
-        # in neither group authenticates fine and then gets a 500 with "no roles in
-        # user claims". Deny them here instead, so they get Authelia's access-denied
-        # page rather than a broken OpenCloud. Flat `subject` lists are OR'd.
         authorization_policies = {
           opencloud = {
             default_policy = "deny";

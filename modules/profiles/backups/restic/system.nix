@@ -8,6 +8,7 @@
         passwordFile = config.sops.secrets.restic_backup_password.path;
         paths = [
           "/etc"
+          "/var/backup"
           "/var/lib"
           "/srv"
           "/root"

@@ -1,6 +1,5 @@
 keys:
   - &user_ethnt age10539mc6shf02hpa8huyjktdw3nfyavxdg8pt247wwvq4xrv8h5zs8nc0k0
-  - &host_bastion age1x708x83pjj7urp26pncx67fqz8a3htrf0umw7c00pvmxhl6y95lszjgd6r
   - &host_monitor age1g22ghnrdg858yv6w2ux8hgntj8gkdyjn28axdkmzyx38d4vx6geqj4px9a
   - &host_omnibus age1k5nzxq4ej2u9ls97c2dhlz96j2vghv0assz5g0p4npzyc8c8fqlqld72hg
   - &host_htpc age1gkzp905yqkla54l52m4xkqtxpn0sndkx0vh6qqa8d2tu29x8f35q354gpe
@@ -12,6 +11,7 @@ keys:
   - &host_nut_network age10q5gqw4gwts228ayanvalq7c93peqjdsfqcgevd7qr43u5rhnczs9u2ysj
   - &host_nut_homelab age1hxynjkmtgcu9lwejchkjfqjp484at589sznqkxk6weucp37p4p7qaj440h
   - &host_whirlwind age1dtf3ahstj5mhzcqf4d2zc54d5dds69ka32dqpmpsskyaz04dtshq9ryxat
+  - &host_gateway age1px3aq87zcjgts5guc59fqn64zjkqzukdwce4a0ggza83n3atkcws4h5aww
 
 creation_rules:
   - path_regex: '^.*secrets\.(json|yml)'
@@ -24,9 +24,9 @@ creation_rules:
           - *host_matrix
           - *host_controller
           - *host_builder
-          - *host_bastion
           - *host_dill
           - *host_fabricator
           - *host_nut_network
           - *host_nut_homelab
           - *host_whirlwind
+          - *host_gateway

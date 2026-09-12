@@ -40,9 +40,9 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
     queues   = 4
   }
 
-  serial_device {
-    device = "socket"
-  }
+  # serial_device {
+  #   device = "socket"
+  # }
 
   agent {
     enabled = true
@@ -136,7 +136,7 @@ resource "proxmox_virtual_environment_vm" "htpc" {
     file_format  = "raw"
     interface    = "scsi0"
     size         = 2048
-    ssd          = false
+    ssd          = true
     cache        = "writeback"
   }
 

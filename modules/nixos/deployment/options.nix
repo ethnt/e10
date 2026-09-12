@@ -16,6 +16,7 @@ with lib;
           "proxmox"
           "incus"
           "aws-ec2"
+          "hcloud"
         ]
       );
       description = "What type of VM this node is";

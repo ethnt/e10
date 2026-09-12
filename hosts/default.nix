@@ -114,17 +114,17 @@ let
 in
 {
   flake.nixosConfigurations = {
-    monitor = mkHost "monitor" { system = "aarch64-linux"; };
-    omnibus = mkHost "omnibus" { system = "x86_64-linux"; };
-    htpc = mkHost "htpc" { system = "x86_64-linux"; };
-    matrix = mkHost "matrix" { system = "x86_64-linux"; };
-    controller = mkHost "controller" { system = "x86_64-linux"; };
     builder = mkHost "builder" { system = "x86_64-linux"; };
-    bastion = mkHost "bastion" { system = "aarch64-linux"; };
+    controller = mkHost "controller" { system = "x86_64-linux"; };
     dill = mkHost "dill" { system = "x86_64-linux"; };
     fabricator = mkHost "fabricator" { system = "x86_64-linux"; };
-    nut-network = mkRaspberryPiHost "nut-network" { };
+    gateway = mkHost "gateway" { system = "x86_64-linux"; };
+    htpc = mkHost "htpc" { system = "x86_64-linux"; };
+    matrix = mkHost "matrix" { system = "x86_64-linux"; };
+    monitor = mkHost "monitor" { system = "x86_64-linux"; };
     nut-homelab = mkRaspberryPiHost "nut-homelab" { };
+    nut-network = mkRaspberryPiHost "nut-network" { };
+    omnibus = mkHost "omnibus" { system = "x86_64-linux"; };
     whirlwind = mkHost "whirlwind" { system = "x86_64-linux"; };
   };
 }

@@ -50,3 +50,8 @@ resource "local_sensitive_file" "rsync_net_public_key" {
   filename        = "${path.module}/../../keys/rsync_net_rsa.pub"
   file_permission = "0600"
 }
+
+resource "hcloud_ssh_key" "deploy" {
+  name       = "deploy"
+  public_key = file("${path.module}/../../keys/id_rsa.pub")
+}
