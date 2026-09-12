@@ -319,7 +319,7 @@ in
               interval = "30s";
               conditions = [
                 "[CONNECTED] == true"
-                "[RESPONSE_TIME] < 50"
+                "[RESPONSE_TIME] < 80"
               ];
               extraConfig = {
                 dns = {

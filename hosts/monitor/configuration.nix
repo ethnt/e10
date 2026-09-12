@@ -2,7 +2,7 @@
   imports =
     with suites;
     core
-    ++ aws
+    ++ hcloud
     ++ web
     ++ [
       profiles.communications.grafana-to-ntfy.default
@@ -25,11 +25,26 @@
       ./profiles/prometheus-ping-exporter.nix
       ./profiles/grafana/default.nix
       ./profiles/healthchecks/default.nix
+    ]
+    ++ [
+      ./disk-config.nix
+      ./hardware-configuration.nix
     ];
 
+  fileSystems."/var/lib" = {
+    # Determined after the volume is created
+    device = "/dev/disk/by-id/scsi-0HC_Volume_106852632";
+    fsType = "ext4";
+  };
+
   deployment = {
-    vmType = "aws-ec2";
+    vmType = "hcloud";
     tags = [ "@external" ];
+  };
+
+  services.loki.configuration = {
+    common.ring.instance_interface_names = [ "enp1s0" ];
+    ingester.lifecycler.interface_names = [ "enp1s0" ];
   };
 
   system.stateVersion = "24.05";

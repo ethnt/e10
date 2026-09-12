@@ -1,3 +1,5 @@
+# gateway
+
 resource "hcloud_server" "gateway" {
   name = "gateway"
 
@@ -42,4 +44,60 @@ module "gateway_install" {
   phases = ["kexec", "disko", "install", "reboot"]
 
   build_on_remote = false
+}
+
+# monitor
+
+resource "hcloud_server" "monitor" {
+  name = "monitor"
+
+  server_type = "cpx31"
+
+  location = "hil"
+
+  image = "debian-12"
+
+  ssh_keys = [hcloud_ssh_key.deploy.id]
+  backups  = false
+
+  public_net {
+    ipv4_enabled = true
+    ipv6_enabled = true
+  }
+
+  lifecycle {
+    ignore_changes = [ssh_keys, image]
+  }
+}
+
+resource "hcloud_volume" "monitor" {
+  name     = "monitor-data"
+  size     = 200
+  location = "hil"
+  format   = "ext4"
+}
+
+resource "hcloud_volume_attachment" "monitor" {
+  volume_id = hcloud_volume.monitor.id
+  server_id = hcloud_server.monitor.id
+  automount = false
+}
+
+module "monitor_install" {
+  source = "github.com/numtide/nixos-anywhere//terraform/install"
+
+  flake = "${abspath("${path.root}/../..")}#monitor"
+
+  target_host = hcloud_server.monitor.ipv4_address
+  target_user = "root"
+
+  instance_id = hcloud_server.monitor.id
+
+  ssh_private_key = tls_private_key.deploy_key.private_key_openssh
+
+  phases = ["kexec", "disko", "install", "reboot"]
+
+  build_on_remote = false
+
+  depends_on = [hcloud_volume_attachment.monitor]
 }

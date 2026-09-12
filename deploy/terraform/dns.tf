@@ -26,7 +26,7 @@ resource "aws_route53_record" "status_e10_video" {
   name    = "status.e10.video"
   type    = "A"
   ttl     = 300
-  records = [aws_eip.monitor.public_ip]
+  records = [hcloud_server.monitor.ipv4_address]
 }
 
 resource "aws_route53_record" "wildcard_e10_video" {
@@ -136,7 +136,7 @@ resource "aws_route53_record" "monitor_e10_camp" {
   name    = "monitor.e10.camp"
   type    = "A"
   ttl     = 60
-  records = [aws_eip.monitor.public_ip]
+  records = [hcloud_server.monitor.ipv4_address]
 }
 
 resource "aws_route53_record" "grafana_e10_camp" {
@@ -144,7 +144,7 @@ resource "aws_route53_record" "grafana_e10_camp" {
   name    = "grafana.e10.camp"
   type    = "A"
   ttl     = 60
-  records = [aws_eip.monitor.public_ip]
+  records = [hcloud_server.monitor.ipv4_address]
 }
 
 resource "aws_route53_record" "status_e10_camp" {
@@ -152,7 +152,7 @@ resource "aws_route53_record" "status_e10_camp" {
   name    = "status.e10.camp"
   type    = "A"
   ttl     = 60
-  records = [aws_eip.monitor.public_ip]
+  records = [hcloud_server.monitor.ipv4_address]
 }
 
 resource "aws_route53_record" "ntfy_e10_camp" {
@@ -160,7 +160,7 @@ resource "aws_route53_record" "ntfy_e10_camp" {
   name    = "ntfy.e10.camp"
   type    = "A"
   ttl     = 60
-  records = [aws_eip.monitor.public_ip]
+  records = [hcloud_server.monitor.ipv4_address]
 }
 
 resource "aws_route53_record" "healthchecks_e10_camp" {
@@ -168,7 +168,7 @@ resource "aws_route53_record" "healthchecks_e10_camp" {
   name    = "healthchecks.e10.camp"
   type    = "A"
   ttl     = 60
-  records = [aws_eip.monitor.public_ip]
+  records = [hcloud_server.monitor.ipv4_address]
 }
 
 resource "aws_route53_record" "wildcard_e10_camp" {
@@ -207,7 +207,7 @@ resource "aws_route53_record" "auth_monitor_e10_camp" {
   zone_id = aws_route53_zone.e10_camp.zone_id
   name    = "auth.monitor.e10.camp"
   type    = "A"
-  records = [aws_eip.monitor.public_ip]
+  records = [hcloud_server.monitor.ipv4_address]
   ttl     = 60
 }
 

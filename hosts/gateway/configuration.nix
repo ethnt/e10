@@ -2,10 +2,10 @@
   imports =
     with suites;
     core
+    ++ hcloud
     ++ web
     ++ (with profiles; [
       security.lldap.default
-      virtualisation.qemu
     ])
     ++ [
       ./profiles/authelia/default.nix
@@ -19,7 +19,6 @@
   deployment = {
     vmType = "hcloud";
     tags = [ "@external" ];
-    targetHost = "5.161.98.131";
   };
 
   system.stateVersion = "26.05";

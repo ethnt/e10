@@ -34,6 +34,13 @@
       server = {
         http_listen_port = 3100;
       };
+      common = {
+        ring = {
+          kvstore = {
+            store = "memberlist";
+          };
+        };
+      };
       ingester = {
         lifecycler = {
           address = "0.0.0.0";
