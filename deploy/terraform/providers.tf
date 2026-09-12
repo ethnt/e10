@@ -41,5 +41,10 @@ terraform {
       source  = "kyswtn/porkbun"
       version = "0.1.3"
     }
+
+    hcloud = {
+      source  = "hetznercloud/hcloud"
+      version = "1.68.0"
+    }
   }
 }

@@ -12,6 +12,7 @@ keys:
   - &host_nut_network age10q5gqw4gwts228ayanvalq7c93peqjdsfqcgevd7qr43u5rhnczs9u2ysj
   - &host_nut_homelab age1hxynjkmtgcu9lwejchkjfqjp484at589sznqkxk6weucp37p4p7qaj440h
   - &host_whirlwind age1dtf3ahstj5mhzcqf4d2zc54d5dds69ka32dqpmpsskyaz04dtshq9ryxat
+  - &host_gateway age1px3aq87zcjgts5guc59fqn64zjkqzukdwce4a0ggza83n3atkcws4h5aww
 
 creation_rules:
   - path_regex: '^.*secrets\.(json|yml)'
@@ -30,3 +31,4 @@ creation_rules:
           - *host_nut_network
           - *host_nut_homelab
           - *host_whirlwind
+          - *host_gateway

@@ -126,5 +126,6 @@ in
     nut-network = mkRaspberryPiHost "nut-network" { };
     nut-homelab = mkRaspberryPiHost "nut-homelab" { };
     whirlwind = mkHost "whirlwind" { system = "x86_64-linux"; };
+    gateway = mkHost "gateway" { system = "x86_64-linux"; };
   };
 }

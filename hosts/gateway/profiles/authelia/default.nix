@@ -16,27 +16,27 @@
       };
     in
     {
-      bastion_authelia_ldap_password = secretConfig;
-      bastion_authelia_jwt_secret = secretConfig;
-      bastion_authelia_storage_encryption_key = secretConfig;
-      bastion_authelia_session_secret = secretConfig;
-      bastion_authelia_oidc_hmac_secret = secretConfig;
-      bastion_authelia_issuer_private_key = secretConfig;
+      gateway_authelia_ldap_password = secretConfig;
+      gateway_authelia_jwt_secret = secretConfig;
+      gateway_authelia_storage_encryption_key = secretConfig;
+      gateway_authelia_session_secret = secretConfig;
+      gateway_authelia_oidc_hmac_secret = secretConfig;
+      gateway_authelia_issuer_private_key = secretConfig;
     };
 
   services.authelia.instances.${config.networking.hostName} = {
     secrets = {
-      jwtSecretFile = config.sops.secrets.bastion_authelia_jwt_secret.path;
-      storageEncryptionKeyFile = config.sops.secrets.bastion_authelia_storage_encryption_key.path;
-      sessionSecretFile = config.sops.secrets.bastion_authelia_session_secret.path;
+      jwtSecretFile = config.sops.secrets.gateway_authelia_jwt_secret.path;
+      storageEncryptionKeyFile = config.sops.secrets.gateway_authelia_storage_encryption_key.path;
+      sessionSecretFile = config.sops.secrets.gateway_authelia_session_secret.path;
 
       # NOTE: These need to be commented out if there are no OIDC clients present, otherwise Authelia will fail to start
-      oidcHmacSecretFile = config.sops.secrets.bastion_authelia_oidc_hmac_secret.path;
-      oidcIssuerPrivateKeyFile = config.sops.secrets.bastion_authelia_issuer_private_key.path;
+      oidcHmacSecretFile = config.sops.secrets.gateway_authelia_oidc_hmac_secret.path;
+      oidcIssuerPrivateKeyFile = config.sops.secrets.gateway_authelia_issuer_private_key.path;
     };
 
     environmentVariables.AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE =
-      config.sops.secrets.bastion_authelia_ldap_password.path;
+      config.sops.secrets.gateway_authelia_ldap_password.path;
 
     settings = {
       authentication_backend.ldap = {
