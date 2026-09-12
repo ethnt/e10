@@ -115,14 +115,6 @@ resource "aws_route53_record" "root_e10_camp" {
   records = [hcloud_server.gateway.ipv4_address]
 }
 
-resource "aws_route53_record" "bastion_e10_camp" {
-  zone_id = aws_route53_zone.e10_camp.zone_id
-  name    = "bastion.e10.camp"
-  type    = "A"
-  ttl     = 300
-  records = [aws_eip.bastion.public_ip]
-}
-
 resource "aws_route53_record" "gateway_e10_camp" {
   zone_id = aws_route53_zone.e10_camp.zone_id
   name    = "gateway.e10.camp"

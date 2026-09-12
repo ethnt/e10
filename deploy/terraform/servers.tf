@@ -51,7 +51,7 @@ module "gateway_install" {
 resource "hcloud_server" "monitor" {
   name = "monitor"
 
-  server_type = "cpx31"
+  server_type = "cpx21"
 
   location = "hil"
 
@@ -70,19 +70,6 @@ resource "hcloud_server" "monitor" {
   }
 }
 
-resource "hcloud_volume" "monitor" {
-  name     = "monitor-data"
-  size     = 200
-  location = "hil"
-  format   = "ext4"
-}
-
-resource "hcloud_volume_attachment" "monitor" {
-  volume_id = hcloud_volume.monitor.id
-  server_id = hcloud_server.monitor.id
-  automount = false
-}
-
 module "monitor_install" {
   source = "github.com/numtide/nixos-anywhere//terraform/install"
 
@@ -99,5 +86,5 @@ module "monitor_install" {
 
   build_on_remote = false
 
-  depends_on = [hcloud_volume_attachment.monitor]
+  extra_files_script = abspath("${path.root}/servers/monitor-extra-files.sh")
 }

@@ -89,26 +89,26 @@ in
                 };
               }
             );
-          bastion = [
+          gateway = [
             (mkEndpoint {
               name = "Caddy";
-              url = "http://bastion:2019/config";
-              group = "Bastion";
+              url = "http://gateway:2019/config";
+              group = "Gateway";
             })
             (mkEndpoint {
               name = "Authelia";
               url = "https://auth.e10.camp";
-              group = "Bastion";
+              group = "Gateway";
             })
             (mkEndpoint {
               name = "LLDAP";
               url = "https://ldap.e10.camp";
-              group = "Bastion";
+              group = "Gateway";
             })
             (mkEndpoint {
               name = "Prometheus Node Exporter";
-              url = "http://bastion:9100";
-              group = "Bastion";
+              url = "http://gateway:9100";
+              group = "Gateway";
             })
           ];
           omnibus = [
@@ -470,7 +470,7 @@ in
             })
           ];
         in
-        bastion
+        gateway
         ++ omnibus
         ++ htpc
         ++ matrix

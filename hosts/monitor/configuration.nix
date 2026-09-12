@@ -31,12 +31,6 @@
       ./hardware-configuration.nix
     ];
 
-  fileSystems."/var/lib" = {
-    # Determined after the volume is created
-    device = "/dev/disk/by-id/scsi-0HC_Volume_106852632";
-    fsType = "ext4";
-  };
-
   deployment = {
     vmType = "hcloud";
     tags = [ "@external" ];

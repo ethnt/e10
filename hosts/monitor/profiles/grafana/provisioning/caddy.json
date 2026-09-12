@@ -2397,8 +2397,8 @@
       },
       {
         "current": {
-          "text": "caddy_bastion",
-          "value": "caddy_bastion"
+          "text": "caddy_gateway",
+          "value": "caddy_gateway"
         },
         "datasource": {
           "type": "prometheus",
@@ -2419,8 +2419,8 @@
       },
       {
         "current": {
-          "text": "bastion:2019",
-          "value": "bastion:2019"
+          "text": "gateway:2019",
+          "value": "gateway:2019"
         },
         "datasource": {
           "type": "prometheus",

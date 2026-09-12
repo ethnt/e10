@@ -43,7 +43,7 @@ with lib;
             environment = {
               LISTEN_ADDRESS = "0.0.0.0";
               LISTEN_PORT = toString backup.exporter.port;
-              REFRESH_INTERVAL = "60";
+              REFRESH_INTERVAL = "120";
               RESTIC_CACHE_DIR = "$CACHE_DIRECTORY";
               RESTIC_REPOSITORY = backup.repository;
             };
