@@ -105,7 +105,7 @@ in
 
       "sonarr.e10.camp" = {
         host = hosts.htpc;
-        inherit (hosts.htpc.config.services.sonarr) port;
+        inherit (hosts.htpc.config.services.sonarr.settings.server) port;
       };
 
       "bazarr.e10.camp" = {
