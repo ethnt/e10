@@ -41,6 +41,7 @@
       };
       log = {
         level = "info";
+        dbenabled = false;
       };
       auth = {
         method = "Forms";

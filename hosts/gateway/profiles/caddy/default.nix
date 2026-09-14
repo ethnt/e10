@@ -100,7 +100,7 @@ in
 
       "radarr.e10.camp" = {
         host = hosts.htpc;
-        inherit (hosts.htpc.config.services.radarr) port;
+        inherit (hosts.htpc.config.services.radarr.settings.server) port;
       };
 
       "sonarr.e10.camp" = {
