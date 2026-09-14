@@ -1,4 +1,4 @@
-{ flake, config, ... }:
+{ config, ... }:
 let
   downloadDir = "/mnt/blockbuster/tmp/sabnzbd/inter";
   completeDir = "/mnt/blockbuster/tmp/sabnzbd/dst";
@@ -9,117 +9,80 @@ in
       sabnzbd_admin_password = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_api_key = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_nzb_key = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_newsgroup_ninja_username = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_newsgroup_ninja_password = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_eweka_username = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_eweka_password = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_newshosting_username = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_newshosting_password = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_newsgroup_direct_username = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_newsgroup_direct_password = {
         format = "yaml";
         sopsFile = ./secrets.yml;
-      };
-
-      sabnzbd_supernews_username = {
-        format = "yaml";
-        sopsFile = ./secrets.yml;
-      };
-
-      sabnzbd_supernews_password = {
-        format = "yaml";
-        sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_xsnews_username = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
 
       sabnzbd_xsnews_password = {
         format = "yaml";
         sopsFile = ./secrets.yml;
+        owner = config.services.sabnzbd.user;
       };
-    };
-
-    templates."sabnzbd/secrets.ini" = {
-      content = flake.lib.generators.toINI {
-        globalSection = { };
-        sections = {
-          misc = {
-            password = config.sops.placeholder.sabnzbd_admin_password;
-            api_key = config.sops.placeholder.sabnzbd_api_key;
-            nzb_key = config.sops.placeholder.sabnzbd_nzb_key;
-          };
-          servers = {
-            "news-us.newsgroup.ninja" = {
-              username = config.sops.placeholder.sabnzbd_newsgroup_ninja_username;
-              password = config.sops.placeholder.sabnzbd_newsgroup_ninja_password;
-            };
-            "news.supernews.com" = {
-              username = config.sops.placeholder.sabnzbd_supernews_username;
-              password = config.sops.placeholder.sabnzbd_supernews_password;
-            };
-            "reader.xsnews.nl" = {
-              username = config.sops.placeholder.sabnzbd_xsnews_username;
-              password = config.sops.placeholder.sabnzbd_xsnews_password;
-            };
-            "news.newshosting.com" = {
-              username = config.sops.placeholder.sabnzbd_newshosting_username;
-              password = config.sops.placeholder.sabnzbd_newshosting_password;
-            };
-            "news.newsgroupdirect.com" = {
-              username = config.sops.placeholder.sabnzbd_newsgroup_direct_username;
-              password = config.sops.placeholder.sabnzbd_newsgroup_direct_password;
-            };
-            "news.eweka.nl" = {
-              username = config.sops.placeholder.sabnzbd_eweka_username;
-              password = config.sops.placeholder.sabnzbd_eweka_password;
-            };
-          };
-        };
-      };
-      owner = config.services.sabnzbd.user;
     };
   };
 
@@ -127,12 +90,29 @@ in
     enable = true;
     openFirewall = true;
     configFile = null;
-    secretFiles = [ config.sops.templates."sabnzbd/secrets.ini".path ];
+    secretValues = {
+      "@sabnzbd_admin_password@" = config.sops.secrets.sabnzbd_admin_password.path;
+      "@sabnzbd_api_key@" = config.sops.secrets.sabnzbd_api_key.path;
+      "@sabnzbd_nzb_key@" = config.sops.secrets.sabnzbd_nzb_key.path;
+      "@sabnzbd_newsgroup_ninja_username@" = config.sops.secrets.sabnzbd_newsgroup_ninja_username.path;
+      "@sabnzbd_newsgroup_ninja_password@" = config.sops.secrets.sabnzbd_newsgroup_ninja_password.path;
+      "@sabnzbd_xsnews_username@" = config.sops.secrets.sabnzbd_xsnews_username.path;
+      "@sabnzbd_xsnews_password@" = config.sops.secrets.sabnzbd_xsnews_password.path;
+      "@sabnzbd_newshosting_username@" = config.sops.secrets.sabnzbd_newshosting_username.path;
+      "@sabnzbd_newshosting_password@" = config.sops.secrets.sabnzbd_newshosting_password.path;
+      "@sabnzbd_newsgroup_direct_username@" = config.sops.secrets.sabnzbd_newsgroup_direct_username.path;
+      "@sabnzbd_newsgroup_direct_password@" = config.sops.secrets.sabnzbd_newsgroup_direct_password.path;
+      "@sabnzbd_eweka_username@" = config.sops.secrets.sabnzbd_eweka_username.path;
+      "@sabnzbd_eweka_password@" = config.sops.secrets.sabnzbd_eweka_password.path;
+    };
     settings = {
       misc = {
         port = 8080;
         host = "0.0.0.0";
         username = "admin";
+        password = "@sabnzbd_admin_password@";
+        api_key = "@sabnzbd_api_key@";
+        nzb_key = "@sabnzbd_nzb_key@";
         permissions = 777;
         download_dir = downloadDir;
         complete_dir = completeDir;
@@ -148,6 +128,8 @@ in
           displayname = "news-us.newsgroup.ninja";
           host = "news-us.newsgroup.ninja";
           port = 563;
+          username = "@sabnzbd_newsgroup_ninja_username@";
+          password = "@sabnzbd_newsgroup_ninja_password@";
           connections = 40;
           ssl = true;
           ssl_verify = "strict";
@@ -156,23 +138,12 @@ in
           expire_date = "2026-10-29";
           priority = 0;
         };
-        "news.supernews.com" = {
-          name = "news.supernews.com";
-          displayname = "news.supernews.com";
-          host = "news.supernews.com";
-          port = 119;
-          connections = 15;
-          ssl = false;
-          ssl_verify = "strict";
-          enable = false;
-          required = false;
-          expire_date = "";
-          priority = 0;
-        };
         "reader.xsnews.nl" = {
           name = "reader.xsnews.nl";
           displayname = "reader.xsnews.nl";
           host = "reader.xsnews.nl";
+          username = "@sabnzbd_xsnews_username@";
+          password = "@sabnzbd_xsnews_password@";
           port = 563;
           connections = 15;
           ssl = true;
@@ -186,6 +157,8 @@ in
           name = "news.newshosting.com";
           displayname = "news.newshosting.com";
           host = "news.newshosting.com";
+          username = "@sabnzbd_newshosting_username@";
+          password = "@sabnzbd_newshosting_password@";
           port = 563;
           connections = 100;
           ssl = true;
@@ -199,6 +172,8 @@ in
           name = "news.newsgroupdirect.com";
           displayname = "NewsgroupDirect";
           host = "news.newsgroupdirect.com";
+          username = "@sabnzbd_newsgroup_direct_username@";
+          password = "@sabnzbd_newsgroup_direct_password@";
           port = 563;
           connections = 8;
           ssl = true;
@@ -213,6 +188,8 @@ in
           name = "news.eweka.nl";
           displayname = "news.eweka.nl";
           host = "news.eweka.nl";
+          username = "@sabnzbd_eweka_username@";
+          password = "@sabnzbd_eweka_password@";
           port = 563;
           connections = 50;
           ssl = true;
@@ -270,12 +247,4 @@ in
   ];
 
   systemd.services.sabnzbd.unitConfig.RequiresMountsFor = [ "/mnt/blockbuster" ];
-
-  services.prometheus.exporters.exportarr-sabnzbd = {
-    enable = true;
-    url = "https://sabnzbd.e10.camp";
-    openFirewall = true;
-    apiKeyFile = config.sops.secrets.sabnzbd_api_key.path;
-    port = 9712;
-  };
 }

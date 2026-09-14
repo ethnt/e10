@@ -30,8 +30,9 @@
       profiles.services.attic-watch-store.default
       profiles.sharing.nfs-client
       profiles.telemetry.prometheus-dcgm-exporter
-      profiles.telemetry.prometheus-sonarr-exporter
       profiles.telemetry.prometheus-radarr-exporter
+      profiles.telemetry.prometheus-sabnzbd-exporter
+      profiles.telemetry.prometheus-sonarr-exporter
       profiles.telemetry.prometheus-plex-exporter.default
       profiles.virtualisation.docker
     ]
