@@ -29,11 +29,13 @@
       profiles.media-management.wizarr
       profiles.services.attic-watch-store.default
       profiles.sharing.nfs-client
+      profiles.telemetry.prometheus-bazarr-exporter
       profiles.telemetry.prometheus-dcgm-exporter
+      profiles.telemetry.prometheus-plex-exporter.default
+      profiles.telemetry.prometheus-prowlarr-exporter
       profiles.telemetry.prometheus-radarr-exporter
       profiles.telemetry.prometheus-sabnzbd-exporter
       profiles.telemetry.prometheus-sonarr-exporter
-      profiles.telemetry.prometheus-plex-exporter.default
       profiles.virtualisation.docker
     ]
     ++ [

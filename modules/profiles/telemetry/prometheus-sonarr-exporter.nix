@@ -1,4 +1,6 @@
-{ config, ... }: {
+{ config, profiles, ... }: {
+  imports = [ profiles.secrets.sonarr.default ];
+
   services.prometheus.exporters.exportarr-sonarr = {
     enable = true;
     url = "https://sonarr.e10.camp";

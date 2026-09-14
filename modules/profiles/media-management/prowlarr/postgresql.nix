@@ -5,15 +5,15 @@
 {
   imports = [ profiles.databases.postgresql ];
 
-  services.postgresqlBackup.databases = [ "sonarr" ];
+  services.postgresqlBackup.databases = [ "prowlarr" ];
 
   services.postgresql = {
     ensureDatabases = [
-      "sonarr"
+      "prowlarr"
     ];
     ensureUsers = [
       {
-        name = "sonarr";
+        name = "prowlarr";
         ensureDBOwnership = true;
       }
     ];
