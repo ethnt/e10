@@ -100,12 +100,12 @@ in
 
       "radarr.e10.camp" = {
         host = hosts.htpc;
-        inherit (hosts.htpc.config.services.radarr) port;
+        inherit (hosts.htpc.config.services.radarr.settings.server) port;
       };
 
       "sonarr.e10.camp" = {
         host = hosts.htpc;
-        inherit (hosts.htpc.config.services.sonarr) port;
+        inherit (hosts.htpc.config.services.sonarr.settings.server) port;
       };
 
       "bazarr.e10.camp" = {
@@ -284,10 +284,10 @@ in
         port = 8123;
       };
 
-      "frigate.e10.camp" = {
-        host = hosts.whirlwind;
-        port = 8971;
-      };
+      # "frigate.e10.camp" = {
+      #   host = hosts.whirlwind;
+      #   port = 8971;
+      # };
 
       "analytics.e10.camp" = {
         host = hosts.matrix;

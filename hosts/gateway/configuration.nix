@@ -1,4 +1,10 @@
-{ suites, profiles, ... }: {
+{
+  suites,
+  profiles,
+  secrets,
+  ...
+}:
+{
   imports =
     with suites;
     core
@@ -14,7 +20,8 @@
     ++ [
       ./disk-config.nix
       ./hardware-configuration.nix
-    ];
+    ]
+    ++ [ secrets.hosts.gateway.configuration ];
 
   deployment = {
     vmType = "hcloud";

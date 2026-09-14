@@ -1,5 +1,4 @@
 {
-  flake,
   config,
   profiles,
   ...
@@ -8,36 +7,10 @@
   imports = [ profiles.secrets.radarr.default ] ++ [ ./postgresql.nix ];
 
   sops = {
-    templates."radarr/config.xml" = {
-      content =
-        flake.lib.generators.toXML
-          {
-            rootName = "Config";
-            xmlns = { };
-          }
-          {
-            ApiKey = "${config.sops.placeholder.radarr_api_key}";
-            AuthenticationMethod = "Forms";
-            AuthenticationRequired = "Enabled";
-            BindAddress = "*";
-            Branch = "master";
-            EnableSsl = false;
-            InstanceName = "Radarr";
-            LaunchBrowser = false;
-            LogLevel = "info";
-            Port = config.services.radarr.port;
-            PostgresHost = "localhost";
-            PostgresLogDb = "radarr_logs";
-            PostgresMainDb = "radarr";
-            PostgresPassword = "";
-            PostgresPort = config.services.postgresql.settings.port;
-            PostgresUser = "radarr";
-            SslCertPassword = null;
-            SslCertPath = null;
-            SslPort = 9898;
-            UrlBase = null;
-          };
-      path = "${config.services.radarr.dataDir}/config.xml";
+    templates."radarr/environment_file" = {
+      content = ''
+        RADARR__AUTH__APIKEY=${config.sops.placeholder.radarr_api_key}
+      '';
       owner = config.services.radarr.user;
       inherit (config.services.radarr) group;
       mode = "0660";
@@ -47,13 +20,36 @@
   services.radarr = {
     enable = true;
     openFirewall = true;
-  };
-
-  services.prometheus.exporters.exportarr-radarr = {
-    enable = true;
-    url = "https://radarr.e10.camp";
-    openFirewall = true;
-    apiKeyFile = config.sops.secrets.radarr_api_key.path;
-    port = 9709;
+    environmentFiles = [ config.sops.templates."radarr/environment_file".path ];
+    settings = {
+      app = {
+        instancename = "Radarr";
+        launchbrowser = false;
+      };
+      server = {
+        bindaddress = "*";
+        port = 9898;
+        enablessl = false;
+      };
+      postgres = {
+        host = "localhost";
+        port = config.services.postgresql.settings.port;
+        maindb = "radarr";
+        user = "radarr";
+        password = "";
+      };
+      log = {
+        level = "info";
+        dbenabled = false;
+      };
+      auth = {
+        method = "Forms";
+        required = "Enabled";
+      };
+      update = {
+        automatically = false;
+        mechanism = "external";
+      };
+    };
   };
 }

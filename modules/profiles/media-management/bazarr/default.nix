@@ -396,17 +396,4 @@
     enable = true;
     openFirewall = true;
   };
-
-  systemd.services.bazarr = {
-    wants = [ "sops-nix.service" ];
-    after = [ "sops-nix.service" ];
-  };
-
-  services.prometheus.exporters.exportarr-bazarr = {
-    enable = true;
-    url = "https://bazarr.e10.camp";
-    openFirewall = true;
-    apiKeyFile = config.sops.secrets.bazarr_api_key.path;
-    port = 9710;
-  };
 }

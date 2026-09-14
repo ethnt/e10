@@ -1,5 +1,4 @@
 {
-  flake,
   config,
   profiles,
   ...
@@ -8,38 +7,10 @@
   imports = [ profiles.secrets.sonarr.default ] ++ [ ./postgresql.nix ];
 
   sops = {
-    templates."sonarr/config.xml" = {
-      content =
-        flake.lib.generators.toXML
-          {
-            rootName = "Config";
-            xmlns = { };
-          }
-          {
-            ApiKey = "${config.sops.placeholder.sonarr_api_key}";
-            AuthenticationMethod = "Forms";
-            AuthenticationRequired = "Enabled";
-            BindAddress = "*";
-            Branch = "main";
-            EnableSsl = false;
-            InstanceName = "Sonarr";
-            LaunchBrowser = true;
-            LogLevel = "info";
-            Port = config.services.sonarr.port;
-            PostgresHost = "localhost";
-            PostgresLogDb = "sonarr_logs";
-            PostgresMainDb = "sonarr";
-            PostgresPassword = "";
-            PostgresPort = config.services.postgresql.settings.port;
-            PostgresUser = "sonarr";
-            SslCertPassword = null;
-            SslCertPath = null;
-            SslPort = 9898;
-            UpdateMechanism = "builtin";
-            UrlBase = null;
-          };
-
-      path = "${config.services.sonarr.dataDir}/config.xml";
+    templates."sonarr/environment_file" = {
+      content = ''
+        SONARR__AUTH__APIKEY=${config.sops.placeholder.sonarr_api_key}
+      '';
       owner = config.services.sonarr.user;
       inherit (config.services.sonarr) group;
       mode = "0660";
@@ -49,13 +20,37 @@
   services.sonarr = {
     enable = true;
     openFirewall = true;
-  };
-
-  services.prometheus.exporters.exportarr-sonarr = {
-    enable = true;
-    url = "https://sonarr.e10.camp";
-    openFirewall = true;
-    apiKeyFile = config.sops.secrets.sonarr_api_key.path;
-    port = 9708;
+    environmentFiles = [ config.sops.templates."sonarr/environment_file".path ];
+    settings = {
+      app = {
+        instancename = "Sonarr";
+        launchbrowser = false;
+      };
+      server = {
+        bindaddress = "*";
+        port = 8989;
+        enablessl = false;
+      };
+      postgres = {
+        host = "localhost";
+        port = config.services.postgresql.settings.port;
+        maindb = "sonarr";
+        logdb = "sonarr_logs";
+        user = "sonarr";
+        password = "";
+      };
+      log = {
+        level = "info";
+        dbenabled = false;
+      };
+      auth = {
+        method = "Forms";
+        required = "Enabled";
+      };
+      update = {
+        automatically = false;
+        mechanism = "external";
+      };
+    };
   };
 }

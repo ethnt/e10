@@ -263,11 +263,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784495994,
-        "narHash": "sha256-VV+mSFXAhY9Vl4n3IizYudLOIoOc7KLGcOLVjQTDuw0=",
+        "lastModified": 1789331947,
+        "narHash": "sha256-MeZm0C9pj7Ks5Z2qWrJTL6LCZolaEpCBAW4u3aiBe8g=",
         "ref": "refs/heads/main",
-        "rev": "ecee262a4c82c319b95572d51e8bb46f68433d4e",
-        "revCount": 3,
+        "rev": "1ec13a6c6b81ad62e3b92f6f7037b55b4853b34b",
+        "revCount": 4,
         "type": "git",
         "url": "ssh://git@github.com/ethnt/e10-secrets"
       },
