@@ -1,9 +1,14 @@
-variable "region" {
-  default = "us-east-2"
+variable "hcloud_primary_location" {
+  default = "ash"
   type    = string
 }
 
-variable "availability_zone" {
-  default = "us-east-2a"
+variable "hcloud_secondary_location" {
+  default = "hil"
+  type    = string
+}
+
+variable "admin_email_address" {
+  default = "admin@e10.camp"
   type    = string
 }

@@ -5,7 +5,7 @@ resource "hcloud_server" "gateway" {
 
   server_type = "cpx11"
 
-  location = "ash"
+  location = var.hcloud_primary_location
 
   image = "debian-12"
 
@@ -17,16 +17,9 @@ resource "hcloud_server" "gateway" {
     ipv6_enabled = true
   }
 
-  network {
-    network_id = hcloud_network.private_network.id
-    ip         = "172.16.1.10"
-  }
-
   lifecycle {
     ignore_changes = [ssh_keys, image]
   }
-
-  depends_on = [hcloud_network_subnet.default_private_network_subnet]
 }
 
 module "gateway_install" {
@@ -53,7 +46,7 @@ resource "hcloud_server" "monitor" {
 
   server_type = "cpx21"
 
-  location = "hil"
+  location = var.hcloud_secondary_location
 
   image = "debian-12"
 
