@@ -1,50 +1,76 @@
-terraform {
-  required_version = ">= 1.0"
+provider "tailscale" {
+  oauth_client_id     = data.sops_file.secrets.data["TAILSCALE_OAUTH_CLIENT_ID"]
+  oauth_client_secret = data.sops_file.secrets.data["TAILSCALE_OAUTH_CLIENT_SECRET"]
+  tailnet             = data.sops_file.secrets.data["TAILSCALE_TAILNET"]
+}
 
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "5.35.0"
-    }
+provider "aws" {
+  access_key = data.sops_file.secrets.data["AWS_ACCESS_KEY_ID"]
+  secret_key = data.sops_file.secrets.data["AWS_SECRET_ACCESS_KEY"]
+  region     = "us-east-2"
+}
 
-    local = {
-      source  = "hashicorp/local"
-      version = "2.9.0"
-    }
+provider "proxmox" {
+  alias    = "anise"
+  endpoint = "https://anise:8006/"
+  username = data.sops_file.secrets.data["ANISE_PM_USERNAME"]
+  password = data.sops_file.secrets.data["ANISE_PM_PASSWORD"]
+  insecure = true
 
-    tls = {
-      source  = "hashicorp/tls"
-      version = "4.3.0"
-    }
-
-    tailscale = {
-      source  = "tailscale/tailscale"
-      version = "0.24.0"
-    }
-
-    sops = {
-      source  = "carlpett/sops"
-      version = "1.0.0"
-    }
-
-    proxmox = {
-      source  = "bpg/proxmox"
-      version = "0.66.3"
-    }
-
-    improvmx = {
-      source  = "issyl0/improvmx"
-      version = "0.7.1"
-    }
-
-    porkbun = {
-      source  = "kyswtn/porkbun"
-      version = "0.1.3"
-    }
-
-    hcloud = {
-      source  = "hetznercloud/hcloud"
-      version = "1.68.0"
-    }
+  ssh {
+    agent    = true
+    username = "deploy"
   }
+}
+
+provider "proxmox" {
+  alias    = "basil"
+  endpoint = "https://basil:8006/"
+  username = data.sops_file.secrets.data["BASIL_PM_USERNAME"]
+  password = data.sops_file.secrets.data["BASIL_PM_PASSWORD"]
+  insecure = true
+
+  ssh {
+    agent    = true
+    username = "deploy"
+  }
+}
+
+provider "proxmox" {
+  alias    = "cardamom"
+  endpoint = "https://cardamom:8006/"
+  username = data.sops_file.secrets.data["CARDAMOM_PM_USERNAME"]
+  password = data.sops_file.secrets.data["CARDAMOM_PM_PASSWORD"]
+  insecure = true
+
+  ssh {
+    agent    = true
+    username = "deploy"
+  }
+}
+
+provider "proxmox" {
+  alias    = "elderflower"
+  endpoint = "https://elderflower:8006/"
+  username = data.sops_file.secrets.data["ELDERFLOWER_PM_USERNAME"]
+  password = data.sops_file.secrets.data["ELDERFLOWER_PM_PASSWORD"]
+  insecure = true
+
+  ssh {
+    agent    = true
+    username = "deploy"
+  }
+}
+
+provider "improvmx" {
+  token = data.sops_file.secrets.data["IMPROVMX_API_TOKEN"]
+}
+
+provider "porkbun" {
+  api_key        = data.sops_file.secrets.data["PORKBUN_API_KEY"]
+  secret_api_key = data.sops_file.secrets.data["PORKBUN_API_SECRET"]
+}
+
+provider "hcloud" {
+  token = data.sops_file.secrets.data["HETZNER_API_TOKEN"]
 }

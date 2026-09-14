@@ -17,16 +17,9 @@ resource "hcloud_server" "gateway" {
     ipv6_enabled = true
   }
 
-  network {
-    network_id = hcloud_network.private_network.id
-    ip         = "172.16.1.10"
-  }
-
   lifecycle {
     ignore_changes = [ssh_keys, image]
   }
-
-  depends_on = [hcloud_network_subnet.default_private_network_subnet]
 }
 
 module "gateway_install" {

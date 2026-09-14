@@ -81,12 +81,3 @@ resource "aws_iam_user_policy_attachment" "mailer_ses_sender" {
   user       = aws_iam_user.mailer.name
   policy_arn = aws_iam_policy.ses_sender.arn
 }
-
-# output "smtp_username" {
-#   value = aws_iam_access_key.mailer.id
-# }
-
-# output "smtp_password" {
-#   value = aws_iam_access_key.mailer.ses_smtp_password_v4
-#   sensitive = true
-# }
