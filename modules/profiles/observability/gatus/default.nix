@@ -212,15 +212,32 @@ in
               group = "HTPC";
             })
             (mkEndpoint {
+              name = "Wizarr";
+              url = "https://setup.e10.video";
+              group = "HTPC";
+            })
+          ];
+          whirlwind = [
+            (mkEndpoint {
               name = "FileFlows";
               url = "https://fileflows.e10.camp";
-              group = "HTPC";
+              group = "Whirlwind";
               protected = true;
             })
             (mkEndpoint {
               name = "Frigate";
-              url = "https://frigate.e10.camp";
-              group = "HTPC";
+              url = "http://whirlwind:8971";
+              group = "Whirlwind";
+            })
+            (mkEndpoint {
+              name = "Prometheus DCGM Exporter";
+              url = "http://whirlwind:9400";
+              group = "Whirlwind";
+            })
+            (mkEndpoint {
+              name = "Prometheus Node Exporter";
+              url = "http://whirlwind:9100";
+              group = "Whirlwind";
             })
           ];
           matrix = [
@@ -481,7 +498,8 @@ in
         ++ elderflower-kvm
         ++ fabricator
         ++ nut-network
-        ++ nut-homelab;
+        ++ nut-homelab
+        ++ whirlwind;
     };
   };
 }

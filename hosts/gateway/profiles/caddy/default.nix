@@ -284,10 +284,10 @@ in
         port = 8123;
       };
 
-      "frigate.e10.camp" = {
-        host = hosts.whirlwind;
-        port = 8971;
-      };
+      # "frigate.e10.camp" = {
+      #   host = hosts.whirlwind;
+      #   port = 8971;
+      # };
 
       "analytics.e10.camp" = {
         host = hosts.matrix;
