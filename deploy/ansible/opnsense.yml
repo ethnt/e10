@@ -2,7 +2,7 @@
 - name: Configure OPNSense
   hosts: opnsense
   connection: local
-  gather_facts: no
+  gather_facts: false
   module_defaults:
     group/oxlorg.opnsense.all: "{{ opnsense_collection_defaults }}"
     oxlorg.opnsense.rule:

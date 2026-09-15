@@ -40,4 +40,5 @@
 - name: Start Tailscale
   ansible.builtin.command: tailscale up --authkey={{ tailscale_auth_key }}
   when: (tailscale_status.stdout | default('{}', true) | from_json).BackendState | default('') != "Running"
+  changed_when: true
   no_log: true
