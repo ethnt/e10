@@ -44,4 +44,4 @@
 
 - name: Update APT repositories
   ansible.builtin.apt:
-    update_cache: yes
+    update_cache: true

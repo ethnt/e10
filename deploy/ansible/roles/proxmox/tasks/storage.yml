@@ -1,8 +1,9 @@
 ---
 - name: Check for omnibus storage
-  ansible.builtin.shell: |
-    cat /etc/pve/storage.cfg | grep -w "omnibus" | { grep -v grep || test $? = 1; }
-  register: omnibus_storage
+  ansible.builtin.command: grep -w omnibus /etc/pve/storage.cfg
+  register: proxmox_omnibus_storage
+  changed_when: false
+  failed_when: proxmox_omnibus_storage.rc not in [0, 1]
 
 - name: Add omnibus storage
   ansible.builtin.command: |
@@ -13,5 +14,6 @@
       --prune-backups keep-all=1 \
       --username proxmox \
       --password {{ OMNIBUS_PASSWORD }}
-  when: '"omnibus" not in omnibus_storage.stdout'
+  when: proxmox_omnibus_storage.rc == 1
+  changed_when: true
   no_log: true
