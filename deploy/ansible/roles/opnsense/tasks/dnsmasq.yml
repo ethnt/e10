@@ -1,18 +1,12 @@
 ---
-# - name: Copy edns0.conf
-#   ansible.builtin.copy:
-#     src: dnsmasq/edns0.conf
-#     dest: "/usr/local/etc/dnsmasq.conf.d/edns0.conf"
-#     owner: root
-#     group: wheel
-#     mode: "0400"
-#     backup: true
-
 - name: Configure dnsmasq
   oxlorg.opnsense.dnsmasq_general:
     enabled: true
     port: 53
+    dhcp_authoritative: true
     dhcp_fqdn: true
+    dhcp_domain: satan.network
+    dhcp_local: true
     dhcpfirst: true
     domain_needed: true
     forward_private_reverse: false
@@ -21,13 +15,26 @@
     resolv_system: true
     strict_order: true
 
+- name: Set DHCP option 6 to Blocky on controller
+  oxlorg.opnsense.dnsmasq_option:
+    description: "[Ansible] DNS server for {{ item.interface }}"
+    type: set
+    option: 6
+    interface: "{{ item.interface }}"
+    value: "{{ item.address }}"
+  loop:
+    - { interface: "LAN", address: "192.168.1.2" }
+    - { interface: "Management", address: "10.2.1.2" }
+    - { interface: "Homelab", address: "10.10.1.2" }
+    - { interface: "IoT", address: "10.100.1.2" }
+
 - name: Create LAN dnsmasq DHCP range
   oxlorg.opnsense.dnsmasq_range:
     description: "[Ansible] LAN DHCP range"
     interface: "LAN"
     start_addr: 192.168.1.50
     end_addr: 192.168.1.254
-    lease_time: 86400
+    lease_time: 3600
 
 - name: Create Management dnsmasq DHCP range
   oxlorg.opnsense.dnsmasq_range:
@@ -35,7 +42,11 @@
     interface: "Management"
     start_addr: 10.2.100.2
     end_addr: 10.2.255.254
-    lease_time: 86400
+    # Stated explicitly rather than derived from the interface, so the mask the
+    # clients get can't drift from the /16 these ranges assume. LAN and Guest
+    # are genuine /24s and keep the auto-calculated mask.
+    subnet_mask: 255.255.0.0
+    lease_time: 3600
 
 - name: Create Homelab dnsmasq DHCP range
   oxlorg.opnsense.dnsmasq_range:
@@ -43,7 +54,8 @@
     interface: "Homelab"
     start_addr: 10.10.100.2
     end_addr: 10.10.255.254
-    lease_time: 86400
+    subnet_mask: 255.255.0.0
+    lease_time: 3600
 
 - name: Create Guest dnsmasq DHCP range
   oxlorg.opnsense.dnsmasq_range:
@@ -51,7 +63,7 @@
     interface: "Guest"
     start_addr: 10.50.0.2
     end_addr: 10.50.0.254
-    lease_time: 86400
+    lease_time: 3600
 
 - name: Create IoT dnsmasq DHCP range
   oxlorg.opnsense.dnsmasq_range:
@@ -59,7 +71,8 @@
     interface: "IoT"
     start_addr: 10.100.100.1
     end_addr: 10.100.255.254
-    lease_time: 86400
+    subnet_mask: 255.255.0.0
+    lease_time: 3600
 
 - name: Create plex.direct dnsmasq domain
   oxlorg.opnsense.dnsmasq_domain:

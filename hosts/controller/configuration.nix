@@ -58,21 +58,21 @@
       vlan2.ipv4.addresses = [
         {
           address = "10.2.1.2";
-          prefixLength = 24;
+          prefixLength = 16;
         }
       ];
 
       vlan10.ipv4.addresses = [
         {
           address = "10.10.1.2";
-          prefixLength = 24;
+          prefixLength = 16;
         }
       ];
 
       vlan100.ipv4.addresses = [
         {
           address = "10.100.1.2";
-          prefixLength = 24;
+          prefixLength = 16;
         }
       ];
 

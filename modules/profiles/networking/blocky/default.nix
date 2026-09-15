@@ -1,6 +1,7 @@
 { pkgs, lib, ... }:
 let
-  routerUpstream = "192.168.1.1:5335";
+  unbound = "192.168.1.1:5335";
+  dnsmasq = "192.168.1.1:53";
 in
 {
   imports = [
@@ -89,7 +90,7 @@ in
         maxItemsCount = 0;
       };
       clientLookup = {
-        upstream = routerUpstream;
+        upstream = dnsmasq;
         singleNameOrder = [
           1
           2
@@ -97,15 +98,16 @@ in
       };
       conditional = {
         mapping = {
-          "1.168.192.in-addr.arpa" = "192.168.1.1:5335";
-          "10.10.in-addr.arpa" = "10.10.0.1:5335";
-          "100.10.in-addr.arpa" = "10.100.0.1:5335";
-          "168.192.in-addr.arpa" = "192.168.1.1:5335";
-          "2.10.in-addr.arpa" = "10.2.0.1:5335";
-          "5.10.in-addr.arpa" = "10.5.0.1:5335";
-          "10.in-addr.arpa" = "192.168.1.1:5335";
-          "arpa" = "192.168.1.1:5335";
-          "." = "192.168.1.1:5335";
+          "satan.network" = dnsmasq;
+          "1.168.192.in-addr.arpa" = dnsmasq;
+          "168.192.in-addr.arpa" = dnsmasq;
+          "2.10.in-addr.arpa" = dnsmasq;
+          "5.10.in-addr.arpa" = dnsmasq;
+          "10.10.in-addr.arpa" = dnsmasq;
+          "100.10.in-addr.arpa" = dnsmasq;
+          "10.in-addr.arpa" = dnsmasq;
+          "." = dnsmasq;
+          "arpa" = unbound;
         };
       };
       prometheus = {
@@ -113,11 +115,6 @@ in
         path = "/metrics";
       };
       ede.enable = true;
-      ecs = {
-        useAsClient = true;
-        ipv4Mask = 32;
-        ipv6Mask = 128;
-      };
       queryLog.type = lib.mkDefault "console";
     };
   };
