@@ -72,7 +72,7 @@
         addresses = [
           {
             address = "10.10.1.101";
-            prefixLength = 24;
+            prefixLength = 16;
           }
         ];
       };

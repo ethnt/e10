@@ -70,7 +70,7 @@
         addresses = [
           {
             address = "10.10.3.101";
-            prefixLength = 24;
+            prefixLength = 16;
           }
         ];
       };

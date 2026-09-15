@@ -49,7 +49,7 @@
         addresses = [
           {
             address = "10.10.2.102";
-            prefixLength = 24;
+            prefixLength = 16;
           }
         ];
       };
