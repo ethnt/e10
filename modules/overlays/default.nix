@@ -34,7 +34,6 @@
             gatus
             prowlarr
             radarr
-            sabnzbd
             sonarr
             netbox
             plex
