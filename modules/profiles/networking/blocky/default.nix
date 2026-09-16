@@ -99,14 +99,14 @@ in
       conditional = {
         mapping = {
           "satan.network" = dnsmasq;
-          "1.168.192.in-addr.arpa" = dnsmasq;
-          "168.192.in-addr.arpa" = dnsmasq;
-          "2.10.in-addr.arpa" = dnsmasq;
-          "5.10.in-addr.arpa" = dnsmasq;
-          "10.10.in-addr.arpa" = dnsmasq;
-          "100.10.in-addr.arpa" = dnsmasq;
-          "10.in-addr.arpa" = dnsmasq;
-          "." = dnsmasq;
+          "." = unbound;
+          "1.168.192.in-addr.arpa" = unbound;
+          "168.192.in-addr.arpa" = unbound;
+          "2.10.in-addr.arpa" = unbound;
+          "5.10.in-addr.arpa" = unbound;
+          "10.10.in-addr.arpa" = unbound;
+          "100.10.in-addr.arpa" = unbound;
+          "10.in-addr.arpa" = unbound;
           "arpa" = unbound;
         };
       };

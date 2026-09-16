@@ -24,6 +24,7 @@
       profiles.media-management.sabnzbd.default
       profiles.media-management.seerr
       profiles.media-management.sonarr.default
+      profiles.media-management.tunarr
       profiles.media-management.tautulli
       profiles.media-management.tracearr.default
       profiles.media-management.wizarr

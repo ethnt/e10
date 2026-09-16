@@ -58,6 +58,7 @@
             unifi-os-server-image
             incus-apply
             wizarr
+            tunarr
             ;
 
           pythonPackagesExtensions = pkgs.pythonPackagesExtensions ++ [
