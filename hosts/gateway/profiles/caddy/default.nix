@@ -256,6 +256,12 @@ in
         inherit (hosts.htpc.config.services.tracearr) port;
       };
 
+      "tunarr.e10.camp" = {
+        host = hosts.htpc;
+        inherit (hosts.htpc.config.services.tunarr) port;
+        protected = true;
+      };
+
       "bichon.e10.camp" = {
         host = hosts.matrix;
         inherit (hosts.matrix.config.services.bichon) port;

@@ -50,13 +50,14 @@
             bichon
             decluttarr
             fileflows
+            incus-apply
             mazanoke
             profilarr
             profilarr-parser
             prometheus-plex-exporter
             tracearr
+            tunarr
             unifi-os-server-image
-            incus-apply
             wizarr
             ;
 

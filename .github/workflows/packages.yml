@@ -56,6 +56,7 @@ jobs:
         - tf
         - tfl
         - tracearr
+        - tunarr
         - unifi-os-server-image
         - wizarr
 name: Build packages
