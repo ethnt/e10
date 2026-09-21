@@ -1,66 +1,121 @@
 { lib
 , stdenv
-, fetchurl
+, fetchFromGitHub
+, fetchPnpmDeps
+, pnpm_11
+, pnpmConfigHook
+, nodejs_22
+, node-gyp
 , makeWrapper
-, patchelf
+, python3
 , ffmpeg
+, callPackage
 , nix-update-script
 }:
 let
-  version = "1.3.13";
+  nodejs = nodejs_22;
+  pnpm = pnpm_11;
+  nodeGyp = node-gyp.override { nodejs = nodejs_22; };
+  meilisearch = callPackage ./meilisearch.nix { };
 in
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "tunarr";
-  inherit version;
+  version = "1.3.15";
 
-  src = fetchurl {
-    url = "https://github.com/chrisbenincasa/tunarr/releases/download/v${version}/tunarr-v${version}-linux-x64.tar.gz";
-    hash = "sha256-F3iHt11oN+IxPo80s/sMzuxCz+8muFbSPULnMpXmDkY=";
+  src = fetchFromGitHub {
+    owner = "chrisbenincasa";
+    repo = "tunarr";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-8ClWs3cTD0ABbuXthu5/emxOMXZExfTNhWGtWV33pOo=";
   };
 
-  sourceRoot = ".";
+  pnpmDeps = fetchPnpmDeps {
+    inherit (finalAttrs) pname version src;
+    inherit pnpm;
+    fetcherVersion = 4;
+    hash = "sha256-xZUqsIMGVu9sGeTz6WNpcZbid1ueQmXwpKbNw79Al5M=";
+  };
+
+  postPatch = ''
+    sed -i 's|"packageManager": "pnpm@[^"]*"|"packageManager": "pnpm@${pnpm.version}"|' package.json
+  '';
+
+  strictDeps = true;
+
   nativeBuildInputs = [
     makeWrapper
-    patchelf
+    nodejs
+    pnpmConfigHook
+    pnpm
+    nodeGyp
+    python3
   ];
 
-  dontConfigure = true;
-  dontBuild = true;
-  dontStrip = true;
+  buildInputs = [ nodejs ];
+
+  env = {
+    TUNARR_VERSION = finalAttrs.version;
+    TUNARR_EDGE_BUILD = "false";
+    TURBO_CONCURRENCY = "1";
+    TURBO_TELEMETRY_DISABLED = "1";
+    npm_config_nodedir = "${nodejs}";
+    npm_config_build_from_source = "true";
+  };
+
+  buildPhase = ''
+    runHook preBuild
+
+    for d in . server web; do
+      printf 'TUNARR_VERSION=%s\nTUNARR_BUILD=\nTUNARR_EDGE_BUILD=false\n' \
+        "${finalAttrs.version}" > "$d/.env"
+    done
+
+    echo "Building better-sqlite3 native addon..."
+    ( cd node_modules/.pnpm/better-sqlite3@*/node_modules/better-sqlite3
+      node-gyp rebuild --release )
+
+    pnpm exec turbo run bundle
+
+    cp -r web/dist server/dist/web
+    cp -r server/src/migration/db/sql server/dist/sql
+
+    runHook postBuild
+  '';
 
   installPhase = ''
     runHook preInstall
 
-    install -Dm755 tunarr-v${version}-linux-x64 "$out/libexec/tunarr/tunarr"
-    install -Dm755 meilisearch "$out/bin/meilisearch"
+    mkdir -p $out/lib/tunarr $out/bin
+    cp -r server/dist/. $out/lib/tunarr/
 
-    # Tunarr is a pkg single-file executable with an appended payload, so
-    # patchelf would corrupt its internal offsets. Run it through nix-ld and
-    # patch only the ordinary Meilisearch ELF.
-    patchelf \
-      --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-      --set-rpath "${lib.makeLibraryPath [stdenv.cc.cc.lib stdenv.cc.libc]}" \
-      "$out/bin/meilisearch"
-
-    makeWrapper "$out/libexec/tunarr/tunarr" "$out/bin/tunarr" \
-      --set NIX_LD "$(cat $NIX_CC/nix-support/dynamic-linker)" \
-      --set NIX_LD_LIBRARY_PATH "${lib.makeLibraryPath [stdenv.cc.cc.lib stdenv.cc.libc]}" \
-      --prefix PATH : "${lib.makeBinPath [ffmpeg]}" \
-      --set-default TUNARR_MEILISEARCH_PATH "$out/bin/meilisearch"
+    makeWrapper ${lib.getExe nodejs} $out/bin/tunarr \
+      --add-flags $out/lib/tunarr/bundle.cjs \
+      --prefix PATH : ${lib.makeBinPath [ ffmpeg ]} \
+      --set-default TUNARR_MEILISEARCH_PATH ${lib.getExe meilisearch} \
+      --set-default NODE_ENV production
 
     runHook postInstall
   '';
 
-  passthru.ffmpeg = ffmpeg;
+  doCheck = false;
 
-  passthru.updateScript = nix-update-script { };
+  passthru = {
+    inherit ffmpeg meilisearch;
+    updateScript = nix-update-script { };
+  };
 
   meta = {
     description = "Create classic TV channels from personal media libraries";
     homepage = "https://tunarr.com";
     license = lib.licenses.zlib;
     mainProgram = "tunarr";
-    platforms = [ "x86_64-linux" ];
-    sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
+    platforms = lib.platforms.linux;
+    maintainers = [
+      {
+        name = "Ethan Turkeltaub";
+        github = "ethnt";
+        githubId = 137037;
+      }
+    ];
   };
-}
+})

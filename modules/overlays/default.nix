@@ -50,15 +50,15 @@
             bichon
             decluttarr
             fileflows
+            incus-apply
             mazanoke
             profilarr
             profilarr-parser
             prometheus-plex-exporter
             tracearr
-            unifi-os-server-image
-            incus-apply
-            wizarr
             tunarr
+            unifi-os-server-image
+            wizarr
             ;
 
           pythonPackagesExtensions = pkgs.pythonPackagesExtensions ++ [

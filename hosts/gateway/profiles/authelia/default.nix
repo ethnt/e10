@@ -392,6 +392,10 @@
           domain = "stirling-pdf.e10.camp";
           policy = "two_factor";
         }
+        {
+          domain = "tunarr.e10.camp";
+          policy = "two_factor";
+        }
       ];
     };
   };

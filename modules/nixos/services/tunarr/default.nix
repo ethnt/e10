@@ -44,7 +44,7 @@ in
       default = 8000;
     };
 
-    logLevel = {
+    logLevel = mkOption {
       type = types.str;
       default = "info";
     };
@@ -56,8 +56,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.nix-ld.enable = true;
-
     systemd.tmpfiles.settings."10-tunarr" = {
       ${cfg.dataDir} = {
         "d" = {
