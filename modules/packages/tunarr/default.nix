@@ -16,7 +16,7 @@ let
   nodejs = nodejs_22;
   pnpm = pnpm_11;
   nodeGyp = node-gyp.override { nodejs = nodejs_22; };
-  meilisearch = callPackage ./meilisearch.nix { };
+  meilisearch = callPackage ./meilisearch_1_30_0.nix { };
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "tunarr";
