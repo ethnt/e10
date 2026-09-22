@@ -66,6 +66,43 @@
         source_net: "any"
         destination_net: "any"
 
+- name: Create Guest rules
+  oxlorg.opnsense.rule_multi:
+    rules:
+      - description: "[Ansible] Guest to DNS rule"
+        interface: "opt4"
+        sequence: 1
+        quick: true
+        direction: "in"
+        action: "pass"
+        ip_protocol: "inet46"
+        protocol: "TCP/UDP"
+        source_net: "opt4"
+        destination_net: "opt4ip"
+        destination_port: "53"
+
+      - description: "[Ansible] Guest to private networks block rule"
+        interface: "opt4"
+        sequence: 2
+        quick: true
+        direction: "in"
+        action: "block"
+        ip_protocol: "inet46"
+        protocol: "any"
+        source_net: "opt4"
+        destination_net: "PrivateNetworks"
+
+      - description: "[Ansible] Guest to any (Internet) rule"
+        interface: "opt4"
+        sequence: 3
+        quick: true
+        direction: "in"
+        action: "pass"
+        ip_protocol: "inet46"
+        protocol: "any"
+        source_net: "opt4"
+        destination_net: "any"
+
 - name: Create IoT rules
   oxlorg.opnsense.rule_multi:
     rules:
