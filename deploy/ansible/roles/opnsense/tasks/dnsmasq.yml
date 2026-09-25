@@ -153,4 +153,4 @@
     description: "[Ansible] Option 43 for UniFi inform URL"
     type: set
     option: 43
-    value: 01043139322E3136382E312E32 # 0143 + `192.168.1.2` hex-encoded
+    value: "01:04:c0:a8:01:02" # suboption 1, length 4, then c0:a8:01:02 = 192.168.1.2
