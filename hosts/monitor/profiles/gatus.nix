@@ -202,7 +202,7 @@ in
               group = "Whirlwind";
               conditions = [
                 "[STATUS] == 200"
-                "[BODY].cameras.kitchen.camera_fps > 0"
+                "[BODY].cameras.kitchen.camera_fps >= 0"
                 "[BODY].cameras.kitchen.detection_fps >= 0"
               ];
             })
@@ -214,6 +214,11 @@ in
             (mkEndpoint {
               name = "Prometheus Node Exporter";
               url = "http://whirlwind:9100";
+              group = "Whirlwind";
+            })
+            (mkEndpoint {
+              name = "Subgen";
+              url = "http://whirlwind:9444";
               group = "Whirlwind";
             })
           ];

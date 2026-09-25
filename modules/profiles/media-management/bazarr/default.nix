@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  hosts,
   profiles,
   ...
 }:
@@ -126,7 +127,10 @@
           embedded_subs_show_desired = true;
           embedded_subtitles_parser = "ffprobe";
           enabled_integrations = [ ];
-          enabled_providers = [ "opensubtitlescom" ];
+          enabled_providers = [
+            "opensubtitlescom"
+            "whisperai"
+          ];
           flask_secret_key = config.sops.placeholder.bazarr_flask_secret_key;
           hi_extension = "hi";
           ignore_ass_subs = false;
@@ -373,7 +377,7 @@
           user_agent = "";
         };
         whisperai = {
-          endpoint = "http://127.0.0.1:9000";
+          endpoint = "http://${hosts.whirlwind.config.networking.hostName}:${toString hosts.whirlwind.config.services.subgen.port}";
           loglevel = "INFO";
           pass_video_name = false;
           response = 5;

@@ -48,12 +48,15 @@
 
           inherit (self'.packages)
             decluttarr
+            faster-whisper-medium
             fileflows
             incus-apply
             mazanoke
             profilarr
             profilarr-parser
             prometheus-plex-exporter
+            stable-ts-whisperless
+            subgen
             tracearr
             tunarr
             unifi-os-server-image

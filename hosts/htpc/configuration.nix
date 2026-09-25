@@ -24,9 +24,9 @@
       profiles.media-management.sabnzbd.default
       profiles.media-management.seerr
       profiles.media-management.sonarr.default
-      profiles.media-management.tunarr
       profiles.media-management.tautulli
       profiles.media-management.tracearr.default
+      profiles.media-management.tunarr
       profiles.media-management.wizarr
       profiles.services.attic-watch-store.default
       profiles.sharing.nfs-client
@@ -37,7 +37,7 @@
       profiles.telemetry.prometheus-radarr-exporter
       profiles.telemetry.prometheus-sabnzbd-exporter
       profiles.telemetry.prometheus-sonarr-exporter
-      profiles.virtualisation.docker
+      profiles.virtualisation.podman
     ]
     ++ [
       ./hardware-configuration.nix
