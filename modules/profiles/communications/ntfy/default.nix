@@ -3,11 +3,13 @@
     ntfy_admin_password.sopsFile = ./secrets.json;
     ntfy_grafana_password.sopsFile = ./secrets.json;
     ntfy_nut_password.sopsFile = ./secrets.json;
+    ntfy_wizarr_password.sopsFile = ./secrets.json;
   };
 
   services.ntfy-sh = {
     enable = true;
     baseUrl = "https://ntfy.e10.camp";
+    behindProxy = true;
     auth = {
       enable = true;
       admin = {
@@ -31,6 +33,16 @@
           grants = [
             {
               topic = "nut-alerts";
+              access = "read-write";
+            }
+          ];
+        }
+        {
+          username = "wizarr";
+          passwordFile = config.sops.secrets.ntfy_wizarr_password.path;
+          grants = [
+            {
+              topic = "wizarr-alerts";
               access = "read-write";
             }
           ];
