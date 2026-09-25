@@ -1,6 +1,6 @@
 { lib
 , stdenv
-, pnpm
+, pnpm_12
 , fetchPnpmDeps
 , pnpmConfigHook
 , makeWrapper
@@ -9,29 +9,24 @@
 , turbo
 , nix-update-script
 }:
+let pnpm = pnpm_12; in
 stdenv.mkDerivation (finalAttrs: {
   pname = "tracearr";
-  version = "2.2.3";
+  version = "2.5.0";
 
   src = fetchFromGitHub {
     owner = "connorgallopo";
     repo = "Tracearr";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-IJYfpQqb3HwvacjK0+TBLd+so5BOPertjuy+EwxV+iI=";
+    hash = "sha256-5iYCMUSuDg5iqOCFoVh4jHAymPkXlu3X3VMFKGXee8c=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
     inherit pnpm;
     fetcherVersion = 4;
-    hash = "sha256-Xt2pDiNSkq/WUG+HBj/u9Y40jRRArJhkL5VpEoan3D4=";
+    hash = "sha256-u1/mfBG+IxXQdKaTdCWeIwGKl4Eo1aMq7uMhachfef4=";
   };
-
-  # The pnpm version is required, but nixpkgs doesn't provide the exact version that Tracearr requires
-  # We can fudge this by replacing the version in the `package.json` with the one we have
-  postPatch = ''
-    sed -i 's|"packageManager": "pnpm@[^"]*"|"packageManager": "pnpm@${pnpm.version}"|' package.json
-  '';
 
   strictDeps = true;
 
@@ -47,9 +42,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [ nodejs ];
 
+  # `pnpm run build` just calls `turbo build`, but Turbo's default strict env
+  # mode drops the `pnpm_config_pm_on_fail=ignore` that `pnpmConfigHook` exports.
+  # Without it, the `pnpm run build` that Turbo spawns per workspace tries to
+  # fetch the pnpm version pinned in `package.json` and dies offline. Calling
+  # Turbo directly lets us pass `--env-mode=loose` so the setting survives.
   buildPhase = ''
     runHook preBuild
-    pnpm run build
+
+    turbo build --env-mode=loose
+
     runHook postBuild
   '';
 
@@ -58,7 +60,7 @@ stdenv.mkDerivation (finalAttrs: {
   checkPhase = ''
     runHook preCheck
 
-    pnpm test
+    turbo test --env-mode=loose
 
     runHook postCheck
   '';
