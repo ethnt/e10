@@ -47,11 +47,14 @@ jobs:
           os: ubuntu-24.04-arm
         package:
         - decluttarr
+        - faster-whisper-medium
         - fileflows
         - incus-apply
         - mazanoke
         - profilarr
         - profilarr-parser
+        - stable-ts-whisperless
+        - subgen
         - tf
         - tfl
         - tracearr
