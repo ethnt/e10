@@ -47,7 +47,6 @@
           inherit (nixpkgs-master) thanos;
 
           inherit (self'.packages)
-            bichon
             decluttarr
             fileflows
             incus-apply

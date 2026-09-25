@@ -1,7 +1,6 @@
 {
   perSystem = { pkgs, ... }: {
     packages = {
-      bichon = pkgs.callPackage ./bichon { };
       decluttarr = pkgs.callPackage ./decluttarr { };
       fileflows = pkgs.callPackage ./fileflows { };
       incus-apply = pkgs.callPackage ./incus-apply { };
