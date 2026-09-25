@@ -9,7 +9,7 @@
 , npmHooks
 , makeWrapper
 , cacert
-,
+, nix-update-script
 }:
 let
   flask-apscheduler = python313Packages.buildPythonPackage rec {
@@ -99,7 +99,7 @@ let
 in
 stdenv.mkDerivation {
   pname = "wizarr";
-  version = "2026.7.1";
+  version = "2026.9.1";
 
   inherit src;
 
@@ -148,6 +148,8 @@ stdenv.mkDerivation {
 
     runHook postInstall
   '';
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Media server invitation and onboarding tool for Jellyfin, Plex, and Emby";
