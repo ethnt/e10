@@ -21,6 +21,7 @@
     ++ [
       ./profiles/authelia
       ./profiles/caddy.nix
+      ./profiles/gatus.nix
       ./profiles/prometheus.nix
       ./profiles/prometheus-ping-exporter.nix
       ./profiles/grafana/default.nix
