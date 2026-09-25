@@ -6,7 +6,7 @@
       "https://nix-community.cachix.org"
       "https://numtide.cachix.org"
       "https://nixos-raspberrypi.cachix.org"
-      "https://cache.e10.camp/e10"
+      "http://omnibus:8080/e10"
       "https://e10.cachix.org"
     ];
 

@@ -6,7 +6,7 @@
 
   nix.settings = {
     substituters = [
-      "https://cache.e10.camp/e10"
+      "http://omnibus:8080/e10"
       "https://nix-community.cachix.org"
       "https://e10.cachix.org"
       "https://numtide.cachix.org"
