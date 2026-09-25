@@ -7,9 +7,8 @@
 , stable-ts-whisperless
 , stdenv
 , cudaSupport ? stdenv.hostPlatform.isLinux && stdenv.hostPlatform.isx86_64
-  # Choose only capabilities matching GPU on target host (htpc)
-, cudaCapabilities ? [ "6.1" ]
-, cudnnSupport ? false
+, cudaCapabilities ? [ "All" ]
+, cudnnSupport ? true
 ,
 }:
 

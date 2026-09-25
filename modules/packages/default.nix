@@ -11,6 +11,9 @@
       stable-ts-whisperless = pkgs.python3Packages.callPackage ./stable-ts-whisperless { };
       subgen = pkgs.callPackage ./subgen {
         inherit stable-ts-whisperless;
+        # Choose only capabilities matching GPU on target host (whirlwind)
+        cudaCapabilities = [ "8.9" ];
+        cudnnSupport = true;
       };
       tracearr = pkgs.callPackage ./tracearr { };
       tunarr = pkgs.callPackage ./tunarr { };

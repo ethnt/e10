@@ -19,6 +19,16 @@ in
       default = pkgs.subgen;
     };
 
+    dataDir = mkOption {
+      type = types.path;
+      default = "/var/lib/subgen";
+    };
+
+    modelDir = mkOption {
+      type = types.path;
+      default = "${cfg.dataDir}/models";
+    };
+
     modelPackage = mkOption {
       type = types.package;
     };
@@ -41,6 +51,23 @@ in
     threads = mkOption {
       type = types.ints.positive;
       default = 4;
+    };
+
+    transcribeDevice = mkOption {
+      type = types.enum [
+        "cpu"
+        "gpu"
+        "cuda"
+      ];
+      default = "cpu";
+    };
+
+    transcribeOrTranslate = mkOption {
+      type = types.enum [
+        "transcribe"
+        "translate"
+      ];
+      default = "transcribe";
     };
 
     concurrentTranscriptions = mkOption {
@@ -66,8 +93,9 @@ in
         WEBHOOK_HOST = cfg.listenAddress;
         WEBHOOK_PORT = toString cfg.port;
         WHISPER_MODEL = toString cfg.modelPackage;
-        MODEL_PATH = "/var/lib/subgen/models";
-        TRANSCRIBE_DEVICE = "cuda";
+        MODEL_PATH = cfg.modelDir;
+        TRANSCRIBE_DEVICE = cfg.transcribeDevice;
+        TRANSCRIBE_OR_TRANSLATE = cfg.transcribeOrTranslate;
         COMPUTE_TYPE = cfg.computeType;
         WHISPER_THREADS = toString cfg.threads;
         CONCURRENT_TRANSCRIPTIONS = toString cfg.concurrentTranscriptions;
@@ -87,11 +115,10 @@ in
         RestartSec = "10s";
         StateDirectory = "subgen";
         StateDirectoryMode = "0700";
-        WorkingDirectory = "/var/lib/subgen";
+        WorkingDirectory = cfg.dataDir;
         UMask = "0077";
 
         NoNewPrivileges = true;
-        # PrivateDevices would hide /dev/nvidia*, which CUDA needs.
         PrivateDevices = false;
         DevicePolicy = "closed";
         DeviceAllow = [

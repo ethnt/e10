@@ -7,11 +7,12 @@
       profiles.filesystems.files.personal
       profiles.filesystems.blockbuster
       profiles.media-management.fileflows.server
+      profiles.media-management.subgen
       profiles.hardware.nvidia
       profiles.home-automation.frigate.default
       profiles.sharing.nfs-client
       profiles.telemetry.prometheus-dcgm-exporter
-      profiles.virtualisation.docker
+      profiles.virtualisation.podman
     ]
     ++ [
       ./hardware-configuration.nix

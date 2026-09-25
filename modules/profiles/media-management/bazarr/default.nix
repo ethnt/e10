@@ -377,7 +377,7 @@
           user_agent = "";
         };
         whisperai = {
-          endpoint = "http://${hosts.htpc.config.networking.hostName}:${toString hosts.htpc.config.services.subgen.port}";
+          endpoint = "http://${hosts.whirlwind.config.networking.hostName}:${toString hosts.whirlwind.config.services.subgen.port}";
           loglevel = "INFO";
           pass_video_name = false;
           response = 5;

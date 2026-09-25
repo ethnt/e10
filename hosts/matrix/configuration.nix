@@ -30,7 +30,7 @@
       profiles.services.miniflux.default
       profiles.services.netbox.default
       profiles.services.paperless.default
-      profiles.virtualisation.docker
+      profiles.virtualisation.podman
       profiles.web-servers.caddy
     ]
     ++ [
