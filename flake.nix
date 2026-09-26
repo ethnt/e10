@@ -47,7 +47,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    colmena.url = "github:zhaofengli/colmena";
+    colmena.url = "github:zhaofengli/colmena/stable";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
 
     treefmt.url = "github:numtide/treefmt-nix";

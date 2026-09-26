@@ -22,6 +22,7 @@
         freeipmi
         ipmitool
         just
+        mosh
         nix-output-monitor
         nix-update
         nurl

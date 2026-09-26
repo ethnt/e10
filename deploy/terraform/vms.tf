@@ -40,10 +40,6 @@ resource "proxmox_virtual_environment_vm" "omnibus" {
     queues   = 4
   }
 
-  # serial_device {
-  #   device = "socket"
-  # }
-
   agent {
     enabled = true
     type    = "virtio"
@@ -120,14 +116,14 @@ resource "proxmox_virtual_environment_vm" "htpc" {
   migrate    = true
 
   cpu {
-    cores   = 16
+    cores   = 8
     sockets = 1
     type    = "host"
     flags   = ["+pcid", "+spec-ctrl", "+ssbd"]
   }
 
   memory {
-    dedicated = 65536
+    dedicated = 32768
   }
 
   disk {
@@ -144,10 +140,6 @@ resource "proxmox_virtual_environment_vm" "htpc" {
     bridge   = "vmbr0"
     firewall = false
     model    = "virtio"
-  }
-
-  serial_device {
-    device = "socket"
   }
 
   agent {
@@ -223,10 +215,6 @@ resource "proxmox_virtual_environment_vm" "whirlwind" {
     model    = "virtio"
   }
 
-  # serial_device {
-  #   device = "socket"
-  # }
-
   agent {
     enabled = true
     type    = "virtio"
@@ -267,7 +255,7 @@ resource "proxmox_virtual_environment_vm" "builder" {
   migrate    = true
 
   cpu {
-    cores   = 4
+    cores   = 8
     sockets = 1
     type    = "host"
     flags   = ["+pcid", "+spec-ctrl", "+ssbd"]
@@ -289,10 +277,6 @@ resource "proxmox_virtual_environment_vm" "builder" {
     bridge   = "vmbr0"
     firewall = false
     model    = "virtio"
-  }
-
-  serial_device {
-    device = "socket"
   }
 
   agent {
@@ -345,10 +329,6 @@ resource "proxmox_virtual_environment_vm" "matrix" {
     bridge   = "vmbr0"
     firewall = false
     model    = "virtio"
-  }
-
-  serial_device {
-    device = "socket"
   }
 
   agent {
@@ -445,10 +425,6 @@ resource "proxmox_virtual_environment_vm" "router" {
     model    = "virtio"
   }
 
-  serial_device {
-    device = "socket"
-  }
-
   agent {
     enabled = true
   }
@@ -530,10 +506,6 @@ resource "proxmox_virtual_environment_vm" "controller" {
     bridge   = "vmbr0"
     firewall = false
     model    = "virtio"
-  }
-
-  serial_device {
-    device = "socket"
   }
 
   agent {
