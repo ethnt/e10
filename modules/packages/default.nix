@@ -16,6 +16,7 @@
         cudnnSupport = true;
       };
       tracearr = pkgs.callPackage ./tracearr { };
+      tracearr-basemap = pkgs.callPackage ./tracearr-basemap { };
       tunarr = pkgs.callPackage ./tunarr { };
       unifi-os-server-image = pkgs.callPackage ./unifi-os-server-image { };
       wizarr = pkgs.callPackage ./wizarr { };

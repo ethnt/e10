@@ -4,21 +4,24 @@
 , fetchPnpmDeps
 , pnpmConfigHook
 , makeWrapper
-, nodejs
+, nodejs-slim_22
 , fetchFromGitHub
 , turbo
 , nix-update-script
 }:
-let pnpm = pnpm_12; in
+let
+  pnpm = pnpm_12.override { nodejs-slim = nodejs-slim_22; };
+  nodejs = nodejs-slim_22;
+in
 stdenv.mkDerivation (finalAttrs: {
   pname = "tracearr";
-  version = "2.5.0";
+  version = "2.5.1";
 
   src = fetchFromGitHub {
     owner = "connorgallopo";
     repo = "Tracearr";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-5iYCMUSuDg5iqOCFoVh4jHAymPkXlu3X3VMFKGXee8c=";
+    hash = "sha256-r0hfoZn005oEjxP32hUW+rqztkEHXHOTbfTEEUDN9yU=";
   };
 
   pnpmDeps = fetchPnpmDeps {
@@ -42,11 +45,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [ nodejs ];
 
-  # `pnpm run build` just calls `turbo build`, but Turbo's default strict env
-  # mode drops the `pnpm_config_pm_on_fail=ignore` that `pnpmConfigHook` exports.
-  # Without it, the `pnpm run build` that Turbo spawns per workspace tries to
-  # fetch the pnpm version pinned in `package.json` and dies offline. Calling
-  # Turbo directly lets us pass `--env-mode=loose` so the setting survives.
   buildPhase = ''
     runHook preBuild
 
@@ -74,6 +72,7 @@ stdenv.mkDerivation (finalAttrs: {
 
     mkdir -p $out/{lib/tracearr,bin}
     cp -r {node_modules,apps,packages,data} $out/lib/tracearr
+
     makeWrapper ${lib.getExe nodejs} $out/bin/tracearr \
       --add-flags $out/lib/tracearr/apps/server/dist/index.js \
       --set NODE_PATH "$out/lib/tracearr/node_modules:$out/lib/tracearr/apps/server/node_modules:$out/lib/tracearr/apps/web/node_modules" \

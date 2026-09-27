@@ -19,6 +19,7 @@ in
 
     package = mkOption {
       type = types.package;
+      description = "Package to use for Declutarr";
       default = pkgs.decluttarr;
     };
 

@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation rec {
   pname = "mazaonke";
-  version = "1.1.6";
+  version = "1.1.7";
 
   src = fetchFromGitHub {
     owner = "civilblur";
     repo = "mazanoke";
     tag = "v${version}";
-    hash = "sha256-cBGk2SYQs53jA9luHp/lc4aWpu83pcbLp7dBnkvBIT8=";
+    hash = "sha256-3w3iJvLyykbzuw+rpoGPpv7doYN+jecENg85VgYS5Fw=";
   };
 
   buildPhase = ''

@@ -13,7 +13,6 @@ in
 
   services.blocky = {
     enable = true;
-    package = pkgs.multiverse.version "blocky" "0.31.0"; # Avoiding EDNS0 bug: https://github.com/0xERR0R/blocky/issues/2212
     settings = {
       ports.http = 4022;
       upstreams = {
