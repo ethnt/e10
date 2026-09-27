@@ -112,6 +112,62 @@
     ip: ["192.168.1.2"]
     local: true
 
+- name: Create NetworkRackSwitch dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] UniFi NetworkRackSwitch"
+    host: NetworkRackSwitch
+    domain: satan.network
+    ip: ["192.168.1.10"]
+    hardware_addr: e4:38:83:1c:07:3f
+
+- name: Create DemarcationPointSwitch dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] UniFi DemarcationPointSwitch"
+    host: DemarcationPointSwitch
+    domain: satan.network
+    ip: ["192.168.1.11"]
+    hardware_addr: 78:45:58:6f:bd:56
+
+- name: Create RackSwitch dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] UniFi RackSwitch"
+    host: RackSwitch
+    domain: satan.network
+    ip: ["192.168.1.12"]
+    hardware_addr: d8:b3:70:3a:3f:f4
+
+- name: Create SecondaryRackSwitch dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] UniFi SecondaryRackSwitch"
+    host: SecondaryRackSwitch
+    domain: satan.network
+    ip: ["192.168.1.13"]
+    hardware_addr: 74:83:c2:0f:10:cd
+
+- name: Create TVSwitch dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] UniFi TVSwitch"
+    host: TvSwitch
+    domain: satan.network
+    ip: ["192.168.1.14"]
+    hardware_addr: f4:92:bf:a3:68:bb
+
+- name: Create OfficeAccessPoint dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] UniFi OfficeAccessPoint"
+    host: OfficeAccessPoint
+    domain: satan.network
+    ip: ["192.168.1.15"]
+    hardware_addr: 0c:ea:14:18:25:f5
+
+- name: Create LivingRoomAccessPoint dnsmasq host
+  oxlorg.opnsense.dnsmasq_host:
+    description: "[Ansible] UniFi LivingRoomAccessPoint"
+    host: LivingRoomAccessPoint
+    domain: satan.network
+    ip: ["192.168.1.16"]
+    hardware_addr: 0c:ea:14:27:95:13
+
 - name: Create TP-Link EP25 (Espresso Machine) dnsmasq host
   oxlorg.opnsense.dnsmasq_host:
     description: "[Ansible] TP-Link EP25 (Espresso Machine)"
