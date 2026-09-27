@@ -58,6 +58,7 @@ jobs:
         - tf
         - tfl
         - tracearr
+        - tracearr-basemap
         - tunarr
         - unifi-os-server-image
         - wizarr

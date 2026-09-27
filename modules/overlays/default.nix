@@ -58,6 +58,7 @@
             stable-ts-whisperless
             subgen
             tracearr
+            tracearr-basemap
             tunarr
             unifi-os-server-image
             wizarr

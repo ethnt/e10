@@ -130,6 +130,12 @@ in
       };
     };
 
+    basemapFile = mkOption {
+      type = types.nullOr types.path;
+      description = "Path to the PMTiles vector basemap archive used by the Stream Map";
+      default = pkgs.tracearr-basemap;
+    };
+
     corsOrigin = mkOption {
       type = types.nullOr types.str;
       description = "If behind a HTTPS reverse proxy, proxy the `X-Forwarded-Host` header, or set this option to provide an origin URL for CORS";
@@ -253,6 +259,7 @@ in
         APP_VERSION = cfg.package.version;
         TRUST_PROXY = lib.boolToString cfg.trustProxy;
       }
+      // lib.optionalAttrs (cfg.basemapFile != null) { MAP_BASEMAP_PATH = toString cfg.basemapFile; }
       // lib.optionalAttrs (cfg.corsOrigin != null) { CORS_ORIGIN = cfg.corsOrigin; }
       // lib.optionalAttrs cfg.oidc.enable {
         OIDC_ISSUER_URL = cfg.oidc.issuerUrl;
