@@ -15,10 +15,7 @@ let
 
   nodeNixpkgsFor =
     configuration:
-    if (configuration.config.boot.loader.raspberry-pi.enable or false) then
-      import configuration.pkgs.path { inherit (configuration.pkgs.stdenv.hostPlatform) system; }
-    else
-      configuration.pkgs;
+    import configuration.pkgs.path { inherit (configuration.pkgs.stdenv.hostPlatform) system; };
 
   mkColmenaMeta = configurations: {
     meta = {
