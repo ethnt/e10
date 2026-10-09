@@ -43,6 +43,16 @@
           redir @httpget https://{host}{uri}
         '';
       };
+
+      "errors.e10.camp" = {
+        host = hosts.monitor;
+        port = hosts.monitor.config.services.glitchtip.settings.GRANIAN_PORT;
+        extraConfig = ''
+          request_body {
+            max_size 256MiB
+          }
+        '';
+      };
     };
   };
 }
