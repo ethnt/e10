@@ -22,6 +22,8 @@
     };
   };
 
+  environment.systemPackages = [ pkgs.glitchtip-cli ];
+
   services.glitchtip = {
     enable = true;
     package = pkgs.glitchtip.overrideAttrs (old: {
@@ -34,6 +36,7 @@
     });
     settings = {
       GLITCHTIP_DOMAIN = "https://errors.e10.camp";
+      CSRF_TRUSTED_ORIGINS = "https://errors.e10.camp";
     };
     environmentFiles = [ config.sops.templates."glitchtip/environment_file".path ];
   };

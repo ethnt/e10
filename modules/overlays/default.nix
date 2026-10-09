@@ -50,6 +50,7 @@
             decluttarr
             faster-whisper-medium
             fileflows
+            glitchtip-cli
             incus-apply
             mazanoke
             profilarr

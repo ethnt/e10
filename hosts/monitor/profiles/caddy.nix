@@ -46,7 +46,7 @@
 
       "errors.e10.camp" = {
         host = hosts.monitor;
-        port = 8000;
+        port = hosts.monitor.config.services.glitchtip.settings.GRANIAN_PORT;
         extraConfig = ''
           request_body {
             max_size 256MiB
