@@ -65,7 +65,7 @@ rsync *args:
     rsync -e "ssh -F $SSH_CONFIG_FILE" {{ args }}
 
 sync-e10-land:
-    rsync -rtu --delete --progress -e "ssh -F $SSH_CONFIG_FILE" ~/Documents/e10.land/ matrix:/var/www/e10.land/
+    rsync -rtu --delete --exclude ".DS_Store" --progress -e "ssh -F $SSH_CONFIG_FILE" ~/Documents/e10.land/ matrix:/var/www/e10.land/
 
 terraform *args:
     terraform -chdir=./deploy/terraform/ {{ args }}

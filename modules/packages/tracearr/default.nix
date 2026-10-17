@@ -15,20 +15,20 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "tracearr";
-  version = "2.5.1";
+  version = "2.8.3";
 
   src = fetchFromGitHub {
     owner = "connorgallopo";
     repo = "Tracearr";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-r0hfoZn005oEjxP32hUW+rqztkEHXHOTbfTEEUDN9yU=";
+    hash = "sha256-DS5I9BFgpp7y9l3egALuZaTW0d+IK9gsKybiF0R3tNk=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
     inherit pnpm;
     fetcherVersion = 4;
-    hash = "sha256-u1/mfBG+IxXQdKaTdCWeIwGKl4Eo1aMq7uMhachfef4=";
+    hash = "sha256-o/AtQkSOAHJuUsbLjGWwytcKO2LwxK0oXVtsE5Q7pyo=";
   };
 
   strictDeps = true;
