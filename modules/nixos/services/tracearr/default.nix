@@ -32,6 +32,12 @@ in
       default = "/var/lib/tracearr";
     };
 
+    backupDir = mkOption {
+      type = types.path;
+      description = "Backup directory for Tracearr";
+      default = "/var/backup/tracearr";
+    };
+
     user = mkOption {
       type = types.str;
       description = "User to run Tracearr under";
@@ -198,6 +204,14 @@ in
           mode = "0700";
         };
       };
+
+      ${cfg.backupDir} = {
+        "d" = {
+          user = "tracearr";
+          group = "tracearr";
+          mode = "0700";
+        };
+      };
     };
 
     services.postgresql =
@@ -248,6 +262,7 @@ in
       ++ (lib.optional cfg.database.createLocally "postgresql.service")
       ++ (lib.optional cfg.redis.createLocally "redis-${cfg.redis.name}.service");
       wantedBy = [ "multi-user.target" ];
+      path = [ config.services.postgresql.package ];
       environment = {
         DATABASE_URL =
           if cfg.database.url != null then
@@ -258,6 +273,7 @@ in
         PORT = toString cfg.port;
         APP_VERSION = cfg.package.version;
         TRUST_PROXY = lib.boolToString cfg.trustProxy;
+        BACKUP_DIR = cfg.backupDir;
       }
       // lib.optionalAttrs (cfg.basemapFile != null) { MAP_BASEMAP_PATH = toString cfg.basemapFile; }
       // lib.optionalAttrs (cfg.corsOrigin != null) { CORS_ORIGIN = cfg.corsOrigin; }
