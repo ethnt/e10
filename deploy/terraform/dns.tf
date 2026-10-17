@@ -163,6 +163,14 @@ resource "aws_route53_record" "healthchecks_e10_camp" {
   records = [hcloud_server.monitor.ipv4_address]
 }
 
+resource "aws_route53_record" "errors_e10_camp" {
+  zone_id = aws_route53_zone.e10_camp.zone_id
+  name    = "errors.e10.camp"
+  type    = "A"
+  ttl     = 60
+  records = [hcloud_server.monitor.ipv4_address]
+}
+
 resource "aws_route53_record" "wildcard_e10_camp" {
   zone_id = aws_route53_zone.e10_camp.zone_id
   name    = "*.e10.camp"

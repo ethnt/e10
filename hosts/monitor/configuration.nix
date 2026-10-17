@@ -17,6 +17,7 @@
       profiles.observability.uptime-kuma
       profiles.telemetry.prometheus-ping-exporter
       profiles.telemetry.prometheus-redis-exporter
+      profiles.applications.glitchtip.default
     ]
     ++ [
       ./profiles/authelia

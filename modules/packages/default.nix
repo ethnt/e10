@@ -4,6 +4,7 @@
       decluttarr = pkgs.callPackage ./decluttarr { };
       faster-whisper-medium = pkgs.callPackage ./faster-whisper-medium { };
       fileflows = pkgs.callPackage ./fileflows { };
+      glitchtip-cli = pkgs.callPackage ./glitchtip-cli { };
       incus-apply = pkgs.callPackage ./incus-apply { };
       mazanoke = pkgs.callPackage ./mazanoke { };
       profilarr = pkgs.callPackage ./profilarr { };

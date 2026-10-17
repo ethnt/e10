@@ -50,6 +50,7 @@
             decluttarr
             faster-whisper-medium
             fileflows
+            glitchtip-cli
             incus-apply
             mazanoke
             profilarr
@@ -69,6 +70,15 @@
               # https://github.com/NixOS/nixpkgs/issues/542586
               paho-mqtt = pyprev.paho-mqtt.overridePythonAttrs (_: {
                 doCheck = false;
+              });
+
+              # GlitchTip 6.2.6 requires django-organizations ~= 2.7 for `aadd_user`
+              django-organizations = pyprev.django-organizations.overridePythonAttrs (old: rec {
+                version = "2.7.0";
+                src = old.src.override {
+                  tag = "v${version}";
+                  hash = "sha256-q9E3Dc9Vg3OrQvzXvmz6L1SlY5Cm1wz4CkJAIR5/xA4=";
+                };
               });
             })
           ];

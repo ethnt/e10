@@ -14,6 +14,7 @@
   services.healthchecks = {
     enable = true;
     listenAddress = "0.0.0.0";
+    port = 9075;
     settings = {
       ADMINS = lib.strings.join "," [ "ethan+e10@turkeltaub.dev" ];
       SECRET_KEY_FILE = config.sops.secrets.healthchecks_secret_key.path;

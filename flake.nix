@@ -17,6 +17,8 @@
       "e10.cachix.org-1:/++Tmo/ghEqnLwsQJdXn04c262agRCK5PaPYz8NcVfo="
       "e10:h64l3MobkrdOGab0Xaambo3ROC/w05Yi70oJ8U8ZEfQ="
     ];
+
+    extra-deprecated-features = [ "or-as-identifier" ];
   };
 
   inputs = {

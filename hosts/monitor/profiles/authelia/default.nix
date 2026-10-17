@@ -130,6 +130,26 @@
             userinfo_signed_response_alg = "none";
             token_endpoint_auth_method = "client_secret_basic";
           }
+          {
+            client_id = "YWyEfz-Oy1zhQSY5rNsBgj05NpUuv_ERjN.ulXU7jE1Qj_tMnDQugfnV62.nyq6~~7RcE7V5";
+            client_name = "GlitchTip";
+            client_secret = "$pbkdf2-sha512$310000$0hJRjCe0cMdkajLMckXK.A$tLkLGv1AYHWqH/Gj4CTVFAGpDlpnfjfSD5bGQy9L47k1Jcc0SsQG/9h1mqy9UIU1XBuvTp5Bd3/A/WZBITTvAg";
+            public = false;
+            authorization_policy = "two_factor";
+            require_pkce = false;
+            pkce_challenge_method = "";
+            redirect_uris = [ "https://errors.e10.camp/accounts/oidc/authelia/login/callback/" ];
+            scopes = [
+              "openid"
+              "email"
+              "profile"
+            ];
+            response_types = [ "code" ];
+            grant_types = [ "authorization_code" ];
+            access_token_signed_response_alg = "none";
+            userinfo_signed_response_alg = "none";
+            token_endpoint_auth_method = "client_secret_post";
+          }
         ];
       };
 

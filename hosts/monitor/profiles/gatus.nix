@@ -391,6 +391,11 @@ in
               group = "Monitor";
             })
             (mkEndpoint {
+              name = "GlitchTip";
+              url = "https://errors.e10.camp";
+              group = "Monitor";
+            })
+            (mkEndpoint {
               name = "Loki";
               url = "tcp://monitor:3100";
               group = "Monitor";
