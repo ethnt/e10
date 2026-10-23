@@ -55,6 +55,7 @@
       "homeassistant_hardware"
       "homeassistant_sky_connect"
       "homekit_controller"
+      "hue_ble"
       "ipp"
       "isal"
       "matter"
@@ -82,6 +83,8 @@
         homekit-audio-proxy
         ibeacon-ble
         pyqrcode
+        # IPP
+        pyipp
       ];
 
     customComponents =

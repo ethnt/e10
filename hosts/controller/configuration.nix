@@ -8,7 +8,7 @@
       profiles.hardware.bluetooth
       profiles.home-automation.home-assistant.default
       profiles.networking.blocky.default
-      profiles.networking.speedtest-tracker.default
+      # profiles.networking.speedtest-tracker.default
       profiles.networking.unifi
       profiles.services.attic-watch-store.default
       profiles.telemetry.prometheus-ping-exporter
