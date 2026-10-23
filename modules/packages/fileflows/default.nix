@@ -23,12 +23,13 @@ let
 
     cd "$FILEFLOWS_SERVER_BASE_DIR"
 
-    rm -rf Server Node FlowRunner
+    rm -rf Server Node Agent FlowRunner Libraries
 
     cp -r @OUT@/fileflows/Server .
-    cp -r @OUT@/fileflows/Node .
+    cp -r @OUT@/fileflows/Agent .
     cp -r @OUT@/fileflows/FlowRunner .
-    chmod -R u+w Server Node FlowRunner
+    cp -r @OUT@/fileflows/Libraries .
+    chmod -R u+w Server Agent FlowRunner Libraries
 
     cd Server
     exec "${dotnet}/bin/dotnet" FileFlows.Server.dll "$@"
@@ -44,23 +45,24 @@ let
 
     cd "$FILEFLOWS_NODE_BASE_DIR"
 
-    rm -rf Node FlowRunner
+    rm -rf Node Agent FlowRunner Libraries
 
-    cp -r @OUT@/fileflows/Node .
+    cp -r @OUT@/fileflows/Agent .
     cp -r @OUT@/fileflows/FlowRunner .
-    chmod -R u+w Node FlowRunner
+    cp -r @OUT@/fileflows/Libraries .
+    chmod -R u+w Agent FlowRunner Libraries
 
-    cd Node
-    exec "${dotnet}/bin/dotnet" FileFlows.Node.dll "$@"
+    cd Agent
+    exec "${dotnet}/bin/dotnet" FileFlows.Agent.dll "$@"
   '';
 in
 stdenvNoCC.mkDerivation rec {
   pname = "fileflows";
-  version = "26.9.5.8383";
+  version = "26.10.3.8555";
   src = fetchzip {
     url = "https://fileflows.com/downloads/TarXz/${version}";
     extension = "tar.xz";
-    hash = "sha256-1A/7+k267+rvBUyhSpkmKT2PVNnucmjcg/JT4PMMDZ0=";
+    hash = "sha256-50KhV6dK8jjABp/9jwxu7855eyVcvq3Uu1J1b1MFqmk=";
     stripRoot = false;
   };
 

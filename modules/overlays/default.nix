@@ -23,6 +23,14 @@
               ];
             };
           };
+
+          nixpkgs-stable = import inputs.nixpkgs-stable {
+            inherit system;
+
+            config = {
+              allowUnfree = true;
+            };
+          };
         in
         {
           multiverse = inputs.nixpkgs-multiverse.lib.mkMultiverse {
@@ -45,6 +53,8 @@
 
           # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923
           inherit (nixpkgs-master) thanos;
+
+          inherit (nixpkgs-stable) vector;
 
           inherit (self'.packages)
             decluttarr

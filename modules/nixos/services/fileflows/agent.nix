@@ -8,11 +8,11 @@
 with lib;
 
 let
-  cfg = config.services.fileflows.node;
+  cfg = config.services.fileflows.agent;
 in
 {
-  options.services.fileflows.node = {
-    enable = mkEnableOption "Enable FileFlows node";
+  options.services.fileflows.agent = {
+    enable = mkEnableOption "Enable FileFlows agent";
 
     package = mkOption {
       type = types.package;
@@ -22,7 +22,7 @@ in
     dataDir = mkOption {
       type = types.path;
       description = "Path to store FileFlows files in";
-      default = "/var/lib/fileflows/node";
+      default = "/var/lib/fileflows/agent";
     };
 
     user = mkOption {
@@ -57,7 +57,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.tmpfiles.settings."10-fileflows-node" = {
+    systemd.tmpfiles.settings."agent" = {
       ${cfg.dataDir} = {
         "d" = {
           inherit (cfg) user group;
@@ -67,16 +67,16 @@ in
 
       "${cfg.binDir}"."L+".argument = "${
         pkgs.symlinkJoin {
-          name = "fileflows-node-extra-pkgs";
+          name = "fileflows-agent-extra-pkgs";
           paths = cfg.extraPkgs;
         }
       }/bin";
     };
 
-    systemd.services.fileflows-node = {
-      description = "FileFlows node";
-      script = "${cfg.package}/bin/node --no-gui --systemd-service --server ${cfg.serverUrl}";
-      environment.FILEFLOWS_NODE_BASE_DIR = cfg.dataDir;
+    systemd.services.fileflows-agent = {
+      description = "FileFlows agent";
+      script = "${cfg.package}/bin/agent --no-gui --systemd-service --server ${cfg.serverUrl}";
+      environment.FILEFLOWS_AGENT_BASE_DIR = cfg.dataDir;
 
       serviceConfig = {
         Type = "simple";

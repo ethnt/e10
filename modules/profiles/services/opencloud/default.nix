@@ -85,6 +85,7 @@ in
 
   services.opencloud = {
     enable = true;
+    package = pkgs.opencloud;
 
     inherit url;
 

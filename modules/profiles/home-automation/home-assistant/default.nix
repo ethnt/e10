@@ -55,6 +55,7 @@
       "homeassistant_hardware"
       "homeassistant_sky_connect"
       "homekit_controller"
+      "hue_ble"
       "ipp"
       "isal"
       "matter"
@@ -82,6 +83,8 @@
         homekit-audio-proxy
         ibeacon-ble
         pyqrcode
+        # IPP
+        pyipp
       ];
 
     customComponents =
@@ -116,6 +119,8 @@
         longitude = "!secret longitude";
         elevation = "!secret elevation";
         unit_system = "us_customary";
+        internal_url = "http://192.168.1.2:8123";
+        external_url = "https://hass.e10.camp";
       };
     };
   };
