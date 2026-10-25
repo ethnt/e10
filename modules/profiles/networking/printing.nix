@@ -29,21 +29,25 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
-    allowInterfaces = [
-      "ens18"
-      "vlan10"
-    ];
-    denyInterfaces = [
-      "docker0"
-      "veth*"
-    ];
-    publish = {
-      enable = true;
-      userServices = true;
-      addresses = true;
-      domain = true;
-      hinfo = true;
-      workstation = true;
+    settings = {
+      server = {
+        allow-interfaces = [
+          "ens18"
+          "vlan10"
+        ];
+        deny-interfaces = [
+          "docker0"
+          "veth*"
+        ];
+      };
+      publish = {
+        publish-domain = true;
+        publish-workstation = true;
+        publish-hinfo = true;
+        publish-addresses = true;
+        disable-user-service-publishing = false;
+        disable-publishing = false;
+      };
     };
   };
 }
