@@ -45,7 +45,6 @@
             sonarr
             netbox
             plex
-            prometheus-dcgm-exporter
             immich
             handbrake
             karakeep
@@ -56,9 +55,7 @@
 
           inherit (nixpkgs-stable) vector;
 
-          dcgm-exporter = nixpkgs-stable.dcgm-exporter.overrideAttrs (oldAttrs: {
-            doCheck = false;
-          });
+          dcgm = pkgs.dcgm.overrideAttrs { doCheck = false; };
 
           inherit (self'.packages)
             decluttarr
