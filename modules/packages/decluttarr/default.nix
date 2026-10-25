@@ -28,7 +28,6 @@ python3Packages.buildPythonApplication rec {
     pytest-asyncio
     black
     pylint
-    autoflake
     isort
     pyyaml-env-tag
     demjson3

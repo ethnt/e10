@@ -56,6 +56,10 @@
 
           inherit (nixpkgs-stable) vector;
 
+          dcgm-exporter = nixpkgs-stable.dcgm-exporter.overrideAttrs (oldAttrs: {
+            doCheck = false;
+          });
+
           inherit (self'.packages)
             decluttarr
             faster-whisper-medium
