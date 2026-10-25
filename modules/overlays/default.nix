@@ -62,6 +62,7 @@
             faster-whisper-medium
             fileflows
             glitchtip-cli
+            grafana-postgresql-plugin
             incus-apply
             mazanoke
             profilarr

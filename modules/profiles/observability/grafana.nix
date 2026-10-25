@@ -2,11 +2,16 @@
   services.grafana = {
     enable = true;
 
-    declarativePlugins = with pkgs.grafanaPlugins; [
+    declarativePlugins = [
+      pkgs.grafana-postgresql-plugin
+    ]
+    ++ (with pkgs.grafanaPlugins; [
       grafana-clock-panel
       grafana-mqtt-datasource
       grafana-piechart-panel
-    ];
+      prometheus
+      loki
+    ]);
 
     settings = {
       server = {
