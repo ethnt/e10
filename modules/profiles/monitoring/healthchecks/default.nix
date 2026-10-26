@@ -1,4 +1,10 @@
-{ config, lib, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   sops.secrets = {
     healthchecks_secret_key = {
       sopsFile = ./secrets.json;
@@ -13,6 +19,15 @@
 
   services.healthchecks = {
     enable = true;
+    package = pkgs.healthchecks.overrideAttrs (old: {
+      postFixup = (old.postFixup or "") + ''
+        sed -i '/^EMAIL_HOST_PASSWORD_FILE = /,/^$/d' $out/opt/healthchecks/hc/local_settings.py
+        if grep -q EMAIL_HOST_PASSWORD $out/opt/healthchecks/hc/local_settings.py; then
+          echo "failed to strip EMAIL_HOST_PASSWORD from local_settings.py" >&2
+          exit 1
+        fi
+      '';
+    });
     listenAddress = "0.0.0.0";
     port = 9075;
     settings = {

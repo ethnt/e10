@@ -99,7 +99,7 @@ let
 in
 stdenv.mkDerivation {
   pname = "wizarr";
-  version = "2026.9.1";
+  version = "2026.10.1";
 
   inherit src;
 

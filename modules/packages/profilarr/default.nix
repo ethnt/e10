@@ -13,13 +13,13 @@
 }:
 
 let
-  version = "2.2.0";
+  version = "2.3.1";
 
   src = fetchFromGitHub {
     owner = "Dictionarry-Hub";
     repo = "Profilarr";
     tag = "v${version}";
-    hash = "sha256-88BT9GUEaPCPmD4pURcknaXrSzYHzjYnDResc4Uc2qY=";
+    hash = "sha256-b+76GvuNIFIrf+Sts+uFERtCtqW/vORbS9X2YF4Uhkg=";
   };
 
   denoDeps = stdenv.mkDerivation {
@@ -57,6 +57,8 @@ let
       mkdir -p $out
       cp -r node_modules $out/node_modules
       cp -r $DENO_DIR $out/deno-dir
+      # Deno >= 2.9 symlinks node_compat_bin/node to its own binary
+      rm -rf $out/deno-dir/node_compat_bin
 
       runHook postInstall
     '';
@@ -66,8 +68,8 @@ let
     outputHashMode = "recursive";
     outputHash =
       {
-        x86_64-linux = "sha256-ll8x57a9zFGTIrAaCfnfnpcTnuHqGQF2eOHdd7Gidco=";
-        aarch64-linux = "sha256-npeoRIUHRvPu8QsZ7bGQCRyQy3suPqgMnvrI6HN5kBo=";
+        x86_64-linux = "sha256-r84Hl1CNM8QJaLqRZyTFhm1yyQOAGHrsUdpLBjEuqdk=";
+        aarch64-linux = "sha256-DwEkBqZy+oDv/UywWpypHxV2CAScJ5eNf6yEZLEjGbA=";
       }.${stdenv.hostPlatform.system}
         or (throw "profilarr: unsupported system ${stdenv.hostPlatform.system}");
   };

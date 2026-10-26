@@ -20,24 +20,35 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "tunarr";
-  version = "1.3.15";
+  version = "2026.10.4";
 
   src = fetchFromGitHub {
     owner = "chrisbenincasa";
     repo = "tunarr";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-8ClWs3cTD0ABbuXthu5/emxOMXZExfTNhWGtWV33pOo=";
+    hash = "sha256-WnMy313+SXLCE88comXQmCM/KBZXh2rchxrcR5vna00=";
   };
 
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
     inherit pnpm;
     fetcherVersion = 4;
-    hash = "sha256-xZUqsIMGVu9sGeTz6WNpcZbid1ueQmXwpKbNw79Al5M=";
+    hash = "sha256-XmLyIkeeO5GS1+u6PmlmTx9CdkvLBIWTiGTX0b/P14Y=";
   };
 
   postPatch = ''
     sed -i 's|"packageManager": "pnpm@[^"]*"|"packageManager": "pnpm@${pnpm.version}"|' package.json
+
+    # The CLI bootstraps long-lived handles (e.g. the log roll scheduler) and
+    # never exits on its own, which hangs the service's ExecStartPre
+    substituteInPlace server/src/cli/settings/settingsUpdateCommand.ts \
+      --replace-fail \
+        "      console.error(e);
+        }" \
+        "      console.error(e);
+          process.exit(1);
+        }
+        process.exit(0);"
   '';
 
   strictDeps = true;

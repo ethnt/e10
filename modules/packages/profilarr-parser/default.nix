@@ -8,13 +8,13 @@
 
 buildDotnetModule rec {
   pname = "profilarr-parser";
-  version = "2.2.0";
+  version = "2.3.1";
 
   src = fetchFromGitHub {
     owner = "Dictionarry-Hub";
     repo = "Profilarr";
     tag = "v${version}";
-    hash = "sha256-88BT9GUEaPCPmD4pURcknaXrSzYHzjYnDResc4Uc2qY=";
+    hash = "sha256-b+76GvuNIFIrf+Sts+uFERtCtqW/vORbS9X2YF4Uhkg=";
   };
 
   sourceRoot = "${src.name}/src/services/parser";

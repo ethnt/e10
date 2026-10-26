@@ -5,6 +5,7 @@
       faster-whisper-medium = pkgs.callPackage ./faster-whisper-medium { };
       fileflows = pkgs.callPackage ./fileflows { };
       glitchtip-cli = pkgs.callPackage ./glitchtip-cli { };
+      grafana-postgresql-plugin = pkgs.callPackage ./grafana-postgresql-plugin { };
       incus-apply = pkgs.callPackage ./incus-apply { };
       mazanoke = pkgs.callPackage ./mazanoke { };
       profilarr = pkgs.callPackage ./profilarr { };

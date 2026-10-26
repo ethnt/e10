@@ -23,6 +23,14 @@
               ];
             };
           };
+
+          nixpkgs-stable = import inputs.nixpkgs-stable {
+            inherit system;
+
+            config = {
+              allowUnfree = true;
+            };
+          };
         in
         {
           multiverse = inputs.nixpkgs-multiverse.lib.mkMultiverse {
@@ -37,7 +45,6 @@
             sonarr
             netbox
             plex
-            prometheus-dcgm-exporter
             immich
             handbrake
             karakeep
@@ -46,11 +53,16 @@
           # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923
           inherit (nixpkgs-master) thanos;
 
+          inherit (nixpkgs-stable) vector;
+
+          dcgm = pkgs.dcgm.overrideAttrs { doCheck = false; };
+
           inherit (self'.packages)
             decluttarr
             faster-whisper-medium
             fileflows
             glitchtip-cli
+            grafana-postgresql-plugin
             incus-apply
             mazanoke
             profilarr

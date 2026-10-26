@@ -16,7 +16,7 @@ in
       owner = "netbox";
     };
 
-    netbox_api_token_peppers = {
+    netbox_api_token_pepper = {
       sopsFile = ./secrets.json;
       owner = "netbox";
     };
@@ -33,7 +33,9 @@ in
         netbox-inventory
       ];
     secretKeyFile = config.sops.secrets.netbox_secret_key.path;
-    apiTokenPeppersFile = config.sops.secrets.netbox_api_token_peppers.path;
+    apiTokenPepperFiles = {
+      "1" = config.sops.secrets.netbox_api_token_pepper.path;
+    };
     # listenAddress = "0.0.0.0";
     settings = {
       CSRF_TRUSTED_ORIGINS = [
