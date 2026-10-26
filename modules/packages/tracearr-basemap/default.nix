@@ -5,8 +5,8 @@
 , jq
 }:
 let
-  version = "2.8.3";
-  layerDigest = "sha256:408ce66d710e80ceee1c8d5a27a74f4b164c8f61064680fbbbf57ac2cd77582d";
+  version = "3.1.1";
+  layerDigest = "sha256:b591c5bbc42208b5d6a4e35fac0b08f40d5a408199543b7daa53552a41544fbc";
 in
 stdenvNoCC.mkDerivation {
   pname = "tracearr-basemap";

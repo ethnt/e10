@@ -58,11 +58,11 @@ let
 in
 stdenvNoCC.mkDerivation rec {
   pname = "fileflows";
-  version = "26.10.3.8555";
+  version = "26.10.4.8572";
   src = fetchzip {
     url = "https://fileflows.com/downloads/TarXz/${version}";
     extension = "tar.xz";
-    hash = "sha256-50KhV6dK8jjABp/9jwxu7855eyVcvq3Uu1J1b1MFqmk=";
+    hash = "sha256-EqeQB2KjkrD5cndJDethsGXkV1BiBrQCn72g7Q8vwcs=";
     stripRoot = false;
   };
 
