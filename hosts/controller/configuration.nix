@@ -10,6 +10,7 @@
       profiles.networking.blocky.default
       profiles.networking.speedtest-tracker.default
       profiles.networking.unifi
+      profiles.security.crowdsec.server
       profiles.services.attic-watch-store.default
       profiles.telemetry.prometheus-ping-exporter
       profiles.telemetry.prometheus-smokeping-exporter
@@ -21,6 +22,7 @@
     ]
     ++ [
       ./profiles/prometheus-ping-exporter.nix
+      ./profiles/crowdsec/default.nix
     ];
 
   deployment = {

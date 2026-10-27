@@ -4,6 +4,7 @@
     core
     ++ hcloud
     ++ web
+    ++ public
     ++ [
       profiles.communications.grafana-to-ntfy.default
       profiles.communications.ntfy.default
@@ -22,6 +23,7 @@
     ++ [
       ./profiles/authelia
       ./profiles/caddy.nix
+      ./profiles/crowdsec/default.nix
       ./profiles/gatus.nix
       ./profiles/prometheus.nix
       ./profiles/prometheus-ping-exporter.nix

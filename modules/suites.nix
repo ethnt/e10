@@ -74,4 +74,10 @@
     profiles.hardware.rpi4
     profiles.filesystems.log2ram
   ];
+
+  public = [
+    profiles.security.crowdsec.agent
+    # profiles.security.crowdsec.bounders.firewall
+    profiles.security.crowdsec.bouncers.caddy
+  ];
 }
