@@ -9,6 +9,16 @@
 
   services.prometheus.scrapeConfigs = [
     {
+      job_name = "crowdsec";
+      static_configs = [
+        {
+          targets = [
+            "${hosts.monitor.config.networking.hostName}:${toString hosts.monitor.config.services.crowdsec.settings.config.prometheus.listen_port}"
+          ];
+        }
+      ];
+    }
+    {
       job_name = "blocky";
       static_configs = [
         {

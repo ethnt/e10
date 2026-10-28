@@ -91,6 +91,19 @@
             };
           }
           {
+            name = "PostgreSQL (CrowdSec)";
+            type = "postgres";
+            access = "proxy";
+            url = hosts.monitor.config.networking.hostName;
+            user = "crowdsec";
+            postgresVersion = 1800;
+            jsonData = {
+              user = "crowdsec";
+              database = "crowdsec";
+              sslmode = "disable";
+            };
+          }
+          {
             name = "MQTT";
             type = "grafana-mqtt-datasource";
             access = "proxy";
@@ -180,6 +193,10 @@
         {
           name = "Frigate";
           options.path = ./provisioning/frigate.json;
+        }
+        {
+          name = "CrowdSec - Attacks";
+          options.path = ./provisioning/crowdsec-attacks.json;
         }
       ];
 

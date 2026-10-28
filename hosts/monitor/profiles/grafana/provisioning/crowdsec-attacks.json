@@ -1,0 +1,4212 @@
+{
+  "apiVersion": "dashboard.grafana.app/v2",
+  "kind": "Dashboard",
+  "metadata": {
+    "name": "crowdsec-attacks"
+  },
+  "spec": {
+    "annotations": [
+      {
+        "kind": "AnnotationQuery",
+        "spec": {
+          "builtIn": true,
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "query": {
+            "datasource": {
+              "name": "-- Grafana --"
+            },
+            "group": "grafana",
+            "kind": "DataQuery",
+            "spec": {},
+            "version": "v0"
+          }
+        }
+      }
+    ],
+    "cursorSync": "Off",
+    "editable": true,
+    "elements": {
+      "panel-1": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT count(*) FROM alerts WHERE $__timeFilter(created_at) AND scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%'))"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 1,
+          "links": [],
+          "title": "Alerts",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "text",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "text",
+                "graphMode": "none",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["lastNotNull"],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "value",
+                "wideLayout": true
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-10": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT source_country AS country, count(*) AS alerts\nFROM alerts WHERE $__timeFilter(created_at) AND scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%')) AND source_country <> ''\nGROUP BY 1 ORDER BY alerts DESC LIMIT 15"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 10,
+          "links": [],
+          "title": "Top countries",
+          "vizConfig": {
+            "group": "barchart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "blue",
+                    "mode": "fixed"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "lineWidth": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barRadius": 0,
+                "barWidth": 0.97,
+                "fullHighlight": false,
+                "groupWidth": 0.7,
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": false
+                },
+                "orientation": "horizontal",
+                "showValue": "auto",
+                "stacking": "none",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                },
+                "xTickLabelRotation": 0,
+                "xTickLabelSpacing": 0
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-11": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT substring(serialized FROM '\"key\":\"target_fqdn\",\"value\":\"([^\"]*)\"') AS service,\n       count(*) AS events\nFROM events WHERE $__timeFilter(created_at) AND serialized LIKE '%\"key\":\"target_fqdn\"%' AND ((${ip:sqlstring} = '' AND ${net:sqlstring} = '') OR alert_events IN (SELECT id FROM alerts a2 WHERE (${ip:sqlstring} = '' OR LOWER(a2.source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR a2.source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%'))))\nGROUP BY 1 ORDER BY events DESC LIMIT 15"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 11,
+          "links": [],
+          "title": "Most-targeted services",
+          "vizConfig": {
+            "group": "barchart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "red",
+                    "mode": "fixed"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "lineWidth": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barRadius": 0,
+                "barWidth": 0.97,
+                "fullHighlight": false,
+                "groupWidth": 0.7,
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": false
+                },
+                "orientation": "horizontal",
+                "showValue": "auto",
+                "stacking": "none",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                },
+                "xTickLabelRotation": 0,
+                "xTickLabelSpacing": 0
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-12": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT source_as_name AS network, count(*) AS alerts\nFROM alerts WHERE $__timeFilter(created_at) AND scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%')) AND source_as_name <> ''\nGROUP BY 1 ORDER BY alerts DESC LIMIT 15"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 12,
+          "links": [],
+          "title": "Top networks (ASN)",
+          "vizConfig": {
+            "group": "barchart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "purple",
+                    "mode": "fixed"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "lineWidth": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barRadius": 0,
+                "barWidth": 0.97,
+                "fullHighlight": false,
+                "groupWidth": 0.7,
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": false
+                },
+                "orientation": "horizontal",
+                "showValue": "auto",
+                "stacking": "none",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                },
+                "xTickLabelRotation": 0,
+                "xTickLabelSpacing": 0
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-13": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT a.source_ip AS \"IP\", a.source_country AS \"CC\",\n       a.source_as_name AS \"Network\", count(*) AS \"Hits\",\n       count(DISTINCT a.scenario) AS \"Scenarios\", MAX(a.created_at) AS \"Last seen\",\n       (SELECT d.type FROM decisions d WHERE d.value = a.source_ip AND d.until > now() ORDER BY d.until DESC LIMIT 1) AS \"Decision\"\nFROM alerts a WHERE $__timeFilter(a.created_at) AND a.scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(a.source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR a.source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%'))\nGROUP BY a.source_ip, a.source_country, a.source_as_name\nORDER BY count(*) DESC LIMIT 100"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 13,
+          "links": [],
+          "title": "Top attacking IPs",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "filterable": true,
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "IP"
+                    },
+                    "properties": [
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": true,
+                            "title": "whois",
+                            "url": "https://www.whois.com/whois/${__value.raw}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Hits"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "mode": "gradient",
+                          "type": "gauge"
+                        }
+                      },
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "continuous-YlRd"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true,
+                "sortBy": [
+                  {
+                    "desc": true,
+                    "displayName": "Hits"
+                  }
+                ]
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-14": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT substring(serialized FROM '\"key\":\"http_path\",\"value\":\"([^\"]*)\"') AS \"Path\",\n       count(*) AS \"Hits\"\nFROM events WHERE $__timeFilter(created_at) AND serialized LIKE '%\"key\":\"http_path\"%' AND ((${ip:sqlstring} = '' AND ${net:sqlstring} = '') OR alert_events IN (SELECT id FROM alerts a2 WHERE (${ip:sqlstring} = '' OR LOWER(a2.source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR a2.source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%'))))\nGROUP BY 1 ORDER BY \"Hits\" DESC LIMIT 30"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 14,
+          "links": [],
+          "title": "Top attacked paths",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "filterable": true,
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Hits"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "mode": "gradient",
+                          "type": "gauge"
+                        }
+                      },
+                      {
+                        "id": "color",
+                        "value": {
+                          "mode": "continuous-YlRd"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true,
+                "sortBy": [
+                  {
+                    "desc": true,
+                    "displayName": "Hits"
+                  }
+                ]
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-15": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT a.created_at AS \"Time\", a.source_ip AS \"IP\", a.source_country AS \"CC\",\n       a.source_as_name AS \"Network\",\n       REPLACE(REPLACE(a.scenario, 'crowdsecurity/', ''), 'LePresidente/', '') AS \"Scenario\",\n       COALESCE((SELECT d.type FROM decisions d WHERE d.value = a.source_ip AND d.until > now() ORDER BY d.until DESC LIMIT 1), '-') AS \"Decision\",\n       substring(mu.value FROM '^\\[\"((?:[^\"\\\\]|\\\\.)*)\"') AS \"URL / path\",\n       a.events_count AS \"Events\", a.capacity AS \"Capacity\"\nFROM alerts a\nLEFT JOIN meta mu ON mu.alert_metas = a.id AND mu.key = 'target_uri'\nWHERE $__timeFilter(a.created_at) AND a.scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(a.source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR a.source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%'))\nORDER BY a.id DESC LIMIT 200"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 15,
+          "links": [],
+          "title": "Recent attacks (newest first)",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "filterable": true,
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "IP"
+                    },
+                    "properties": [
+                      {
+                        "id": "links",
+                        "value": [
+                          {
+                            "targetBlank": true,
+                            "title": "whois",
+                            "url": "https://www.whois.com/whois/${__value.raw}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-16": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT m.machine_id AS agent, count(*) AS alerts\nFROM alerts a JOIN machines m ON m.id = a.machine_alerts\nWHERE $__timeFilter(a.created_at) AND a.scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(a.source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR a.source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%'))\nGROUP BY m.machine_id ORDER BY alerts DESC"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 16,
+          "links": [],
+          "title": "Detections by agent (machine)",
+          "vizConfig": {
+            "group": "barchart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "green",
+                    "mode": "fixed"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "lineWidth": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barRadius": 0,
+                "barWidth": 0.97,
+                "fullHighlight": false,
+                "groupWidth": 0.7,
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": false
+                },
+                "orientation": "horizontal",
+                "showValue": "auto",
+                "stacking": "none",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                },
+                "xTickLabelRotation": 0,
+                "xTickLabelSpacing": 0
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-17": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT * FROM (\n  SELECT DISTINCT ON (split_part(name, '@', 1))\n         split_part(name, '@', 1) AS \"Bouncer\", type AS \"Type\", version AS \"Version\",\n         last_pull AS \"Last pull\"\n  FROM bouncers WHERE NOT revoked\n  ORDER BY split_part(name, '@', 1), last_pull DESC NULLS LAST\n) b ORDER BY \"Last pull\" DESC NULLS LAST"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 17,
+          "links": [],
+          "title": "Bouncers (enforcement points)",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "filterable": true,
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Last pull"
+                    },
+                    "properties": [
+                      {
+                        "id": "unit",
+                        "value": "dateTimeFromNow"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true,
+                "sortBy": [
+                  {
+                    "desc": true,
+                    "displayName": "Last pull"
+                  }
+                ]
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-18": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "WITH ag AS (\n  SELECT m.machine_id AS name, COUNT(a.id) AS n,\n         ROW_NUMBER() OVER (ORDER BY COUNT(a.id) DESC, m.machine_id) AS rn\n  FROM machines m\n  LEFT JOIN alerts a ON a.machine_alerts = m.id AND $__timeFilter(a.created_at) AND a.scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(a.source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR a.source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%'))\n  GROUP BY m.machine_id\n), bo AS (\n  SELECT split_part(name, '@', 1) AS name,\n         ROW_NUMBER() OVER (ORDER BY MAX(last_pull) DESC NULLS LAST) AS rn\n  FROM bouncers WHERE NOT revoked\n  GROUP BY 1\n)\nSELECT\n  COALESCE((SELECT name FROM ag WHERE rn=1),' ') AS a1_name, (SELECT n FROM ag WHERE rn=1) AS a1,\n  COALESCE((SELECT name FROM ag WHERE rn=2),' ') AS a2_name, (SELECT n FROM ag WHERE rn=2) AS a2,\n  COALESCE((SELECT name FROM ag WHERE rn=3),' ') AS a3_name, (SELECT n FROM ag WHERE rn=3) AS a3,\n  COALESCE((SELECT name FROM ag WHERE rn=4),' ') AS a4_name, (SELECT n FROM ag WHERE rn=4) AS a4,\n  COALESCE((SELECT name FROM ag WHERE rn=5),' ') AS a5_name, (SELECT n FROM ag WHERE rn=5) AS a5,\n  COALESCE((SELECT name FROM ag WHERE rn=6),' ') AS a6_name, (SELECT n FROM ag WHERE rn=6) AS a6,\n  CASE WHEN (SELECT COUNT(*) FROM ag) > 6 THEN CONCAT('+ ', (SELECT COUNT(*) FROM ag) - 6, ' more agents (see Detections by agent)') ELSE ' ' END AS a_more,\n  (SELECT COALESCE(SUM(n), 0) FROM ag)::bigint AS total,\n  (SELECT count(DISTINCT value) FROM decisions WHERE until > now() AND origin = 'crowdsec') AS enforced,\n  COALESCE((SELECT name FROM bo WHERE rn=1),' ') AS b1_name,\n  COALESCE((SELECT name FROM bo WHERE rn=2),' ') AS b2_name,\n  COALESCE((SELECT name FROM bo WHERE rn=3),' ') AS b3_name,\n  CASE WHEN (SELECT COUNT(*) FROM bo) > 3 THEN CONCAT('+ ', (SELECT COUNT(*) FROM bo) - 3, ' more (see Bouncers)') ELSE ' ' END AS b_more"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 18,
+          "links": [],
+          "title": "Detection & enforcement flow (live)",
+          "vizConfig": {
+            "group": "canvas",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "infinitePan": false,
+                "inlineEditing": false,
+                "panZoom": false,
+                "panzoom": false,
+                "root": {
+                  "background": {
+                    "color": {
+                      "fixed": "transparent"
+                    }
+                  },
+                  "border": {
+                    "color": {
+                      "fixed": "dark-green"
+                    }
+                  },
+                  "constraint": {
+                    "horizontal": "left",
+                    "vertical": "top"
+                  },
+                  "elements": [
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#3fbf94"
+                        },
+                        "size": 12,
+                        "text": {
+                          "fixed": "AGENTS · parse logs, detect",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "hdr_agents",
+                      "placement": {
+                        "height": 18,
+                        "left": 30,
+                        "top": 14,
+                        "width": 260
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#4a9fe0"
+                        },
+                        "size": 12,
+                        "text": {
+                          "fixed": "LAPI · decide",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "hdr_decide",
+                      "placement": {
+                        "height": 18,
+                        "left": 470,
+                        "top": 14,
+                        "width": 240
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#e07a5f"
+                        },
+                        "size": 12,
+                        "text": {
+                          "fixed": "BOUNCERS · pull & enforce",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "hdr_enforce",
+                      "placement": {
+                        "height": 18,
+                        "left": 900,
+                        "top": 14,
+                        "width": 300
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#1f6f54"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#3fbf94"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "connections": [
+                        {
+                          "color": {
+                            "fixed": "#9aa0a6"
+                          },
+                          "path": "straight",
+                          "size": {
+                            "fixed": 2,
+                            "max": 8,
+                            "min": 1
+                          },
+                          "source": {
+                            "x": 1,
+                            "y": 0
+                          },
+                          "target": {
+                            "x": -1,
+                            "y": 0
+                          },
+                          "targetName": "lapi"
+                        }
+                      ],
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "s_a1",
+                      "placement": {
+                        "height": 40,
+                        "left": 30,
+                        "top": 44,
+                        "width": 260
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 15,
+                        "text": {
+                          "field": "a1_name",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "nm_a1",
+                      "placement": {
+                        "height": 40,
+                        "left": 42,
+                        "top": 44,
+                        "width": 150
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 18,
+                        "text": {
+                          "field": "a1",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "n_a1",
+                      "placement": {
+                        "height": 40,
+                        "left": 198,
+                        "top": 44,
+                        "width": 84
+                      },
+                      "type": "metric-value"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#1f6f54"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#3fbf94"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "connections": [
+                        {
+                          "color": {
+                            "fixed": "#9aa0a6"
+                          },
+                          "path": "straight",
+                          "size": {
+                            "fixed": 2,
+                            "max": 8,
+                            "min": 1
+                          },
+                          "source": {
+                            "x": 1,
+                            "y": 0
+                          },
+                          "target": {
+                            "x": -1,
+                            "y": 0
+                          },
+                          "targetName": "lapi"
+                        }
+                      ],
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "s_a2",
+                      "placement": {
+                        "height": 40,
+                        "left": 30,
+                        "top": 88,
+                        "width": 260
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 15,
+                        "text": {
+                          "field": "a2_name",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "nm_a2",
+                      "placement": {
+                        "height": 40,
+                        "left": 42,
+                        "top": 88,
+                        "width": 150
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 18,
+                        "text": {
+                          "field": "a2",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "n_a2",
+                      "placement": {
+                        "height": 40,
+                        "left": 198,
+                        "top": 88,
+                        "width": 84
+                      },
+                      "type": "metric-value"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#1f6f54"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#3fbf94"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "connections": [
+                        {
+                          "color": {
+                            "fixed": "#9aa0a6"
+                          },
+                          "path": "straight",
+                          "size": {
+                            "fixed": 2,
+                            "max": 8,
+                            "min": 1
+                          },
+                          "source": {
+                            "x": 1,
+                            "y": 0
+                          },
+                          "target": {
+                            "x": -1,
+                            "y": 0
+                          },
+                          "targetName": "lapi"
+                        }
+                      ],
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "s_a3",
+                      "placement": {
+                        "height": 40,
+                        "left": 30,
+                        "top": 132,
+                        "width": 260
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 15,
+                        "text": {
+                          "field": "a3_name",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "nm_a3",
+                      "placement": {
+                        "height": 40,
+                        "left": 42,
+                        "top": 132,
+                        "width": 150
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 18,
+                        "text": {
+                          "field": "a3",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "n_a3",
+                      "placement": {
+                        "height": 40,
+                        "left": 198,
+                        "top": 132,
+                        "width": 84
+                      },
+                      "type": "metric-value"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#1f6f54"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#3fbf94"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "connections": [
+                        {
+                          "color": {
+                            "fixed": "#9aa0a6"
+                          },
+                          "path": "straight",
+                          "size": {
+                            "fixed": 2,
+                            "max": 8,
+                            "min": 1
+                          },
+                          "source": {
+                            "x": 1,
+                            "y": 0
+                          },
+                          "target": {
+                            "x": -1,
+                            "y": 0
+                          },
+                          "targetName": "lapi"
+                        }
+                      ],
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "s_a4",
+                      "placement": {
+                        "height": 40,
+                        "left": 30,
+                        "top": 176,
+                        "width": 260
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 15,
+                        "text": {
+                          "field": "a4_name",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "nm_a4",
+                      "placement": {
+                        "height": 40,
+                        "left": 42,
+                        "top": 176,
+                        "width": 150
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 18,
+                        "text": {
+                          "field": "a4",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "n_a4",
+                      "placement": {
+                        "height": 40,
+                        "left": 198,
+                        "top": 176,
+                        "width": 84
+                      },
+                      "type": "metric-value"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#1f6f54"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#3fbf94"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "connections": [
+                        {
+                          "color": {
+                            "fixed": "#9aa0a6"
+                          },
+                          "path": "straight",
+                          "size": {
+                            "fixed": 2,
+                            "max": 8,
+                            "min": 1
+                          },
+                          "source": {
+                            "x": 1,
+                            "y": 0
+                          },
+                          "target": {
+                            "x": -1,
+                            "y": 0
+                          },
+                          "targetName": "lapi"
+                        }
+                      ],
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "s_a5",
+                      "placement": {
+                        "height": 40,
+                        "left": 30,
+                        "top": 220,
+                        "width": 260
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 15,
+                        "text": {
+                          "field": "a5_name",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "nm_a5",
+                      "placement": {
+                        "height": 40,
+                        "left": 42,
+                        "top": 220,
+                        "width": 150
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 18,
+                        "text": {
+                          "field": "a5",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "n_a5",
+                      "placement": {
+                        "height": 40,
+                        "left": 198,
+                        "top": 220,
+                        "width": 84
+                      },
+                      "type": "metric-value"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#1f6f54"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#3fbf94"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "connections": [
+                        {
+                          "color": {
+                            "fixed": "#9aa0a6"
+                          },
+                          "path": "straight",
+                          "size": {
+                            "fixed": 2,
+                            "max": 8,
+                            "min": 1
+                          },
+                          "source": {
+                            "x": 1,
+                            "y": 0
+                          },
+                          "target": {
+                            "x": -1,
+                            "y": 0
+                          },
+                          "targetName": "lapi"
+                        }
+                      ],
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "s_a6",
+                      "placement": {
+                        "height": 40,
+                        "left": 30,
+                        "top": 264,
+                        "width": 260
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 15,
+                        "text": {
+                          "field": "a6_name",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "nm_a6",
+                      "placement": {
+                        "height": 40,
+                        "left": 42,
+                        "top": 264,
+                        "width": 150
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 18,
+                        "text": {
+                          "field": "a6",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "n_a6",
+                      "placement": {
+                        "height": 40,
+                        "left": 198,
+                        "top": 264,
+                        "width": 84
+                      },
+                      "type": "metric-value"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#9aa0a6"
+                        },
+                        "size": 10,
+                        "text": {
+                          "field": "a_more",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "a_more",
+                      "placement": {
+                        "height": 16,
+                        "left": 34,
+                        "top": 308,
+                        "width": 260
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#1f4e79"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#4a9fe0"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "connections": [
+                        {
+                          "color": {
+                            "fixed": "#9aa0a6"
+                          },
+                          "path": "straight",
+                          "size": {
+                            "fixed": 2,
+                            "max": 8,
+                            "min": 1
+                          },
+                          "source": {
+                            "x": 1,
+                            "y": 0
+                          },
+                          "target": {
+                            "x": -1,
+                            "y": 0
+                          },
+                          "targetName": "decisions"
+                        }
+                      ],
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "lapi",
+                      "placement": {
+                        "height": 104,
+                        "left": 470,
+                        "top": 96,
+                        "width": 240
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 16,
+                        "text": {
+                          "fixed": "CrowdSec LAPI",
+                          "mode": "fixed"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "lapi_t",
+                      "placement": {
+                        "height": 22,
+                        "left": 470,
+                        "top": 104,
+                        "width": 240
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#eaf3ff"
+                        },
+                        "size": 30,
+                        "text": {
+                          "field": "total",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "n_total",
+                      "placement": {
+                        "height": 40,
+                        "left": 470,
+                        "top": 130,
+                        "width": 240
+                      },
+                      "type": "metric-value"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#c9def5"
+                        },
+                        "size": 10,
+                        "text": {
+                          "fixed": "alerts from all agents in range",
+                          "mode": "fixed"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "lapi_c",
+                      "placement": {
+                        "height": 16,
+                        "left": 478,
+                        "top": 172,
+                        "width": 224
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#4a2f6f"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#9a7fd0"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "connections": [
+                        {
+                          "color": {
+                            "fixed": "#9a7fd0"
+                          },
+                          "path": "straight",
+                          "size": {
+                            "fixed": 2,
+                            "max": 8,
+                            "min": 1
+                          },
+                          "source": {
+                            "x": 0,
+                            "y": 1
+                          },
+                          "target": {
+                            "x": 0,
+                            "y": -1
+                          },
+                          "targetName": "lapi"
+                        }
+                      ],
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "appsec",
+                      "placement": {
+                        "height": 56,
+                        "left": 470,
+                        "top": 250,
+                        "width": 240
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 13,
+                        "text": {
+                          "fixed": "AppSec / WAF engine",
+                          "mode": "fixed"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "appsec_t",
+                      "placement": {
+                        "height": 20,
+                        "left": 470,
+                        "top": 258,
+                        "width": 240
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ddccf2"
+                        },
+                        "size": 10,
+                        "text": {
+                          "fixed": "inline request inspection → vpatch",
+                          "mode": "fixed"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "appsec_c",
+                      "placement": {
+                        "height": 16,
+                        "left": 478,
+                        "top": 282,
+                        "width": 224
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#7a2f2f"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#e07a5f"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "connections": [
+                        {
+                          "color": {
+                            "fixed": "#e07a5f"
+                          },
+                          "path": "straight",
+                          "size": {
+                            "fixed": 2,
+                            "max": 8,
+                            "min": 1
+                          },
+                          "source": {
+                            "x": 0,
+                            "y": -1
+                          },
+                          "target": {
+                            "x": 0,
+                            "y": 1
+                          },
+                          "targetName": "b_b1"
+                        }
+                      ],
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "decisions",
+                      "placement": {
+                        "height": 72,
+                        "left": 900,
+                        "top": 60,
+                        "width": 260
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 15,
+                        "text": {
+                          "fixed": "Decisions",
+                          "mode": "fixed"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "dec_t",
+                      "placement": {
+                        "height": 22,
+                        "left": 912,
+                        "top": 68,
+                        "width": 150
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#f2cabc"
+                        },
+                        "size": 10,
+                        "text": {
+                          "fixed": "block / captcha · local",
+                          "mode": "fixed"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "dec_c",
+                      "placement": {
+                        "height": 16,
+                        "left": 912,
+                        "top": 94,
+                        "width": 150
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffe6dc"
+                        },
+                        "size": 24,
+                        "text": {
+                          "field": "enforced",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "n_enf",
+                      "placement": {
+                        "height": 72,
+                        "left": 1060,
+                        "top": 60,
+                        "width": 88
+                      },
+                      "type": "metric-value"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#5a3030"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#e07a5f"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "b_b1",
+                      "placement": {
+                        "height": 40,
+                        "left": 900,
+                        "top": 172,
+                        "width": 260
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 13,
+                        "text": {
+                          "field": "b1_name",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "t_b1",
+                      "placement": {
+                        "height": 40,
+                        "left": 900,
+                        "top": 172,
+                        "width": 260
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#5a3030"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#e07a5f"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "b_b2",
+                      "placement": {
+                        "height": 40,
+                        "left": 900,
+                        "top": 216,
+                        "width": 260
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 13,
+                        "text": {
+                          "field": "b2_name",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "t_b2",
+                      "placement": {
+                        "height": 40,
+                        "left": 900,
+                        "top": 216,
+                        "width": 260
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "#5a3030"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "#e07a5f"
+                        },
+                        "radius": 6,
+                        "width": 2
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "text": {
+                          "fixed": "",
+                          "mode": "fixed"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "b_b3",
+                      "placement": {
+                        "height": 40,
+                        "left": 900,
+                        "top": 260,
+                        "width": 260
+                      },
+                      "type": "rectangle"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "center",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 13,
+                        "text": {
+                          "field": "b3_name",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "middle"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "t_b3",
+                      "placement": {
+                        "height": 40,
+                        "left": 900,
+                        "top": 260,
+                        "width": 260
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#9aa0a6"
+                        },
+                        "size": 10,
+                        "text": {
+                          "field": "b_more",
+                          "fixed": "",
+                          "mode": "field"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "b_more",
+                      "placement": {
+                        "height": 16,
+                        "left": 900,
+                        "top": 304,
+                        "width": 260
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#9aa0a6"
+                        },
+                        "size": 10,
+                        "text": {
+                          "fixed": "each bouncer pulls decisions from the LAPI and enforces them",
+                          "mode": "fixed"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "bnc_c",
+                      "placement": {
+                        "height": 28,
+                        "left": 900,
+                        "top": 322,
+                        "width": 260
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#ffffff"
+                        },
+                        "size": 12,
+                        "text": {
+                          "fixed": "What the numbers mean",
+                          "mode": "fixed"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "leg_hdr",
+                      "placement": {
+                        "height": 16,
+                        "left": 30,
+                        "top": 352,
+                        "width": 300
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#3fbf94"
+                        },
+                        "size": 11,
+                        "text": {
+                          "fixed": "● Agent number — alerts this agent raised, in the selected time range",
+                          "mode": "fixed"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "leg1",
+                      "placement": {
+                        "height": 16,
+                        "left": 30,
+                        "top": 374,
+                        "width": 560
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#4a9fe0"
+                        },
+                        "size": 11,
+                        "text": {
+                          "fixed": "● CrowdSec LAPI — total alerts from all agents, same range",
+                          "mode": "fixed"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "leg2",
+                      "placement": {
+                        "height": 16,
+                        "left": 30,
+                        "top": 394,
+                        "width": 560
+                      },
+                      "type": "text"
+                    },
+                    {
+                      "background": {
+                        "color": {
+                          "fixed": "transparent"
+                        }
+                      },
+                      "border": {
+                        "color": {
+                          "fixed": "transparent"
+                        },
+                        "radius": 0,
+                        "width": 0
+                      },
+                      "config": {
+                        "align": "left",
+                        "color": {
+                          "fixed": "#e07a5f"
+                        },
+                        "size": 11,
+                        "text": {
+                          "fixed": "● Decisions — distinct IPs blocked or shown a captcha right now by these agents' own detections (live, not time-filtered; the CAPI community blocklist is excluded)",
+                          "mode": "fixed"
+                        },
+                        "valign": "top"
+                      },
+                      "constraint": {
+                        "horizontal": "left",
+                        "vertical": "top"
+                      },
+                      "name": "leg3",
+                      "placement": {
+                        "height": 40,
+                        "left": 600,
+                        "top": 374,
+                        "width": 590
+                      },
+                      "type": "text"
+                    }
+                  ],
+                  "name": "root",
+                  "placement": {
+                    "height": 420,
+                    "left": 0,
+                    "top": 0,
+                    "width": 1200
+                  },
+                  "type": "frame"
+                },
+                "showAdvancedTypes": false,
+                "tooltip": {
+                  "disableForOneClick": false,
+                  "mode": "single"
+                },
+                "zoomToContent": false
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-19": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 19,
+          "links": [],
+          "title": "What am I looking at?",
+          "vizConfig": {
+            "group": "text",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": []
+              },
+              "options": {
+                "code": {
+                  "language": "plaintext",
+                  "showLineNumbers": false,
+                  "showMiniMap": false
+                },
+                "content": "### Reading this dashboard\n\nCrowdSec runs as one or more **agents** (machines), each parsing its own logs and reporting\nto a shared **LAPI**. This dashboard reads the LAPI's PostgreSQL database directly: the\n`alerts`, `events`, `decisions`, `machines` and `bouncers` tables. *Detections by agent* and\nthe flow diagram show which agent raised what. A public-facing reverse proxy usually dominates,\nbecause it sees the internet's `http-*` scanning (probing, sensitive files, admin panels, path\ntraversal, WordPress, 403 brute-force). Agents parsing application logs (Nextcloud, Vaultwarden,\nSSH …) catch app-level abuse such as failed logins.\n\nAgents running the **AppSec / WAF engine** (the `appsec` source) inspect requests that the\nbouncers forward to them, producing `vpatch-*` / `appsec-vpatch` decisions. These are attributed\nto whichever engine handled the request.\n\nEach detector is a **leaky bucket**: matching requests drop into a bucket, it leaks at a fixed rate,\nand when drops arrive faster than it leaks the bucket **overflows** and fires an alert. **Capacity**\nis how many events overflow it; **Events** is how many were seen in that pour. A slow scan stays\nunder the leak rate and never overflows.\n\nAn overflow runs the **profiles** (`profiles.yaml`), which decide the remedy, for example a\n**captcha** for a first offence and a **ban** for serious scenarios (CVE, backdoor, AppSec\nvirtual-patch). Already-decided IPs are usually skipped, so a banned scanner's later hits don't\nre-alert. An IP can therefore **alert without a live ban**: a captcha-only scenario, an expired\ndecision, or a profile that doesn't remediate. Use the filters to investigate one.\n\nDecisions are enforced by the **bouncers** (see *Bouncers*), which continuously pull the block /\ncaptcha list from the LAPI and apply it at their own enforcement point: a reverse-proxy plugin\n(Traefik, nginx, …) before a request reaches any service, or a firewall bouncer dropping banned\nIPs at the network layer.\n\n**Filters** (top of the dashboard)\n\n- **IP**: type a source IP (v4 or v6) to scope every panel to just that address. Best way to see\n  exactly what one IP did: its scenarios, the URLs/paths it hit, and whether it was banned. Leave\n  blank for everything.\n- **Provider / ASN**: substring match on the network name (`comcast`, `vodafone`, `google`, …),\n  for chasing likely false positives from consumer ISPs. Leave blank for all.\n- **Map: show**: the map only; toggles between all detections and only IPs with a live ban/captcha.\n\n**Common scenarios**\n\n- `http-probing` / `http-sensitive-files`: scanning for files that shouldn't be public (`.env`, `.git/config`, `info.php`).\n- `http-admin-interface-probing` / `http-wordpress-scan`: hunting for admin panels and WordPress logins.\n- `http-path-traversal-probing`: `../` tricks to escape the web root.\n- `vpatch-*` / `appsec-vpatch`: the AppSec (WAF) engine blocked a known-exploit request inline.\n- `CVE-*` / `thinkphp` / `jira` / `fortinet`: attempts at a specific named vulnerability.\n- `http-generic-403-bf`: an IP hammering URLs that all return 403 (often an already-blocked scanner).\n- `*-bf` (e.g. `vaultwarden-bf`, `ssh-bf`): repeated failed logins.\n\nStat tiles and the *local* ban/captcha counts are these agents' own detections. The community\nblocklist (CAPI, typically tens of thousands of IPs) is excluded from these views.",
+                "mode": "markdown"
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-2": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT count(DISTINCT source_ip) FROM alerts WHERE $__timeFilter(created_at) AND scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%'))"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 2,
+          "links": [],
+          "title": "Attacking IPs",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "text",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "text",
+                "graphMode": "none",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["lastNotNull"],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "value",
+                "wideLayout": true
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-3": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT count(DISTINCT source_country) FROM alerts WHERE $__timeFilter(created_at) AND scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%')) AND source_country <> ''"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 3,
+          "links": [],
+          "title": "Countries",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "text",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "text",
+                "graphMode": "none",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["lastNotNull"],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "value",
+                "wideLayout": true
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-4": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT count(DISTINCT value) FROM decisions WHERE type = 'ban' AND origin = 'crowdsec' AND until > now() AND (${ip:sqlstring} = '' OR LOWER(value) = LOWER(${ip:sqlstring}))"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 4,
+          "links": [],
+          "title": "Bans (local)",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "text",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "text",
+                "graphMode": "none",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["lastNotNull"],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "value",
+                "wideLayout": true
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-5": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT count(DISTINCT value) FROM decisions WHERE type = 'captcha' AND until > now() AND (${ip:sqlstring} = '' OR LOWER(value) = LOWER(${ip:sqlstring}))"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 5,
+          "links": [],
+          "title": "Captchas (local)",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "text",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "text",
+                "graphMode": "none",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["lastNotNull"],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "value",
+                "wideLayout": true
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-6": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT count(*) FROM alerts WHERE $__timeFilter(created_at) AND scenario ILIKE '%cve%' AND (${ip:sqlstring} = '' OR LOWER(source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%'))"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 6,
+          "links": [],
+          "title": "CVE probes",
+          "vizConfig": {
+            "group": "stat",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "text",
+                    "mode": "fixed"
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "colorMode": "text",
+                "graphMode": "none",
+                "justifyMode": "center",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": ["lastNotNull"],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "value",
+                "wideLayout": true
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-7": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT source_latitude AS latitude, source_longitude AS longitude,\n       source_ip AS ip,\n       COALESCE((SELECT d.type FROM decisions d WHERE d.value = source_ip AND d.until > now() ORDER BY d.until DESC LIMIT 1), '-') AS decision,\n       count(*) AS alerts, source_country AS country, source_as_name AS network\nFROM alerts\nWHERE $__timeFilter(created_at) AND scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%')) AND source_latitude IS NOT NULL AND source_latitude <> 0\n      AND ('$decided' = '0' OR EXISTS (SELECT 1 FROM decisions d\n                                       WHERE d.value = source_ip AND d.until > now()))\nGROUP BY source_ip, source_latitude, source_longitude, source_country, source_as_name"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 7,
+          "links": [],
+          "title": "Where attacks come from",
+          "vizConfig": {
+            "group": "geomap",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "dark-red",
+                    "mode": "fixed"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "decision"
+                    },
+                    "properties": [
+                      {
+                        "id": "mappings",
+                        "value": [
+                          {
+                            "options": {
+                              "-": {
+                                "color": "blue",
+                                "index": 2,
+                                "text": "none (expired)"
+                              },
+                              "ban": {
+                                "color": "red",
+                                "index": 0,
+                                "text": "ban"
+                              },
+                              "captcha": {
+                                "color": "orange",
+                                "index": 1,
+                                "text": "captcha"
+                              }
+                            },
+                            "type": "value"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "options": {
+                "basemap": {
+                  "name": "Basemap",
+                  "type": "default"
+                },
+                "controls": {
+                  "mouseWheelZoom": true,
+                  "showAttribution": true,
+                  "showDebug": false,
+                  "showMeasure": false,
+                  "showScale": false,
+                  "showZoom": true
+                },
+                "layers": [
+                  {
+                    "config": {
+                      "showLegend": true,
+                      "style": {
+                        "color": {
+                          "field": "decision",
+                          "fixed": "dark-red"
+                        },
+                        "opacity": 0.55,
+                        "size": {
+                          "field": "alerts",
+                          "fixed": 6,
+                          "max": 22,
+                          "min": 4
+                        },
+                        "symbol": {
+                          "fixed": "img/icons/marker/circle.svg",
+                          "mode": "fixed"
+                        }
+                      }
+                    },
+                    "location": {
+                      "latitude": "latitude",
+                      "longitude": "longitude",
+                      "mode": "coords"
+                    },
+                    "name": "Attacks",
+                    "type": "markers"
+                  }
+                ],
+                "tooltip": {
+                  "mode": "details"
+                },
+                "view": {
+                  "allLayers": true,
+                  "dashboardVariable": false,
+                  "id": "zero",
+                  "lat": 20,
+                  "lon": 0,
+                  "noRepeat": false,
+                  "zoom": 1.3
+                }
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-8": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "time_series",
+                        "rawQuery": true,
+                        "rawSql": "SELECT $__timeGroupAlias(created_at, $__interval), count(*) AS alerts\nFROM alerts WHERE $__timeFilter(created_at) AND scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%'))\nGROUP BY 1 ORDER BY 1"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 8,
+          "links": [],
+          "title": "Alerts over time",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "orange",
+                    "mode": "fixed"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "bars",
+                    "fillOpacity": 40,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": false
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      },
+      "panel-9": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "${DS_POSTGRESQL}"
+                      },
+                      "group": "grafana-postgresql-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT REPLACE(REPLACE(scenario, 'crowdsecurity/', ''), 'LePresidente/', '') AS scenario,\n       count(*) AS alerts\nFROM alerts WHERE $__timeFilter(created_at) AND scenario NOT LIKE 'update :%' AND (${ip:sqlstring} = '' OR LOWER(source_ip) = LOWER(${ip:sqlstring})) AND (${net:sqlstring} = '' OR source_as_name ILIKE CONCAT('%', ${net:sqlstring}, '%'))\nGROUP BY 1 ORDER BY alerts DESC LIMIT 15"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 9,
+          "links": [],
+          "title": "Top attack types (scenarios)",
+          "vizConfig": {
+            "group": "barchart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "fixedColor": "orange",
+                    "mode": "fixed"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "lineWidth": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "short"
+                },
+                "overrides": []
+              },
+              "options": {
+                "barRadius": 0,
+                "barWidth": 0.97,
+                "fullHighlight": false,
+                "groupWidth": 0.7,
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": false
+                },
+                "orientation": "horizontal",
+                "showValue": "auto",
+                "stacking": "none",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                },
+                "xTickLabelRotation": 0,
+                "xTickLabelSpacing": 0
+              }
+            },
+            "version": "13.2.4"
+          }
+        }
+      }
+    },
+    "layout": {
+      "kind": "GridLayout",
+      "spec": {
+        "items": [
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-1"
+              },
+              "height": 4,
+              "width": 4,
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-2"
+              },
+              "height": 4,
+              "width": 4,
+              "x": 4,
+              "y": 0
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-3"
+              },
+              "height": 4,
+              "width": 4,
+              "x": 8,
+              "y": 0
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-4"
+              },
+              "height": 4,
+              "width": 4,
+              "x": 12,
+              "y": 0
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-5"
+              },
+              "height": 4,
+              "width": 4,
+              "x": 16,
+              "y": 0
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-6"
+              },
+              "height": 4,
+              "width": 4,
+              "x": 20,
+              "y": 0
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-7"
+              },
+              "height": 11,
+              "width": 14,
+              "x": 0,
+              "y": 4
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-8"
+              },
+              "height": 11,
+              "width": 10,
+              "x": 14,
+              "y": 4
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-9"
+              },
+              "height": 9,
+              "width": 12,
+              "x": 0,
+              "y": 15
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-10"
+              },
+              "height": 9,
+              "width": 12,
+              "x": 12,
+              "y": 15
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-11"
+              },
+              "height": 9,
+              "width": 12,
+              "x": 0,
+              "y": 24
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-12"
+              },
+              "height": 9,
+              "width": 12,
+              "x": 12,
+              "y": 24
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-13"
+              },
+              "height": 11,
+              "width": 14,
+              "x": 0,
+              "y": 33
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-14"
+              },
+              "height": 11,
+              "width": 10,
+              "x": 14,
+              "y": 33
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-15"
+              },
+              "height": 12,
+              "width": 24,
+              "x": 0,
+              "y": 44
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-16"
+              },
+              "height": 9,
+              "width": 12,
+              "x": 0,
+              "y": 56
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-17"
+              },
+              "height": 9,
+              "width": 12,
+              "x": 12,
+              "y": 56
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-18"
+              },
+              "height": 16,
+              "width": 24,
+              "x": 0,
+              "y": 65
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-19"
+              },
+              "height": 16,
+              "width": 24,
+              "x": 0,
+              "y": 81
+            }
+          }
+        ]
+      }
+    },
+    "links": [],
+    "liveNow": false,
+    "preload": false,
+    "tags": ["crowdsec", "security"],
+    "timeSettings": {
+      "autoRefresh": "15m",
+      "autoRefreshIntervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "fiscalYearStartMonth": 0,
+      "from": "now-7d",
+      "hideTimepicker": false,
+      "timezone": "browser",
+      "to": "now"
+    },
+    "title": "CrowdSec - Attacks",
+    "variables": [
+      {
+        "kind": "DatasourceVariable",
+        "spec": {
+          "allowCustomValue": true,
+          "current": {
+            "text": "PostgreSQL (CrowdSec)",
+            "value": "P5AA4E9609EA7FDA1"
+          },
+          "hide": "dontHide",
+          "includeAll": false,
+          "label": "Datasource",
+          "multi": false,
+          "name": "DS_POSTGRESQL",
+          "options": [],
+          "pluginId": "grafana-postgresql-datasource",
+          "refresh": "onDashboardLoad",
+          "regex": "/CrowdSec/",
+          "skipUrlSync": false
+        }
+      },
+      {
+        "kind": "TextVariable",
+        "spec": {
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "hide": "dontHide",
+          "label": "IP",
+          "name": "ip",
+          "query": "",
+          "skipUrlSync": false
+        }
+      },
+      {
+        "kind": "TextVariable",
+        "spec": {
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "hide": "dontHide",
+          "label": "Provider / ASN",
+          "name": "net",
+          "query": "",
+          "skipUrlSync": false
+        }
+      },
+      {
+        "kind": "CustomVariable",
+        "spec": {
+          "allowCustomValue": true,
+          "current": {
+            "text": "All",
+            "value": "0"
+          },
+          "hide": "dontHide",
+          "includeAll": false,
+          "label": "Map: show",
+          "multi": false,
+          "name": "decided",
+          "options": [],
+          "query": "All : 0, Only banned/captcha : 1",
+          "skipUrlSync": false,
+          "valuesFormat": "csv"
+        }
+      }
+    ]
+  }
+}
