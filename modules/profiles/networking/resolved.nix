@@ -4,6 +4,7 @@
     settings.Resolve = {
       Domains = [ "~." ];
       FallbackDNS = [ "1.1.1.1" ];
+      StaleRetentionSec = "1d";
     };
   };
 }
