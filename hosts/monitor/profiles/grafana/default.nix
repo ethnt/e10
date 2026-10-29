@@ -64,12 +64,6 @@
     provision = {
       enable = true;
       datasources.settings = {
-        deleteDatasources = [
-          {
-            name = "PostgreSQL";
-            orgId = 1;
-          }
-        ];
         datasources = [
           {
             name = "Thanos";
