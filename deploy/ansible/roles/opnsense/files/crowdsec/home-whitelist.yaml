@@ -1,0 +1,6 @@
+name: custom/network-external-ip
+description: "Whitelist network external IP"
+whitelist:
+  reason: "Trusted IP"
+  expression:
+    - evt.Overflow.Alert.Source.IP in LookupHost("home.e10.network")

@@ -1,0 +1,8 @@
+---
+- name: Restart CrowdSec
+  vars:
+    ansible_connection: ssh
+    ansible_python_interpreter: /usr/local/bin/python3
+  ansible.builtin.service:
+    name: crowdsec
+    state: restarted

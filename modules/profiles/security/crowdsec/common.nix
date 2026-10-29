@@ -13,15 +13,18 @@
     settings = {
       config.api.client.credentials_path = config.sops.templates.crowdsec_lapi_credentials.path;
 
-      parsers.s02Enrich = [
+      postOverflows.s01Whitelist = [
         {
           name = "custom/network-external-ip";
           description = "Whitelist network external IP";
           whitelist = {
             reason = "Trusted IP";
-            ip = [ "151.202.8.5" ];
+            expression = [ ''evt.Overflow.Alert.Source.IP in LookupHost("home.e10.network")'' ];
           };
         }
+      ];
+
+      parsers.s02Enrich = [
         {
           name = "custom/tailnet-whitelist";
           description = "Whitelist trusted tailnet subnets";

@@ -423,6 +423,12 @@ in
               url = "http://monitor:9427";
               group = "Monitor";
             })
+            (mkEndpoint {
+              name = "CrowdSec (LAPI)";
+              url = "http://monitor:8010/v1/heartbeat";
+              group = "Monitor";
+              conditions = [ "[STATUS] == 401" ];
+            })
           ];
           pikvm = [
             (mkEndpoint {

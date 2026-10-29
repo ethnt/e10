@@ -1,0 +1,55 @@
+api:
+  client:
+    credentials_path: /usr/local/etc/crowdsec/local_api_credentials.yaml
+    insecure_skip_verify: false
+  server:
+    console_path: /usr/local/etc/crowdsec/console.yaml
+    enable: false
+    listen_uri: 192.168.1.1:8080
+    log_level: info
+    online_client:
+      credentials_path: /usr/local/etc/crowdsec/online_api_credentials.yaml
+    profiles_path: /usr/local/etc/crowdsec/profiles.yaml
+    trusted_ips:
+      - 127.0.0.1
+      - ::1
+common:
+  compress_logs: true
+  daemonize: true
+  log_dir: /var/log/crowdsec
+  log_level: info
+  log_max_files: 10
+  log_max_size: 20
+  log_media: file
+config_paths:
+  config_dir: /usr/local/etc/crowdsec/
+  data_dir: /var/db/crowdsec/data/
+  hub_dir: /usr/local/etc/crowdsec/hub/
+  index_path: /usr/local/etc/crowdsec/hub/.index.json
+  notification_dir: /usr/local/etc/crowdsec/notifications/
+  plugin_dir: /usr/local/lib/crowdsec/plugins/
+  simulation_path: /usr/local/etc/crowdsec/simulation.yaml
+crowdsec_service:
+  acquisition_dir: /usr/local/etc/crowdsec/acquis.d/
+  acquisition_path: /usr/local/etc/crowdsec/acquis.yaml
+  enable: true
+  parser_routines: 1
+cscli:
+  color: auto
+  output: human
+db_config:
+  db_path: /var/db/crowdsec/data/crowdsec.db
+  flush:
+    max_age: 7d
+    max_items: 5000
+  log_level: info
+  type: sqlite
+  use_wal: true
+plugin_config:
+  group: nogroup
+  user: nobody
+prometheus:
+  enabled: true
+  level: full
+  listen_addr: 127.0.0.1
+  listen_port: 6060

@@ -16,6 +16,23 @@
         sopsFile = ./secrets.json;
         mode = "0777";
       };
+
+      crowdsec_capi_login = {
+        sopsFile = ./secrets.json;
+        owner = config.services.crowdsec.user;
+        inherit (config.services.crowdsec) group;
+      };
+
+      crowdsec_capi_password = {
+        sopsFile = ./secrets.json;
+        owner = config.services.crowdsec.user;
+        inherit (config.services.crowdsec) group;
+      };
+
+      crowdsec_console_enroll_key = {
+        sopsFile = ./secrets.json;
+        mode = "0777";
+      };
     };
 
     templates = {
@@ -29,12 +46,31 @@
         inherit (config.services.crowdsec) group;
       };
 
+      crowdsec_capi_credentials = {
+        content = ''
+          url: https://api.crowdsec.net/
+          login: ${config.sops.placeholder.crowdsec_capi_login}
+          password: ${config.sops.placeholder.crowdsec_capi_password}
+        '';
+        owner = config.services.crowdsec.user;
+        inherit (config.services.crowdsec) group;
+      };
+
       crowdsec_caddy_bouncer_environment_file = {
         content = ''
           CROWDSEC_API_KEY=${config.sops.placeholder.crowdsec_caddy_bouncer_api_key}
         '';
         owner = "caddy";
       };
+    };
+  };
+
+  services.crowdsec.settings = {
+    config.api.server = {
+      online_client.credentials_path = config.sops.templates.crowdsec_capi_credentials.path;
+    };
+    console = {
+      enrollKeyFile = config.sops.secrets.crowdsec_console_enroll_key.path;
     };
   };
 
