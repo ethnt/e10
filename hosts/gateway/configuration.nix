@@ -12,9 +12,9 @@
     ++ web
     ++ (with profiles; [
       security.crowdsec.agent
-      security.crowdsec.integrations.caddy
-      security.crowdsec.bouncers.firewall
       security.crowdsec.bouncers.caddy
+      security.crowdsec.bouncers.firewall
+      security.crowdsec.integrations.caddy
       security.lldap.default
     ])
     ++ [

@@ -3007,43 +3007,6 @@
           }
         }
       },
-      "panel-19": {
-        "kind": "Panel",
-        "spec": {
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [],
-              "queryOptions": {},
-              "transformations": []
-            }
-          },
-          "description": "",
-          "id": 19,
-          "links": [],
-          "title": "What am I looking at?",
-          "vizConfig": {
-            "group": "text",
-            "kind": "VizConfig",
-            "spec": {
-              "fieldConfig": {
-                "defaults": {},
-                "overrides": []
-              },
-              "options": {
-                "code": {
-                  "language": "plaintext",
-                  "showLineNumbers": false,
-                  "showMiniMap": false
-                },
-                "content": "### Reading this dashboard\n\nCrowdSec runs as one or more **agents** (machines), each parsing its own logs and reporting\nto a shared **LAPI**. This dashboard reads the LAPI's PostgreSQL database directly: the\n`alerts`, `events`, `decisions`, `machines` and `bouncers` tables. *Detections by agent* and\nthe flow diagram show which agent raised what. A public-facing reverse proxy usually dominates,\nbecause it sees the internet's `http-*` scanning (probing, sensitive files, admin panels, path\ntraversal, WordPress, 403 brute-force). Agents parsing application logs (Nextcloud, Vaultwarden,\nSSH …) catch app-level abuse such as failed logins.\n\nAgents running the **AppSec / WAF engine** (the `appsec` source) inspect requests that the\nbouncers forward to them, producing `vpatch-*` / `appsec-vpatch` decisions. These are attributed\nto whichever engine handled the request.\n\nEach detector is a **leaky bucket**: matching requests drop into a bucket, it leaks at a fixed rate,\nand when drops arrive faster than it leaks the bucket **overflows** and fires an alert. **Capacity**\nis how many events overflow it; **Events** is how many were seen in that pour. A slow scan stays\nunder the leak rate and never overflows.\n\nAn overflow runs the **profiles** (`profiles.yaml`), which decide the remedy, for example a\n**captcha** for a first offence and a **ban** for serious scenarios (CVE, backdoor, AppSec\nvirtual-patch). Already-decided IPs are usually skipped, so a banned scanner's later hits don't\nre-alert. An IP can therefore **alert without a live ban**: a captcha-only scenario, an expired\ndecision, or a profile that doesn't remediate. Use the filters to investigate one.\n\nDecisions are enforced by the **bouncers** (see *Bouncers*), which continuously pull the block /\ncaptcha list from the LAPI and apply it at their own enforcement point: a reverse-proxy plugin\n(Traefik, nginx, …) before a request reaches any service, or a firewall bouncer dropping banned\nIPs at the network layer.\n\n**Filters** (top of the dashboard)\n\n- **IP**: type a source IP (v4 or v6) to scope every panel to just that address. Best way to see\n  exactly what one IP did: its scenarios, the URLs/paths it hit, and whether it was banned. Leave\n  blank for everything.\n- **Provider / ASN**: substring match on the network name (`comcast`, `vodafone`, `google`, …),\n  for chasing likely false positives from consumer ISPs. Leave blank for all.\n- **Map: show**: the map only; toggles between all detections and only IPs with a live ban/captcha.\n\n**Common scenarios**\n\n- `http-probing` / `http-sensitive-files`: scanning for files that shouldn't be public (`.env`, `.git/config`, `info.php`).\n- `http-admin-interface-probing` / `http-wordpress-scan`: hunting for admin panels and WordPress logins.\n- `http-path-traversal-probing`: `../` tricks to escape the web root.\n- `vpatch-*` / `appsec-vpatch`: the AppSec (WAF) engine blocked a known-exploit request inline.\n- `CVE-*` / `thinkphp` / `jira` / `fortinet`: attempts at a specific named vulnerability.\n- `http-generic-403-bf`: an IP hammering URLs that all return 403 (often an already-blocked scanner).\n- `*-bf` (e.g. `vaultwarden-bf`, `ssh-bf`): repeated failed logins.\n\nStat tiles and the *local* ban/captcha counts are these agents' own detections. The community\nblocklist (CAPI, typically tens of thousands of IPs) is excluded from these views.",
-                "mode": "markdown"
-              }
-            },
-            "version": "13.2.4"
-          }
-        }
-      },
       "panel-2": {
         "kind": "Panel",
         "spec": {
@@ -4097,19 +4060,6 @@
               "x": 0,
               "y": 65
             }
-          },
-          {
-            "kind": "GridLayoutItem",
-            "spec": {
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-19"
-              },
-              "height": 16,
-              "width": 24,
-              "x": 0,
-              "y": 81
-            }
           }
         ]
       }
@@ -4117,7 +4067,7 @@
     "links": [],
     "liveNow": false,
     "preload": false,
-    "tags": ["crowdsec", "security"],
+    "tags": [],
     "timeSettings": {
       "autoRefresh": "15m",
       "autoRefreshIntervals": [

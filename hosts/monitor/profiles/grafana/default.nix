@@ -64,6 +64,12 @@
     provision = {
       enable = true;
       datasources.settings = {
+        deleteDatasources = [
+          {
+            name = "PostgreSQL";
+            orgId = 1;
+          }
+        ];
         datasources = [
           {
             name = "Thanos";
@@ -78,7 +84,7 @@
             url = "http://${hosts.monitor.config.networking.hostName}:${toString config.services.loki.configuration.server.http_listen_port}";
           }
           {
-            name = "PostgreSQL";
+            name = "PostgreSQL (Blocky)";
             type = "postgres";
             access = "proxy";
             url = hosts.controller.config.networking.hostName;
