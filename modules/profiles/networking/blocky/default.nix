@@ -98,6 +98,7 @@ in
       conditional = {
         mapping = {
           "satan.network" = dnsmasq;
+          "tailc3772.ts.net" = "100.100.100.100";
           "." = unbound;
           "1.168.192.in-addr.arpa" = unbound;
           "168.192.in-addr.arpa" = unbound;

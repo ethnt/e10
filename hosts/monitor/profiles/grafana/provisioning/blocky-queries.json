@@ -4,19 +4,19 @@
   "metadata": {
     "name": "NhdNWqTVl",
     "namespace": "default",
-    "uid": "21d26e49-5051-458d-803a-ef0df9b0d52f",
-    "resourceVersion": "1787409208864997",
+    "uid": "c0160b2f-0af5-4770-acf7-568deb01b897",
+    "resourceVersion": "1792954472270000",
     "generation": 1,
-    "creationTimestamp": "2026-08-22T14:33:28Z",
+    "creationTimestamp": "2026-10-25T18:54:32Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "1501677692108800"
+      "grafana.app/deprecatedInternalID": "2242200066977792"
     },
     "annotations": {
       "grafana.app/createdBy": "access-policy:service",
       "grafana.app/managedBy": "classic-file-provisioning",
       "grafana.app/managerId": "Blocky Queries",
-      "grafana.app/sourceChecksum": "8a0772414543702a2ddefa17b12fd79d",
-      "grafana.app/sourcePath": "/nix/store/sqvx094l97iba07735k6m9w6sz062pb2-blocky-queries.json",
+      "grafana.app/sourceChecksum": "85749e5043a29dcc092b888f36ea201d",
+      "grafana.app/sourcePath": "/nix/store/5b00i6fcqgwzvfv4q1z9lalc36vsdz19-blocky-queries.json",
       "grafana.app/sourceTimestamp": "1000",
       "grafana.app/folder": ""
     }

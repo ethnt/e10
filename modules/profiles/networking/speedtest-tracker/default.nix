@@ -5,7 +5,7 @@
   };
 
   services.speedtest-tracker = {
-    enable = false;
+    enable = true;
     settings = {
       APP_KEY_FILE = config.sops.secrets.speedtest_tracker_app_key.path;
       APP_URL = "https://speedtest-tracker.e10.camp";

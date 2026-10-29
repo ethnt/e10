@@ -16,5 +16,6 @@
     - nat.yml
     - nut.yml
     - monit.yml
+    - crowdsec.yml
   loop_control:
     loop_var: task_file

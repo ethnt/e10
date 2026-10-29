@@ -1,0 +1,85 @@
+---
+- name: Install os-crowdsec
+  oxlorg.opnsense.package:
+    name: os-crowdsec
+    action: install
+
+- name: Load CrowdSec secrets
+  community.sops.load_vars:
+    file: ../secrets.json
+
+- name: Copy CrowdSec configuration
+  vars:
+    ansible_connection: ssh
+    ansible_python_interpreter: /usr/local/bin/python3
+  ansible.builtin.copy:
+    src: crowdsec/config.yaml
+    dest: /usr/local/etc/crowdsec/config.yaml
+    owner: root
+    group: wheel
+    mode: "0600"
+    backup: true
+  notify: Restart CrowdSec
+
+- name: Configure CrowdSec LAPI credentials
+  vars:
+    ansible_connection: ssh
+    ansible_python_interpreter: /usr/local/bin/python3
+  ansible.builtin.copy:
+    dest: /usr/local/etc/crowdsec/local_api_credentials.yaml
+    content: |
+      url: http://monitor.tailc3772.ts.net:8010
+      login: router
+      password: {{ CROWDSEC_ROUTER_LAPI_PASSWORD }}
+    owner: root
+    group: wheel
+    mode: "0600"
+    backup: true
+  no_log: true
+  notify: Restart CrowdSec
+
+- name: Create CrowdSec postoverflow whitelist directory
+  vars:
+    ansible_connection: ssh
+    ansible_python_interpreter: /usr/local/bin/python3
+  ansible.builtin.file:
+    path: /usr/local/etc/crowdsec/postoverflows/s01-whitelist
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0750"
+
+- name: Copy CrowdSec home network whitelist
+  vars:
+    ansible_connection: ssh
+    ansible_python_interpreter: /usr/local/bin/python3
+  ansible.builtin.copy:
+    src: crowdsec/home-whitelist.yaml
+    dest: /usr/local/etc/crowdsec/postoverflows/s01-whitelist/home-whitelist.yaml
+    owner: root
+    group: wheel
+    mode: "0644"
+  notify: Restart CrowdSec
+
+- name: Create CrowdSec enrich parser directory
+  vars:
+    ansible_connection: ssh
+    ansible_python_interpreter: /usr/local/bin/python3
+  ansible.builtin.file:
+    path: /usr/local/etc/crowdsec/parsers/s02-enrich
+    state: directory
+    owner: root
+    group: wheel
+    mode: "0750"
+
+- name: Copy CrowdSec tailnet whitelist
+  vars:
+    ansible_connection: ssh
+    ansible_python_interpreter: /usr/local/bin/python3
+  ansible.builtin.copy:
+    src: crowdsec/tailnet-whitelist.yaml
+    dest: /usr/local/etc/crowdsec/parsers/s02-enrich/tailnet-whitelist.yaml
+    owner: root
+    group: wheel
+    mode: "0644"
+  notify: Restart CrowdSec

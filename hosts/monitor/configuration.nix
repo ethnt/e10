@@ -5,23 +5,28 @@
     ++ hcloud
     ++ web
     ++ [
+      profiles.applications.glitchtip.default
       profiles.communications.grafana-to-ntfy.default
       profiles.communications.ntfy.default
+      profiles.monitoring.healthchecks.default
       profiles.monitoring.loki.default
       profiles.monitoring.rsyslogd
-      profiles.telemetry.vector.syslog
-      profiles.monitoring.healthchecks.default
       profiles.monitoring.thanos.default
       profiles.observability.gatus.default
       profiles.observability.grafana
       profiles.observability.uptime-kuma
+      profiles.security.crowdsec.bouncers.caddy
+      profiles.security.crowdsec.bouncers.firewall
+      profiles.security.crowdsec.integrations.caddy
+      profiles.security.crowdsec.server
       profiles.telemetry.prometheus-ping-exporter
       profiles.telemetry.prometheus-redis-exporter
-      profiles.applications.glitchtip.default
+      profiles.telemetry.vector.syslog
     ]
     ++ [
       ./profiles/authelia
       ./profiles/caddy.nix
+      ./profiles/crowdsec/default.nix
       ./profiles/gatus.nix
       ./profiles/prometheus.nix
       ./profiles/prometheus-ping-exporter.nix

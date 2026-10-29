@@ -78,7 +78,7 @@
             url = "http://${hosts.monitor.config.networking.hostName}:${toString config.services.loki.configuration.server.http_listen_port}";
           }
           {
-            name = "PostgreSQL";
+            name = "PostgreSQL (Blocky)";
             type = "postgres";
             access = "proxy";
             url = hosts.controller.config.networking.hostName;
@@ -87,6 +87,19 @@
             jsonData = {
               user = "blocky";
               database = "blocky";
+              sslmode = "disable";
+            };
+          }
+          {
+            name = "PostgreSQL (CrowdSec)";
+            type = "postgres";
+            access = "proxy";
+            url = hosts.monitor.config.networking.hostName;
+            user = "crowdsec";
+            postgresVersion = 1800;
+            jsonData = {
+              user = "crowdsec";
+              database = "crowdsec";
               sslmode = "disable";
             };
           }
@@ -180,6 +193,10 @@
         {
           name = "Frigate";
           options.path = ./provisioning/frigate.json;
+        }
+        {
+          name = "CrowdSec - Attacks";
+          options.path = ./provisioning/crowdsec-attacks.json;
         }
       ];
 

@@ -34,6 +34,10 @@ in
               type = types.bool;
               default = false;
             };
+            crowdsecBouncer = mkOption {
+              type = types.bool;
+              default = true;
+            };
             acme = mkOption {
               type = types.submodule {
                 options = {
@@ -86,6 +90,8 @@ in
           }
         '';
         extraConfig = ''
+          ${optionalString value.crowdsecBouncer "crowdsec"}
+
           ${optionalString value.protected autheliaForwardAuth}
 
           reverse_proxy ${resolvedHost}:${toString value.port} {

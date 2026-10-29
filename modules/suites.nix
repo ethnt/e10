@@ -11,7 +11,6 @@
     profiles.networking.openssh
     profiles.networking.resolved
     profiles.networking.tailscale.default
-    profiles.security.fail2ban
     profiles.shell.fish
     profiles.system.earlyoom
     profiles.telemetry.prometheus-node-exporter
