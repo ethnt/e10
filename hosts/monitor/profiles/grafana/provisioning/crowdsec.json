@@ -3636,7 +3636,7 @@
     ],
     "liveNow": false,
     "preload": false,
-    "tags": ["crowdsec", "appsec", "security"],
+    "tags": [],
     "timeSettings": {
       "timezone": "browser",
       "from": "now-7d",
@@ -3657,7 +3657,7 @@
       "hideTimepicker": false,
       "fiscalYearStartMonth": 0
     },
-    "title": "CrowdSec Metrics",
+    "title": "CrowdSec",
     "variables": [
       {
         "kind": "DatasourceVariable",
