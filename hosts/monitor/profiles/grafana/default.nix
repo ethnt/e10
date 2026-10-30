@@ -195,6 +195,10 @@
           options.path = ./provisioning/frigate.json;
         }
         {
+          name = "CrowdSec";
+          options.path = ./provisioning/crowdsec.json;
+        }
+        {
           name = "CrowdSec - Attacks";
           options.path = ./provisioning/crowdsec-attacks.json;
         }

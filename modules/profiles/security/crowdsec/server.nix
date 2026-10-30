@@ -28,7 +28,10 @@
   systemd.services.crowdsec-github-actions-allowlist = {
     description = "Sync GitHub Actions IP ranges into a CrowdSec allowlist";
     wants = [ "network-online.target" ];
-    after = [ "network-online.target" "crowdsec.service" ];
+    after = [
+      "network-online.target"
+      "crowdsec.service"
+    ];
     requires = [ "crowdsec.service" ];
     serviceConfig = {
       Type = "oneshot";
