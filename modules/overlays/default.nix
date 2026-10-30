@@ -92,6 +92,16 @@
                   hash = "sha256-q9E3Dc9Vg3OrQvzXvmz6L1SlY5Cm1wz4CkJAIR5/xA4=";
                 };
               });
+
+              # Requires django-async-backend 6.1.5, otherwise get an error like this:
+              #   RuntimeError: An async connection can only be used by the task that created it
+              django-async-backend = pyprev.django-async-backend.overridePythonAttrs (old: rec {
+                version = "6.1.5";
+                src = old.src.override {
+                  tag = "v${version}";
+                  hash = "sha256-kjR0IFQjjTS+2M+2SdzzyDLR/PQtWIU9eUYgLK9PIs8=";
+                };
+              });
             })
           ];
         };
