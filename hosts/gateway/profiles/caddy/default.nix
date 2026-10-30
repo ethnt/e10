@@ -158,7 +158,6 @@ in
       "cache.builder.e10.camp" = {
         host = hosts.builder;
         inherit (hosts.builder.config.services.nix-serve) port;
-        crowdsecBouncer = false;
         extraConfig = ''
           request_body {
             max_size 2GiB
@@ -202,7 +201,6 @@ in
       "cache.e10.camp" = {
         host = hosts.omnibus;
         port = portFromAddress hosts.omnibus.config.services.atticd.settings.listen;
-        crowdsecBouncer = false;
         extraConfig = ''
           encode gzip zstd
 
