@@ -34,7 +34,7 @@ in
               type = types.bool;
               default = false;
             };
-            crowdsecBouncer = mkOption {
+            crowdsec = mkOption {
               type = types.bool;
               default = true;
             };
@@ -90,7 +90,7 @@ in
           }
         '';
         extraConfig = ''
-          ${optionalString value.crowdsecBouncer "crowdsec"}
+          ${optionalString value.crowdsec "crowdsec"}
 
           ${optionalString value.protected autheliaForwardAuth}
 
