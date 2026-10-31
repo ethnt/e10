@@ -102,6 +102,16 @@
                   hash = "sha256-kjR0IFQjjTS+2M+2SdzzyDLR/PQtWIU9eUYgLK9PIs8=";
                 };
               });
+
+              # Tapo cameras get stuck failing every query after a timeout in 0.11.0.1:
+              #   https://github.com/home-assistant/core/issues/186172
+              python-kasa = pyprev.python-kasa.overridePythonAttrs (old: rec {
+                version = "0.12.0";
+                src = old.src.override {
+                  tag = version;
+                  hash = "sha256-z984z3Rqh5wZ+Tbum+vOaJjXOL8ljX1g/HkhdlQi4rI=";
+                };
+              });
             })
           ];
         };
