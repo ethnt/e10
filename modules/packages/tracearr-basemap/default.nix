@@ -5,8 +5,8 @@
 , jq
 }:
 let
-  version = "3.1.1";
-  layerDigest = "sha256:b591c5bbc42208b5d6a4e35fac0b08f40d5a408199543b7daa53552a41544fbc";
+  version = "3.1.3";
+  layerDigest = "sha256:27d9ebd5d5831c08037dda64b034d860ec164206cb4b5f9566b4f2c71b7dfe0d";
 in
 stdenvNoCC.mkDerivation {
   pname = "tracearr-basemap";
@@ -33,7 +33,7 @@ stdenvNoCC.mkDerivation {
 
   outputHashMode = "flat";
   outputHashAlgo = "sha256";
-  outputHash = "sha256-nMMtnZo3Q+Ht8g7IktTvTS0GCZKu/CFcDm+cN+3lt6o=";
+  outputHash = "sha256-9BqvkIB4X4vqfWbpWpMDv0379PycZnGtBkToIN+J2o8=";
 
   passthru.updateScript = ./update.sh;
 
