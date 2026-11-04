@@ -68,7 +68,7 @@ let
     outputHashMode = "recursive";
     outputHash =
       {
-        x86_64-linux = "sha256-3KgcgiZyW5+CGGNvzR6Rt7K9sSlmJWQovENXtjiNsUo=";
+        x86_64-linux = "sha256-FfXIV7X1a5KFpHp5efeuuZBJSC6bpUse6//45CNIECk=";
         aarch64-linux = "sha256-DwEkBqZy+oDv/UywWpypHxV2CAScJ5eNf6yEZLEjGbA=";
       }.${stdenv.hostPlatform.system}
         or (throw "profilarr: unsupported system ${stdenv.hostPlatform.system}");
