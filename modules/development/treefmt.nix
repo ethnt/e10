@@ -15,11 +15,12 @@
           actionlint.enable = true;
           beautysh.enable = true;
           deadnix.enable = true;
-          terraform.enable = true;
           nixfmt.enable = true;
           nixpkgs-fmt.enable = true;
-          statix.enable = true;
           prettier.enable = true;
+          statix.enable = true;
+          terraform.enable = true;
+          zizmor.enable = true;
         };
         settings.formatter = {
           prettier.excludes = [

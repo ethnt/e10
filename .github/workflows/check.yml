@@ -10,6 +10,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      with:
+        persist-credentials: false
     - name: Install Lix
       uses: samueldr/lix-gha-installer-action@7b7f14d320d6aacfb65bd1ef761566b3b69e474c
       with:
@@ -38,3 +40,5 @@ name: Check
 'on':
   push: {}
   workflow_dispatch: {}
+permissions:
+  contents: read
