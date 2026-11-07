@@ -18,19 +18,19 @@ let
   nodeGyp = node-gyp.override { nodejs = nodejs_22; };
   meilisearch = callPackage ./meilisearch_1_30_0.nix { };
 in
-stdenv.mkDerivation (finalAttrs: {
+stdenv.mkDerivation rec {
   pname = "tunarr";
   version = "2026.11.1";
 
   src = fetchFromGitHub {
     owner = "chrisbenincasa";
     repo = "tunarr";
-    tag = "v${finalAttrs.version}";
+    tag = "v${version}";
     hash = "sha256-ZzRc3pybrdR5oSYCeeAmtXs/qd0kDErZr3QDEvl5vbA=";
   };
 
   pnpmDeps = fetchPnpmDeps {
-    inherit (finalAttrs) pname version src;
+    inherit pname version src;
     inherit pnpm;
     fetcherVersion = 4;
     hash = "sha256-G3IKYN8xRXFPLOoBZhNSYriQLN/OaWsWodcDgPjFUM4=";
@@ -65,7 +65,7 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [ nodejs ];
 
   env = {
-    TUNARR_VERSION = finalAttrs.version;
+    TUNARR_VERSION = version;
     TUNARR_EDGE_BUILD = "false";
     TURBO_CONCURRENCY = "1";
     TURBO_TELEMETRY_DISABLED = "1";
@@ -78,7 +78,7 @@ stdenv.mkDerivation (finalAttrs: {
 
     for d in . server web; do
       printf 'TUNARR_VERSION=%s\nTUNARR_BUILD=\nTUNARR_EDGE_BUILD=false\n' \
-        "${finalAttrs.version}" > "$d/.env"
+        "${version}" > "$d/.env"
     done
 
     echo "Building better-sqlite3 native addon..."
@@ -129,4 +129,4 @@ stdenv.mkDerivation (finalAttrs: {
       }
     ];
   };
-})
+}

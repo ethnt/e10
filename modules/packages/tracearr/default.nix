@@ -13,19 +13,19 @@ let
   pnpm = pnpm_12.override { nodejs-slim = nodejs-slim_22; };
   nodejs = nodejs-slim_22;
 in
-stdenv.mkDerivation (finalAttrs: {
+stdenv.mkDerivation rec {
   pname = "tracearr";
   version = "3.1.3";
 
   src = fetchFromGitHub {
     owner = "connorgallopo";
     repo = "Tracearr";
-    tag = "v${finalAttrs.version}";
+    tag = "v${version}";
     hash = "sha256-EvnD2wqrI/32GRVQQsWAfaL6ptn/tVezafMxNWKpcUA=";
   };
 
   pnpmDeps = fetchPnpmDeps {
-    inherit (finalAttrs) pname version src;
+    inherit pname version src;
     inherit pnpm;
     fetcherVersion = 4;
     hash = "sha256-wxtx5Jdx2eSSo+OR6284/4cWbqrlO1kXXknhK06FVaw=";
@@ -76,8 +76,8 @@ stdenv.mkDerivation (finalAttrs: {
     makeWrapper ${lib.getExe nodejs} $out/bin/tracearr \
       --add-flags $out/lib/tracearr/apps/server/dist/index.js \
       --set NODE_PATH "$out/lib/tracearr/node_modules:$out/lib/tracearr/apps/server/node_modules:$out/lib/tracearr/apps/web/node_modules" \
-      --set-default APP_VERSION ${finalAttrs.version} \
-      --set-default APP_TAG v${finalAttrs.version} \
+      --set-default APP_VERSION ${version} \
+      --set-default APP_TAG v${version} \
       --set-default NODE_ENV production
 
     runHook postInstall
@@ -103,4 +103,4 @@ stdenv.mkDerivation (finalAttrs: {
       }
     ];
   };
-})
+}
