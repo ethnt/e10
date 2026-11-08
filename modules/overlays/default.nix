@@ -40,18 +40,15 @@
 
           inherit (nixpkgs-master)
             gatus
+            handbrake
+            immich
+            karakeep
+            netbox
+            plex
             prowlarr
             radarr
             sonarr
-            netbox
-            plex
-            immich
-            handbrake
-            karakeep
             ;
-
-          # This is to pick up bugfix here: https://github.com/thanos-io/thanos/issues/7923
-          inherit (nixpkgs-master) thanos;
 
           inherit (nixpkgs-stable) vector;
 

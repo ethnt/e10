@@ -3,7 +3,7 @@
     package =
       (pkgs.caddy.withPlugins {
         plugins = [ "github.com/hslatman/caddy-crowdsec-bouncer/http@v0.14.1" ];
-        hash = "sha256-3zj9JZnjagY2AQfgcMSDLMSmUxQdZE8OSp8e50o1fiQ=";
+        hash = "sha256-znOWMHeCfmWHNurAto/IwZzMb/Em/z0/2Ql3NYkkaws=";
       }).overrideAttrs
         {
           doInstallCheck = false;

@@ -18,6 +18,9 @@ in
         {
           name = "Checkout code";
           uses = actions.checkout;
+          "with" = {
+            persist-credentials = false;
+          };
         }
         {
           name = "Install Lix";
@@ -59,6 +62,9 @@ in
     {
       ".github/workflows/check.yml" = {
         name = "Check";
+        permissions = {
+          contents = "read";
+        };
         jobs = {
           check = {
             name = "Check flake";
@@ -74,6 +80,9 @@ in
 
       ".github/workflows/hosts.yml" = {
         name = "Build hosts";
+        permissions = {
+          contents = "read";
+        };
         jobs = {
           buildX86System = {
             name = "Build host system (x86)";
@@ -149,6 +158,9 @@ in
 
       ".github/workflows/packages.yml" = {
         name = "Build packages";
+        permissions = {
+          contents = "read";
+        };
         on.push.paths = [
           "flake.lock"
           "modules/packages/**/*.nix"

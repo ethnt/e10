@@ -6,7 +6,7 @@
 , makeWrapper
 , autoPatchelfHook
 , sqlite
-, git
+, gitMinimal
 , gnutar
 , gzip
 ,
@@ -68,7 +68,7 @@ let
     outputHashMode = "recursive";
     outputHash =
       {
-        x86_64-linux = "sha256-r84Hl1CNM8QJaLqRZyTFhm1yyQOAGHrsUdpLBjEuqdk=";
+        x86_64-linux = "sha256-FfXIV7X1a5KFpHp5efeuuZBJSC6bpUse6//45CNIECk=";
         aarch64-linux = "sha256-DwEkBqZy+oDv/UywWpypHxV2CAScJ5eNf6yEZLEjGbA=";
       }.${stdenv.hostPlatform.system}
         or (throw "profilarr: unsupported system ${stdenv.hostPlatform.system}");
@@ -133,14 +133,16 @@ stdenv.mkDerivation {
     mkdir -p $out/lib/profilarr $out/bin $out/share
     cp -r node_modules dist src static deno.jsonc deno.lock \
       tsconfig.json svelte.config.js vite.config.ts $out/lib/profilarr/
+
+    rm -rf $DENO_DIR/npm $DENO_DIR/v8_code_cache_v2*
     cp -r $DENO_DIR $out/share/deno-dir
 
     makeWrapper ${lib.getExe deno} $out/bin/profilarr \
       --run "cd $out/lib/profilarr" \
-      --add-flags "run -A --cached-only --frozen dist/build/mod.ts" \
+      --add-flags "run -A --cached-only --frozen --node-modules-dir=manual dist/build/mod.ts" \
       --prefix PATH : ${
         lib.makeBinPath [
-          git
+          gitMinimal
           gnutar
           gzip
         ]
