@@ -10,6 +10,7 @@
     core
     ++ proxmox-vm
     ++ [
+      profiles.applications.dawarich.default
       profiles.applications.stirling-pdf
       profiles.applications.umami.default
       profiles.databases.postgresql
