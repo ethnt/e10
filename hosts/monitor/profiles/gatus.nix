@@ -296,6 +296,11 @@ in
               url = "https://analytics.e10.camp";
               group = "Matrix";
             })
+            (mkEndpoint {
+              name = "Dawarich";
+              url = "https://dawarich.e10.camp";
+              group = "Matrix";
+            })
           ];
           builder = [
             (mkEndpoint {

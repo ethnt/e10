@@ -88,6 +88,13 @@ in
         '';
       };
 
+      "dawarich.e10.camp" = {
+        host = hosts.matrix;
+        port =
+          portFromAddress
+            hosts.matrix.config.services.caddy.virtualHosts."http://dawarich.e10.camp:9010".hostName;
+      };
+
       "feeds.e10.camp" = {
         host = hosts.matrix;
         port = hosts.matrix.config.services.miniflux.config.PORT;
