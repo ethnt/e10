@@ -14,12 +14,13 @@
       profiles.filesystems.blockbuster
       profiles.filesystems.files.personal
       profiles.hardware.nvidia
+      profiles.media-management.audiobookshelf
       profiles.media-management.bazarr.default
       profiles.media-management.decluttarr.default
       profiles.media-management.jellyfin
+      profiles.media-management.koito
       profiles.media-management.multi-scrobbler.default
       profiles.media-management.plex
-      profiles.media-management.koito
       profiles.media-management.profilarr.default
       profiles.media-management.prowlarr.default
       profiles.media-management.radarr.default
