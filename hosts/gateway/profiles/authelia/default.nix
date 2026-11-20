@@ -396,6 +396,10 @@
           domain = "tunarr.e10.camp";
           policy = "two_factor";
         }
+        {
+          domain = "change-detection.e10.camp";
+          policy = "two_factor";
+        }
       ];
     };
   };
