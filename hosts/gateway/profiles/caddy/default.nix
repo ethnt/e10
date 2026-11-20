@@ -307,6 +307,16 @@ in
         port = hosts.matrix.config.services.umami.settings.PORT;
       };
 
+      "multi-scrobbler.e10.camp" = {
+        host = hosts.htpc;
+        port = hosts.htpc.config.services.multi-scrobbler.port;
+      };
+
+      "koito.e10.camp" = {
+        host = hosts.htpc;
+        port = hosts.htpc.config.services.koito.environment.KOITO_LISTEN_PORT;
+      };
+
       "stirling-pdf.e10.camp" = {
         host = hosts.matrix;
         port = hosts.matrix.config.services.stirling-pdf.environment.SERVER_PORT;
